@@ -512,11 +512,11 @@ a.btn-theme:focus{
 /*------------------------
 -----Services Styles------
 ------------------------*/
-#services .item {
+#which .item {
     padding:30px; 
 }
 
-#services .item h3 {
+#which .item h3 {
     text-transform:uppercase;
     font-size:21px;
     letter-spacing:0.02em;
@@ -524,7 +524,7 @@ a.btn-theme:focus{
     font-weight:300;
 }
 
-#services .item .icon {
+#which .item .icon {
     margin:0 auto 40px;
     background:#f5f5f5;
     width:160px;
@@ -532,7 +532,7 @@ a.btn-theme:focus{
     border-radius:50%;
 }
 
-#services .item [class*=fa] {
+#which .item [class*=fa] {
     color:#d4d4d4;
     font-size:48px;
     line-height:160px;
@@ -541,7 +541,7 @@ a.btn-theme:focus{
 
 }
 
-#services .item:hover [class*=fa] {
+#which .item:hover [class*=fa] {
     color:#9661A8;
     -webkit-transform:scale(1.2);
     transform:scale(1.2);
@@ -549,7 +549,7 @@ a.btn-theme:focus{
     transition: transform .6s cubic-bezier(.17,.89,.67,4),color .4s ease-out;
 }
 
-#services .item h4 {
+#which .item h4 {
     padding:10px 60px;
     margin:0;
     border-bottom:1px dotted #ddd;
