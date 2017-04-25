@@ -2,8 +2,9 @@
 .jumbotron .second-line p {
     text-transform: none !important;
 }
-/* overrides section end */
+/* end overrides section */
 
+/* xemantic styles section */
 .x-circular {
     border-radius: 50%;
 }
@@ -33,3 +34,4 @@
     background:#fff;
     color:#9661A8;
 }
+/* end xemantic styles section */
