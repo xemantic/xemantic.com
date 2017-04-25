@@ -1,0 +1,35 @@
+/* overrides section */
+.jumbotron .second-line p {
+    text-transform: none !important;
+}
+/* overrides section end */
+
+.x-circular {
+    border-radius: 50%;
+}
+
+.x-skills {
+    padding: 0px;
+    text-align: center;
+}
+
+.x-skills li {
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: 300;
+    margin: 10px;
+    background:transparent;
+    border:3px solid #fff;
+    border-radius:5px;
+    font-size:21px;
+    padding:15px 20px;
+    text-decoration:none;
+    -webkit-transition:all .2s ease-out;
+    transition:all .2s ease-out;
+}
+
+.x-skills li:hover {
+    opacity:1;
+    background:#fff;
+    color:#9661A8;
+}

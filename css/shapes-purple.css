@@ -572,23 +572,23 @@ a.btn-theme:focus{
 /*-----------------------
 ------About Styles-------
 ------------------------*/
-#about .lead-member .member-title{
+#who .lead-member .member-title{
     position:relative;
     top:-20px;
 }
 
-#about .member .img-wrapper{
+#who .member .img-wrapper{
     position:relative;
 }
 
-#about .member.lead-member img{
+#who .member.lead-member img{
     position:relative;
     max-width:150%;
     left:-25%;
 }
 
-#about .member .main-img,
-#about .member.lead-member .main-img{
+#who .member .main-img,
+#who .member.lead-member .main-img{
     position:relative;
     z-index:2;
     opacity:0;
@@ -596,8 +596,8 @@ a.btn-theme:focus{
     transition:opacity .5s ease-in;
 }
 
-#about .member .shadow,
-#about .member.lead-member .shadow{
+#who .member .shadow,
+#who .member.lead-member .shadow{
     position:absolute;
     top:0;
     opacity:1;
@@ -606,17 +606,17 @@ a.btn-theme:focus{
     transition:opacity .5s ease-in;
 }
 
-#about .member:hover .main-img,
-#about .member.lead-member:hover .main-img{
+#who .member:hover .main-img,
+#who .member.lead-member:hover .main-img{
     opacity:1;
 }
 
-#about .member:hover .shadow,
-#about .member.lead-member:hover .shadow{
+#who .member:hover .shadow,
+#who .member.lead-member:hover .shadow{
     opacity:0;
 }
 
-#about .details-btn {
+#who .details-btn {
     margin-top:20px;
     display:inline-block;
     position:relative;
@@ -628,7 +628,7 @@ a.btn-theme:focus{
     z-index:1;
 }
 
-#about .details-btn [class*=fa]{
+#who .details-btn [class*=fa]{
     width:30px;
     height:30px;
     font-size:18px;
@@ -638,7 +638,7 @@ a.btn-theme:focus{
     border-radius:50%;
 }
 
-#about .details-btn span{
+#who .details-btn span{
     margin-left:10px;
     vertical-align:bottom;
     color:#777;
@@ -648,12 +648,12 @@ a.btn-theme:focus{
     font-weight:100;
 }
 
-#about .details-btn:hover {
+#who .details-btn:hover {
     text-decoration:none;
     font-size:28px;
 }
 
-#about .member-details{
+#who .member-details{
     margin:0;
     padding:30px;
     background:#fafafa;
@@ -661,25 +661,25 @@ a.btn-theme:focus{
     border-radius:3px;
 }
 
-#about .member-details p {
+#who .member-details p {
     text-align:left;
     color:#999;
     font-size:15px;
 }
 
-#about .member-socials {
+#who .member-socials {
     list-style:none;
     text-align:center;
     margin:0;
     padding:0;
 }
 
-#about .member-socials li {
+#who .member-socials li {
     display:inline;
     margin:0 2px;
 }
 
-#about .member-socials li a{
+#who .member-socials li a{
     display:inline-block;
     padding:0;
     background:#fff;
@@ -693,7 +693,7 @@ a.btn-theme:focus{
     transition:all .3s ease-out;
 }
 
-#about .member-socials li a:hover{
+#who .member-socials li a:hover{
     background:#9661A8;
     color:#fff;
 }
