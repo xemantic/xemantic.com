@@ -1336,26 +1336,26 @@ a.btn-theme:focus{
 /*----------------------
 -----Contact Styles-----
 ------------------------*/
-#contact h3 {
+#where h3 {
     margin-bottom:20px;
 }
 
-#contact ul {
+#where ul {
     padding:0;
     margin:0 0 40px;
     list-style:none;
 }
 
-#contact ul li{
+#where ul li{
     margin:5px 0;
     list-style:none;
 }
 
-#contact ul li span{
+#where ul li span{
     margin-right:10px;
 }
 
-#contact ul li span [class*=fa]{
+#where ul li span [class*=fa]{
     color:#9661A8;
 }
 
