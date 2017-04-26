@@ -30,4 +30,26 @@
     background:#fff;
     color:#9661A8;
 }
+
+#why h1 {
+  margin-top: 0;
+  margin-bottom: 35px;
+  padding: 0;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 48px;
+  letter-spacing: 0.02em;
+  word-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.x-declaration p {
+   font-size: 22px;
+   line-height: 32px;
+   font-weight: 300;
+   text-align: center;
+   word-spacing: 5px;
+   margin-bottom: 40px;
+}
 /* end xemantic styles section */
