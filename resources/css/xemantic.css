@@ -1,10 +1,22 @@
 /* overrides section */
 .jumbotron .second-line p {
-    text-transform: none !important;
+  text-transform: none !important;
 }
 /* end overrides section */
 
 /* xemantic styles section */
+.x-top-logo {
+  height: 32px;
+  margin-top: 13px;
+}
+
+@media (max-width: 767px) {
+  .x-top-logo {
+    height: 32px;
+    margin-top: 10px;
+  }
+}
+
 .x-skills {
     padding: 0px;
     text-align: center;
