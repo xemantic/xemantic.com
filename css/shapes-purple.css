@@ -2013,10 +2013,6 @@ a.btn-theme:focus{
     display:none;
 }
 
-.jumbotron .header-logo{
-    width:50px;
-}
-
 .jumbotron .first-line p{
     font-size:24px;
     line-height:28px;
