@@ -2,12 +2,33 @@
 .jumbotron .second-line p {
   text-transform: none !important;
 }
+
+.jumbotron .header-logo {
+  margin-left: 7vw;
+  margin-right: 7vw;
+  margin-bottom: 10%;
+}
+
 /* end overrides section */
 
 /* xemantic styles section */
+
+.x-loader-logo {
+  margin-top: -3px;
+  height: 70px;
+  filter: invert(.5)
+}
+
 .x-top-logo {
   height: 32px;
   margin-top: 13px;
+  filter: invert(.5);
+  transition: height .2s ease-out, margin-top .2s ease-out;
+}
+
+#main-nav.scrolled .x-top-logo {
+  margin-top: 16px;
+  height: 24px;
 }
 
 @media (max-width: 767px) {
