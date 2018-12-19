@@ -66,7 +66,7 @@
 	<body data-spy="scroll" data-target="#main-nav" data-offset="400">
 	
 		<!--=== PAGE PRELOADER ===-->
-		<div id="page-loader"><h1 class="loader-logo"><img src="logo/xemantic-logo.svg" alt="xemantic" class="x-loader-logo"/><span> / translating ideas into code</h1></h1><span class="page-loader-gif"></span></div>
+    <div id="page-loader"><h1 class="loader-logo"><img src="logo/xemantic-logo.svg" alt="xemantic" class="x-loader-logo"/><span> / translating ideas into code</span></h1><span class="page-loader-gif"></span></div>
 		
 		<!--=== BACKGROUND ===-->
 		<div id="backgrounds" data-backgrounds="backgrounds/aggressive-flowers.jpg,backgrounds/backlit-keyboard.jpg,backgrounds/tunnel.jpg"></div>
@@ -311,6 +311,9 @@
 							<li>
 								<a href="#" data-type=".java">Java</a>
 							</li>
+							<li>
+								<a href="#" data-type=".creative-code">Creative Code</a>
+							</li>
 						</ul>
 						
 					</div><!--End portfolio filters -->
@@ -358,6 +361,54 @@
 				<div class="container masonry-wrapper">
 				
 					<div id="projects-container" class="">
+
+						<article class="project-item open-source art creative-code">
+							<a href="#">
+								<img class="img-responsive project-thumb" src="images/portfolio/shaders/alien-shield.jpg" alt=""><!--Project thumb -->
+								<div class="details">
+									<h3 class="project-title x-smaller-project-title">Hypnotic shaders</h3><!--Project Title -->
+									<small>#creativecode #art #opensource</small><!--Project Categories -->
+								</div>
+							</a>
+							<!--==== Project Preview ====-->
+							<div class="sr-only">
+								<div class="project-media" data-images="images/portfolio/shaders/alien-shield-thumb.jpg"></div>
+								<div class="project-attributes">
+									<div class="newline"><span>Date : </span>2018</div>
+									<div class="newline"><span>Technologies : </span>GLSL</div>
+									<div class="newline"><span>Gallery : </span><a href="https://www.shadertoy.com/playlist/csSXz3">See on Shadertoy</a> </div>
+									<div class="newline"><span>Show : </span>
+										<a href="#where">Let me know if you want to use them as visuals</a>,
+											they can be tweaked to visualize a music
+									</div>
+								</div>
+								<div class="project-description">
+									<div class="col-md-3">
+										<h2>The Idea</h2>
+										<p>
+											I wanted to learn what is possible to achieve visually with so called fragment
+											shaders.
+										</p>
+									</div>
+									<div class="col-md-5">
+										<h2>The Code</h2>
+										<p>
+											Writing shaders requires special kind of imagination, where combination
+											of many math abstracts create the visual. It is like if the screen was the
+											canvas, and the math was the tool. Quite challenging, but also very
+											satisfactory.
+										</p>
+									</div>
+									<div class="col-md-4">
+										<h2>The Impact</h2>
+										<p>
+											I want to explore shaders even more in the future. I am thinking about
+											interactive simulations of artificial life forms.
+										</p>
+									</div>
+								</div>
+							</div><!-- End Project Preview -->
+						</article>
 
 						<article class="project-item enterprise backend library java">
 							<a href="#">
@@ -939,7 +990,7 @@
 					
 					<p class="section-description lead">
                         The work is not a place but an activity. You can contact me via the Internet, but if you want
-                        to meet in person, then most likely it would be in Berlin. I speak English and Polish.
+                        to meet in person, then most likely it would be in Berlin.
                     </p>
 					
 				</div><!--End section-header -->
