@@ -85,4 +85,11 @@
    word-spacing: 5px;
    margin-bottom: 40px;
 }
+
+.x-footer-logo {
+  height: 20px;
+  margin-right: 8px;
+  filter: invert(.5);
+}
+
 /* end xemantic styles section */

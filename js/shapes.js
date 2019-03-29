@@ -320,63 +320,7 @@ $(document).ready(function() {
 		$('#project-preview').removeClass('open');
 		$('.project-item').removeClass('active');
 	}
-	
-	/*============================================
-	Twitter Functions
-	==============================================*/
-	var tweetsLength = $('#twitter-slider').data('tweets-length'),
-		widgetID = $('#twitter-slider').data('widget-id');
-	
-	var configTweets = {
-	  "id": widgetID,
-	  "domId": '',
-	  "maxTweets": tweetsLength,
-	  "enableLinks": true,
-	  "showUser": false,
-	  "showTime": true,
-	  "dateFunction": '',
-	  "showRetweet": false,
-	  "customCallback": handleTweets,
-	  "showInteraction": true
-	};
-	
-	twitterFetcher.fetch(configTweets);
 
-	function handleTweets(tweets){
-	
-		var x = tweets.length,
-			n = 0,
-			tweetsHtml = '<ul class="slides">';
-			
-		while(n < x) {
-			tweetsHtml += '<li>' + tweets[n] + '</li>';
-			n++;
-		}
-		
-		tweetsHtml += '</ul>';
-		$('#twitter-slider').html(tweetsHtml);
-		
-		$('.twitter_reply_icon').html("<i class='fa fa-reply'></i>");
-		$('.twitter_retweet_icon').html("<i class='fa fa-retweet'></i>");
-		$('.twitter_fav_icon').html("<i class='fa fa-heart'></i>");
-
-		$('.twitter_reply_icon').data({'toggle':'tooltip','placement':'bottom'}).attr({'title':'Reply'}).tooltip();
-		$('.twitter_retweet_icon').data({'toggle':'tooltip','placement':'bottom'}).attr({'title':'Retweet'}).tooltip();
-		$('.twitter_fav_icon').data({'toggle':'tooltip','placement':'bottom'}).attr({'title':'Like'}).tooltip();
-		$('#twitter-slider').flexslider({
-			prevText: '<i class="fa fa-angle-left"></i>',
-			nextText: '<i class="fa fa-angle-right"></i>',
-			slideshowSpeed: 5000,
-			useCSS: true,
-			controlNav: false, 
-			pauseOnAction: false, 
-			pauseOnHover: true,
-			smoothHeight: false
-		});
-		
-		
-	}
-	
 	/*============================================
 	Testimonials Slider
 	==============================================*/
