@@ -270,62 +270,47 @@
 					<div id="filter-works" class="scrollimation fade-in">
 					
 						<ul data-filter="category">
-							<li class="active">
-								<a href="#" data-category="*">All Categories</a>
-							</li>
-							<li>
-								<a href="#" data-category=".role">Role</a>
-							</li>
-							<li>
-								<a href="#" data-category=".enterprise">Enterprise</a>
-							</li>
-							<li>
-								<a href="#" data-category=".opensource">Open Source</a>
-							</li>
-							<li>
-								<a href="#" data-category=".activism">Activism</a>
-							</li>
-							<li>
-								<a href="#" data-category=".art">Art</a>
-							</li>
+							<li class="active"><a href="#" data-category="*">All Categories</a></li>
+							<li><a href="#" data-category=".role">role</a></li>
+							<li><a href="#" data-category=".enterprise">enterprise</a></li>
+							<li><a href="#" data-category=".opensource">open source</a></li>
+							<li><a href="#" data-category=".activism">activism</a></li>
+							<li><a href="#" data-category=".philosophy">philosophy</a></li>
+							<li><a href="#" data-category=".art">art</a></li>
 						</ul>
 						
 						<ul data-filter="type">
-							<li class="active">
-								<a href="#" data-type="*">All Types</a>
-							</li>
-							<li>
-								<a href="#" data-type=".frontend">Frontend</a>
-							</li>
-							<li>
-								<a href="#" data-type=".backend">Backend</a>
-							</li>
-							<li>
-								<a href="#" data-type=".middleware">Middleware</a>
-							</li>
-							<li>
-								<a href="#" data-type=".library">Library</a>
-							</li>
-							<li>
-								<a href="#" data-type=".web">Web</a>
-							</li>
-							<li>
-								<a href="#" data-type=".cloud">Cloud</a>
-							</li>
-							<li>
-								<a href="#" data-type=".desktop">Desktop</a>
-							</li>
-							<li>
-								<a href="#" data-type=".java">Java</a>
-							</li>
-							<li>
-								<a href="#" data-type=".javascript">JavaScript</a>
-							</li>
-							<li>
-								<a href="#" data-type=".creativecode">Creative Code</a>
-							</li>
+							<li class="active"><a href="#" data-type="*">All Types</a></li>
+							<li><a href="#" data-type=".web">web</a></li>
+							<li><a href="#" data-type=".backend">backend</a></li>
+							<li><a href="#" data-type=".library">library</a></li>
+							<li><a href="#" data-type=".cloud">cloud</a></li>
+							<li><a href="#" data-type=".app">app</a></li>
+							<li><a href="#" data-type=".creativecode">creative code</a></li>
 						</ul>
-						
+
+						<ul data-filter="tech">
+							<li class="active"><a href="#" data-type="*">All Tech</a></li>
+							<li><a href="#" data-type=".cloud">cloud</a></li>
+							<li><a href="#" data-type=".oracle">oracle</a></li>
+							<li><a href="#" data-type=".linux">linux</a></li>
+							<li><a href="#" data-type=".processing">processing</a></li>
+							<li><a href="#" data-type=".openrndr">openrndr</a></li>
+							<li><a href="#" data-type=".kinect">kinect</a></li>
+							<li><a href="#" data-type=".embedded">embedded</a></li>
+							<li><a href="#" data-lang=".machinelearning">machine learning</a></li>
+						</ul>
+
+						<ul data-filter="lang">
+							<li class="active"><a href="#" data-type="*">All Codes</a></li>
+							<li><a href="#" data-lang=".java">java</a></li>
+							<li><a href="#" data-lang=".html">html</a></li>
+							<li><a href="#" data-lang=".sql">sql</a></li>
+							<li><a href="#" data-lang=".javascript">javascript</a></li>
+							<li><a href="#" data-lang=".glsl">glsl</a></li>
+							<li><a href="#" data-lang=".kotlin">kotlin</a></li>
+						</ul>
+
 					</div><!--End portfolio filters -->
 					
 					<p class="filter-results text-center"><span></span> Works match criteria</p>
@@ -372,12 +357,57 @@
 				
 					<div id="projects-container" class="">
 
-						<article class="project-item opensource art creativecode">
+						<article class="project-item creativecode opensource java glsl processing kinect">
+							<a href="#">
+								<img class="img-responsive project-thumb" src="images/portfolio/processing-shaders/processing-shaders-thumb.jpg" alt="alien shield"><!--Project thumb -->
+								<div class="details">
+									<h3 class="project-title x-smaller-project-title">processing-shaders</h3><!--Project Title -->
+									<small>#creativecode #opensource #java #glsl #processing #kinect</small><!--Project Categories -->
+								</div>
+							</a>
+							<!--==== Project Preview ====-->
+
+							<div class="sr-only">
+								<div class="project-media" data-images="images/portfolio/processing-shaders/processing-shaders.jpg"></div>
+								<div class="project-attributes">
+									<div class="newline"><span><i class="fa fa-calendar"></i> Started : </span>2019</div>
+									<div class="newline"><span><i class="fa fa-tags"></i> Tags : </span>#creativecode #opensource #java #shaders #processing #kinect</div>
+									<div class="newline"><span><i class="fa fa-wrench"></i> Technologies : </span>Processing, Java, GLSL, OpenGL, Kinect, libfreenect</div>
+									<div class="newline"><span><i class="fa fa-github"></i> GitHub : </span><a href="https://github.com/morisil/processing-shaders">processing-shaders</a></div>
+								</div>
+								<div class="project-description">
+									<div class="col-md-4">
+										<h2>The Idea</h2>
+										<p>
+											Using GLSL shaders in Processing is possible and even quite convenient.
+											Unfortunately more advanced use cases are not that well documented.
+										</p>
+									</div>
+									<div class="col-md-4">
+										<h2>The Code</h2>
+										<p>
+											Pieces of code which I am usually using in other projects. They cover effects
+											of my research on how to use Processing together with Kinect and more
+											advanced OpenGL.
+										</p>
+									</div>
+									<div class="col-md-4">
+										<h2>The Impact</h2>
+										<p>
+											Hard to asses, I wish I had this code before I started working with Kinect.
+											I hope this code will save someone's time.
+										</p>
+									</div>
+								</div>
+							</div><!-- End Project Preview -->
+						</article>
+
+						<article class="project-item opensource art creativecode glsl">
 							<a href="#">
 								<img class="img-responsive project-thumb" src="images/portfolio/shaders/alien-shield.jpg" alt="alien shield"><!--Project thumb -->
 								<div class="details">
 									<h3 class="project-title x-smaller-project-title">Hypnotic shaders</h3><!--Project Title -->
-									<small>#creativecode #art #opensource</small><!--Project Categories -->
+									<small>#creativecode #art #opensource #glsl</small><!--Project Categories -->
 								</div>
 							</a>
 							<!--==== Project Preview ====-->
@@ -385,7 +415,7 @@
 								<div class="project-media" data-images="images/portfolio/shaders/alien-shield.jpg"></div>
 								<div class="project-attributes">
 									<div class="newline"><span>Date : </span>2018</div>
-									<div class="newline"><span>Tags : </span>#creativecode #art #opensource</div>
+									<div class="newline"><span>Tags : </span>#creativecode #art #opensource #glsl</div>
 									<div class="newline"><span>Technologies : </span>GLSL</div>
 									<div class="newline"><span>Gallery : </span><a href="https://www.shadertoy.com/user/morisil">See on Shadertoy</a> </div>
 									<div class="newline"><span>Show : </span>
@@ -734,12 +764,12 @@
 							</div><!-- End Project Preview -->
 						</article>
 
-						<article class="project-item enterprise backend middleware desktop java">
+						<article class="project-item enterprise backend app java">
 							<a href="#">
 								<img class="img-responsive project-thumb" src="images/portfolio/pcm/pcm-architecture.png"  alt=""><!--Project thumb -->
 								<div class="details">
 									<h3 class="project-title x-smaller-project-title">Process Control &amp; Management</h3><!--Project Title -->
-									<small>enterprise, backend, middleware, desktop, java</small><!--Project Categories -->
+									<small>enterprise, backend, app, java</small><!--Project Categories -->
 								</div>
 							</a>
 							<!--==== Project Preview ====-->
@@ -748,7 +778,7 @@
 								<div class="project-attributes">
 									<div class="newline"><span>Date : </span>2002 - 2006</div>
 									<div class="newline"><span>Client : </span><a href="http://www.ncdc.eu/">Nordic Consulting &amp; Development Company</a></div>
-									<div class="newline"><span>Categories : </span>enterprise, backend, middleware, desktop, java</div>
+									<div class="newline"><span>Categories : </span>enterprise, backend, app, java</div>
 									<div class="newline"><span>Website : </span><a href="http://www.ncdc.eu/services">NCDC solutions</a></div>
 									<div class="newline"><span>Technologies : </span>Java, Oracle, TIA, PL/SQL, Swing, JDBC, JMS, Oracle AQ,
 										Apache&nbsp;Avalon/Fortress, JavaMail, Velocity, SEDA, TIA, JGraph, java.util.concurrent
@@ -918,12 +948,12 @@
 							</div><!-- End Project Preview -->
 						</article>
 
-						<article class="project-item enterprise frontend backend web java">
+						<article class="project-item enterprise backend web java">
 							<a href="#">
 								<img class="img-responsive project-thumb" src="images/portfolio/liberty/liberty-mutual.jpg"  alt=""><!--Project thumb -->
 								<div class="details">
 									<h3 class="project-title x-smaller-project-title">Liberty Direct / online insurance sales</h3><!--Project Title -->
-									<small>enterprise, frontend, backend, web, java</small><!--Project Categories -->
+									<small>enterprise, backend, web, java</small><!--Project Categories -->
 								</div>
 							</a>
 							<!--==== Project Preview ====-->
@@ -944,7 +974,7 @@
 							</div><!-- End Project Preview -->
 						</article>
 
-						<article class="project-item enterprise frontend backend web java">
+						<article class="project-item enterprise backend web java">
 							<a href="#">
 								<img class="img-responsive project-thumb" src="images/portfolio/coming-soon.jpg"  alt=""><!--Project thumb -->
 								<div class="details">
@@ -970,7 +1000,7 @@
 							</div><!-- End Project Preview -->
 						</article>
 
-						<article class="project-item enterprise frontend backend web java">
+						<article class="project-item enterprise backend web java">
 							<a href="#">
 								<img class="img-responsive project-thumb" src="images/portfolio/coming-soon.jpg"  alt=""><!--Project thumb -->
 								<div class="details">
@@ -1210,7 +1240,7 @@
                         <div class="x-declaration">
                             <p>
                                 I always want to make something that matters, my goal is to make the highest quality
-								code. I work on key components equipping organizations with competitive advantage,
+																code. I work on key components equipping organizations with competitive advantage,
                                 either in terms of features, performance or scalable development process.
                             </p>
                             <p>
