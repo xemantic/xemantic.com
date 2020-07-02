@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <title>xemantic</title>
+
+  <meta name="description"  content="Kazik Pogoda, creative technologist based in Berlin, producing interactive media art installations, generative design and robots" />
+  <meta name="keywords"     content="creative technologist, creative coding, code, coding, programmer, programming, software, IT, software architect, backend, frontend, web, java, kotlin, GLSL, OPENRNDR, art, installations, kinect, new media, media art, digital art, generative, generative art generative design, motion design" />
+  <meta name="author"       content="Kazik Pogoda" />
+
+  <meta property="og:title"         content="xemantic" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:url"           content="https://xemantic.com/" />
+  <meta property="og:image"         content="https://xemantic.com/logo/xemantic-avatar.png" />
+  <meta property="og:image:type"    content="image/png" />
+  <meta property="og:image:width"   content="400" />
+  <meta property="og:image:height"  content="400" />
+  <meta property="og:image:alt"     content="xemantic logo" />
+  <meta property="og:description"   content="Kazik Pogoda, creative technologist based in Berlin, producing interactive media art installations, generative design and robots" />
+  <meta property="og:locale"        content="en_US" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="assets/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="assets/apple-touch-icon-114x114.png">
+
+  <script type="x-shader/x-fragment" id="loopback-shader">
+    #version 300 es
+    precision lowp float; precision lowp int; precision lowp sampler2D; uniform vec2 R;uniform float D,T;
+    uniform sampler2D T0;out lowp vec4 O;void main(){lowp vec3 v;highp vec2 f;f=gl_FragCoord.xy/R;
+    highp vec2 m;m=(gl_FragCoord.xy*2.-R)/D;highp vec2 h;h=f-m/R*20.7;lowp vec2 i;i=(texture(T0,h).xy-vec2(.3,.3))*vec2(.002,.002);
+    highp vec2 l;l=f-i;v=texture(T0,l).xyz*.999;highp float u;u=sqrt(dot(m,m));if(u<.618){highp float e,c;
+    c=clamp((u-.618)/-.016,0.,1.);e=c*(c*(3.-2.*c))*(u/.618);highp float p;p=pow(e,20.);e=p;float o;
+    o=float(mod(T*.1,1.));vec3 y;y=vec3(3.54585,2.93225,2.41594)*(o-vec3(.695491,.492283,.276999));
+    vec3 z;z=vec3(3.90307,3.21183,3.96587)*(o-vec3(.117486,.86755,.660779));
+    v=v+(min(max(vec3(1.,1.,1.)-y*y-vec3(.0231264,.152251,.52608),0.),1.)+
+    min(max(vec3(1.,1.,1.)-z*z-vec3(.848971,.884453,.739495),0.),1.))*p*.03;if(u<.4944){highp float t;
+    t=clamp((u-.4944)/-.016,0.,1.);e=t*(t*(3.-2.*t))*(u/.4944);highp float s;s=pow(e,20.);e=s;float g;
+    g=float(mod(T*.1+.5,1.));vec3 w;w=vec3(3.54585,2.93225,2.41594)*(g-vec3(.695491,.492283,.276999));
+    vec3 a;a=vec3(3.90307,3.21183,3.96587)*(g-vec3(.117486,.86755,.660779));v=v+(min(max(vec3(1.,1.,1.)-
+    w*w-vec3(.0231264,.152251,.52608),0.),1.)+min(max(vec3(1.,1.,1.)-a*a-vec3(.848971,.884453,.739495),0.),1.))*s*.03;}
+    v=clamp(v,0.,1.);}lowp vec4 p;p.w=1.;p.xyz=v;O=p;}
+  </script>
+  <style>
+    :root {
+      --shadow-x: 0;
+      --shadow-y: 0;
+      --shadow-blur-radius: .1vw;
+      --shadow-opacity: 0.7;
+      --golden-ratio-width-longer: 61.8vw;
+      --golden-ratio-width-shorter: 38.2vw;
+      --golden-ratio-height-longer: 61.8vh;
+      --golden-ratio-height-shorter: 38.2vh;
+      --z-index-fade-over: 2;
+      --z-index-nav: 1;
+      --z-index-content: 0;
+      --z-index-background: -2;
+    }
+    * { margin: 0; padding: 0; }
+    html { background: black; }
+    html, body { height: 101%; /* will prevent canvas resizing when content is loaded */ }
+    section { display: none; }
+    nav { display: none; }
+    footer { display: none; }
+    header {
+      height: var(--golden-ratio-height-longer);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    header .logo {
+      width: var(--golden-ratio-width-longer);
+      opacity: 0;
+      filter: drop-shadow(var(--shadow-x) var(--shadow-y) var(--shadow-blur-radius) rgba(0, 0, 0, var(--shadow-opacity)));
+      animation: fade-in 6s ease-in-out;
+      animation-delay: 4s;
+      animation-fill-mode: forwards;
+    }
+    #loopback-background {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: var(--z-index-background);
+    }
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+  </style>
+  <script defer>
+    function n(a){var c=0;return function(){return c<a.length?{done:!1,value:a[c++]}:{done:!0}}}function p(a){return Error(a)}p.prototype=Object.create(Error.prototype);
+    function q(a,c,e){this.a=a;this.b=a.createTexture();a.bindTexture(a.TEXTURE_2D,this.b);a.texImage2D(a.TEXTURE_2D,0,a.RGBA16F,c,e,0,a.RGBA,a.FLOAT,null);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MIN_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MAG_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_S,a.CLAMP_TO_EDGE);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_T,a.CLAMP_TO_EDGE);this.c=a.createFramebuffer();a.bindFramebuffer(a.FRAMEBUFFER,this.c);a.framebufferTexture2D(a.FRAMEBUFFER,
+    a.COLOR_ATTACHMENT0,a.TEXTURE_2D,this.b,0)}q.prototype.release=function(){this.a.bindFramebuffer(this.a.FRAMEBUFFER,this.c);this.a.deleteTexture(this.b);this.a.bindFramebuffer(this.a.FRAMEBUFFER,null);this.a.deleteFramebuffer(this.c)};function r(a,c,e){c=a.createShader(c);a.shaderSource(c,e);a.compileShader(c);if(!a.getShaderParameter(c,a.COMPILE_STATUS)){var f=String(a.getShaderInfoLog(c));console.log(f,e);a.deleteShader(c);return f}return c}
+    function t(a,c){var e=r(a,a.VERTEX_SHADER,"#version 300 es\nin vec2 V;out vec2 O;void main(){O=V;gl_Position=vec4(V,0.,1.);}");c=r(a,a.FRAGMENT_SHADER,c);var f=a.createProgram();a.attachShader(f,e);a.attachShader(f,c);a.linkProgram(f);return f}function w(a){var c=a.createBuffer();a.bindBuffer(a.ARRAY_BUFFER,c);a.bufferData(a.ARRAY_BUFFER,new Float32Array([-1,1,1,1,-1,-1,1,-1]),a.STATIC_DRAW);return c}function x(a,c,e){var f=new q(a,c,e);a=new q(a,c,e);return[f,a]}
+    window.LoopbackCanvas=function(a,c){function e(){u=performance.now()/1E3;if(d.width!==d.clientWidth||d.height!==d.clientHeight){d.width=d.clientWidth;d.height=d.clientHeight;b.viewport(0,0,b.canvas.width,b.canvas.height);var g=k;var l="undefined"!=typeof Symbol&&Symbol.iterator&&g[Symbol.iterator];g=l?l.call(g):{next:n(g)};for(l=g.next();!l.done;l=g.next())l.value.release();k=x(b,d.width,d.height);f()}b.useProgram(h);b.uniform1f(y,u);b.uniform1i(z,v);b.bindFramebuffer(b.FRAMEBUFFER,k[0].c);b.bindTexture(b.TEXTURE_2D,
+    k[1].b);b.drawArrays(b.TRIANGLE_STRIP,0,4);b.useProgram(m);b.bindFramebuffer(b.FRAMEBUFFER,null);b.bindTexture(b.TEXTURE_2D,k[0].b);b.drawArrays(b.TRIANGLE_STRIP,0,4);k.reverse();v++;requestAnimationFrame(e)}function f(){var g=Math.min(d.width,d.height);b.useProgram(h);b.uniform2f(A,d.width,d.height);b.uniform1f(B,g);b.useProgram(m);b.uniform2f(C,d.width,d.height);b.uniform1f(D,g)}var d=document.getElementById(a);a=document.getElementById(c).text.trim();d.width=d.clientWidth;d.height=d.clientHeight;
+    var b=d.getContext("webgl2");if(!b)throw new p("webgl2 context not supported on supplied canvas element: "+d);if(!b.getExtension("EXT_color_buffer_float"))throw new p("EXT_color_buffer_float is required but not supported here");var k=x(b,d.width,d.height),h=t(b,a),m=t(b,"#version 300 es\nprecision lowp float;uniform sampler2D T;uniform vec2 R;out vec4 O;void main(){O=texture(T,gl_FragCoord.xy/R);}");b.useProgram(h);a=b.getAttribLocation(h,"V");c=w(b);b.bindBuffer(b.ARRAY_BUFFER,c);b.vertexAttribPointer(a,
+    2,b.FLOAT,!1,0,0);b.enableVertexAttribArray(a);b.viewport(0,0,b.canvas.width,b.canvas.height);var A=b.getUniformLocation(h,"R"),B=b.getUniformLocation(h,"D"),y=b.getUniformLocation(h,"T"),z=b.getUniformLocation(h,"F");b.useProgram(m);var C=b.getUniformLocation(m,"R"),D=b.getUniformLocation(m,"D");f();var v=0,u=0;e()};window.WebglLoopbackException=p;
+
+    function addScript(src, callback) {
+      var script = document.createElement("script");
+      script.setAttribute("src", src );
+      if (callback) {
+        script.onload = callback;
+      }
+      script.defer = true;
+      document.body.appendChild(script);
+    }
+
+    window.addEventListener("load", e => {
+      new LoopbackCanvas("loopback-background", "loopback-shader");
+      addScript("modules/main/main.js");
+    });
+  </script>
+</head>
+<body>
+<header>
+  <svg class="logo" viewBox="0 0 1052.5 212" xmlns="http://www.w3.org/2000/svg"><style>.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#fff}</style><g clip-rule="evenodd" fill="#5d5e5f" fill-rule="evenodd"><path class="st0" d="M997.632 179.087c-41.02 0-63.905-30.14-63.905-69.283s22.886-69.283 63.905-69.283c30.39 0 51.9 17.883 54.651 46.647h-25.262c-2.376-14.632-13.006-25.262-28.013-25.262h-2.626c-25.262 0-37.268 22.636-37.268 48.023s12.006 48.023 37.268 48.023h2.626c14.882 0 25.637-10.63 28.013-25.262h25.262c-2.626 28.639-24.261 46.397-54.65 46.397zM885.829 27.265h25.262V176.46h-25.262zM809.042 129.063V65.158h-29.264V43.272h29.264V.127h25.262v43.145h32.015v21.886h-32.015v118.557c0 18.634-9.38 28.013-28.014 28.013h-20.01v-22.636h12.007c8.003 0 10.63-2.626 10.63-10.63v-49.399zM673.102 101.925v74.661h-25.263V27.265h25.263v34.641c8.003-12.006 21.26-21.26 42.645-21.26 30.64 0 48.023 18.634 48.023 46.647v89.293h-25.262V92.671c0-18.634-8.004-30.64-26.638-30.64h-2.626c-18.76-.125-36.142 14.507-36.142 39.894zM384.963 123.186v25.262c0 18.634-9.38 28.013-28.013 28.013h-20.01v-22.636h12.006c8.004 0 10.63-2.626 10.63-10.63v-50.65c0-18.633-8.004-30.639-26.638-30.639h-2.626c-16.008 0-33.266 14.632-33.266 40.02v93.294h-25.262V43.272h25.262v18.634c8.004-12.006 21.26-21.26 40.02-21.26 19.134 0 35.141 7.504 44.02 24.762 10.38-18.384 27.764-24.762 44.022-24.762 30.64 0 48.023 18.634 48.023 46.647v89.293h-25.513V92.671c0-18.634-8.003-30.64-26.637-30.64h-2.627c-16.007 0-33.266 14.632-33.266 40.02v21.135zM191.996 40.646c-31.39 0-62.03 22.886-62.03 69.033 0 46.647 29.89 69.533 62.905 69.533 27.763 0 51.15-14.632 55.402-42.145H223.01c-2.627 14.132-15.133 20.76-28.514 20.76h-1.626c-16.508 0-36.017-13.631-37.518-44.02h93.67c2.501-48.274-19.634-73.161-57.027-73.161zm-35.142 53.276c4.752-23.762 20.26-32.016 33.891-32.016h2.626c14.883 0 28.514 8.504 30.89 32.016zM49.302 109.304L1.404 43.272h29.514L64.31 89.044l33.517-45.772h28.763l-47.898 65.532 49.274 67.657h-29.64l-34.64-47.648-34.893 47.648H.03zM594.94 43.272v18.634c-8.005-12.006-20.01-21.26-42.646-21.26-33.266 0-58.654 25.262-58.654 69.283s25.263 69.283 58.654 69.283c22.635 0 34.641-9.38 42.645-21.26v37.268h25.262V43.272zM557.67 157.827h-2.626c-20.01 0-36.017-16.008-36.017-48.023s16.007-48.023 36.017-48.023h2.626c18.634 0 37.268 16.008 37.268 48.023s-18.634 48.023-37.268 48.023z"/></g></svg>
+</header>
+<nav class="miniatures" id="miniatures" data-flickity='{ "bgLazyLoad": 2, "freeScroll": true }'>
+  <!--  <a class="miniature"-->
+  <!--     href="#xemantic"-->
+  <!--     data-flickity-bg-lazyload="miniatures/emotional-robots.jpg">-->
+  <!--    <h3>xemantic.com</h3>-->
+  <!--  </a>-->
+  <a class="miniature"
+     href="#xemantic">
+    <img src="logo/xemantic-logo.svg" width="100%"/>
+    <h3>xemantic.com</h3>
+  </a>
+  <a class="miniature"
+     href="#emotional-robots"
+     data-flickity-bg-lazyload="miniatures/emotional-robots.jpg">
+    <h3>Emotional Robots</h3>
+  </a>
+  <a class="miniature"
+     href="#we-are-the-robots"
+     data-flickity-bg-lazyload="miniatures/we-are-the-robots.jpg">
+    <h3>we-are-the-robots</h3>
+  </a>
+  <a class="miniature"
+     href="#angels-in-america"
+     data-flickity-bg-lazyload="miniatures/angels-in-america.jpg">
+    <h3>Angels in America</h3>
+  </a>
+  <a class="miniature"
+     href="#eyegasm"
+     data-flickity-bg-lazyload="miniatures/eyegasm.jpg">
+    <h3>Eyegasm</h3>
+  </a>
+  <a class="miniature"
+     href="#generative-philosophy"
+     data-flickity-bg-lazyload="miniatures/generative-philosophy.jpg">
+    <h3>Generative Philosophy</h3>
+  </a>
+  <a class="miniature"
+     href="#xemantic">
+    <img src="logo/xemantic-logo.svg" width="100%"/>
+    <h3>xemantic.com</h3>
+  </a>
+  <a class="miniature"
+     href="#emotional-robots"
+     data-flickity-bg-lazyload="miniatures/emotional-robots.jpg">
+    <h3>Emotional Robots</h3>
+  </a>
+  <a class="miniature"
+     href="#we-are-the-robots"
+     data-flickity-bg-lazyload="miniatures/we-are-the-robots.jpg">
+    <h3>we-are-the-robots</h3>
+  </a>
+  <a class="miniature"
+     href="#angels-in-america"
+     data-flickity-bg-lazyload="miniatures/angels-in-america.jpg">
+    <h3>Angels in America</h3>
+  </a>
+  <a class="miniature"
+     href="#eyegasm"
+     data-flickity-bg-lazyload="miniatures/eyegasm.jpg">
+    <h3>Eyegasm</h3>
+  </a>
+  <a class="miniature"
+     href="#generative-philosophy"
+     data-flickity-bg-lazyload="miniatures/generative-philosophy.jpg">
+    <h3>Generative Philosophy</h3>
+  </a>
+  <a class="miniature"
+     href="#xemantic">
+    <img src="logo/xemantic-logo.svg" width="100%"/>
+    <h3>xemantic.com</h3>
+  </a>
+  <a class="miniature"
+     href="#emotional-robots"
+     data-flickity-bg-lazyload="miniatures/emotional-robots.jpg">
+    <h3>Emotional Robots</h3>
+  </a>
+  <a class="miniature"
+     href="#we-are-the-robots"
+     data-flickity-bg-lazyload="miniatures/we-are-the-robots.jpg">
+    <h3>we-are-the-robots</h3>
+  </a>
+  <a class="miniature"
+     href="#angels-in-america"
+     data-flickity-bg-lazyload="miniatures/angels-in-america.jpg">
+    <h3>Angels in America</h3>
+  </a>
+  <a class="miniature"
+     href="#eyegasm"
+     data-flickity-bg-lazyload="miniatures/eyegasm.jpg">
+    <h3>Eyegasm</h3>
+  </a>
+  <a class="miniature"
+     href="#generative-philosophy"
+     data-flickity-bg-lazyload="miniatures/generative-philosophy.jpg">
+    <h3>Generative Philosophy</h3>
+  </a>
+  <a class="miniature"
+     href="#xemantic">
+    <img src="logo/xemantic-logo.svg" width="100%"/>
+    <h3>xemantic.com</h3>
+  </a>
+  <a class="miniature"
+     href="#emotional-robots"
+     data-flickity-bg-lazyload="miniatures/emotional-robots.jpg">
+    <h3>Emotional Robots</h3>
+  </a>
+  <a class="miniature"
+     href="#we-are-the-robots"
+     data-flickity-bg-lazyload="miniatures/we-are-the-robots.jpg">
+    <h3>we-are-the-robots</h3>
+  </a>
+  <a class="miniature"
+     href="#angels-in-america"
+     data-flickity-bg-lazyload="miniatures/angels-in-america.jpg">
+    <h3>Angels in America</h3>
+  </a>
+  <a class="miniature"
+     href="#eyegasm"
+     data-flickity-bg-lazyload="miniatures/eyegasm.jpg">
+    <h3>Eyegasm</h3>
+  </a>
+  <a class="miniature"
+     href="#generative-philosophy"
+     data-flickity-bg-lazyload="miniatures/generative-philosophy.jpg">
+    <h3>Generative Philosophy</h3>
+  </a>
+  <a class="miniature"
+     href="#xemantic">
+    <img src="logo/xemantic-logo.svg" width="100%"/>
+    <h3>xemantic.com</h3>
+  </a>
+  <a class="miniature"
+     href="#emotional-robots"
+     data-flickity-bg-lazyload="miniatures/emotional-robots.jpg">
+    <h3>Emotional Robots</h3>
+  </a>
+  <a class="miniature"
+     href="#we-are-the-robots"
+     data-flickity-bg-lazyload="miniatures/we-are-the-robots.jpg">
+    <h3>we-are-the-robots</h3>
+  </a>
+  <a class="miniature"
+     href="#angels-in-america"
+     data-flickity-bg-lazyload="miniatures/angels-in-america.jpg">
+    <h3>Angels in America</h3>
+  </a>
+  <a class="miniature"
+     href="#eyegasm"
+     data-flickity-bg-lazyload="miniatures/eyegasm.jpg">
+    <h3>Eyegasm</h3>
+  </a>
+  <a class="miniature"
+     href="#generative-philosophy"
+     data-flickity-bg-lazyload="miniatures/generative-philosophy.jpg">
+    <h3>Generative Philosophy</h3>
+  </a>
+</nav>
+<section id="projects">
+<!--  <article id="xemantic">-->
+<!--    <div class="media">-->
+<!--      <iframe class="iframe" src="index-new.html" style="width: 61.8vw; height:32vw;"></iframe>-->
+<!--    </div>-->
+<!--    <div class="description">-->
+<!--      <h2>xemantic.com</h2>-->
+<!--      <p>-->
+<!--        The latest project I've been working on is actually this website :)-->
+<!--      </p>-->
+<!--      <p>-->
+<!--        I wanted to put responsive design on another level. Look what kind of fractal it creates-->
+<!--        in your browser.-->
+<!--      </p>-->
+<!--    </div>-->
+<!--  </article>-->
+  <article id="emotional-robots">
+    <div class="media">
+<!--      <iframe class="iframe"-->
+<!--              src="https://player.vimeo.com/video/361821257"-->
+<!--              allow="autoplay; fullscreen" allowfullscreen loading="lazy">-->
+<!--      </iframe>-->
+    </div>
+    <div class="description">
+      <h2>Emotional robots</h2>
+      <p>
+        Robotic software for artists - upcycling useful vacuum cleaners into useless
+        (but maybe profound) experiences.
+      </p>
+    </div>
+  </article>
+  <article id="we-are-the-robots">
+    <div class="media">
+      <img src="images/we-are-the-robots/we-are-the-robots-example.jpg" />
+    </div>
+    <div class="description">
+      <h2>we-are-the-robots</h2>
+      <p>
+        Robotic software for artists - upcycling useful vacuum cleaners into useless
+        (but maybe profound) experiences.
+      </p>
+    </div>
+  </article>
+  <article id="generative-philosophy">
+    <div class="media">
+      <img src="images/we-are-the-robots/we-are-the-robots-example.jpg" />
+    </div>
+    <div class="description">
+      <h2>Generative philosophy</h2>
+      <p>
+        Robotic software for artists - upcycling useful vacuum cleaners into useless
+        (but maybe profound) experiences.
+      </p>
+    </div>
+  </article>
+</section>
+<nav>
+  Go to projects <i class="fas fa-hand-point-up"></i>, read about me
+  <i class="fas fa-hand-point-down"></i> or contact me <i class="fas fa-hand-point-up"></i>
+  <i class="fas fa-hand-point-down"></i>
+</nav>
+<section id="who">
+  <p>
+    My name is Kazik Pogoda and I work as creative technologist. A fancy term to say that instead
+    of using Adobe products I write my own software. Expressing myself the way I want to requires
+    writing a custom software. The practice is called creative coding, and the outcome is called
+    generative art or design. I don't feel like an artist though. I majored in philosophy and
+    what I create is rather reflecting my philosophical believes on the evolution applied not
+    only to the context of biology, but also human and machine cultures.
+  </p>
+  <p>
+    I love to collaborate. If you feel like achieving some of my generative aesthetics in your work,
+    feel free to contact me. Also
+  </p>
+</section>
+<footer>
+  <div>
+    <p>
+      Copyright &copy; 2020 Kazimierz Pogoda / xemantic.com All Rights Reserved
+    </p>
+    <p>
+      <img src="logo/xemantic-logo.svg" class="footer-logo" loading="lazy" />&nbsp;&nbsp;logo designed with &hearts; by Ivan Skoro.
+    </p>
+  </div>
+</footer>
+<canvas id="loopback-background"></canvas>
+</body>
+</html>
