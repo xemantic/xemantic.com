@@ -48,8 +48,8 @@
     :root {
       --shadow-x: 0;
       --shadow-y: 0;
-      --shadow-blur-radius: .1vw;
-      --shadow-opacity: 0.7;
+      --shadow-blur-radius: .15vw;
+      --shadow-opacity: .8;
       --golden-ratio-width-longer: 61.8vw;
       --golden-ratio-width-shorter: 38.2vw;
       --golden-ratio-height-longer: 61.8vh;
@@ -62,9 +62,6 @@
     * { margin: 0; padding: 0; }
     html { background: black; }
     html, body { height: 101%; /* will prevent canvas resizing when content is loaded */ }
-    section { display: none; }
-    nav { display: none; }
-    footer { display: none; }
     header {
       height: var(--golden-ratio-height-longer);
       display: flex;
@@ -92,7 +89,15 @@
       to   { opacity: 1; }
     }
   </style>
-  <script defer>
+  <style id="hider">
+    section { display: none; }
+    nav { display: none; }
+    footer { display: none; }
+  </style>
+  <script>
+    const MAX_SHADOW_DROP = 5.0
+    const MAX_BLUR_RADIUS = .9
+
     function n(a){var c=0;return function(){return c<a.length?{done:!1,value:a[c++]}:{done:!0}}}function p(a){return Error(a)}p.prototype=Object.create(Error.prototype);
     function q(a,c,e){this.a=a;this.b=a.createTexture();a.bindTexture(a.TEXTURE_2D,this.b);a.texImage2D(a.TEXTURE_2D,0,a.RGBA16F,c,e,0,a.RGBA,a.FLOAT,null);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MIN_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MAG_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_S,a.CLAMP_TO_EDGE);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_T,a.CLAMP_TO_EDGE);this.c=a.createFramebuffer();a.bindFramebuffer(a.FRAMEBUFFER,this.c);a.framebufferTexture2D(a.FRAMEBUFFER,
     a.COLOR_ATTACHMENT0,a.TEXTURE_2D,this.b,0)}q.prototype.release=function(){this.a.bindFramebuffer(this.a.FRAMEBUFFER,this.c);this.a.deleteTexture(this.b);this.a.bindFramebuffer(this.a.FRAMEBUFFER,null);this.a.deleteFramebuffer(this.c)};function r(a,c,e){c=a.createShader(c);a.shaderSource(c,e);a.compileShader(c);if(!a.getShaderParameter(c,a.COMPILE_STATUS)){var f=String(a.getShaderInfoLog(c));console.log(f,e);a.deleteShader(c);return f}return c}
@@ -102,199 +107,133 @@
     var b=d.getContext("webgl2");if(!b)throw new p("webgl2 context not supported on supplied canvas element: "+d);if(!b.getExtension("EXT_color_buffer_float"))throw new p("EXT_color_buffer_float is required but not supported here");var k=x(b,d.width,d.height),h=t(b,a),m=t(b,"#version 300 es\nprecision lowp float;uniform sampler2D T;uniform vec2 R;out vec4 O;void main(){O=texture(T,gl_FragCoord.xy/R);}");b.useProgram(h);a=b.getAttribLocation(h,"V");c=w(b);b.bindBuffer(b.ARRAY_BUFFER,c);b.vertexAttribPointer(a,
     2,b.FLOAT,!1,0,0);b.enableVertexAttribArray(a);b.viewport(0,0,b.canvas.width,b.canvas.height);var A=b.getUniformLocation(h,"R"),B=b.getUniformLocation(h,"D"),y=b.getUniformLocation(h,"T"),z=b.getUniformLocation(h,"F");b.useProgram(m);var C=b.getUniformLocation(m,"R"),D=b.getUniformLocation(m,"D");f();var v=0,u=0;e()};window.WebglLoopbackException=p;
 
-    function addScript(src, callback) {
+    function addScript(src, callback, errorCallback, crossorigin) {
       var script = document.createElement("script");
-      script.setAttribute("src", src );
       if (callback) {
         script.onload = callback;
       }
-      script.defer = true;
-      document.body.appendChild(script);
+      if (errorCallback) {
+        script.onerror = errorCallback;
+      }
+      if (crossorigin) {
+        script.setAttribute("crossorigin", crossorigin);
+      }
+      script.setAttribute("src", src);
+      script.async = true;
+      document.head.appendChild(script);
     }
+
+    const root = document.documentElement;
+
+    function handleMove(event) {
+      let x = (event.clientX - .5 * innerWidth) / innerWidth
+      let y = (event.clientY - .5 * innerHeight) / innerWidth
+      let distance = Math.sqrt((x * x) + (y * y));
+      root.style.setProperty("--shadow-x", (x * -MAX_SHADOW_DROP) + "vw");
+      root.style.setProperty("--shadow-y", (y * -MAX_SHADOW_DROP) + "vw");
+      root.style.setProperty("--shadow-blur-radius", ((distance * MAX_BLUR_RADIUS) + "vw"));
+    }
+    document.addEventListener("mousemove", handleMove, false);
+    // TODO it should be ,false
+
+    const enableLazy = (element) => {
+      element.loading = "lazy";
+      element.onload = () => element.classList.add("loaded");
+    }
+    document.addEventListener("DOMContentLoaded", e => {
+      for (var i = 0; i < document.images.length; i++) {
+        enableLazy(document.images[i]);
+      }
+      document.querySelectorAll("iframe").forEach(iframe => {
+        enableLazy(iframe);
+      });
+    }); // TODO it should be ,false
 
     window.addEventListener("load", e => {
       new LoopbackCanvas("loopback-background", "loopback-shader");
       addScript("modules/main/main.js");
-    });
+    }); // TODO it should be ,false
   </script>
 </head>
 <body>
 <header>
   <svg class="logo" viewBox="0 0 1052.5 212" xmlns="http://www.w3.org/2000/svg"><style>.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#fff}</style><g clip-rule="evenodd" fill="#5d5e5f" fill-rule="evenodd"><path class="st0" d="M997.632 179.087c-41.02 0-63.905-30.14-63.905-69.283s22.886-69.283 63.905-69.283c30.39 0 51.9 17.883 54.651 46.647h-25.262c-2.376-14.632-13.006-25.262-28.013-25.262h-2.626c-25.262 0-37.268 22.636-37.268 48.023s12.006 48.023 37.268 48.023h2.626c14.882 0 25.637-10.63 28.013-25.262h25.262c-2.626 28.639-24.261 46.397-54.65 46.397zM885.829 27.265h25.262V176.46h-25.262zM809.042 129.063V65.158h-29.264V43.272h29.264V.127h25.262v43.145h32.015v21.886h-32.015v118.557c0 18.634-9.38 28.013-28.014 28.013h-20.01v-22.636h12.007c8.003 0 10.63-2.626 10.63-10.63v-49.399zM673.102 101.925v74.661h-25.263V27.265h25.263v34.641c8.003-12.006 21.26-21.26 42.645-21.26 30.64 0 48.023 18.634 48.023 46.647v89.293h-25.262V92.671c0-18.634-8.004-30.64-26.638-30.64h-2.626c-18.76-.125-36.142 14.507-36.142 39.894zM384.963 123.186v25.262c0 18.634-9.38 28.013-28.013 28.013h-20.01v-22.636h12.006c8.004 0 10.63-2.626 10.63-10.63v-50.65c0-18.633-8.004-30.639-26.638-30.639h-2.626c-16.008 0-33.266 14.632-33.266 40.02v93.294h-25.262V43.272h25.262v18.634c8.004-12.006 21.26-21.26 40.02-21.26 19.134 0 35.141 7.504 44.02 24.762 10.38-18.384 27.764-24.762 44.022-24.762 30.64 0 48.023 18.634 48.023 46.647v89.293h-25.513V92.671c0-18.634-8.003-30.64-26.637-30.64h-2.627c-16.007 0-33.266 14.632-33.266 40.02v21.135zM191.996 40.646c-31.39 0-62.03 22.886-62.03 69.033 0 46.647 29.89 69.533 62.905 69.533 27.763 0 51.15-14.632 55.402-42.145H223.01c-2.627 14.132-15.133 20.76-28.514 20.76h-1.626c-16.508 0-36.017-13.631-37.518-44.02h93.67c2.501-48.274-19.634-73.161-57.027-73.161zm-35.142 53.276c4.752-23.762 20.26-32.016 33.891-32.016h2.626c14.883 0 28.514 8.504 30.89 32.016zM49.302 109.304L1.404 43.272h29.514L64.31 89.044l33.517-45.772h28.763l-47.898 65.532 49.274 67.657h-29.64l-34.64-47.648-34.893 47.648H.03zM594.94 43.272v18.634c-8.005-12.006-20.01-21.26-42.646-21.26-33.266 0-58.654 25.262-58.654 69.283s25.263 69.283 58.654 69.283c22.635 0 34.641-9.38 42.645-21.26v37.268h25.262V43.272zM557.67 157.827h-2.626c-20.01 0-36.017-16.008-36.017-48.023s16.007-48.023 36.017-48.023h2.626c18.634 0 37.268 16.008 37.268 48.023s-18.634 48.023-37.268 48.023z"/></g></svg>
 </header>
-<nav class="miniatures" id="miniatures" data-flickity='{ "bgLazyLoad": 2, "freeScroll": true }'>
-  <!--  <a class="miniature"-->
-  <!--     href="#xemantic"-->
-  <!--     data-flickity-bg-lazyload="miniatures/emotional-robots.jpg">-->
-  <!--    <h3>xemantic.com</h3>-->
-  <!--  </a>-->
-  <a class="miniature"
+<nav id="project-miniatures" class="miniatures">
+  <a class="miniature miniature-with-content"
      href="#xemantic">
-    <img src="logo/xemantic-logo.svg" width="100%"/>
-    <h3>xemantic.com</h3>
+    <img src="logo/xemantic-logo.svg" class="logo" />
+    <h2>xemantic.com</h2>
   </a>
   <a class="miniature"
      href="#emotional-robots"
      data-flickity-bg-lazyload="miniatures/emotional-robots.jpg">
-    <h3>Emotional Robots</h3>
+    <h2>Emotional Robots</h2>
   </a>
   <a class="miniature"
      href="#we-are-the-robots"
      data-flickity-bg-lazyload="miniatures/we-are-the-robots.jpg">
-    <h3>we-are-the-robots</h3>
+    <h2>we-are-the-robots</h2>
   </a>
   <a class="miniature"
      href="#angels-in-america"
      data-flickity-bg-lazyload="miniatures/angels-in-america.jpg">
-    <h3>Angels in America</h3>
+    <h2>Angels in America</h2>
   </a>
   <a class="miniature"
      href="#eyegasm"
      data-flickity-bg-lazyload="miniatures/eyegasm.jpg">
-    <h3>Eyegasm</h3>
+    <h2>Eyegasm</h2>
+  </a>
+  <a class="miniature"
+     href="#the-body-of-noise"
+     data-flickity-bg-lazyload="miniatures/the-body-of-noise.jpg">
+    <h2>The Body of Noise</h2>
+  </a>
+  <a class="miniature"
+     href="#negentropy"
+     data-flickity-bg-lazyload="miniatures/negentropy.jpg">
+    <h2>Eyegasm</h2>
   </a>
   <a class="miniature"
      href="#generative-philosophy"
      data-flickity-bg-lazyload="miniatures/generative-philosophy.jpg">
-    <h3>Generative Philosophy</h3>
+    <h2>Generative Philosophy</h2>
   </a>
   <a class="miniature"
-     href="#xemantic">
-    <img src="logo/xemantic-logo.svg" width="100%"/>
-    <h3>xemantic.com</h3>
-  </a>
-  <a class="miniature"
-     href="#emotional-robots"
-     data-flickity-bg-lazyload="miniatures/emotional-robots.jpg">
-    <h3>Emotional Robots</h3>
-  </a>
-  <a class="miniature"
-     href="#we-are-the-robots"
-     data-flickity-bg-lazyload="miniatures/we-are-the-robots.jpg">
-    <h3>we-are-the-robots</h3>
-  </a>
-  <a class="miniature"
-     href="#angels-in-america"
-     data-flickity-bg-lazyload="miniatures/angels-in-america.jpg">
-    <h3>Angels in America</h3>
-  </a>
-  <a class="miniature"
-     href="#eyegasm"
-     data-flickity-bg-lazyload="miniatures/eyegasm.jpg">
-    <h3>Eyegasm</h3>
-  </a>
-  <a class="miniature"
-     href="#generative-philosophy"
+     href="#deconstruction-of-hitler-neural-synthesis-of-generative-wittgenstein"
      data-flickity-bg-lazyload="miniatures/generative-philosophy.jpg">
-    <h3>Generative Philosophy</h3>
-  </a>
-  <a class="miniature"
-     href="#xemantic">
-    <img src="logo/xemantic-logo.svg" width="100%"/>
-    <h3>xemantic.com</h3>
-  </a>
-  <a class="miniature"
-     href="#emotional-robots"
-     data-flickity-bg-lazyload="miniatures/emotional-robots.jpg">
-    <h3>Emotional Robots</h3>
-  </a>
-  <a class="miniature"
-     href="#we-are-the-robots"
-     data-flickity-bg-lazyload="miniatures/we-are-the-robots.jpg">
-    <h3>we-are-the-robots</h3>
-  </a>
-  <a class="miniature"
-     href="#angels-in-america"
-     data-flickity-bg-lazyload="miniatures/angels-in-america.jpg">
-    <h3>Angels in America</h3>
-  </a>
-  <a class="miniature"
-     href="#eyegasm"
-     data-flickity-bg-lazyload="miniatures/eyegasm.jpg">
-    <h3>Eyegasm</h3>
-  </a>
-  <a class="miniature"
-     href="#generative-philosophy"
-     data-flickity-bg-lazyload="miniatures/generative-philosophy.jpg">
-    <h3>Generative Philosophy</h3>
-  </a>
-  <a class="miniature"
-     href="#xemantic">
-    <img src="logo/xemantic-logo.svg" width="100%"/>
-    <h3>xemantic.com</h3>
-  </a>
-  <a class="miniature"
-     href="#emotional-robots"
-     data-flickity-bg-lazyload="miniatures/emotional-robots.jpg">
-    <h3>Emotional Robots</h3>
-  </a>
-  <a class="miniature"
-     href="#we-are-the-robots"
-     data-flickity-bg-lazyload="miniatures/we-are-the-robots.jpg">
-    <h3>we-are-the-robots</h3>
-  </a>
-  <a class="miniature"
-     href="#angels-in-america"
-     data-flickity-bg-lazyload="miniatures/angels-in-america.jpg">
-    <h3>Angels in America</h3>
-  </a>
-  <a class="miniature"
-     href="#eyegasm"
-     data-flickity-bg-lazyload="miniatures/eyegasm.jpg">
-    <h3>Eyegasm</h3>
-  </a>
-  <a class="miniature"
-     href="#generative-philosophy"
-     data-flickity-bg-lazyload="miniatures/generative-philosophy.jpg">
-    <h3>Generative Philosophy</h3>
-  </a>
-  <a class="miniature"
-     href="#xemantic">
-    <img src="logo/xemantic-logo.svg" width="100%"/>
-    <h3>xemantic.com</h3>
-  </a>
-  <a class="miniature"
-     href="#emotional-robots"
-     data-flickity-bg-lazyload="miniatures/emotional-robots.jpg">
-    <h3>Emotional Robots</h3>
-  </a>
-  <a class="miniature"
-     href="#we-are-the-robots"
-     data-flickity-bg-lazyload="miniatures/we-are-the-robots.jpg">
-    <h3>we-are-the-robots</h3>
-  </a>
-  <a class="miniature"
-     href="#angels-in-america"
-     data-flickity-bg-lazyload="miniatures/angels-in-america.jpg">
-    <h3>Angels in America</h3>
-  </a>
-  <a class="miniature"
-     href="#eyegasm"
-     data-flickity-bg-lazyload="miniatures/eyegasm.jpg">
-    <h3>Eyegasm</h3>
-  </a>
-  <a class="miniature"
-     href="#generative-philosophy"
-     data-flickity-bg-lazyload="miniatures/generative-philosophy.jpg">
-    <h3>Generative Philosophy</h3>
+    <h2>Deconstruction of Hitler, neural synthesis of generative Wittgenstein</h2>
   </a>
 </nav>
 <section id="projects">
-<!--  <article id="xemantic">-->
-<!--    <div class="media">-->
-<!--      <iframe class="iframe" src="index-new.html" style="width: 61.8vw; height:32vw;"></iframe>-->
-<!--    </div>-->
-<!--    <div class="description">-->
-<!--      <h2>xemantic.com</h2>-->
-<!--      <p>-->
-<!--        The latest project I've been working on is actually this website :)-->
-<!--      </p>-->
-<!--      <p>-->
-<!--        I wanted to put responsive design on another level. Look what kind of fractal it creates-->
-<!--        in your browser.-->
-<!--      </p>-->
-<!--    </div>-->
-<!--  </article>-->
+  <article id="xemantic">
+    <div class="media">
+      <iframe class="iframe" src="about:blank" data-src="index-new.html"></iframe>
+    </div>
+    <div class="description">
+      <h2>xemantic.com</h2>
+      <p class="intro">
+        This website was born, because I wanted to adequately present all my work, spanning
+        across variety of disciplines and expressed in diverse media. I express my self with the
+        code, but it's not something you can easily perceive. So here is the wrapping.
+      </p>
+      <p>
+        Powered by bleeding edge technologies: webgl2, feedback loop synaesthetic shaders where the
+        natural colors of the rainbow transforms into movement, new level of responsiveness in
+        web design, golden ratio everywhere and extremely fast initial load - the graphics and
+        animation are embedded into the
+        source of this page, representing the ultimate conceptual compression.
+        The whole thing is listed here, because it represents a significant project on it's own.
+        Besides I love going meta. Look how cute it is as a recursive fractal. :)
+      </p>
+      <p>
+        So I also do websites. Maybe you need one? I can help building it or consult on techniques.
+        I didn't want to copy Netflix navigation, but the comparison seems inevitable.
+        Maybe it's a seed for an art-streaming service?
+      </p>
+    </div>
+  </article>
   <article id="emotional-robots">
     <div class="media">
 <!--      <iframe class="iframe"-->
@@ -303,56 +242,166 @@
 <!--      </iframe>-->
     </div>
     <div class="description">
-      <h2>Emotional robots</h2>
+      <h2>Emotional Robots</h2>
+      <p class="intro">
+        Imagine a swarm of robots who are curious, anxious, cute, obnoxious. Behaving like if they
+        were experiencing affectionate states driving their agency.
+      </p>
       <p>
-        Robotic software for artists - upcycling useful vacuum cleaners into useless
-        (but maybe profound) experiences.
+        I turned towards robotics during the time of pandemic, when the gig-economy collapsed, so
+        did most of my other projects which live only with the audience perceiving them -
+        <em>esse est percipi</em>. At least androids cannot be infected with bio-viruses.
+        I am grateful that my friend <a href="https://jheer.com/">Jacqueline Heer</a>
+        commissioned the first one of this breed of art-robots, to display her work. We will
+        develop them much further.
+      </p>
+      <p>
+        I am building many of these robots currently, providing various experiences:
+        insect-like movement among the crowd, machine poetry, gnostic encounters, video-skin.
+        Check for updates soon. I open sourced the software developed for this purpose as
+        <a href="#we-are-the-robots"><nobr>we-are-the-robots</nobr></a> project and I am happy to
+        help with your emotional machines.
       </p>
     </div>
   </article>
   <article id="we-are-the-robots">
     <div class="media">
-      <img src="images/we-are-the-robots/we-are-the-robots-example.jpg" />
+      <img src="images/we-are-the-robots/we-are-the-robots-example.jpg"/>
     </div>
     <div class="description">
       <h2>we-are-the-robots</h2>
-      <p>
+      <p class="intro">
         Robotic software for artists - upcycling useful vacuum cleaners into useless
         (but maybe profound) experiences.
+      </p>
+      <p>
+        It's made out of building blocks, which can be easily assembled into new behavioral
+        patterns. Although any kind of robot might benefit from this project, it is designed
+        to deliver an experience for people interacting with the machine. See
+        <a href="#emotional-robots">emotional robots</a> for the experiences I am working on.
+      </p>
+      <p>
+        <a href="https://github.com/xemantic/we-are-the-robots"><i class="fab fa-github"></i> project on GitHub</a>
       </p>
     </div>
   </article>
   <article id="generative-philosophy">
     <div class="media">
-      <img src="images/we-are-the-robots/we-are-the-robots-example.jpg" />
+      <img src="images/we-are-the-robots/we-are-the-robots-example.jpg"/>
     </div>
     <div class="description">
       <h2>Generative philosophy</h2>
       <p>
-        Robotic software for artists - upcycling useful vacuum cleaners into useless
-        (but maybe profound) experiences.
+        Can machine synthesize a meaning for us?
+      </p>
+      <p>
+        I want to transform my research into experience. It will be obviously about philosophy,
+        it's status and relevance in the modern era. About logic, ethics, aesthetics, transcendence,
+        genius, unfulfilled ambitions, <em>statolatry</em> - cult of the national state, and the
+        reemergence of right-wing ideologies. I wrote an article with covers some details of the
+        narrative: <a href="#deconstruction-of-hitler-neural-synthesis-of-generative-wittgenstein">
+        Deconstruction of Hitler, neural synthesis of generative Wittgenstein</a>
+        https://medium.com/@kazikpogoda/deconstruction-of-hitler-neural-synthesis-of-generative-wittgenstein-3682484a7669?source=friends_link&sk=369f1512ec89948e346ce0f814784118
+      </p>
+    </div>
+  </article>
+  <article id="deconstruction-of-hitler-neural-synthesis-of-generative-wittgenstein">
+    <div class="media">
+      <img src="images/we-are-the-robots/we-are-the-robots-example.jpg"/>
+    </div>
+    <div class="description">
+      <h2>Deconstruction of Hitler, neural synthesis of generative Wittgenstein</h2>
+      <p class="intro">
+        An article which I wrote when AI-generated philosophy surprised me with
+        significance of it's products, shining a new light on meta-theories of our
+        culture.
+      </p>
+      <p>
+        I want to transform my research into experience. It will be obviously about philosophy,
+        it's status and relevance in the modern era. About logic, ethics, aesthetics, transcendence,
+        genius, unfulfilled ambitions, <em>statolatry</em> - cult of the national state, and the
+        reemergence of right-wing ideologies. I wrote an article with covers some details of the
+        narrative: <a href="#deconstruction-of-hitler-neural-synthesis-of-generative-wittgenstein">
+        Deconstruction of Hitler, neural synthesis of generative Wittgenstein</a>
+        https://medium.com/@kazikpogoda/deconstruction-of-hitler-neural-synthesis-of-generative-wittgenstein-3682484a7669?source=friends_link&sk=369f1512ec89948e346ce0f814784118
+      </p>
+      <p>
+        Illustration: Synthetic Emotionality by Sophia Crespo
       </p>
     </div>
   </article>
 </section>
-<nav>
-  Go to projects <i class="fas fa-hand-point-up"></i>, read about me
-  <i class="fas fa-hand-point-down"></i> or contact me <i class="fas fa-hand-point-up"></i>
-  <i class="fas fa-hand-point-down"></i>
-</nav>
-<section id="who">
-  <p>
-    My name is Kazik Pogoda and I work as creative technologist. A fancy term to say that instead
-    of using Adobe products I write my own software. Expressing myself the way I want to requires
-    writing a custom software. The practice is called creative coding, and the outcome is called
-    generative art or design. I don't feel like an artist though. I majored in philosophy and
-    what I create is rather reflecting my philosophical believes on the evolution applied not
-    only to the context of biology, but also human and machine cultures.
-  </p>
-  <p>
-    I love to collaborate. If you feel like achieving some of my generative aesthetics in your work,
-    feel free to contact me. Also
-  </p>
+<section id="me">
+  <div class="row">
+    <div class="media">
+      <img src="images/me/kazik-pogoda-at-coart-timisoara.jpg" alt="Kazik Pogoda at co(art) Festival, Timisoara 2019" />
+    </div>
+    <div class="description">
+      <p>
+        My name is Kazik Pogoda and I work as a
+        <em><a href="https://en.wikipedia.org/wiki/Creative_technology">creative technologist</a></em>.
+        A fancy phrase to say that instead
+        of using Adobe products I write my own software. Achieving the aesthetics I desire requires
+        writing a custom code. The practice is called <em>creative coding</em>, and the outcome is
+        called <em><a href="https://en.wikipedia.org/wiki/Generative_art">generative art</a></em>
+        or <em>generative design</em>. I feel neither like an artist
+        nor like a designer. I majored in philosophy and
+        what I create is rather reflecting my philosophical believes on the evolution applied not
+        only to the context of biology, but also human culture and our "symbiosis" with the machines
+        weaving the new fabric of reality.
+      </p>
+      <p>
+        I like speaking in their languages and I understand them well. But my love stays with humans.
+        I love to collaborate, because it always brings additional humanistic narrative and
+        dimension to my own work, when it is becoming part of some bigger story to tell.
+        If you feel like using some of my generative aesthetics in your work,
+        performance, show, film, website, theatrical play, sustainable product, ... you name it,
+        then feel free to <a href=""><i class="fas fa-envelope-square"></i> contact me</a>.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="description">
+      <p>
+        I started working with creative technologies very recently, even though it is something
+        I was fascinated with as a teenager back in Poland, in the time when my home country
+        was transforming from the communist to the capitalist economy.
+        I've been working for years with software, as chief architect, lead developer
+        and mentor for other
+        programmers, in very diverse international teams. I've produced software used by millions of
+        human and non-human agents. You can find my full professional curriculum on
+        <a href="https://github.com/xemantic/we-are-the-robots"><i class="fab fa-linkedin"></i> LinkedIn</a>.
+      </p>
+      <p>
+        But now I what to use code for different purposes. I want to evoke affectionate states with
+        the use of machines. <em>Emotional generative art</em>. Make you feel something when you
+        perceive a product of an algorithm. Either thanks to purely aesthetic experience, or thanks
+        to the relevance, when the meditation accurately reflects our post-human condition.
+      </p>
+      <p>
+        A glimpse of my recent work you can find on
+        <a href="https://github.com/xemantic/we-are-the-robots"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="https://github.com/xemantic/we-are-the-robots"><i class="fab fa-twitter"></i> Twitter</a>
+        and <a href="https://github.com/xemantic/we-are-the-robots"><i class="fab fa-facebook"></i> Facebook</a>.
+        . They are good platforms for sharing static visuals, but I want to deliver an
+        experience and it's not easy to convey without an immersive interactive installation. A better
+        feeling for this one can get from my
+        <a href="https://github.com/xemantic/we-are-the-robots"><i class="fab fa-vimeo"></i> Vimeo</a>
+        and
+        <a href="https://github.com/xemantic/we-are-the-robots"><i class="fab fa-youtube"></i> YouTube channel</a>
+        where I also put more experimental generative videos.
+      </p>
+      <p>
+        When it comes to <em>meta</em> and the narrative behind my work,
+        I also write on <a href="https://medium.com/@kazikpogoda"><i class="fab fa-medium"></i> Medium</a>
+        Follow me if you wish, wherever you wish, or write me an email <i class="fas fa-envelope-square"></i>:
+        <a class="email"></a>.
+      </p>
+    </div>
+    <div class="media">
+      <img src="images/me/kazik-pogoda-synthesizing-videos.jpg" alt="Kazik Pogoda synthesizing videos, 2019" />
+    </div>
+  </div>
 </section>
 <footer>
   <div>
@@ -360,7 +409,7 @@
       Copyright &copy; 2020 Kazimierz Pogoda / xemantic.com All Rights Reserved
     </p>
     <p>
-      <img src="logo/xemantic-logo.svg" class="footer-logo" loading="lazy" />&nbsp;&nbsp;logo designed with &hearts; by Ivan Skoro.
+      <img src="logo/xemantic-logo.svg" class="footer-logo"/>&nbsp;&nbsp;logo designed with &hearts; by <a href="">Ivan Škoro</a>.
     </p>
   </div>
 </footer>
