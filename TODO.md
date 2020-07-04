@@ -14,7 +14,3 @@
 * kot i los - put under xemantic
 * belcanto
 * tatry.info
-
-# style
-
-* replace backgrounds with a shader
