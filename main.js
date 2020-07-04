@@ -1,6 +1,6 @@
 const GA_ID = "UA-35099425-1";
 
-const mainCss = "modules/main/main.css";
+const mainCss = "main.css";
 const flickityDist = "https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js";
 const flickityCssDist = "https://unpkg.com/flickity@2/dist/flickity.min.css";
 const flickityBgLazyLoadDist = "https://npmcdn.com/flickity-bg-lazyload@1.0.0/bg-lazyload.js";
