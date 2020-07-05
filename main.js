@@ -4,6 +4,9 @@ const mainCss = "main.css";
 const flickityDist = "https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js";
 const flickityCssDist = "https://unpkg.com/flickity@2/dist/flickity.min.css";
 const flickityBgLazyLoadDist = "https://npmcdn.com/flickity-bg-lazyload@1.0.0/bg-lazyload.js";
+const flickityFullscreenDist = "https://unpkg.com/flickity-fullscreen@1/fullscreen.js";
+const flickityFullscreenCssDist = "https://unpkg.com/flickity-fullscreen@1/fullscreen.css";
+
 const gaDist = "https://www.googletagmanager.com/gtag/js?" + GA_ID;
 const vimeoDist = "https://player.vimeo.com/api/player.js";
 const arsenalFontDist = "https://fonts.googleapis.com/css2?family=Arsenal:ital,wght@0,400;0,700;1,400;1,700&display=swap";
@@ -47,7 +50,6 @@ const loadJs = (src, crossorigin) => {
 const loadCss = (src) => {
   return new Promise((resolve, reject) => {
     addCss(src, () => {
-    console.log("resolved: " + src);
     resolve(); }, (error) => { reject(error); });
   });
 };
@@ -55,9 +57,13 @@ const loadCss = (src) => {
 Promise.all([
   loadCss(arsenalFontDist),
   loadJs(fontAwesomeDist, "anonymous"),
-  loadJs(flickityDist).then(() => loadJs(flickityBgLazyLoadDist)),
+  loadJs(flickityDist).then(() => Promise.all([
+    loadJs(flickityFullscreenDist),
+    loadJs(flickityBgLazyLoadDist)
+  ])),
   loadCss(mainCss),
-  loadCss(flickityCssDist)
+  loadCss(flickityCssDist),
+  loadCss(flickityFullscreenCssDist)
 ]).then(() => {
   document.getElementById("hider").remove(); // show the whole content
   const projects = document.getElementById("projects");
