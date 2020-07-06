@@ -54,9 +54,6 @@
       --golden-ratio-width-shorter: 38.2vw;
       --golden-ratio-height-longer: 61.8vh;
       --golden-ratio-height-shorter: 38.2vh;
-      --z-index-fade-over: 2;
-      --z-index-nav: 1;
-      --z-index-content: 0;
       --z-index-background: -2;
     }
     * { margin: 0; padding: 0; }
@@ -231,7 +228,6 @@
         TODO - I hope this list will be getting shorter
       </p>
       <ul>
-        <li>remove promise console logs</li>
         <li>add email and mailto</li>
         <li>replace hearts with fa hearts</li>
         <li>fix style of titles in project miniatures - they should have dark background</li>
@@ -239,8 +235,6 @@
         <li>fix all the margins in all resolutions</li>
         <li>add support for media galleries</li>
         <li>fix footer style</li>
-        <li>fix project container grid display which is causing troubles on mobile</li>
-        <li>make project container height animated depending on selected project</li>
         <li>make sure that any project anchor will be working from external link, even the loading of the site is slow</li>
         <li>review the whole code</li>
         <li>prepare fallback background for safari - negentropy</li>
@@ -260,12 +254,18 @@
         <li>prepare new og:graph graphics</li>
         <li>new favicon</li>
         <li>previous xemantic.com note should be in small script</li>
+        <li>remove bold font if never used</li>
+        <li>fix logo size</li>
       </ul>
     </div>
   </article>
   <article id="emotional-robots">
     <div class="media">
-      <img src="projects/negentropy/Negentropy-Kazik_Pogoda-Generative-2020.jpg" />
+      <div>
+        <div data-flickity='{ "fullscreen": true, "lazyLoad": 1 }'>
+          <img src="projects/negentropy/Negentropy-Kazik_Pogoda-Generative-2020.jpg" />
+        </div>
+      </div>
     </div>
     <div class="description">
       <h2>Emotional Robots</h2>
@@ -363,7 +363,9 @@
     </div>
     <div class="description">
       <p>
-        My name is Kazik Pogoda and I work as a
+        My name is Kazik Pogoda and
+        <img src="logo/xemantic-logo.svg" class="logo-in-text" alt="xemantic logo"/>
+        is a label I use for my projects. I work as a
         <em><a href="https://en.wikipedia.org/wiki/Creative_technology">creative technologist</a></em>.
         A fancy phrase to say that instead
         of using Adobe products I write my own software. Achieving the aesthetics I desire requires
@@ -394,7 +396,7 @@
         was transforming from the communist to the capitalist economy.
         I've been working for years with software, as chief architect, lead developer
         and mentor for other
-        programmers, in a very diverse international teams. I've produced software used by millions of
+        programmers, in diverse international teams. I've produced software used by millions of
         human and non-human agents. You can find my full professional curriculum on
         <a href="https://www.linkedin.com/in/kpogoda/"><i class="fab fa-linkedin"></i> LinkedIn</a>.
       </p>
@@ -444,7 +446,7 @@
       Copyright &copy; 2020 Kazimierz Pogoda / xemantic.com All Rights Reserved
     </p>
     <p>
-      <img src="logo/xemantic-logo.svg" class="footer-logo"/>&nbsp;&nbsp;logo designed with &hearts; by <a href="">Ivan Škoro</a>.
+      <img src="logo/xemantic-logo.svg" class="logo-in-text" alt="xemantic logo"/>&nbsp;&nbsp;logo designed with &hearts; by <a href="">Ivan Škoro</a>.
     </p>
   </div>
 </footer>

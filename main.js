@@ -68,17 +68,21 @@ Promise.all([
   document.getElementById("hider").remove(); // show the whole content
   const projects = document.getElementById("projects");
   const miniatures = document.getElementById("project-miniatures");
-  var flickityMiniatures = new Flickity(miniatures, {
+  const me = document.getElementById("me");
+  const flickityMiniatures = new Flickity(miniatures, {
     bgLazyLoad: 2,
     freeScroll: true,
     pageDots: false,
   });
-  window.addEventListener("hashchange", e => {
-    var hash = location.hash;
-    if (projects.querySelector(hash)) { // one of the projects
+  const hashChangeHandler = (e) => {
+    let hash = location.hash;
+    let project = projects.querySelector(hash)
+    if (project) {
       flickityMiniatures.selectCell("[href='" + hash + "']");
+      me.style.marginTop = project.clientHeight + "px";
     }
-  }, false); // TODO what's the mining of false here?
+  };
+  window.addEventListener("hashchange", hashChangeHandler, false); // TODO what's the mining of false here?
 });
 
 // we don't need to wait for these

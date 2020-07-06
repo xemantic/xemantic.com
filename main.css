@@ -3,20 +3,30 @@
   --content-padding: 1vw;
   --font-size-base: 14px;
   --font-size-increment: 1.04166667vw;
+  --font-size: calc(var(--font-size-base) + var(--font-size-increment));
   --content-padding-base: .5vw;
   --content-padding-increment: 1vw;
-}
-
-html {
-  scroll-behavior: smooth;
-  font-size: calc(var(--font-size-base) + var(--font-size-increment));
-  font-family: "Arsenal", sans-serif;
-  color: white;
+  --project-miniatures: 1;
+  --z-index-over: 2;
+  --z-index-navigation: 1;
+  --z-index-content: 0;
+  --z-index-behind-content: -1;
 }
 
 ::selection {
   background-color: rgb(220, 34, 240, .4);
   color: white;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: var(--font-size);
+  font-family: "Arsenal", sans-serif;
+  color: white;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 iframe {
@@ -31,10 +41,6 @@ p {
   text-align: justify;
   margin-top: .618rem;
   margin-bottom: .618rem;
-}
-
-.svg-inline--fa {
-  vertical-align: middle;
 }
 
 a {
@@ -55,6 +61,11 @@ img {
   display: flex;
 }
 
+.logo-in-text {
+  width: auto;
+  height: var(--font-size);
+  vertical-align: middle;
+}
 /* general styles: end */
 
 /* miniatures: start */
@@ -66,7 +77,7 @@ img {
   animation: fade-in 0s ease-in-out;
   animation-delay: 0s;
   animation-fill-mode: both;
-  z-index: var(--z-index-nav);
+  z-index: var(--z-index-navigation);
 }
 
 .miniatures .miniature {
@@ -92,7 +103,7 @@ img {
 }
 
 .miniatures .miniature h2 {
-  margin-bottom: calc(var(--golden-ratio-height-shorter) * .0618);
+  margin-bottom: calc(var(--golden-ratio-height-shorter) * .0618); /* TODO put as variable */
 }
 
 .miniatures .flickity-viewport {
@@ -142,33 +153,15 @@ img {
 
 /* miniatures end */
 
-.vimeo-iframe-container {
-  padding: 56.25% 0 0 0;
-  position: relative;
-  align-items: flex-start;
-}
-
-.vimeo-iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-#projects {
-  display: grid;
-  overflow: hidden;
-}
-
+/* projects: start */
 #projects article {
+  position: absolute;
+  overflow-x: hidden;
   padding-top: var(--golden-ratio-height-shorter);
-  grid-row: 1;
-  grid-column: 1;
   color: white;
   display: flex;
   visibility: hidden;
-  z-index: -1;
+  z-index: var(--z-index-content);
   transform: scale(1);
   opacity: 0;
   animation: hide-project 2s ease-out;
@@ -176,7 +169,6 @@ img {
 
 #projects article:target {
   visibility: visible;
-  z-index: 0;
   transform: scale(1);
   opacity: 1;
   animation: none;
@@ -229,14 +221,14 @@ img {
 @keyframes hide-project {
 	0% {
   	pointer-events: none;
-	  z-index: 200;
+	  z-index: var(--z-index-over);
 		transform: scale(1);
 		opacity: 1;
-		visibility: visible;
+		visibility: visible; /* TODO do we need visible here? */
 	}
 	99% {
     pointer-events: none;
-	  z-index: 200;
+    z-index: var(--z-index-over);
 	  transform: scale(3.618);
 	  opacity: 0;
 	  visibility: visible;
@@ -246,48 +238,31 @@ img {
 	}
 }
 
-@keyframes hide-project-media {
-	0% {
-	  visibility: visible;
-		opacity: 1;
-		transform: translateX(0);
-	}
-	99% {
-		visibility: visible;
-	  opacity: 1;
-	  transform: translateX(0);
-	}
-	100% {
-	  visibility: hidden;
-	  opacity: 0;
-	  transform: translateX(calc(var(--golden-ratio-width-longer) * -1));
-	}
+.vimeo-iframe-container {
+  padding: 56.25% 0 0 0;
+  position: relative;
+  align-items: flex-start;
 }
 
-@keyframes hide-project-description {
-	0% {
-	  visibility: visible;
-		opacity: 1;
-		transform: translateX(0);
-		z-index: -1;
-	}
-	99% {
-		visibility: visible;
-	  opacity: 1;
-	  transform: translateX(0);
-	  z-index: -1;
-	}
-	100% {
-	  visibility: hidden;
-	  opacity: 0;
-	  transform: translateX(calc(var(--golden-ratio-width-longer) * -1));
-	  z-index: 1;
-	}
+.vimeo-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
+/* projects: end */
 
 /* me: start */
+#me::before { /* restore proper spacing */
+  content: " ";
+  display: block;
+  height: var(--golden-ratio-height-shorter);
+}
+
 #me {
-  margin-top: var(--golden-ratio-height-shorter);
+  transition: margin-top 4s;
+  z-index: var(--z-index-behind-content);
 }
 
 @media (max-width: 900px) {
@@ -321,11 +296,5 @@ footer {
   align-items: center;
   justify-content: center;
   filter: drop-shadow(var(--shadow-x) var(--shadow-y) var(--shadow-blur-radius) rgba(0, 0, 0, var(--shadow-opacity)));
-}
-
-.footer-logo {
-  width: auto;
-  height: calc(1.04166667vw + 12px);
-  vertical-align: middle;
 }
 /* footer: end */
