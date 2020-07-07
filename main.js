@@ -1,3 +1,5 @@
+const FADE_IN_DELAY = 7000;
+
 const GA_ID = "UA-35099425-1";
 
 const mainCss = "main.css";
@@ -14,6 +16,25 @@ const fontAwesomeDist = "https://kit.fontawesome.com/0bbdfd8b39.js";
 
 const cryptedEmail = "znvygb:bssvpr@krznagvp.pbz";
 
+const miniatures = document.getElementById("project-miniatures");
+const projects = document.getElementById("projects");
+const me = document.getElementById("me");
+const footer = document.getElementsByTagName("footer")[0];
+
+function hide(element) {
+  element.classList.add("hidden");
+}
+
+function show(element) {
+  element.classList.remove("hidden");
+  element.classList.add("fade-in");
+}
+
+hide(miniatures);
+hide(projects);
+hide(me);
+hide(footer);
+
 //let email = cryptedEmail.replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);});
 //document.querySelectorAll(".email").forEach(element => {
 //  element.appendChild(email);
@@ -29,13 +50,13 @@ gtag("js", new Date());
 gtag("config", GA_ID);
 
 function addCss(href, callback, errorCallback) {
-  var link = document.createElement("link");
-    if (callback) {
-      link.onload = callback;
-    }
-    if (errorCallback) {
-      link.onerror = errorCallback;
-    }
+  const link = document.createElement("link");
+  if (callback) {
+    link.onload = callback;
+  }
+  if (errorCallback) {
+    link.onerror = errorCallback;
+  };
   link.setAttribute("href", href);
   link.setAttribute("rel", "stylesheet");
   document.head.appendChild(link);
@@ -65,10 +86,6 @@ Promise.all([
   loadCss(flickityCssDist),
   loadCss(flickityFullscreenCssDist)
 ]).then(() => {
-  document.getElementById("hider").remove(); // show the whole content
-  const projects = document.getElementById("projects");
-  const miniatures = document.getElementById("project-miniatures");
-  const me = document.getElementById("me");
   const flickityMiniatures = new Flickity(miniatures, {
     bgLazyLoad: 2,
     freeScroll: true,
@@ -79,10 +96,21 @@ Promise.all([
     let project = projects.querySelector(hash)
     if (project) {
       flickityMiniatures.selectCell("[href='" + hash + "']");
-      me.style.marginTop = project.clientHeight + "px";
+      let height = project.clientHeight + "px";
+      projects.style.height = height;
+      me.style.marginTop = height;
     }
   };
-  window.addEventListener("hashchange", hashChangeHandler, false); // TODO what's the mining of false here?
+  window.addEventListener("hashchange", hashChangeHandler, false);
+  const fadeInTime = START_TIME + FADE_IN_DELAY - Date.now();
+  setTimeout(() => {
+    root.style.setProperty("--z-index-background", -2);
+    show(miniatures);
+    show(projects);
+    show(me);
+    show(footer);
+  }, fadeInTime);
+
 });
 
 // we don't need to wait for these

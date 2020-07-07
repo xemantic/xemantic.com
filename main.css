@@ -1,28 +1,30 @@
 /* general styles: begin */
 :root {
-  --content-padding: 1vw;
   --font-size-base: 14px;
   --font-size-increment: 1.04166667vw;
   --font-size: calc(var(--font-size-base) + var(--font-size-increment));
   --content-padding-base: .5vw;
   --content-padding-increment: 1vw;
-  --project-miniatures: 1;
+  --content-padding: calc(var(--content-padding-base) + var(--content-padding-increment));
   --z-index-over: 2;
   --z-index-navigation: 1;
   --z-index-content: 0;
   --z-index-behind-content: -1;
+  --text-color: white;
+  --selection-color: rgb(220, 34, 240, .4);
+  --paragraph-spacing: .618rem;
 }
 
 ::selection {
-  background-color: rgb(220, 34, 240, .4);
-  color: white;
+  background-color: var(--selection-color);
+  color: var(--text-color);
 }
 
 html {
   scroll-behavior: smooth;
   font-size: var(--font-size);
   font-family: "Arsenal", sans-serif;
-  color: white;
+  color: var(--text-color);
 }
 
 body {
@@ -33,28 +35,31 @@ iframe {
   border: none;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
 
 p {
   text-align: justify;
-  margin-top: .618rem;
-  margin-bottom: .618rem;
+  margin-bottom: var(--paragraph-spacing);
+}
+
+p:last-child {
+  margin-bottom: 0;
 }
 
 a {
-  color: white;
+  color: var(--text-color);
   text-decoration: underline dotted;
 }
 
 a:hover {
-  color: white;
   text-decoration: underline solid;
 }
 
 img {
   width: 100%; /* responsive by default */
+  height: auto;
 }
 
 .row {
@@ -63,8 +68,22 @@ img {
 
 .logo-in-text {
   width: auto;
-  height: var(--font-size);
+  height: calc(var(--font-size) * .9);
+  margin-top: calc(var(--font-size) * -.1);
   vertical-align: middle;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.fade-in {
+  visibility: visible;
+  opacity: 1;
+  animation-name: fade-in;
+  animation-duration: 4s;
+  animation-timing-function: ease-in-out;
 }
 /* general styles: end */
 
@@ -72,11 +91,6 @@ img {
 .miniatures {
   height: var(--golden-ratio-height-shorter);
   margin-bottom: calc(var(--golden-ratio-height-shorter) * -1);
-  /*animation: fade-in 4s ease-in-out;
-  animation-delay: 9s;*/
-  animation: fade-in 0s ease-in-out;
-  animation-delay: 0s;
-  animation-fill-mode: both;
   z-index: var(--z-index-navigation);
 }
 
@@ -90,7 +104,6 @@ img {
   text-overflow: ellipsis;
   text-decoration: none;
   text-shadow: 0px 0px 2px black, 0px 0px 2px black, 0px 0px 4px black;
-  opacity: 1;
   transform: scale(.8);
   justify-content: center;
   align-items: flex-end;
@@ -98,9 +111,11 @@ img {
   pointer-events: auto;
 }
 
+/* TODO test with lazy loading
 .miniatures .miniature.flickity-bg-lazyloaded {
   opacity: 1;
 }
+*/
 
 .miniatures .miniature h2 {
   margin-bottom: calc(var(--golden-ratio-height-shorter) * .0618); /* TODO put as variable */
@@ -154,24 +169,33 @@ img {
 /* miniatures end */
 
 /* projects: start */
+#projects {
+  position: absolute;
+  overflow: hidden;
+  margin-top: var(--golden-ratio-height-longer);
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
 #projects article {
   position: absolute;
-  overflow-x: hidden;
   padding-top: var(--golden-ratio-height-shorter);
-  color: white;
   display: flex;
+  pointer-events: none;
   visibility: hidden;
-  z-index: var(--z-index-content);
-  transform: scale(1);
-  opacity: 0;
-  animation: hide-project 2s ease-out;
+	z-index: var(--z-index-over);
+	opacity: 0;
+	transform: scale(3.618);
+	transition: visibility 2s, transform 2s, opacity 2s;
 }
 
 #projects article:target {
   visibility: visible;
   transform: scale(1);
   opacity: 1;
-  animation: none;
+  z-index: var(--z-index-content);
+  transition: visibility 0s, transform 0s, opacity 0s;
 }
 
 #projects article .media {
@@ -186,7 +210,7 @@ img {
 #projects article .description {
   flex: var(--golden-ratio-width-shorter);
   background: rgba(0, 0, 0, 0.5);
-  padding: calc(var(--content-padding-base) + var(--content-padding-increment));
+  padding: var(--content-padding);
   transform: translateX(var(--golden-ratio-width-shorter));
   transition: transform 0s;
   transition-delay: 2s;
@@ -216,26 +240,6 @@ img {
   #projects article {
     display: block;
   }
-}
-
-@keyframes hide-project {
-	0% {
-  	pointer-events: none;
-	  z-index: var(--z-index-over);
-		transform: scale(1);
-		opacity: 1;
-		visibility: visible; /* TODO do we need visible here? */
-	}
-	99% {
-    pointer-events: none;
-    z-index: var(--z-index-over);
-	  transform: scale(3.618);
-	  opacity: 0;
-	  visibility: visible;
-	}
-	100% {
-	  visibility: hidden;
-	}
 }
 
 .vimeo-iframe-container {
@@ -277,7 +281,7 @@ img {
 }
 
 #me .description {
-  padding: calc(var(--content-padding-base) + var(--content-padding-increment));
+  padding: var(--content-padding);
   background: rgba(0, 0, 0, 0.5);
   flex: var(--golden-ratio-width-longer);
 }
@@ -289,6 +293,8 @@ img {
 
 /* footer: start */
 footer {
+  opacity: 0;
+  padding: var(--content-padding);
   text-align: center;
   vertical-align: middle;
   height: var(--golden-ratio-height-shorter);

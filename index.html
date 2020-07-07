@@ -54,11 +54,21 @@
       --golden-ratio-width-shorter: 38.2vw;
       --golden-ratio-height-longer: 61.8vh;
       --golden-ratio-height-shorter: 38.2vh;
-      --z-index-background: -2;
+      /* initially covering everything */
+      --z-index-logo: 4;
+      --z-index-background: 3;
     }
-    * { margin: 0; padding: 0; }
-    html { background: black; }
-    html, body { height: 101%; /* will prevent canvas resizing when content is loaded */ }
+    html {
+      box-sizing: border-box;
+      background: black;
+    }
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+    body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+      margin: 0;
+      padding: 0;
+    }
     header {
       height: var(--golden-ratio-height-longer);
       display: flex;
@@ -69,31 +79,29 @@
       width: var(--golden-ratio-width-longer);
       opacity: 0;
       filter: drop-shadow(var(--shadow-x) var(--shadow-y) var(--shadow-blur-radius) rgba(0, 0, 0, var(--shadow-opacity)));
-      animation: fade-in 6s ease-in-out;
-      animation-delay: 4s;
-      animation-fill-mode: forwards;
-    }
-    #loopback-background {
-      width: 100%;
-      height: 100%;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: var(--z-index-background);
+      animation: fade-in 7s ease-in-out;
+      animation-delay: 2s;
+      animation-fill-mode: forwards; /* will keep the opacity */
+      z-index: var(--z-index-logo);
     }
     @keyframes fade-in {
       from { opacity: 0; }
       to   { opacity: 1; }
     }
-  </style>
-  <style id="hider">
-    section { display: none; }
-    nav { display: none; }
-    footer { display: none; }
+    #loopback-background {
+      background: black; /* covers everything */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: var(--z-index-background);
+    }
   </style>
   <script>
-    const MAX_SHADOW_DROP = 5.0
-    const MAX_BLUR_RADIUS = .9
+    const START_TIME = Date.now();
+    const MAX_SHADOW_DROP = 5.0;
+    const MAX_BLUR_RADIUS = .9;
 
     function n(a){var c=0;return function(){return c<a.length?{done:!1,value:a[c++]}:{done:!0}}}function p(a){return Error(a)}p.prototype=Object.create(Error.prototype);
     function q(a,c,e){this.a=a;this.b=a.createTexture();a.bindTexture(a.TEXTURE_2D,this.b);a.texImage2D(a.TEXTURE_2D,0,a.RGBA16F,c,e,0,a.RGBA,a.FLOAT,null);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MIN_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MAG_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_S,a.CLAMP_TO_EDGE);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_T,a.CLAMP_TO_EDGE);this.c=a.createFramebuffer();a.bindFramebuffer(a.FRAMEBUFFER,this.c);a.framebufferTexture2D(a.FRAMEBUFFER,
@@ -105,7 +113,7 @@
     2,b.FLOAT,!1,0,0);b.enableVertexAttribArray(a);b.viewport(0,0,b.canvas.width,b.canvas.height);var A=b.getUniformLocation(h,"R"),B=b.getUniformLocation(h,"D"),y=b.getUniformLocation(h,"T"),z=b.getUniformLocation(h,"F");b.useProgram(m);var C=b.getUniformLocation(m,"R"),D=b.getUniformLocation(m,"D");f();var v=0,u=0;e()};window.WebglLoopbackException=p;
 
     function addScript(src, callback, errorCallback, crossorigin) {
-      var script = document.createElement("script");
+      const script = document.createElement("script");
       if (callback) {
         script.onload = callback;
       }
@@ -123,33 +131,24 @@
     const root = document.documentElement;
 
     function handleMove(event) {
-      let x = (event.clientX - .5 * innerWidth) / innerWidth
-      let y = (event.clientY - .5 * innerHeight) / innerWidth
-      let distance = Math.sqrt((x * x) + (y * y));
+      const x = (event.clientX - .5 * innerWidth) / innerWidth;
+      const y = (event.clientY - .5 * innerHeight) / innerWidth;
+      const distance = Math.sqrt((x * x) + (y * y));
       root.style.setProperty("--shadow-x", (x * -MAX_SHADOW_DROP) + "vw");
       root.style.setProperty("--shadow-y", (y * -MAX_SHADOW_DROP) + "vw");
       root.style.setProperty("--shadow-blur-radius", ((distance * MAX_BLUR_RADIUS) + "vw"));
     }
     document.addEventListener("mousemove", handleMove, false);
-    // TODO it should be ,false
+    document.addEventListener("touchmove", handleMove, false);
 
-    const enableLazy = (element) => {
-      element.loading = "lazy";
-      element.onload = () => element.classList.add("loaded");
+    function loaded(element) {
+      element.classList.add("loaded");
     }
-    document.addEventListener("DOMContentLoaded", e => {
-      for (var i = 0; i < document.images.length; i++) {
-        enableLazy(document.images[i]);
-      }
-      document.querySelectorAll("iframe").forEach(iframe => {
-        enableLazy(iframe);
-      });
-    }); // TODO it should be ,false
 
     window.addEventListener("load", e => {
       new LoopbackCanvas("loopback-background", "loopback-shader");
       addScript("main.js");
-    }); // TODO it should be ,false
+    }, false);
   </script>
 </head>
 <body>
@@ -257,6 +256,8 @@
         <li>remove bold font if never used</li>
         <li>fix logo size</li>
         <li>shadow animation should follow touch events</li>
+        <li>social media sharing buttons like here: https://alligator.io/css/minimal-css-reset/</li>
+        <li>add alt to all the images</li>
       </ul>
     </div>
   </article>
@@ -264,7 +265,7 @@
     <div class="media">
       <div>
         <div data-flickity='{ "fullscreen": true, "lazyLoad": 1 }'>
-          <img src="projects/negentropy/Negentropy-Kazik_Pogoda-Generative-2020.jpg" />
+          <img src="projects/negentropy/Negentropy-Kazik_Pogoda-Generative-2020.jpg" loading="lazy" onload="loaded(this)"/>
         </div>
       </div>
     </div>
@@ -293,7 +294,7 @@
   </article>
   <article id="we-are-the-robots">
     <div class="media">
-      <img src="projects/we-are-the-robots/we-are-the-robots-code-example.jpg"/>
+      <img src="projects/we-are-the-robots/we-are-the-robots-code-example.jpg" loading="lazy" onload="loaded(this)"/>
     </div>
     <div class="description">
       <h2>we-are-the-robots</h2>
@@ -314,7 +315,7 @@
   </article>
   <article id="generative-philosophy">
     <div class="media">
-      <img src="projects/negentropy/Negentropy-Kazik_Pogoda-Generative-2020.jpg"/>
+      <img src="projects/negentropy/Negentropy-Kazik_Pogoda-Generative-2020.jpg" loading="lazy" onload="loaded(this)"/>
     </div>
     <div class="description">
       <h2>Generative philosophy</h2>
@@ -333,7 +334,7 @@
   </article>
   <article id="deconstruction-of-hitler-neural-synthesis-of-generative-wittgenstein">
     <div class="media">
-      <img src="projects/negentropy/Negentropy-Kazik_Pogoda-Generative-2020.jpg"/>
+      <img src="projects/negentropy/Negentropy-Kazik_Pogoda-Generative-2020.jpg" loading="lazy" onload="loaded(this)"/>
     </div>
     <div class="description">
       <h2>Deconstruction of Hitler, neural synthesis of generative Wittgenstein</h2>
@@ -360,12 +361,12 @@
 <section id="me">
   <div class="row">
     <div class="media">
-      <img src="images/me/kazik-pogoda-at-coart-timisoara.jpg" alt="Kazik Pogoda at co(art) Festival, Timișoara 2019" />
+      <img src="images/me/kazik-pogoda-at-coart-timisoara.jpg" alt="Kazik Pogoda at co(art) Festival, Timișoara 2019" loading="lazy" onload="loaded(this)"/>
     </div>
     <div class="description">
       <p>
         My name is Kazik Pogoda and
-        <img src="logo/xemantic-logo.svg" class="logo-in-text" alt="xemantic logo"/>
+        <img src="logo/xemantic-logo.svg" class="logo-in-text" alt="xemantic logo"  loading="lazy" onload="loaded(this)"/>
         is a label I use for my projects. I am based in Berlin where I am working as a
         <em><a href="https://en.wikipedia.org/wiki/Creative_technology">creative technologist</a></em>.
         A fancy phrase to say that instead
@@ -440,7 +441,7 @@
       </p>
     </div>
     <div class="media">
-      <img src="images/me/kazik-pogoda-synthesizing-videos.jpg" alt="Kazik Pogoda synthesizing videos, 2019" />
+      <img src="images/me/kazik-pogoda-synthesizing-videos.jpg" alt="Kazik Pogoda synthesizing videos, 2019"  loading="lazy" onload="loaded(this)"/>
     </div>
   </div>
 </section>
@@ -450,7 +451,11 @@
       Copyright &copy; 2020 Kazimierz Pogoda / xemantic.com All Rights Reserved
     </p>
     <p>
-      <img src="logo/xemantic-logo.svg" class="logo-in-text" alt="xemantic logo"/>&nbsp;&nbsp;logo designed with &hearts; by <a href="">Ivan Škoro</a>.
+      <img src="logo/xemantic-logo.svg"
+           class="logo-in-text"
+           alt="xemantic logo"
+           loading="lazy" onload="loaded(this)"/>
+      logo designed with <i class="fas fa-heart"></i> by <a href="https://ivanskoro.com/">Ivan Škoro</a>.
     </p>
   </div>
 </footer>
