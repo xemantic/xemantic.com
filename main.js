@@ -2,17 +2,17 @@ const FADE_IN_DELAY = 7000;
 
 const GA_ID = "UA-35099425-1";
 
-const mainCss = "main.css";
-const flickityDist = "https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js";
-const flickityCssDist = "https://unpkg.com/flickity@2/dist/flickity.min.css";
-const flickityBgLazyLoadDist = "https://npmcdn.com/flickity-bg-lazyload@1.0.0/bg-lazyload.js";
-const flickityFullscreenDist = "https://unpkg.com/flickity-fullscreen@1/fullscreen.js";
-const flickityFullscreenCssDist = "https://unpkg.com/flickity-fullscreen@1/fullscreen.css";
+const MAIN_CSS = "main.css";
+const FLICKITY_DIST = "https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js";
+const FLICKITY_CSS_DIST = "https://unpkg.com/flickity@2/dist/flickity.min.css";
+const FLICKITY_BG_LAZY_LOAD_DIST = "https://npmcdn.com/flickity-bg-lazyload@1.0.0/bg-lazyload.js";
+const FLICKITY_FULLSCREEN_DIST = "https://unpkg.com/flickity-fullscreen@1/fullscreen.js";
+const FLICKITY_FULLSCREEN_CSS_DIST = "https://unpkg.com/flickity-fullscreen@1/fullscreen.css";
 
-const gaDist = "https://www.googletagmanager.com/gtag/js?" + GA_ID;
-const vimeoDist = "https://player.vimeo.com/api/player.js";
-const arsenalFontDist = "https://fonts.googleapis.com/css2?family=Arsenal:ital,wght@0,400;0,700;1,400;1,700&display=swap";
-const fontAwesomeDist = "https://kit.fontawesome.com/0bbdfd8b39.js";
+const GA_DIST = "https://www.googletagmanager.com/gtag/js?" + GA_ID;
+const VIMEO_DIST = "https://player.vimeo.com/api/player.js";
+const FONT_DIST = "https://fonts.googleapis.com/css2?family=Arsenal:ital,wght@0,400;0,700;1,400;1,700&display=swap";
+const FONT_AWESOME_DIST = "https://kit.fontawesome.com/0bbdfd8b39.js";
 
 const cryptedEmail = "znvygb:bssvpr@krznagvp.pbz";
 
@@ -82,15 +82,15 @@ const loadCss = (src) => {
 };
 
 Promise.all([
-  loadCss(arsenalFontDist),
-  loadJs(fontAwesomeDist, "anonymous"),
-  loadJs(flickityDist).then(() => Promise.all([
-    loadJs(flickityFullscreenDist),
-    loadJs(flickityBgLazyLoadDist)
+  loadCss(FONT_DIST),
+  loadJs(FONT_AWESOME_DIST, "anonymous"),
+  loadJs(FLICKITY_DIST).then(() => Promise.all([
+    loadJs(FLICKITY_FULLSCREEN_DIST),
+    loadJs(FLICKITY_BG_LAZY_LOAD_DIST)
   ])),
-  loadCss(mainCss),
-  loadCss(flickityCssDist),
-  loadCss(flickityFullscreenCssDist)
+  loadCss(MAIN_CSS),
+  loadCss(FLICKITY_CSS_DIST),
+  loadCss(FLICKITY_FULLSCREEN_CSS_DIST)
 ]).then(() => {
   const flickityMiniatures = new Flickity(miniatures, {
     bgLazyLoad: 2,
@@ -122,5 +122,5 @@ Promise.all([
 });
 
 // we don't need to wait for these
-addScript(gaDist);
-addScript(vimeoDist);
+addScript(GA_DIST);
+addScript(VIMEO_DIST);
