@@ -202,6 +202,14 @@ img {
   transition-delay: 2s;
 }
 
+#projects article .media .caption {
+  padding: var(--content-padding);
+  padding-top: calc(var(--content-padding) * .5);
+  text-align: center;
+  font-style: italic;
+  font-size: .68rem;
+}
+
 #projects article .description {
   flex: var(--golden-ratio-width-shorter);
   background: rgba(0, 0, 0, 0.5);
