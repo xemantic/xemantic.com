@@ -14,7 +14,16 @@ const VIMEO_DIST = "https://player.vimeo.com/api/player.js";
 const FONT_DIST = "https://fonts.googleapis.com/css2?family=Arsenal:ital,wght@0,400;0,700;1,400;1,700&display=swap";
 const FONT_AWESOME_DIST = "https://kit.fontawesome.com/0bbdfd8b39.js";
 
-const cryptedEmail = "znvygb:bssvpr@krznagvp.pbz";
+const cryptedEmail = "bssvpr@krznagvp.pbz";
+
+let email = cryptedEmail.replace(/[a-zA-Z]/g, c => String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26));
+document.querySelectorAll(".email").forEach(element => {
+  if (element.nodeName == "A") {
+    element.href = "mailto:" + email;
+  } else if (element.nodeName = "SPAN") {
+    element.appendChild(document.createTextNode(email));
+  }
+});
 
 function loaded(element) {
   element.classList.add("loaded");
@@ -40,11 +49,6 @@ function show(element) {
   element.classList.remove("hidden");
   element.classList.add("fade-in");
 }
-
-//let email = cryptedEmail.replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);});
-//document.querySelectorAll(".email").forEach(element => {
-//  element.appendChild(email);
-//})
 
 window.dataLayer = window.dataLayer || [];
 
