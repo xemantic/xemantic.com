@@ -16,24 +16,30 @@ const fontAwesomeDist = "https://kit.fontawesome.com/0bbdfd8b39.js";
 
 const cryptedEmail = "znvygb:bssvpr@krznagvp.pbz";
 
+function loaded(element) {
+  element.classList.add("loaded");
+}
+
+// restoring back image src attributes
+for (let i = 0; i < document.images.length; i++) {
+  let image = document.images[i];
+  let dataSrc = image.getAttribute("data-src");
+  if (dataSrc) {
+    image.onload = loaded(image);
+    image.src = image.getAttribute("data-src");
+    image.removeAttribute("data-src");
+  }
+}
+
 const miniatures = document.getElementById("project-miniatures");
 const projects = document.getElementById("projects");
 const me = document.getElementById("me");
 const footer = document.getElementsByTagName("footer")[0];
 
-function hide(element) {
-  element.classList.add("hidden");
-}
-
 function show(element) {
   element.classList.remove("hidden");
   element.classList.add("fade-in");
 }
-
-hide(miniatures);
-hide(projects);
-hide(me);
-hide(footer);
 
 //let email = cryptedEmail.replace(/[a-zA-Z]/g, function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);});
 //document.querySelectorAll(".email").forEach(element => {
@@ -102,6 +108,7 @@ Promise.all([
     }
   };
   window.addEventListener("hashchange", hashChangeHandler, false);
+
   const fadeInTime = START_TIME + FADE_IN_DELAY - Date.now();
   setTimeout(() => {
     root.style.setProperty("--z-index-background", -2);
@@ -109,6 +116,7 @@ Promise.all([
     show(projects);
     show(me);
     show(footer);
+    flickityMiniatures.resize();
   }, fadeInTime);
 
 });

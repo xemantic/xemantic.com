@@ -46,21 +46,29 @@
   </script>
   <style>
     :root {
-      --shadow-x: 1.3vw;
-      --shadow-y: 1.3vw;
-      --shadow-blur-radius: .15vw;
-      --shadow-opacity: .8;
       --golden-ratio-width-longer: 61.8vw;
       --golden-ratio-width-shorter: 38.2vw;
       --golden-ratio-height-longer: 61.8vh;
       --golden-ratio-height-shorter: 38.2vh;
-      /* initially covering everything */
+
+      --shadow-x: 1.3vw;
+      --shadow-y: 1.3vw;
+      --shadow-blur-radius: .15vw;
+      --shadow-opacity: .8;
+
+      /* initially background is covering everything */
       --z-index-logo: 4;
       --z-index-background: 3;
+
+      --logo-fade-in-delay: 2s;
+      --logo-fade-in-duration: 7s;
     }
     html {
       box-sizing: border-box;
       background: black;
+    }
+    body {
+      overflow-y: scroll;
     }
     *, *:before, *:after {
       box-sizing: inherit;
@@ -79,8 +87,8 @@
       width: var(--golden-ratio-width-longer);
       opacity: 0;
       filter: drop-shadow(var(--shadow-x) var(--shadow-y) var(--shadow-blur-radius) rgba(0, 0, 0, var(--shadow-opacity)));
-      animation: fade-in 7s ease-in-out;
-      animation-delay: 2s;
+      animation: fade-in var(--logo-fade-in-duration) ease-in-out;
+      animation-delay: var(--logo-fade-in-delay);
       animation-fill-mode: forwards; /* will keep the opacity */
       z-index: var(--z-index-logo);
     }
@@ -97,12 +105,16 @@
       height: 100vh;
       z-index: var(--z-index-background);
     }
+    .hidden {
+      display: none;
+    }
   </style>
   <script>
     const START_TIME = Date.now();
     const MAX_SHADOW_DROP = 5.0;
     const MAX_BLUR_RADIUS = .9;
 
+    // LoopbackCanvas
     function n(a){var c=0;return function(){return c<a.length?{done:!1,value:a[c++]}:{done:!0}}}function p(a){return Error(a)}p.prototype=Object.create(Error.prototype);
     function q(a,c,e){this.a=a;this.b=a.createTexture();a.bindTexture(a.TEXTURE_2D,this.b);a.texImage2D(a.TEXTURE_2D,0,a.RGBA16F,c,e,0,a.RGBA,a.FLOAT,null);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MIN_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MAG_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_S,a.CLAMP_TO_EDGE);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_T,a.CLAMP_TO_EDGE);this.c=a.createFramebuffer();a.bindFramebuffer(a.FRAMEBUFFER,this.c);a.framebufferTexture2D(a.FRAMEBUFFER,
     a.COLOR_ATTACHMENT0,a.TEXTURE_2D,this.b,0)}q.prototype.release=function(){this.a.bindFramebuffer(this.a.FRAMEBUFFER,this.c);this.a.deleteTexture(this.b);this.a.bindFramebuffer(this.a.FRAMEBUFFER,null);this.a.deleteFramebuffer(this.c)};function r(a,c,e){c=a.createShader(c);a.shaderSource(c,e);a.compileShader(c);if(!a.getShaderParameter(c,a.COMPILE_STATUS)){var f=String(a.getShaderInfoLog(c));console.log(f,e);a.deleteShader(c);return f}return c}
@@ -112,6 +124,7 @@
     var b=d.getContext("webgl2");if(!b)throw new p("webgl2 context not supported on supplied canvas element: "+d);if(!b.getExtension("EXT_color_buffer_float"))throw new p("EXT_color_buffer_float is required but not supported here");var k=x(b,d.width,d.height),h=t(b,a),m=t(b,"#version 300 es\nprecision lowp float;uniform sampler2D T;uniform vec2 R;out vec4 O;void main(){O=texture(T,gl_FragCoord.xy/R);}");b.useProgram(h);a=b.getAttribLocation(h,"V");c=w(b);b.bindBuffer(b.ARRAY_BUFFER,c);b.vertexAttribPointer(a,
     2,b.FLOAT,!1,0,0);b.enableVertexAttribArray(a);b.viewport(0,0,b.canvas.width,b.canvas.height);var A=b.getUniformLocation(h,"R"),B=b.getUniformLocation(h,"D"),y=b.getUniformLocation(h,"T"),z=b.getUniformLocation(h,"F");b.useProgram(m);var C=b.getUniformLocation(m,"R"),D=b.getUniformLocation(m,"D");f();var v=0,u=0;e()};window.WebglLoopbackException=p;
 
+    // will load main.js, but also will be used there to load other scripts
     function addScript(src, callback, errorCallback, crossorigin) {
       const script = document.createElement("script");
       if (callback) {
@@ -141,21 +154,43 @@
     document.addEventListener("mousemove", handleMove, false);
     document.addEventListener("touchmove", handleMove, false);
 
-    function loaded(element) {
-      element.classList.add("loaded");
-    }
+    // now we have to fix chrome native image lazy loading which is still trying to download some
+    // images before the page emits load event
+    const supportsLazyLoad = ("loading" in document.createElement("img"));
+    const lazyLoadingProcessor = (supportsLazyLoad && window.MutationObserver) ? new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        mutation.addedNodes.forEach(node => {
+          if (node.nodeName == "IMG" && node.loading && (node.loading == "lazy")) {
+            node.setAttribute("data-src", node.src);
+            node.src = "";
+          }
+        });
+      });
+    }) : null;
 
     window.addEventListener("load", e => {
+      if (lazyLoadingProcessor) {
+        lazyLoadingProcessor.disconnect();
+      }
       new LoopbackCanvas("loopback-background", "loopback-shader");
       addScript("main.js");
     }, false);
   </script>
 </head>
 <body>
+<script>
+  // installing the processor as early as possible, after the body is created
+  if (lazyLoadingProcessor) {
+    lazyLoadingProcessor.observe(document.body, {childList: true, subtree: true});
+  }
+</script>
 <header>
-  <svg class="logo" viewBox="0 0 1052.5 212" xmlns="http://www.w3.org/2000/svg"><style>.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#fff}</style><g clip-rule="evenodd" fill="#5d5e5f" fill-rule="evenodd"><path class="st0" d="M997.632 179.087c-41.02 0-63.905-30.14-63.905-69.283s22.886-69.283 63.905-69.283c30.39 0 51.9 17.883 54.651 46.647h-25.262c-2.376-14.632-13.006-25.262-28.013-25.262h-2.626c-25.262 0-37.268 22.636-37.268 48.023s12.006 48.023 37.268 48.023h2.626c14.882 0 25.637-10.63 28.013-25.262h25.262c-2.626 28.639-24.261 46.397-54.65 46.397zM885.829 27.265h25.262V176.46h-25.262zM809.042 129.063V65.158h-29.264V43.272h29.264V.127h25.262v43.145h32.015v21.886h-32.015v118.557c0 18.634-9.38 28.013-28.014 28.013h-20.01v-22.636h12.007c8.003 0 10.63-2.626 10.63-10.63v-49.399zM673.102 101.925v74.661h-25.263V27.265h25.263v34.641c8.003-12.006 21.26-21.26 42.645-21.26 30.64 0 48.023 18.634 48.023 46.647v89.293h-25.262V92.671c0-18.634-8.004-30.64-26.638-30.64h-2.626c-18.76-.125-36.142 14.507-36.142 39.894zM384.963 123.186v25.262c0 18.634-9.38 28.013-28.013 28.013h-20.01v-22.636h12.006c8.004 0 10.63-2.626 10.63-10.63v-50.65c0-18.633-8.004-30.639-26.638-30.639h-2.626c-16.008 0-33.266 14.632-33.266 40.02v93.294h-25.262V43.272h25.262v18.634c8.004-12.006 21.26-21.26 40.02-21.26 19.134 0 35.141 7.504 44.02 24.762 10.38-18.384 27.764-24.762 44.022-24.762 30.64 0 48.023 18.634 48.023 46.647v89.293h-25.513V92.671c0-18.634-8.003-30.64-26.637-30.64h-2.627c-16.007 0-33.266 14.632-33.266 40.02v21.135zM191.996 40.646c-31.39 0-62.03 22.886-62.03 69.033 0 46.647 29.89 69.533 62.905 69.533 27.763 0 51.15-14.632 55.402-42.145H223.01c-2.627 14.132-15.133 20.76-28.514 20.76h-1.626c-16.508 0-36.017-13.631-37.518-44.02h93.67c2.501-48.274-19.634-73.161-57.027-73.161zm-35.142 53.276c4.752-23.762 20.26-32.016 33.891-32.016h2.626c14.883 0 28.514 8.504 30.89 32.016zM49.302 109.304L1.404 43.272h29.514L64.31 89.044l33.517-45.772h28.763l-47.898 65.532 49.274 67.657h-29.64l-34.64-47.648-34.893 47.648H.03zM594.94 43.272v18.634c-8.005-12.006-20.01-21.26-42.646-21.26-33.266 0-58.654 25.262-58.654 69.283s25.263 69.283 58.654 69.283c22.635 0 34.641-9.38 42.645-21.26v37.268h25.262V43.272zM557.67 157.827h-2.626c-20.01 0-36.017-16.008-36.017-48.023s16.007-48.023 36.017-48.023h2.626c18.634 0 37.268 16.008 37.268 48.023s-18.634 48.023-37.268 48.023z"/></g></svg>
+  <svg class="logo" viewBox="0 0 1052.5 212" xmlns="http://www.w3.org/2000/svg">
+    <style>.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#fff}</style>
+    <g clip-rule="evenodd" fill="#5d5e5f" fill-rule="evenodd"><path class="st0" d="M997.632 179.087c-41.02 0-63.905-30.14-63.905-69.283s22.886-69.283 63.905-69.283c30.39 0 51.9 17.883 54.651 46.647h-25.262c-2.376-14.632-13.006-25.262-28.013-25.262h-2.626c-25.262 0-37.268 22.636-37.268 48.023s12.006 48.023 37.268 48.023h2.626c14.882 0 25.637-10.63 28.013-25.262h25.262c-2.626 28.639-24.261 46.397-54.65 46.397zM885.829 27.265h25.262V176.46h-25.262zM809.042 129.063V65.158h-29.264V43.272h29.264V.127h25.262v43.145h32.015v21.886h-32.015v118.557c0 18.634-9.38 28.013-28.014 28.013h-20.01v-22.636h12.007c8.003 0 10.63-2.626 10.63-10.63v-49.399zM673.102 101.925v74.661h-25.263V27.265h25.263v34.641c8.003-12.006 21.26-21.26 42.645-21.26 30.64 0 48.023 18.634 48.023 46.647v89.293h-25.262V92.671c0-18.634-8.004-30.64-26.638-30.64h-2.626c-18.76-.125-36.142 14.507-36.142 39.894zM384.963 123.186v25.262c0 18.634-9.38 28.013-28.013 28.013h-20.01v-22.636h12.006c8.004 0 10.63-2.626 10.63-10.63v-50.65c0-18.633-8.004-30.639-26.638-30.639h-2.626c-16.008 0-33.266 14.632-33.266 40.02v93.294h-25.262V43.272h25.262v18.634c8.004-12.006 21.26-21.26 40.02-21.26 19.134 0 35.141 7.504 44.02 24.762 10.38-18.384 27.764-24.762 44.022-24.762 30.64 0 48.023 18.634 48.023 46.647v89.293h-25.513V92.671c0-18.634-8.003-30.64-26.637-30.64h-2.627c-16.007 0-33.266 14.632-33.266 40.02v21.135zM191.996 40.646c-31.39 0-62.03 22.886-62.03 69.033 0 46.647 29.89 69.533 62.905 69.533 27.763 0 51.15-14.632 55.402-42.145H223.01c-2.627 14.132-15.133 20.76-28.514 20.76h-1.626c-16.508 0-36.017-13.631-37.518-44.02h93.67c2.501-48.274-19.634-73.161-57.027-73.161zm-35.142 53.276c4.752-23.762 20.26-32.016 33.891-32.016h2.626c14.883 0 28.514 8.504 30.89 32.016zM49.302 109.304L1.404 43.272h29.514L64.31 89.044l33.517-45.772h28.763l-47.898 65.532 49.274 67.657h-29.64l-34.64-47.648-34.893 47.648H.03zM594.94 43.272v18.634c-8.005-12.006-20.01-21.26-42.646-21.26-33.266 0-58.654 25.262-58.654 69.283s25.263 69.283 58.654 69.283c22.635 0 34.641-9.38 42.645-21.26v37.268h25.262V43.272zM557.67 157.827h-2.626c-20.01 0-36.017-16.008-36.017-48.023s16.007-48.023 36.017-48.023h2.626c18.634 0 37.268 16.008 37.268 48.023s-18.634 48.023-37.268 48.023z"/></g>
+  </svg>
 </header>
-<nav id="project-miniatures" class="miniatures">
+<nav id="project-miniatures" class="miniatures hidden">
   <a class="miniature miniature-with-content"
      href="#xemantic">
     <span class="logo">Achtung! Under heavy construction!</span>
@@ -197,10 +232,10 @@
     <h2>Deconstruction of Hitler, neural synthesis of generative Wittgenstein</h2>
   </a>
 </nav>
-<section id="projects">
+<section id="projects" class="hidden">
   <article id="xemantic">
     <div class="media">
-      <iframe class="iframe" src="about:blank" data-src="index.html"></iframe>
+<!--      <iframe class="iframe" src="about:blank" data-src="index.html"></iframe>-->
     </div>
     <div class="description">
       <h2>xemantic.com</h2>
@@ -258,6 +293,7 @@
         <li>shadow animation should follow touch events</li>
         <li>social media sharing buttons like here: https://alligator.io/css/minimal-css-reset/</li>
         <li>add alt to all the images</li>
+        <li>fix link style on small screens when dotted line is scaled down and does not look good</li>
       </ul>
     </div>
   </article>
@@ -265,7 +301,7 @@
     <div class="media">
       <div>
         <div data-flickity='{ "fullscreen": true, "lazyLoad": 1 }'>
-          <img src="projects/negentropy/Negentropy-Kazik_Pogoda-Generative-2020.jpg" loading="lazy" onload="loaded(this)"/>
+          <img src="projects/negentropy/Negentropy-Kazik_Pogoda-Generative-2020.jpg" loading="lazy"/>
         </div>
       </div>
     </div>
@@ -294,7 +330,7 @@
   </article>
   <article id="we-are-the-robots">
     <div class="media">
-      <img src="projects/we-are-the-robots/we-are-the-robots-code-example.jpg" loading="lazy" onload="loaded(this)"/>
+      <img src="projects/we-are-the-robots/we-are-the-robots-code-example.jpg" loading="lazy"/>
     </div>
     <div class="description">
       <h2>we-are-the-robots</h2>
@@ -315,7 +351,7 @@
   </article>
   <article id="generative-philosophy">
     <div class="media">
-      <img src="projects/negentropy/Negentropy-Kazik_Pogoda-Generative-2020.jpg" loading="lazy" onload="loaded(this)"/>
+      <img src="projects/negentropy/Negentropy-Kazik_Pogoda-Generative-2020.jpg" loading="lazy"/>
     </div>
     <div class="description">
       <h2>Generative philosophy</h2>
@@ -334,7 +370,7 @@
   </article>
   <article id="deconstruction-of-hitler-neural-synthesis-of-generative-wittgenstein">
     <div class="media">
-      <img src="projects/negentropy/Negentropy-Kazik_Pogoda-Generative-2020.jpg" loading="lazy" onload="loaded(this)"/>
+      <img src="projects/negentropy/Negentropy-Kazik_Pogoda-Generative-2020.jpg" loading="lazy"/>
     </div>
     <div class="description">
       <h2>Deconstruction of Hitler, neural synthesis of generative Wittgenstein</h2>
@@ -358,15 +394,15 @@
     </div>
   </article>
 </section>
-<section id="me">
+<section id="me" class="hidden">
   <div class="row">
     <div class="media">
-      <img src="images/me/kazik-pogoda-at-coart-timisoara.jpg" alt="Kazik Pogoda at co(art) Festival, Timișoara 2019" loading="lazy" onload="loaded(this)"/>
+      <img src="images/me/kazik-pogoda-at-coart-timisoara.jpg" alt="Kazik Pogoda at co(art) Festival, Timișoara 2019" loading="lazy"/>
     </div>
     <div class="description">
       <p>
         My name is Kazik Pogoda and
-        <img src="logo/xemantic-logo.svg" class="logo-in-text" alt="xemantic logo"  loading="lazy" onload="loaded(this)"/>
+        <img src="logo/xemantic-logo.svg" class="logo-in-text" alt="xemantic logo" loading="lazy"/>
         is a label I use for my projects. I am based in Berlin where I am working as a
         <em><a href="https://en.wikipedia.org/wiki/Creative_technology">creative technologist</a></em>.
         A fancy phrase to say that instead
@@ -441,11 +477,11 @@
       </p>
     </div>
     <div class="media">
-      <img src="images/me/kazik-pogoda-synthesizing-videos.jpg" alt="Kazik Pogoda synthesizing videos, 2019"  loading="lazy" onload="loaded(this)"/>
+      <img src="images/me/kazik-pogoda-synthesizing-videos.jpg" alt="Kazik Pogoda synthesizing videos, 2019" loading="lazy" />
     </div>
   </div>
 </section>
-<footer>
+<footer class="hidden">
   <div>
     <p>
       Copyright &copy; 2020 Kazimierz Pogoda / xemantic.com All Rights Reserved
@@ -453,8 +489,7 @@
     <p>
       <img src="logo/xemantic-logo.svg"
            class="logo-in-text"
-           alt="xemantic logo"
-           loading="lazy" onload="loaded(this)"/>
+           alt="xemantic logo" loading="lazy"/>
       logo designed with <i class="fas fa-heart"></i> by <a href="https://ivanskoro.com/">Ivan Škoro</a>.
     </p>
   </div>

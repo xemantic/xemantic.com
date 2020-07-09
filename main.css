@@ -73,11 +73,6 @@ img {
   vertical-align: middle;
 }
 
-.hidden {
-  visibility: hidden;
-  opacity: 0;
-}
-
 .fade-in {
   visibility: visible;
   opacity: 1;
