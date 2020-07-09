@@ -171,23 +171,27 @@ img {
   top: 0;
   left: 0;
   width: 100%;
+  /* the height will be set dynamically */
 }
 
 #projects article {
   position: absolute;
+  /* padding to accommodate miniatures nav will make hash based navigation work */
   padding-top: var(--golden-ratio-height-shorter);
   display: flex;
   pointer-events: none;
   visibility: hidden;
-	z-index: var(--z-index-over);
 	opacity: 0;
 	transform: scale(3.618);
+	transform-origin: center 50vh;
 	transition: visibility 2s, transform 2s, opacity 2s;
+  z-index: var(--z-index-over);
 }
 
 #projects article:target {
   visibility: visible;
   transform: scale(1);
+  pointer-events: auto;
   opacity: 1;
   z-index: var(--z-index-content);
   transition: visibility 0s, transform 0s, opacity 0s;
