@@ -13,6 +13,10 @@
   --text-color: white;
   --selection-color: rgb(220, 34, 240, .4);
   --paragraph-spacing: .618rem;
+  --content-background-strong: rgba(0, 0, 0, .618);
+  --miniature-title-height: calc(var(--golden-ratio-height-shorter) * .236);
+  --miniature-title-padding: calc(var(--golden-ratio-height-shorter) * 0.0618);
+  --miniature-title-font-size: calc(var(--golden-ratio-height-shorter) * .13);
 }
 
 ::selection {
@@ -94,11 +98,11 @@ img {
   width: calc(var(--golden-ratio-height-shorter) * 1.618);
   height: var(--golden-ratio-height-shorter);
   margin-right: calc(var(--golden-ratio-height-shorter) * -0.22);
-  background-size: cover;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   color: white;
   text-overflow: ellipsis;
   text-decoration: none;
-  text-shadow: 0px 0px 2px black, 0px 0px 2px black, 0px 0px 4px black;
   transform: scale(.8);
   justify-content: center;
   align-items: flex-end;
@@ -113,7 +117,17 @@ img {
 */
 
 .miniatures .miniature h2 {
-  margin-bottom: calc(var(--golden-ratio-height-shorter) * .0618); /* TODO put as variable */
+  width: 100%;
+  height: var(--miniature-title-height);
+  padding-left: var(--miniature-title-padding);
+  padding-right: var(--miniature-title-padding);
+  background: var(--content-background-strong);
+  line-height: var(--miniature-title-height);
+  font-size: var(--miniature-title-font-size);
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .miniatures .flickity-viewport {
@@ -136,16 +150,6 @@ img {
 .miniatures .flickity-viewport .miniature.chosen {
   transform: scale(1);
   margin-right: calc(var(--golden-ratio-height-shorter) * -0.44);
-}
-
-.miniatures .miniature.miniature-with-content {
-  background: rgba(0, 0, 0, 0.5);
-}
-
-.miniatures .miniature .logo {
-  position: absolute;
-  align-self: center;
-  width: 61.8%;
 }
 
 /*
@@ -261,6 +265,11 @@ img {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.iframe {
+  width: 100%;
+  height: var(--golden-ratio-width-shorter);
 }
 /* projects: end */
 
