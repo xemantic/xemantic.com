@@ -17,6 +17,7 @@
   --miniature-title-height: calc(var(--golden-ratio-height-shorter) * .236);
   --miniature-title-padding: calc(var(--golden-ratio-height-shorter) * 0.0618);
   --miniature-title-font-size: calc(var(--golden-ratio-height-shorter) * .13);
+  --h2-margin-bottom: .5rem;
 }
 
 ::selection {
@@ -241,6 +242,7 @@ img {
 
 #projects article .description h2 {
   text-align: right;
+  margin-bottom: var(--h2-margin-bottom);
 }
 
 #projects article .description .intro {

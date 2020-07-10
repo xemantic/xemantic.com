@@ -1,4 +1,3 @@
-const FADE_IN_DELAY = 7000;
 const IFRAME_REMOVAL_DELAY = 3000;
 
 const GA_ID = "UA-35099425-1";
@@ -91,7 +90,7 @@ function initializeProject(project) {
   let iframe = project.querySelector("iframe");
   if (iframe) {
     iframe.src = (project.id == "xemantic")
-      ? window.location.href.split('#')[0] + "?x"
+      ? window.location.href.split("#")[0] + "?x"
       : iframe.getAttribute("data-src");
   }
 }
@@ -145,15 +144,17 @@ Promise.all([
   };
   window.addEventListener("hashchange", hashChangeHandler, false);
 
-  const fadeInTime = START_TIME + FADE_IN_DELAY - Date.now();
-  setTimeout(() => {
-    root.style.setProperty("--z-index-background", -2);
-    show(miniatures);
-    show(projects);
-    show(me);
-    show(footer);
-    flickityMiniatures.resize();
-  }, fadeInTime);
+  root.style.setProperty("--z-index-background", -2);
+  show(miniatures);
+  show(projects);
+  show(me);
+  show(footer);
+  flickityMiniatures.resize();
+  let hash = window.location.hash;
+  if (hash) {
+    window.location.hash = "";
+    window.location.hash = hash;
+  }
 
 });
 
