@@ -1,14 +1,11 @@
 # new website todo
 
-* fix style of titles in project miniatures - they should have dark background
-* fix ul list style margin
 * fix all the margins in all resolutions
 * add support for media galleries
 * fix footer style
 * make sure that any project anchor will be working from external link, even the loading of the site is slow
 * review the whole code
 * prepare fallback background for safari - negentropy
-* make iframes lazy loaded and removed when not visible
 * add all the projects
 * make shader background dependant on the mouse position
 * fix background resizing on mobile - scrolling on mobile often changes viewport size

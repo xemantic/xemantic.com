@@ -1,4 +1,5 @@
 const FADE_IN_DELAY = 7000;
+const IFRAME_REMOVAL_DELAY = 3000;
 
 const GA_ID = "UA-35099425-1";
 
@@ -85,6 +86,23 @@ const loadCss = (src) => {
   });
 };
 
+// if there are iframes
+function initializeProject(project) {
+  let iframe = project.querySelector("iframe");
+  if (iframe) {
+    iframe.src = (project.id == "xemantic")
+      ? window.location.href.split('#')[0] + "?x"
+      : iframe.getAttribute("data-src");
+  }
+}
+
+function cleanUpProject(project) {
+  let iframe = project.querySelector("iframe");
+  if (iframe) {
+    iframe.removeAttribute("src");
+  }
+}
+
 Promise.all([
   loadCss(FONT_DIST),
   loadJs(FONT_AWESOME_DIST, "anonymous"),
@@ -101,6 +119,17 @@ Promise.all([
     freeScroll: true,
     pageDots: false,
   });
+  var selectedProject = null;
+  const projectCleaner = (projectToClean) => {
+    if (!projectToClean) {
+      return;
+    }
+    setTimeout(() => {
+      if (projectToClean != selectedProject) {
+        cleanUpProject(projectToClean);
+      }
+    }, IFRAME_REMOVAL_DELAY);
+  }
   const hashChangeHandler = (e) => {
     let hash = location.hash;
     let project = projects.querySelector(hash)
@@ -109,6 +138,9 @@ Promise.all([
       let height = project.clientHeight + "px";
       projects.style.height = height;
       me.style.marginTop = height;
+      initializeProject(project);
+      projectCleaner(selectedProject);
+      selectedProject = project;
     }
   };
   window.addEventListener("hashchange", hashChangeHandler, false);
