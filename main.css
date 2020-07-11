@@ -46,8 +46,30 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   text-align: justify;
+}
+
+blockquote {
+  text-align: center;
+  font-style: italic;
+  line-height: 1.682rem;
+}
+
+blockquote::before {
+  content: open-quote;
+}
+
+blockquote::after {
+  content: close-quote;
+}
+
+blockquote q {
+  quotes: "«" "»";
+}
+
+p, blockquote {
   margin-bottom: var(--paragraph-spacing);
 }
+
 
 p:last-child {
   margin-bottom: 0;
