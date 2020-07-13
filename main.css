@@ -1,7 +1,7 @@
 /* general styles: begin */
 :root {
-  --font-size-base: 14px;
-  --font-size-increment: 1.04166667vw;
+  --font-size-base: 15px;
+  --font-size-increment: 1vw;
   --font-size: calc(var(--font-size-base) + var(--font-size-increment));
   --content-padding-base: .5vw;
   --content-padding-increment: 1vw;
@@ -243,7 +243,7 @@ img {
 
 #projects article .description {
   flex: var(--golden-ratio-width-shorter);
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--content-background-strong);
   padding: var(--content-padding);
   transform: translateX(var(--golden-ratio-width-shorter));
   transition: transform 0s;
