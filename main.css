@@ -225,7 +225,6 @@ img {
 }
 
 #projects article .media {
-  min-height: var(--golden-ratio-height-longer);
   flex: var(--golden-ratio-width-longer);
   background: rgba(0, 0, 0, 0.25);
   transform: translateX(calc(var(--golden-ratio-width-longer) * -1));
@@ -239,6 +238,31 @@ img {
   text-align: center;
   font-style: italic;
   font-size: .68rem;
+}
+
+#projects article .media {
+  margin-bottom: 32px;
+}
+
+#projects article .media .flickity-viewport {
+  transition: height 1.3s;
+}
+
+#projects article .media .flickity-page-dots .dot {
+  width: 12px;
+  height: 12px;
+  opacity: .68;
+  background: transparent;
+  border: 2px solid white;
+}
+
+#projects article .media .flickity-page-dots .dot.is-selected {
+  background: white;
+}
+
+#projects article .media .medium {
+  width: 100%;
+  background: rgba(0, 0, 0. 0.25);
 }
 
 #projects article .description {

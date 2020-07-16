@@ -27,8 +27,27 @@
 * social media sharing buttons like here: https://alligator.io/css/minimal-css-reset/
 * add alt to all the images
 * fix link style on small screens when dotted line is scaled down and does not look good
+* social media links
 
 # list of projects to add
+
+* dream world
+* Negentropy
+* the body of noise
+* eyegasm
+* alien landscapes
+* not so discreet charm of machine colors
+* ugly locomotive
+* the early green outburst
+* yozy
+* emocomu
+* terra aria
+* anatomy lesson futurium
+* differentia javaica
+* aggressive flowers
+* github-users
+* polskiezoo.info
+* dr Oblivion
 
 * polishismylove.pl
 * web4tia

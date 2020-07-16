@@ -72,33 +72,83 @@ function addCss(href, callback, errorCallback) {
   document.head.appendChild(link);
 }
 
-const loadJs = (src, crossorigin) => {
-  return new Promise((resolve, reject) => {
-    addScript(src, () => { resolve(); }, (error) => { reject(error); }, crossorigin);
-  });
-};
+const loadJs = (src, crossorigin) => new Promise((resolve, reject) => {
+  addScript(src, () => { resolve(); }, (error) => { reject(error); }, crossorigin);
+});
 
-const loadCss = (src) => {
-  return new Promise((resolve, reject) => {
-    addCss(src, () => {
-    resolve(); }, (error) => { reject(error); });
-  });
-};
+const loadCss = (src) => new Promise((resolve, reject) => {
+  addCss(src, () => { resolve(); }, (error) => { reject(error); });
+});
 
-// if there are iframes
+function newPlayer(element) {
+  element.player = new Vimeo.Player(element, {
+    id: element.getAttribute("data-video-id"),
+    responsive: true,
+    byline: false,
+    title: false,
+    color: "ffffff"
+  });
+  return element.player;
+}
+
+function initializeMedia(media) {
+  media.querySelectorAll(":scope > .flickity").forEach(flickityElement => {
+    const flickity = new Flickity(flickityElement, {
+      adaptiveHeight: true
+    });
+    flickityElement.flickity = flickity;
+    flickityElement.querySelectorAll(".vimeo-video").forEach(video => {
+      const player = newPlayer(video);
+      function showButtons(visibility) {
+        const value = visibility ? "visible" : "hidden";
+        flickity.prevButton.element.style.visibility = value;
+        flickity.nextButton.element.style.visibility = value;
+      }
+      player.ready().then(() => flickity.resize());
+      player.on("playing", () => flickity.showButtons(false));
+      player.on("pause",   () => flickity.showButtons(true));
+      player.on("ended",   () => flickity.showButtons(true));
+      player.on("loaded",  () => video.classList.add("loaded"));
+      flickity.on("change", (index) => { player.pause(); })
+    });
+  });
+  media.querySelectorAll(":scope > .vimeo-video").forEach(video => {
+    newPlayer(vimeo);
+  });
+}
+
+function cleanUpMedia(media) {
+  videos = media.querySelectorAll(".vimeo-video");
+  videos.forEach(video => {
+    if (video.player) {
+      video.player.destroy().then(() => {
+        video.player = null;
+        video.textContent = "";
+      });
+    }
+    video.classList.remove("loaded");
+  });
+  const flickity = media.querySelector(".flickity");
+  if (flickity) {
+    flickity.flickity.destroy();
+  }
+}
+
 function initializeProject(project) {
-  let iframe = project.querySelector("iframe");
-  if (iframe) {
-    iframe.src = (project.id == "xemantic")
-      ? window.location.href.split("#")[0] + "?x"
-      : iframe.getAttribute("data-src");
+  if (project.id == "xemantic") {
+    const iframe = project.querySelector("iframe");
+    iframe.src = window.location.href.split("#")[0] + "?x"
+  } else {
+    initializeMedia(project.querySelector(".media"));
   }
 }
 
 function cleanUpProject(project) {
-  let iframe = project.querySelector("iframe");
-  if (iframe) {
+  if (project.id == "xemantic") {
+    let iframe = project.querySelector("iframe");
     iframe.removeAttribute("src");
+  } else {
+    cleanUpMedia(project.querySelector(".media"));
   }
 }
 
@@ -109,6 +159,7 @@ Promise.all([
     loadJs(FLICKITY_FULLSCREEN_DIST),
     loadJs(FLICKITY_BG_LAZY_LOAD_DIST)
   ])),
+  loadJs(VIMEO_DIST),
   loadCss(MAIN_CSS),
   loadCss(FLICKITY_CSS_DIST),
   loadCss(FLICKITY_FULLSCREEN_CSS_DIST)
@@ -129,18 +180,19 @@ Promise.all([
       }
     }, IFRAME_REMOVAL_DELAY);
   }
+
   const hashChangeHandler = (e) => {
-    let hash = location.hash;
-    let project = projects.querySelector(hash)
-    if (project) {
-      flickityMiniatures.selectCell("[href='" + hash + "']");
-      let height = project.clientHeight + "px";
-      projects.style.height = height;
-      me.style.marginTop = height;
-      initializeProject(project);
-      projectCleaner(selectedProject);
-      selectedProject = project;
-    }
+    const hash = location.hash;
+    if (!hash) return;
+    const project = projects.querySelector(hash);
+    if (!project) return;
+    flickityMiniatures.selectCell("[href='" + hash + "']");
+    const height = project.clientHeight + "px";
+    projects.style.height = height;
+    me.style.marginTop = height;
+    initializeProject(project);
+    projectCleaner(selectedProject);
+    selectedProject = project;
   };
   window.addEventListener("hashchange", hashChangeHandler, false);
 
@@ -152,12 +204,12 @@ Promise.all([
   flickityMiniatures.resize();
   let hash = window.location.hash;
   if (hash) {
-    window.location.hash = "";
-    window.location.hash = hash;
+    hashChangeHandler();
+    if (selectedProject) {
+      selectedProject.scrollIntoView();
+    }
   }
-
 });
 
-// we don't need to wait for these
+// we don't need to wait for this
 addScript(GA_DIST);
-addScript(VIMEO_DIST);
