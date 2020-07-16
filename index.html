@@ -28,11 +28,10 @@
   <link rel="apple-touch-icon" sizes="114x114" href="icons/apple-touch-icon-114x114.png">
 
   <script type="x-shader/x-fragment" id="loopback-shader">
-    #version 300 es
     precision lowp float; precision lowp int; precision lowp sampler2D; uniform vec2 R;uniform float D,T;
-    uniform sampler2D T0;out lowp vec4 O;void main(){lowp vec3 v;highp vec2 f;f=gl_FragCoord.xy/R;
-    highp vec2 m;m=(gl_FragCoord.xy*2.-R)/D;highp vec2 h;h=f-m/R*20.7;lowp vec2 i;i=(texture(T0,h).xy-vec2(.3,.3))*vec2(.002,.002);
-    highp vec2 l;l=f-i;v=texture(T0,l).xyz*.999;highp float u;u=sqrt(dot(m,m));if(u<.618){highp float e,c;
+    uniform sampler2D T0;void main(){lowp vec3 v;highp vec2 f;f=gl_FragCoord.xy/R;
+    highp vec2 m;m=(gl_FragCoord.xy*2.-R)/D;highp vec2 h;h=f-m/R*20.7;lowp vec2 i;i=(texture2D(T0,h).xy-vec2(.3,.3))*vec2(.002,.002);
+    highp vec2 l;l=f-i;v=texture2D(T0,l).xyz*.999;highp float u;u=sqrt(dot(m,m));if(u<.618){highp float e,c;
     c=clamp((u-.618)/-.016,0.,1.);e=c*(c*(3.-2.*c))*(u/.618);highp float p;p=pow(e,20.);e=p;float o;
     o=float(mod(T*.1,1.));vec3 y;y=vec3(3.54585,2.93225,2.41594)*(o-vec3(.695491,.492283,.276999));
     vec3 z;z=vec3(3.90307,3.21183,3.96587)*(o-vec3(.117486,.86755,.660779));
@@ -42,7 +41,7 @@
     g=float(mod(T*.1+.5,1.));vec3 w;w=vec3(3.54585,2.93225,2.41594)*(g-vec3(.695491,.492283,.276999));
     vec3 a;a=vec3(3.90307,3.21183,3.96587)*(g-vec3(.117486,.86755,.660779));v=v+(min(max(vec3(1.,1.,1.)-
     w*w-vec3(.0231264,.152251,.52608),0.),1.)+min(max(vec3(1.,1.,1.)-a*a-vec3(.848971,.884453,.739495),0.),1.))*s*.03;}
-    v=clamp(v,0.,1.);}lowp vec4 p;p.w=1.;p.xyz=v;O=p;}
+    v=clamp(v,0.,1.);}lowp vec4 p;p.w=1.;p.xyz=v;gl_FragColor=p;}
   </script>
   <style>
     :root {
@@ -113,14 +112,15 @@
     const MAX_BLUR_RADIUS = .9;
 
     // LoopbackCanvas
-    function n(a){var c=0;return function(){return c<a.length?{done:!1,value:a[c++]}:{done:!0}}}function p(a){return Error(a)}p.prototype=Object.create(Error.prototype);
-    function q(a,c,e){this.a=a;this.b=a.createTexture();a.bindTexture(a.TEXTURE_2D,this.b);a.texImage2D(a.TEXTURE_2D,0,a.RGBA16F,c,e,0,a.RGBA,a.FLOAT,null);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MIN_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MAG_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_S,a.CLAMP_TO_EDGE);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_T,a.CLAMP_TO_EDGE);this.c=a.createFramebuffer();a.bindFramebuffer(a.FRAMEBUFFER,this.c);a.framebufferTexture2D(a.FRAMEBUFFER,
+    function m(a){var c=0;return function(){return c<a.length?{done:!1,value:a[c++]}:{done:!0}}}function p(a){return Error(a)}p.prototype=Object.create(Error.prototype);
+    function q(a,c,e){this.a=a;this.b=a.createTexture();a.bindTexture(a.TEXTURE_2D,this.b);a.texImage2D(a.TEXTURE_2D,0,a.RGBA,c,e,0,a.RGBA,a.FLOAT,null);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MIN_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MAG_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_S,a.CLAMP_TO_EDGE);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_T,a.CLAMP_TO_EDGE);this.c=a.createFramebuffer();a.bindFramebuffer(a.FRAMEBUFFER,this.c);a.framebufferTexture2D(a.FRAMEBUFFER,
     a.COLOR_ATTACHMENT0,a.TEXTURE_2D,this.b,0)}q.prototype.release=function(){this.a.bindFramebuffer(this.a.FRAMEBUFFER,this.c);this.a.deleteTexture(this.b);this.a.bindFramebuffer(this.a.FRAMEBUFFER,null);this.a.deleteFramebuffer(this.c)};function r(a,c,e){c=a.createShader(c);a.shaderSource(c,e);a.compileShader(c);if(!a.getShaderParameter(c,a.COMPILE_STATUS)){var f=String(a.getShaderInfoLog(c));console.log(f,e);a.deleteShader(c);return f}return c}
-    function t(a,c){var e=r(a,a.VERTEX_SHADER,"#version 300 es\nin vec2 V;out vec2 O;void main(){O=V;gl_Position=vec4(V,0.,1.);}");c=r(a,a.FRAGMENT_SHADER,c);var f=a.createProgram();a.attachShader(f,e);a.attachShader(f,c);a.linkProgram(f);return f}function w(a){var c=a.createBuffer();a.bindBuffer(a.ARRAY_BUFFER,c);a.bufferData(a.ARRAY_BUFFER,new Float32Array([-1,1,1,1,-1,-1,1,-1]),a.STATIC_DRAW);return c}function x(a,c,e){var f=new q(a,c,e);a=new q(a,c,e);return[f,a]}
-    window.LoopbackCanvas=function(a,c){function e(){u=performance.now()/1E3;if(d.width!==d.clientWidth||d.height!==d.clientHeight){d.width=d.clientWidth;d.height=d.clientHeight;b.viewport(0,0,b.canvas.width,b.canvas.height);var g=k;var l="undefined"!=typeof Symbol&&Symbol.iterator&&g[Symbol.iterator];g=l?l.call(g):{next:n(g)};for(l=g.next();!l.done;l=g.next())l.value.release();k=x(b,d.width,d.height);f()}b.useProgram(h);b.uniform1f(y,u);b.uniform1i(z,v);b.bindFramebuffer(b.FRAMEBUFFER,k[0].c);b.bindTexture(b.TEXTURE_2D,
-    k[1].b);b.drawArrays(b.TRIANGLE_STRIP,0,4);b.useProgram(m);b.bindFramebuffer(b.FRAMEBUFFER,null);b.bindTexture(b.TEXTURE_2D,k[0].b);b.drawArrays(b.TRIANGLE_STRIP,0,4);k.reverse();v++;requestAnimationFrame(e)}function f(){var g=Math.min(d.width,d.height);b.useProgram(h);b.uniform2f(A,d.width,d.height);b.uniform1f(B,g);b.useProgram(m);b.uniform2f(C,d.width,d.height);b.uniform1f(D,g)}var d=document.getElementById(a);a=document.getElementById(c).text.trim();d.width=d.clientWidth;d.height=d.clientHeight;
-    var b=d.getContext("webgl2");if(!b)throw new p("webgl2 context not supported on supplied canvas element: "+d);if(!b.getExtension("EXT_color_buffer_float"))throw new p("EXT_color_buffer_float is required but not supported here");var k=x(b,d.width,d.height),h=t(b,a),m=t(b,"#version 300 es\nprecision lowp float;uniform sampler2D T;uniform vec2 R;out vec4 O;void main(){O=texture(T,gl_FragCoord.xy/R);}");b.useProgram(h);a=b.getAttribLocation(h,"V");c=w(b);b.bindBuffer(b.ARRAY_BUFFER,c);b.vertexAttribPointer(a,
-    2,b.FLOAT,!1,0,0);b.enableVertexAttribArray(a);b.viewport(0,0,b.canvas.width,b.canvas.height);var A=b.getUniformLocation(h,"R"),B=b.getUniformLocation(h,"D"),y=b.getUniformLocation(h,"T"),z=b.getUniformLocation(h,"F");b.useProgram(m);var C=b.getUniformLocation(m,"R"),D=b.getUniformLocation(m,"D");f();var v=0,u=0;e()};window.WebglLoopbackException=p;
+    function t(a,c){var e=r(a,a.VERTEX_SHADER,"\nattribute vec2 V;\n//attribute vec2 aUV;\n//varying vec2 vUV;\n\nvoid main() {\n    gl_Position = vec4(V, 0.0, 1.0);\n    //vUV = aUV;\n}\n");c=r(a,a.FRAGMENT_SHADER,c);var f=a.createProgram();a.attachShader(f,e);a.attachShader(f,c);a.linkProgram(f);return f}function w(a){var c=a.createBuffer();a.bindBuffer(a.ARRAY_BUFFER,c);a.bufferData(a.ARRAY_BUFFER,new Float32Array([-1,1,1,1,-1,-1,1,-1]),a.STATIC_DRAW);return c}
+    function x(a,c,e){var f=new q(a,c,e);a=new q(a,c,e);return[f,a]}
+    window.LoopbackCanvas=function(a,c){function e(){u=performance.now()/1E3;if(d.width!==d.clientWidth||d.height!==d.clientHeight){d.width=d.clientWidth;d.height=d.clientHeight;b.viewport(0,0,b.canvas.width,b.canvas.height);var g=k;var l="undefined"!=typeof Symbol&&Symbol.iterator&&g[Symbol.iterator];g=l?l.call(g):{next:m(g)};for(l=g.next();!l.done;l=g.next())l.value.release();k=x(b,d.width,d.height);f()}b.useProgram(h);b.uniform1f(y,u);b.uniform1i(z,v);b.bindFramebuffer(b.FRAMEBUFFER,k[0].c);b.bindTexture(b.TEXTURE_2D,
+    k[1].b);b.drawArrays(b.TRIANGLE_STRIP,0,4);b.useProgram(n);b.bindFramebuffer(b.FRAMEBUFFER,null);b.bindTexture(b.TEXTURE_2D,k[0].b);b.drawArrays(b.TRIANGLE_STRIP,0,4);k.reverse();v++;requestAnimationFrame(e)}function f(){var g=Math.min(d.width,d.height);b.useProgram(h);b.uniform2f(A,d.width,d.height);b.uniform1f(B,g);b.useProgram(n);b.uniform2f(C,d.width,d.height);b.uniform1f(D,g)}var d=document.getElementById(a);a=document.getElementById(c).text.trim();d.width=d.clientWidth;d.height=d.clientHeight;
+    var b=d.getContext("webgl");if(!b)throw new p("webgl2 context not supported on supplied canvas element: "+d);if(!b.getExtension("OES_texture_float"))throw new p("OES_texture_float is required but not supported here");if(!b.getExtension("OES_texture_float_linear"))throw new p("OES_texture_float_linear is required but not supported here");var k=x(b,d.width,d.height),h=t(b,a),n=t(b,"\nprecision mediump float;\n\nuniform vec2 R;\nuniform sampler2D T;\nvarying vec2 vUV;\n\nvoid main() {\n    // vUV is equal to gl_FragCoord/uScreenResolution\n    // do some pixel shader related work\n    gl_FragColor = texture2D(T, gl_FragCoord.xy/R);\n}\n\n");
+    b.useProgram(h);a=b.getAttribLocation(h,"V");c=w(b);b.bindBuffer(b.ARRAY_BUFFER,c);b.vertexAttribPointer(a,2,b.FLOAT,!1,0,0);b.enableVertexAttribArray(a);b.viewport(0,0,b.canvas.width,b.canvas.height);var A=b.getUniformLocation(h,"R"),B=b.getUniformLocation(h,"D"),y=b.getUniformLocation(h,"T"),z=b.getUniformLocation(h,"F");b.useProgram(n);var C=b.getUniformLocation(n,"R"),D=b.getUniformLocation(n,"D");f();var v=0,u=0;e()};window.WebglLoopbackException=p;
 
     // will load main.js, but also will be used there to load other scripts
     function addScript(src, callback, errorCallback, crossorigin) {
