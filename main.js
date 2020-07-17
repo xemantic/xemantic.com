@@ -31,10 +31,10 @@ function loaded(element) {
 
 // restoring back image src attributes
 for (let i = 0; i < document.images.length; i++) {
-  let image = document.images[i];
-  let dataSrc = image.getAttribute("data-src");
+  const image = document.images[i];
+  const dataSrc = image.getAttribute("data-src");
   if (dataSrc) {
-    image.onload = loaded(image);
+    image.addEventListener("load", e => loaded(image));
     image.src = image.getAttribute("data-src");
     image.removeAttribute("data-src");
   }
@@ -97,6 +97,7 @@ function initializeMedia(media) {
       adaptiveHeight: true
     });
     flickityElement.flickity = flickity;
+    flickityElement.imageLoadHandler = (e) => flickity.resize();
     flickityElement.querySelectorAll(".vimeo-video").forEach(video => {
       const player = newPlayer(video);
       function showButtons(visibility) {
@@ -110,6 +111,9 @@ function initializeMedia(media) {
       player.on("ended",   () => flickity.showButtons(true));
       player.on("loaded",  () => video.classList.add("loaded"));
       flickity.on("change", (index) => { player.pause(); })
+    });
+    flickityElement.querySelectorAll("img").forEach(image => {
+      image.addEventListener("load", flickityElement.imageLoadHandler);
     });
   });
   media.querySelectorAll(":scope > .vimeo-video").forEach(video => {
@@ -130,6 +134,9 @@ function cleanUpMedia(media) {
   });
   const flickity = media.querySelector(".flickity");
   if (flickity) {
+    flickity.querySelectorAll("img").forEach(image => {
+      image.removeEventListener("load", flickity.imageLoadHandler);
+    });
     flickity.flickity.destroy();
   }
 }
