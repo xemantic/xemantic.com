@@ -31,8 +31,7 @@
 
 # list of projects to add
 
-* dream world
-* Negentropy
+* openrndr
 * the body of noise
 * eyegasm
 * alien landscapes
@@ -48,6 +47,11 @@
 * github-users
 * polskiezoo.info
 * dr Oblivion
+* cartesian creatures
+
+* pride visuals - zdjęcie goji i paxa
+
+* wszystkie artykuły z medium
 
 * polishismylove.pl
 * web4tia
