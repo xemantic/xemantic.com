@@ -1,4 +1,4 @@
-const IFRAME_REMOVAL_DELAY = 3000;
+const PROJECT_CLEANUP_DELAY = 3000;
 
 const GA_ID = "UA-35099425-1";
 
@@ -25,8 +25,10 @@ document.querySelectorAll(".email").forEach(element => {
   }
 });
 
-function loaded(element) {
-  element.classList.add("loaded");
+const imageLoadHandler = (event) => {
+  const image = event.target;
+  image.classList.add("loaded");
+  event.target.removeEventListener("load", imageLoadHandler);
 }
 
 // restoring back image src attributes
@@ -34,7 +36,7 @@ for (let i = 0; i < document.images.length; i++) {
   const image = document.images[i];
   const dataSrc = image.getAttribute("data-src");
   if (dataSrc) {
-    image.addEventListener("load", e => loaded(image));
+    image.addEventListener("load", imageLoadHandler);
     image.src = image.getAttribute("data-src");
     image.removeAttribute("data-src");
   }
@@ -91,33 +93,33 @@ function newPlayer(element) {
   return element.player;
 }
 
+function setVisibility(button, visibility) {
+  const value = visibility ? "visible" : "hidden";
+  button.element.style.visibility = value;
+}
+
 function initializeMedia(media) {
   media.querySelectorAll(":scope > .flickity").forEach(flickityElement => {
-    const flickity = new Flickity(flickityElement, {
-      adaptiveHeight: true
-    });
-    flickityElement.flickity = flickity;
-    flickityElement.imageLoadHandler = (e) => flickity.resize();
+    const flickity = flickityElement.flickity;
     flickityElement.querySelectorAll(".vimeo-video").forEach(video => {
-      const player = newPlayer(video);
       function showButtons(visibility) {
-        const value = visibility ? "visible" : "hidden";
-        flickity.prevButton.element.style.visibility = value;
-        flickity.nextButton.element.style.visibility = value;
+        setVisibility(flickity.prevButton, visibility);
+        setVisibility(flickity.nextButton, visibility);
       }
+      const player = newPlayer(video);
       player.ready().then(() => flickity.resize());
-      player.on("playing", () => flickity.showButtons(false));
-      player.on("pause",   () => flickity.showButtons(true));
-      player.on("ended",   () => flickity.showButtons(true));
-      player.on("loaded",  () => video.classList.add("loaded"));
-      flickity.on("change", (index) => { player.pause(); })
-    });
-    flickityElement.querySelectorAll("img").forEach(image => {
-      image.addEventListener("load", flickityElement.imageLoadHandler);
+      player.on("playing", () => showButtons(false));
+      player.on("pause",   () => showButtons(true));
+      player.on("ended",   () => showButtons(true));
+      player.on("loaded", () => {
+        video.classList.add("loaded");
+        flickity.resize();
+      });
+      flickity.on("change", (index) => { player.pause(); });
     });
   });
   media.querySelectorAll(":scope > .vimeo-video").forEach(video => {
-    newPlayer(vimeo);
+    newPlayer(video);
   });
 }
 
@@ -132,13 +134,6 @@ function cleanUpMedia(media) {
     }
     video.classList.remove("loaded");
   });
-  const flickity = media.querySelector(".flickity");
-  if (flickity) {
-    flickity.querySelectorAll("img").forEach(image => {
-      image.removeEventListener("load", flickity.imageLoadHandler);
-    });
-    flickity.flickity.destroy();
-  }
 }
 
 function initializeProject(project) {
@@ -170,7 +165,9 @@ Promise.all([
   loadCss(MAIN_CSS),
   loadCss(FLICKITY_CSS_DIST),
   loadCss(FLICKITY_FULLSCREEN_CSS_DIST)
-]).then(() => {
+]).then(() => initialize());
+
+function initialize() {
   const flickityMiniatures = new Flickity(miniatures, {
     bgLazyLoad: 2,
     freeScroll: true,
@@ -185,7 +182,7 @@ Promise.all([
       if (projectToClean != selectedProject) {
         cleanUpProject(projectToClean);
       }
-    }, IFRAME_REMOVAL_DELAY);
+    }, PROJECT_CLEANUP_DELAY);
   }
 
   const hashChangeHandler = (e) => {
@@ -209,6 +206,9 @@ Promise.all([
   show(me);
   show(footer);
   flickityMiniatures.resize();
+
+  initializeProjects();
+
   let hash = window.location.hash;
   if (hash) {
     hashChangeHandler();
@@ -216,7 +216,20 @@ Promise.all([
       selectedProject.scrollIntoView();
     }
   }
-});
+}
+
+function initializeProjects() {
+  projects.querySelectorAll(".flickity").forEach(flickityElement => {
+    const flickity = new Flickity(flickityElement, {
+      adaptiveHeight: true
+    });
+    flickityElement.flickity = flickity;
+    flickityElement.imageLoadHandler = (e) => flickity.resize();
+    flickityElement.querySelectorAll("img.medium").forEach(image => {
+      image.addEventListener("load", flickity.imageLoadHandler);
+    });
+  });
+}
 
 // we don't need to wait for this
 addScript(GA_DIST);

@@ -1,5 +1,8 @@
 /* general styles: begin */
 :root {
+  --medium-width: var(--golden-ratio-width-longer);
+  --medium-height: calc(var(--golden-ratio-width-longer) * .618);
+
   --font-size-base: 15px;
   --font-size-increment: 1vw;
   --font-size: calc(var(--font-size-base) + var(--font-size-increment));
@@ -75,13 +78,21 @@ p:last-child {
   margin-bottom: 0;
 }
 
-a {
+section a, footer a {
   color: var(--text-color);
-  text-decoration: underline dotted;
+  text-decoration: underline;
+  transition: color 1s, background-color 1.6s;
+  margin-left: -.16rem;
+  padding-left: .16rem;
+  margin-right: -.16rem;
+  padding-right: .16rem;
+  border-radius: .16rem;
 }
 
-a:hover {
-  text-decoration: underline solid;
+section a:hover, footer a:hover {
+  color: black;
+  background-color: white;
+  text-decoration: none;
 }
 
 img {
@@ -205,6 +216,7 @@ img {
   position: absolute;
   /* padding to accommodate miniatures nav will make hash based navigation work */
   padding-top: var(--golden-ratio-height-shorter);
+  width: 100%;
   display: flex;
   pointer-events: none;
   visibility: hidden;
@@ -225,9 +237,9 @@ img {
 }
 
 #projects article .media {
-  flex: var(--golden-ratio-width-longer);
+  flex: var(--medium-width);
   background: rgba(0, 0, 0, 0.25);
-  transform: translateX(calc(var(--golden-ratio-width-longer) * -1));
+  transform: translateX(calc(var(--medium-width) * -1));
   transition: transform 0s;
   transition-delay: 2s;
 }
@@ -241,7 +253,7 @@ img {
 }
 
 #projects article .media {
-  margin-bottom: 32px;
+  padding-bottom: 32px;
 }
 
 #projects article .media .flickity-viewport {
@@ -262,7 +274,21 @@ img {
 
 #projects article .media .medium {
   width: 100%;
-  background: rgba(0, 0, 0. 0.25);
+  height: var(--medium-height);
+  background-color: rgba(0, 0, 0. 0.25);
+  animation-name: background-blink;
+  animation-duration: 2s;
+}
+
+@keyframes background-blink {
+  0%   { background-color: rgba(0, 0, 0. 0.25) }
+  75%  { background-color: rgba(0, 0, 0. 0.25) }
+  80%  { background-color: rgba(1, 1, 1. 0.25) }
+  100% { background-color: rgba(0, 0, 0. 0.25) }
+}
+
+#projects article .media .medium.loaded {
+  height: auto;
 }
 
 #projects article .description {
