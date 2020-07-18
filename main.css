@@ -394,3 +394,6 @@ footer {
   filter: drop-shadow(var(--shadow-x) var(--shadow-y) var(--shadow-blur-radius) rgba(0, 0, 0, var(--shadow-opacity)));
 }
 /* footer: end */
+
+
+/* update trigger */
