@@ -56,6 +56,18 @@ const loadCss = (src) => new Promise((resolve, reject) => {
   addCss(src, () => { resolve(); }, (error) => { reject(error); });
 });
 
+const maybeLoadCustomJs = () => new Promise((resolve, reject) => {
+  if (typeof CUSTOM_JS === "undefined") {
+    resolve();
+  } else {
+    addScript(
+      CUSTOM_JS,
+      () => resolve(),
+      error => reject(error)
+    );
+  }
+});
+
 function newPlayer(element) {
   element.player = new Vimeo.Player(element, {
     id: element.getAttribute("data-video-id"),
@@ -187,17 +199,8 @@ function cleanUpMedia(media) {
   });
 }
 
-new Promise((resolve, reject) => {
-  if (typeof CUSTOM_JS === "undefined") {
-    resolve();
-  } else {
-    addScript(
-      CUSTOM_JS,
-      () => resolve(),
-      error => reject(error)
-    );
-  }
-}).then(() => Promise.all([
+Promise.all([
+  maybeLoadCustomJs,
   loadCss(FONT_DIST),
   loadJs(FONT_AWESOME_DIST, "anonymous"),
   loadJs(FLICKITY_DIST).then(() => Promise.all([
@@ -208,4 +211,4 @@ new Promise((resolve, reject) => {
   loadCss(MAIN_CSS),
   loadCss(FLICKITY_CSS_DIST),
   loadCss(FLICKITY_FULLSCREEN_CSS_DIST)
-])).then(() => initialize());
+]).then(() => initialize());
