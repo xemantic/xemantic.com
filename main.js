@@ -1,6 +1,5 @@
 const PROJECT_CLEANUP_DELAY = 3000;
 
-const MAIN_CSS = "main.css";
 const FLICKITY_DIST = "https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js";
 const FLICKITY_CSS_DIST = "https://unpkg.com/flickity@2/dist/flickity.min.css";
 const FLICKITY_BG_LAZY_LOAD_DIST = "https://npmcdn.com/flickity-bg-lazyload@1.0.0/bg-lazyload.js";
@@ -189,9 +188,9 @@ function cleanUpMedia(media) {
 }
 
 new Promise((resolve, reject) => {
-  if (HAS_CUSTOM_JS) {
+  if (CUSTOM_JS) {
     addScript(
-      "custom.js",
+      CUSTOM_JS,
       () => resolve(),
       error => reject(error)
     );
