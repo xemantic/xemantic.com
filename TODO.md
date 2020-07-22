@@ -12,7 +12,6 @@
 * tweak evolution of the shader shape in time
 * double check all the shader optimizations and their relevance
 * review language mistakes
-* another project to add - word cloud for project dictionary
 * check ga gdpr
 * captions under media
 * blockquote style
@@ -31,6 +30,9 @@
 
 # list of projects to add
 
+* another project to add - word cloud for project dictionary
+* kotlin-swing-dsl
+* 8 rooms gallery
 * openrndr
 * the body of noise
 * eyegasm
