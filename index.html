@@ -27,10 +27,6 @@
   <link rel="apple-touch-icon" sizes="72x72" href="icons/apple-touch-icon-72x72.png">
   <link rel="apple-touch-icon" sizes="114x114" href="icons/apple-touch-icon-114x114.png">
 
-  <link rel="preload" href="main.css" as="style">
-  <link rel="preload" href="custom.js" as="script">
-  <link rel="preload" href="main.js" as="script">
-
   <script type="x-shader/x-fragment" id="loopback-shader">
     precision lowp float; precision lowp int; precision lowp sampler2D; uniform vec2 R;uniform float D,T;
     uniform sampler2D T0;void main(){lowp vec3 v;highp vec2 f;f=gl_FragCoord.xy/R;
