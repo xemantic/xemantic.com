@@ -36,6 +36,7 @@ function show(element) {
 }
 
 function addCss(href, callback, errorCallback) {
+  const firstStyle = document.head.querySelector("style");
   const link = document.createElement("link");
   if (callback) {
     link.onload = callback;
@@ -45,7 +46,7 @@ function addCss(href, callback, errorCallback) {
   };
   link.setAttribute("href", href);
   link.setAttribute("rel", "stylesheet");
-  document.head.appendChild(link);
+  document.head.insertBefore(link, firstStyle);
 }
 
 const loadJs = (src, crossorigin) => new Promise((resolve, reject) => {
@@ -56,7 +57,7 @@ const loadCss = (src) => new Promise((resolve, reject) => {
   addCss(src, () => { resolve(); }, (error) => { reject(error); });
 });
 
-const maybeLoadCustomJs = () => new Promise((resolve, reject) => {
+const maybeLoadCustomJs = new Promise((resolve, reject) => {
   if (typeof CUSTOM_JS === "undefined") {
     resolve();
   } else {
