@@ -188,14 +188,14 @@ function cleanUpMedia(media) {
 }
 
 new Promise((resolve, reject) => {
-  if (CUSTOM_JS) {
+  if (typeof CUSTOM_JS === "undefined") {
+    resolve();
+  } else {
     addScript(
       CUSTOM_JS,
       () => resolve(),
       error => reject(error)
     );
-  } else {
-    resolve();
   }
 }).then(() => Promise.all([
   loadCss(FONT_DIST),
