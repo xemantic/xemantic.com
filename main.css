@@ -295,6 +295,7 @@ img {
   transform: translateX(calc(var(--medium-width) * -1));
   transition: transform 0s;
   transition-delay: 2s;
+  background: var(--background-subtle);
 }
 
 #projects article .media .caption {
@@ -349,6 +350,7 @@ img {
   transform: translateX(var(--golden-ratio-width-shorter));
   transition: transform 0s;
   transition-delay: 2s;
+  background: var(--background-strong);
 }
 
 #projects article .description p {
@@ -457,3 +459,5 @@ footer p {
 }
 /* footer: end */
 
+
+/* css trigger */
