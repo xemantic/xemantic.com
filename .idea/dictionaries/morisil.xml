@@ -2,14 +2,17 @@
   <dictionary name="morisil">
     <words>
       <w>achtung</w>
+      <w>afterend</w>
       <w>attrib</w>
       <w>autoplay</w>
+      <w>avant</w>
       <w>blockquote</w>
       <w>christidi</w>
       <w>coart</w>
       <w>coord</w>
       <w>crossorigin</w>
       <w>crypted</w>
+      <w>décor</w>
       <w>esse</w>
       <w>evenodd</w>
       <w>exultations</w>
@@ -17,12 +20,15 @@
       <w>eötvös</w>
       <w>ffffff</w>
       <w>flickity</w>
+      <w>garde</w>
       <w>glsl</w>
       <w>gtag</w>
       <w>hashchange</w>
       <w>heer</w>
       <w>iframe</w>
       <w>iframes</w>
+      <w>industria</w>
+      <w>innov</w>
       <w>kazik</w>
       <w>kazimierz</w>
       <w>kraftwerk</w>
@@ -31,8 +37,12 @@
       <w>lazyload</w>
       <w>lazyloaded</w>
       <w>lgbtq</w>
+      <w>libre</w>
+      <w>linkedin</w>
       <w>mediump</w>
       <w>mousemove</w>
+      <w>mundo</w>
+      <w>músicas</w>
       <w>negentropy</w>
       <w>npmcdn</w>
       <w>onerror</w>
@@ -44,9 +54,12 @@
       <w>pkgd</w>
       <w>podkowiński</w>
       <w>pogoda</w>
+      <w>pumpernicki</w>
       <w>péter</w>
       <w>readystatechange</w>
       <w>roboter</w>
+      <w>ruhl</w>
+      <w>schwenner</w>
       <w>scrollto</w>
       <w>shaders</w>
       <w>shumi</w>
@@ -54,11 +67,14 @@
       <w>substr</w>
       <w>synaesthetic</w>
       <w>szumacher</w>
+      <w>timisoara</w>
       <w>timișoara</w>
       <w>touchmove</w>
       <w>universität</w>
       <w>unpkg</w>
       <w>upcycling</w>
+      <w>veloretti</w>
+      <w>vidaloka</w>
       <w>webgl</w>
       <w>władysław</w>
       <w>xemantic</w>
