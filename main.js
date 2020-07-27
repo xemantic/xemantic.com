@@ -6,6 +6,7 @@ const FLICKITY_BG_LAZY_LOAD_DIST = "https://npmcdn.com/flickity-bg-lazyload@1.0.
 const FLICKITY_FULLSCREEN_DIST = "https://unpkg.com/flickity-fullscreen@1/fullscreen.js";
 const FLICKITY_FULLSCREEN_CSS_DIST = "https://unpkg.com/flickity-fullscreen@1/fullscreen.css";
 
+// TODO vimeo support should be conditional
 const VIMEO_DIST = "https://player.vimeo.com/api/player.js";
 
 const imageLoadHandler = (event) => {
@@ -27,46 +28,31 @@ for (let i = 0; i < document.images.length; i++) {
 
 const miniatures = document.getElementById("project-miniatures");
 const projects = document.getElementById("projects");
-const me = document.getElementById("me");
-const footer = document.getElementsByTagName("footer")[0];
 
 function show(element) {
   element.classList.remove("hidden");
   element.classList.add("fade-in");
 }
 
-function addCss(href, callback, errorCallback) {
-  const firstStyle = document.head.querySelector("style");
-  const link = document.createElement("link");
-  if (callback) {
-    link.onload = callback;
+const loadJs = (src, extender) => new Promise((resolve, reject) => {
+  const script = document.createElement("script");
+  script.onload = () => resolve();
+  script.onerror = (e) => reject(e);
+  if (extender) {
+    extender(script);
   }
-  if (errorCallback) {
-    link.onerror = errorCallback;
-  };
-  link.setAttribute("href", href);
-  link.setAttribute("rel", "stylesheet");
-  document.head.insertBefore(link, firstStyle);
-}
-
-const loadJs = (src, crossorigin) => new Promise((resolve, reject) => {
-  addScript(src, () => { resolve(); }, (error) => { reject(error); }, crossorigin);
+  script.src = src;
+  document.head.appendChild(script);
 });
 
 const loadCss = (src) => new Promise((resolve, reject) => {
-  addCss(src, () => { resolve(); }, (error) => { reject(error); });
-});
-
-const maybeLoadCustomJs = new Promise((resolve, reject) => {
-  if (typeof CUSTOM_JS === "undefined") {
-    resolve();
-  } else {
-    addScript(
-      CUSTOM_JS,
-      () => resolve(),
-      error => reject(error)
-    );
-  }
+  const firstStyle = document.head.querySelector("style");
+  const link = document.createElement("link");
+  link.onload = () => resolve();
+  link.onerror = (e) => reject(e);
+  link.rel = "stylesheet";
+  link.href = src;
+  document.head.insertBefore(link, firstStyle);
 });
 
 function newPlayer(element) {
@@ -103,6 +89,10 @@ function initialize() {
     }, PROJECT_CLEANUP_DELAY);
   }
 
+  const projectExpander = document.createElement("div");
+  projectExpander.id = "project-expander";
+  projects.insertAdjacentElement("afterend", projectExpander);
+
   const hashChangeHandler = (e) => {
     const hash = location.hash;
     if (!hash) return;
@@ -110,21 +100,18 @@ function initialize() {
     if (!project) return;
     flickityMiniatures.selectCell("[href='" + hash + "']");
     const height = project.clientHeight + "px";
+    initializeProject(project);
     projects.style.height = height;
-    me.style.marginTop = height;
-    if (initializeProject) {
-      initializeProject(project);
-    }
-    initializeMedia(project)
+    projectExpander.style.height = height;
     projectCleaner(selectedProject);
     selectedProject = project;
   };
   window.addEventListener("hashchange", hashChangeHandler, false);
 
-  root.style.setProperty("--z-index-background", -2);
   document.querySelectorAll(".hidden").forEach(element => show(element));
   flickityMiniatures.resize();
   initializeProjects();
+  root.style.setProperty("--z-index-background", -2);
 
   let hash = window.location.hash;
   if (hash) {
@@ -149,6 +136,8 @@ function initializeProjects() {
 }
 
 function initializeProject(project) {
+  const media = project.querySelector(".media");
+  const description = project.querySelector(".description");
   initializeMedia(project.querySelector(".media"));
   if (typeof initializeCustomProject === "function") {
     initializeCustomProject(project);
@@ -156,7 +145,9 @@ function initializeProject(project) {
 }
 
 function cleanUpProject(project) {
-  cleanUpMedia(project.querySelector(".media"));
+  const media = project.querySelector(".media");
+  const description = project.querySelector(".description");
+  cleanUpMedia(media);
   if (typeof cleanUpCustomProject === "function") {
     cleanUpCustomProject(project);
   }
@@ -200,16 +191,19 @@ function cleanUpMedia(media) {
   });
 }
 
-Promise.all([
-  maybeLoadCustomJs,
-  loadCss(FONT_DIST),
-  loadJs(FONT_AWESOME_DIST, "anonymous"),
-  loadJs(FLICKITY_DIST).then(() => Promise.all([
-    loadJs(FLICKITY_FULLSCREEN_DIST),
-    loadJs(FLICKITY_BG_LAZY_LOAD_DIST)
-  ])),
-  loadJs(VIMEO_DIST),
-  loadCss(MAIN_CSS),
-  loadCss(FLICKITY_CSS_DIST),
-  loadCss(FLICKITY_FULLSCREEN_CSS_DIST)
-]).then(() => initialize());
+Promise.all(
+  [
+    loadJs(FLICKITY_DIST).then(() => Promise.all([
+      loadJs(FLICKITY_FULLSCREEN_DIST),
+      loadJs(FLICKITY_BG_LAZY_LOAD_DIST)
+    ])),
+    loadJs(VIMEO_DIST),
+    loadCss(FLICKITY_CSS_DIST),
+    loadCss(FLICKITY_FULLSCREEN_CSS_DIST)
+  ].concat(
+    scriptsToLoad.map(x => {
+      loadJs(x[0], x[1]);
+    }),
+    cssToLoad.map(src => loadCss(src))
+  )
+).then(() => initialize());
