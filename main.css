@@ -394,6 +394,7 @@ img {
 /* .content-container: begin */
 .content-container {
   background: var(--background-content);
+  overflow: auto;
 }
 
 .content-container p {
@@ -402,12 +403,14 @@ img {
   margin-bottom: .618rem;
 }
 
-.content-container p:first-of-type {
+.content-container::before {
+  content: " ";
   padding-top: .618rem;
+  display: inline-block;
 }
 
-.content-container p:last-of-type {
-  padding-bottom: .618rem;
+.content-container h3 {
+  margin-bottom: .618rem;
 }
 
 @media (max-width: 900px) {
