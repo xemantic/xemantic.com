@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <title>Industria: (s)teamed ideas</title>
+
+  <meta name="author"       content="Kazik Pogoda" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="shortcut icon" href="../../favicon.ico">
+  <link rel="apple-touch-icon" href="../../icons/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="../../icons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="../../icons/apple-touch-icon-114x114.png">
+
+  <style>
+    :root {
+      --heading-font-family: "Vidaloka", serif;
+      --content-font-family: "Frank Ruhl Libre", serif;
+      --logo-fade-in-duration: 9s;
+
+      --background-strong: rgba(242, 238, 203, .618);
+      --background-subtle: rgba(242, 238, 203, .2);
+      --content-text-color: black;
+
+      --project-title-align: center;
+
+      --footer-font-family: var(--heading-font-family);
+      --footer-text-color: black;
+      --miniature-title-color: black;
+
+      --golden-ratio-width-longer: 61.8vw;
+      --golden-ratio-width-shorter: 38.2vw;
+      --golden-ratio-height-longer: 61.8vh;
+      --golden-ratio-height-shorter: 38.2vh;
+
+      /* initial shadow values - later on supplied from mouse or touch events */
+      --shadow-x: 1.3vw;
+      --shadow-y: 1.3vw;
+      --shadow-blur-radius: .15vw;
+      --shadow-opacity: .8;
+
+      /* initially background is covering everything */
+      --z-index-logo: 4;
+      --z-index-background: 3;
+    }
+    html {
+      box-sizing: border-box;
+      background: black;
+    }
+    body {
+      // prevents from future resizing of the background canvas and from flickering when
+      // content appears
+      overflow-y: scroll;
+    }
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+    body, h1, h2, h3, h4, h5, h6, p, ol, ul, blockquote {
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      height: var(--golden-ratio-height-longer);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    header .logo {
+      width: var(--golden-ratio-width-longer);
+      opacity: 0;
+      filter: drop-shadow(var(--shadow-x) var(--shadow-y) var(--shadow-blur-radius) rgba(0, 0, 0, var(--shadow-opacity)));
+      animation: fade-in var(--logo-fade-in-duration) ease-in-out;
+      animation-fill-mode: forwards; /* will keep the opacity */
+      z-index: var(--z-index-logo);
+    }
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    #loopback-background {
+      background: black; /* covers everything */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: var(--z-index-background);
+    }
+    .hidden {
+      display: none;
+    }
+    body > h2 {
+      font-size: 10vw;
+      line-height: 30vw;
+      text-align: center;
+      filter: drop-shadow(var(--shadow-x) var(--shadow-y) var(--shadow-blur-radius) rgba(0, 0, 0, var(--shadow-opacity)));
+    }
+    h3 {
+      text-align: center;
+    }
+  </style>
+  <script>
+    const scriptsToLoad = [];
+    const cssToLoad = [];
+
+    // adjustable settings: start
+    const MAIN_JS = "../../main.js";
+    addCss("../../main.css");
+
+    addScript("https://kit.fontawesome.com/0bbdfd8b39.js", (script) => {
+      script.setAttribute("crossorigin", "anonymous");
+    });
+    addCss("https://fonts.googleapis.com/css2?family=Vidaloka&display=swap");
+    addCss("https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre&display=swap");
+
+    const MAX_SHADOW_DROP = 5.0;
+    const MAX_BLUR_RADIUS = .9;
+    // adjustable settings: end
+
+    // LoopbackCanvas: start
+    function m(a){var c=0;return function(){return c<a.length?{done:!1,value:a[c++]}:{done:!0}}}function p(a){return Error(a)}p.prototype=Object.create(Error.prototype);
+    function r(a,c,f,e){this.a=a;this.b=a.createTexture();a.bindTexture(a.TEXTURE_2D,this.b);a.texImage2D(a.TEXTURE_2D,0,a.RGBA,c,f,0,a.RGBA,e.HALF_FLOAT_OES,null);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MIN_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MAG_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_S,a.CLAMP_TO_EDGE);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_T,a.CLAMP_TO_EDGE);this.c=a.createFramebuffer();a.bindFramebuffer(a.FRAMEBUFFER,this.c);a.framebufferTexture2D(a.FRAMEBUFFER,
+    a.COLOR_ATTACHMENT0,a.TEXTURE_2D,this.b,0)}r.prototype.release=function(){this.a.bindFramebuffer(this.a.FRAMEBUFFER,this.c);this.a.deleteTexture(this.b);this.a.bindFramebuffer(this.a.FRAMEBUFFER,null);this.a.deleteFramebuffer(this.c)};function t(a,c,f){c=a.createShader(c);a.shaderSource(c,f);a.compileShader(c);if(!a.getShaderParameter(c,a.COMPILE_STATUS)){var e=String(a.getShaderInfoLog(c));console.log(e,f);a.deleteShader(c);return e}return c}
+    function u(a,c){var f=t(a,a.VERTEX_SHADER,"\nattribute vec2 V;\n//attribute vec2 aUV;\n//varying vec2 vUV;\n\nvoid main() {\n    gl_Position = vec4(V, 0.0, 1.0);\n    //vUV = aUV;\n}\n");c=t(a,a.FRAGMENT_SHADER,c);var e=a.createProgram();a.attachShader(e,f);a.attachShader(e,c);a.linkProgram(e);return e}function x(a){var c=a.createBuffer();a.bindBuffer(a.ARRAY_BUFFER,c);a.bufferData(a.ARRAY_BUFFER,new Float32Array([-1,1,1,1,-1,-1,1,-1]),a.STATIC_DRAW);return c}
+    function y(a,c,f,e){var d=new r(a,c,f,e);a=new r(a,c,f,e);return[d,a]}
+    window.LoopbackCanvas=function(a,c){function f(){v=performance.now()/1E3;if(d.width!==d.clientWidth||d.height!==d.clientHeight){d.width=d.clientWidth;d.height=d.clientHeight;b.viewport(0,0,b.canvas.width,b.canvas.height);var g=k;var l="undefined"!=typeof Symbol&&Symbol.iterator&&g[Symbol.iterator];g=l?l.call(g):{next:m(g)};for(l=g.next();!l.done;l=g.next())l.value.release();k=y(b,d.width,d.height,q);e()}b.useProgram(h);b.uniform1f(z,v);b.uniform1i(A,w);b.bindFramebuffer(b.FRAMEBUFFER,k[0].c);b.bindTexture(b.TEXTURE_2D,
+    k[1].b);b.drawArrays(b.TRIANGLE_STRIP,0,4);b.useProgram(n);b.bindFramebuffer(b.FRAMEBUFFER,null);b.bindTexture(b.TEXTURE_2D,k[0].b);b.drawArrays(b.TRIANGLE_STRIP,0,4);k.reverse();w++;requestAnimationFrame(f)}function e(){var g=Math.min(d.width,d.height);b.useProgram(h);b.uniform2f(B,d.width,d.height);b.uniform1f(C,g);b.useProgram(n);b.uniform2f(D,d.width,d.height);b.uniform1f(E,g)}var d=document.getElementById(a);a=document.getElementById(c).text.trim();d.width=d.clientWidth;d.height=d.clientHeight;
+    var b=d.getContext("webgl");if(!b)throw new p("webgl context not supported on supplied canvas element: "+d);var q=b.getExtension("OES_texture_half_float");if(!q)throw new p("OES_texture_half_float is required but not supported here");if(!b.getExtension("OES_texture_half_float_linear"))throw new p("OES_texture_half_float_linear is required but not supported here");var k=y(b,d.width,d.height,q),h=u(b,a),n=u(b,"\nprecision mediump float;\n\nuniform vec2 R;\nuniform sampler2D T;\nvarying vec2 vUV;\n\nvoid main() {\n    // vUV is equal to gl_FragCoord/uScreenResolution\n    // do some pixel shader related work\n    gl_FragColor = vec4(vec3(texture2D(T, gl_FragCoord.xy/R).r, texture2D(T, gl_FragCoord.xy/R - vec2(0.002, 0.002)).r, texture2D(T, gl_FragCoord.xy/R - vec2(0.004, 0.004)).r), 1.0);\n}\n\n");
+    b.useProgram(h);a=b.getAttribLocation(h,"V");c=x(b);b.bindBuffer(b.ARRAY_BUFFER,c);b.vertexAttribPointer(a,2,b.FLOAT,!1,0,0);b.enableVertexAttribArray(a);b.viewport(0,0,b.canvas.width,b.canvas.height);var B=b.getUniformLocation(h,"R"),C=b.getUniformLocation(h,"D"),z=b.getUniformLocation(h,"T"),A=b.getUniformLocation(h,"F");b.useProgram(n);var D=b.getUniformLocation(n,"R"),E=b.getUniformLocation(n,"D");e();var w=0,v=0;f()};window.WebglLoopbackException=p;
+    // LoopbackCanvas: end
+
+    function addScript(src, extender) {
+      scriptsToLoad.push([src, extender]);
+    }
+
+    function addCss(src) {
+      cssToLoad.push(src);
+    }
+
+    const root = document.documentElement;
+
+    function handleMove(event) {
+      const x = (event.clientX - .5 * innerWidth) / innerWidth;
+      const y = (event.clientY - .5 * innerHeight) / innerWidth;
+      const distance = Math.sqrt((x * x) + (y * y));
+      root.style.setProperty("--shadow-x", (x * -MAX_SHADOW_DROP) + "vw");
+      root.style.setProperty("--shadow-y", (y * -MAX_SHADOW_DROP) + "vw");
+      root.style.setProperty("--shadow-blur-radius", ((distance * MAX_BLUR_RADIUS) + "vw"));
+    }
+    document.addEventListener("mousemove", handleMove, false);
+    document.addEventListener("touchmove", handleMove, false);
+
+    // now we have to fix chrome native image lazy loading which is still trying to download some
+    // images before the page emits load event
+    const supportsLazyLoad = ("loading" in document.createElement("img"));
+    const lazyLoadingProcessor = (supportsLazyLoad && window.MutationObserver) ? new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        mutation.addedNodes.forEach(node => {
+          if (node.nodeName == "IMG" && node.loading && (node.loading == "lazy")) {
+            node.setAttribute("data-src", node.src);
+            node.src = "";
+          }
+        });
+      });
+    }) : null;
+
+    window.addEventListener("load", e => {
+      if (lazyLoadingProcessor) {
+        lazyLoadingProcessor.disconnect();
+      }
+      new LoopbackCanvas("loopback-background", "loopback-shader");
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = MAIN_JS;
+      document.head.appendChild(script);
+    }, false);
+  </script>
+  <script type="x-shader/x-fragment" id="loopback-shader">
+    precision lowp float; precision lowp int; precision lowp sampler2D; uniform vec2 R;uniform float D,T;
+    uniform sampler2D T0;void main(){lowp vec3 v;highp vec2 f;f=gl_FragCoord.xy/R;
+      highp vec2 m;m=(gl_FragCoord.xy*2.-R)/D;highp vec2 h;h=f-m/R*20.7;lowp vec2 i;i=(texture2D(T0,h).xy-vec2(.3,.3))*vec2(.002,.004);
+      highp vec2 l;l=f-i;v=texture2D(T0,l).xyz*.999;highp float u;u=sqrt(dot(m,m)) + sin(atan(m.x, m.y) * 30. - T * 3.) * .05;if(u<.618){highp float e,c;
+        c=clamp((u-.618)/-.016,0.,1.);e=c*(c*(3.-2.*c))*(u/.618);highp float p;p=pow(e,20.);e=p;float o;
+        o=float(mod(T*.1,1.));vec3 y;y=vec3(3.54585,2.93225,2.41594)*(o-vec3(.695491,.492283,.276999));
+        vec3 z;z=vec3(3.90307,3.21183,3.96587)*(o-vec3(.117486,.86755,.660779));
+        v=v+(min(max(vec3(1.,1.,1.)-y*y-vec3(.0231264,.152251,.52608),0.),1.)+
+        min(max(vec3(1.,1.,1.)-z*z-vec3(.848971,.884453,.739495),0.),1.))*p*.03;if(u<.4944){highp float t;
+          t=clamp((u-.4944)/-.016,0.,1.);e=t*(t*(3.-2.*t))*(u/.4944);highp float s;s=pow(e,20.);e=s;float g;
+          g=float(mod(T*.1+.5,1.));vec3 w;w=vec3(3.54585,2.93225,2.41594)*(g-vec3(.695491,.492283,.276999));
+          vec3 a;a=vec3(3.90307,3.21183,3.96587)*(g-vec3(.117486,.86755,.660779));v=v+(min(max(vec3(1.,1.,1.)-
+          w*w-vec3(.0231264,.152251,.52608),0.),1.)+min(max(vec3(1.,1.,1.)-a*a-vec3(.848971,.884453,.739495),0.),1.))*s*.04;}
+        v=clamp(v,0.,1.);}lowp vec4 p;p.w=1.;p.xyz=v;gl_FragColor=p;}
+  </script>
+</head>
+<body>
+<script>
+  // installing the processor as early as possible, after the body is created
+  if (lazyLoadingProcessor) {
+    lazyLoadingProcessor.observe(document.body, {childList: true, subtree: true});
+  }
+</script>
+<header>
+  <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 178.008 25.503">
+    <defs/>
+    <path d="M0 24.908v-.765l2.613-.17V1.63L0 1.459V.7h9.566v.76l-2.612.17v22.345l2.612.17v.764zM11.976 1.459V.7h3.63l14.56 17.644h.033L29.96 1.63l-2.592-.17V.7h6.276v.76l-2.613.17.186 23.618h-1.033L15.626 7.553h-.037l.24 16.42 2.596.17v.765h-6.28v-.765l2.613-.17-.186-22.344zm24.06 23.449v-.765l2.613-.17V1.63l-2.612-.17V.7h8.549q3.444 0 5.904.864t3.894 2.51q1.434 1.644 2.088 3.819.653 2.17.653 5.019 0 2.054-.426 3.828-.422 1.774-1.348 3.29-.926 1.518-2.31 2.597-1.381 1.079-3.39 1.683-2.01.599-4.507.599zm6.954-1.104q.918.17 1.662.17 1.732 0 3.08-.558 1.352-.563 2.257-1.555.91-.992 1.501-2.422.595-1.435.856-3.113.264-1.683.264-3.684 0-1.968-.186-3.51-.186-1.546-.702-3.005-.517-1.46-1.369-2.41-.847-.951-2.24-1.518-1.39-.57-3.254-.57-.951 0-1.869.17zM59.465 1.46V.7h9.57v.76l-2.629.17v15.846q0 .699.033 1.24.034.542.162 1.298.128.757.363 1.315.24.558.678 1.153.443.596 1.05.976.612.38 1.538.628.926.244 2.08.244 1.389 0 2.468-.43 1.079-.434 1.749-1.128.67-.695 1.1-1.695.433-1.005.603-2.038.17-1.034.17-2.241V1.629l-2.597-.17V.7h6.28v.76l-2.596.17v15.544q0 1.22-.199 2.315-.194 1.092-.719 2.229-.525 1.136-1.356 1.943-.831.806-2.232 1.322-1.398.521-3.217.521-1.88 0-3.365-.272-1.484-.273-2.497-.712-1.009-.442-1.728-1.136-.72-.7-1.129-1.394-.405-.694-.636-1.653-.228-.96-.29-1.737-.058-.781-.058-1.819V1.63zm33.205-.421q-1.224 0-2.15.289-.922.285-1.55.814-.629.526-.943 1.266-.314.735-.314 1.616 0 .628.17 1.24.173.608.731 1.245.558.636 1.617 1.318 1.062.678 2.86 1.456 2.072.95 3.506 1.781 1.435.831 2.332 1.766.901.934 1.298 2.096.4 1.161.4 2.774 0 1.22-.491 2.443-.492 1.22-1.488 2.187-.993.967-2.493 1.57-1.5.604-3.518.604-2.241 0-3.77-.417-1.526-.414-2.452-1.075-.922-.666-1.331-1.505-.406-.84-.406-1.687 0-.558.17-1.041.17-.484.5-.848.33-.368.815-.579.483-.21 1.095-.21.558 0 1.017.194.459.194.773.525.314.33.492.781.178.447.178.976 0 1.203-.699 1.815-.694.612-1.798.612v.066q.12.136.467.376.347.236.968.475.62.236 1.525.414.91.178 2.15.178 1.017 0 2.025-.273 1.01-.273 1.799-.782.79-.508 1.281-1.236.492-.732.492-1.645 0-.782-.29-1.46-.284-.678-1.082-1.38-.798-.707-2.216-1.513-1.418-.807-3.692-1.824-1.678-.715-2.757-1.57-1.075-.856-1.695-1.815-.62-.96-.86-2.001-.236-1.046-.236-2.146 0-1.393.509-2.63.512-1.24 1.48-2.161.967-.926 2.38-1.468 1.419-.546 3.234-.546 1.749 0 3.047.41 1.298.405 2.145 1.075.848.67 1.27 1.562.425.889.425 1.856 0 .509-.17.976-.169.467-.491.814-.323.348-.798.563-.476.21-1.083.21-.562 0-1.021-.185-.455-.19-.786-.513-.33-.323-.512-.76-.178-.443-.178-.968 0-.595.202-1.063.207-.467.554-.777.348-.314.823-.475.475-.161 1.017-.161v-.07q-.1-.117-.405-.381-.306-.265-.852-.525-.541-.265-1.34-.459-.797-.194-1.88-.194zm10.263 7.974l.17-8.313h18.528l.17 8.293h-.935q-.235-1.307-.413-2.1-.178-.798-.434-1.679-.256-.885-.53-1.377-.268-.492-.66-.983-.39-.492-.89-.72-.5-.231-1.161-.376-.662-.145-1.526-.145-.07 0-.28.009-.212.008-.381.008v22.345l2.63.17v.764h-9.571v-.765l2.596-.17-.104-22.328q-.169 0-.38-.008-.21-.008-.281-.008-.76 0-1.356.087-.595.082-1.079.322-.484.236-.84.509-.355.272-.66.78-.307.51-.517.985-.211.475-.443 1.298-.227.823-.72 3.402zm21.125 15.896v-.765l2.613-.17V1.63l-2.613-.17V.7h9.042q1.885 0 3.402.322 1.517.323 2.712 1.017 1.199.695 1.852 1.877.653 1.178.653 2.786 0 2.903-1.95 4.523-1.952 1.62-5.276 2.096v.033q1.422.017 2.464.46 1.046.441 1.666 1.128.62.686 1.178 1.773.372.744 1.059 2.282.69 1.534 1.368 2.72.541.968 1.137 1.497.595.525 1 .645.41.116.935.116v.934h-2.816q-1.29 0-2.038-.161-.748-.161-1.488-.77-.736-.611-1.315-1.69-.574-1.079-1.964-4.506-.202-.509-.587-1.315-.38-.806-.661-1.22-.281-.417-.661-.872-.38-.459-.782-.653-.397-.198-.84-.198-.743 0-1.136.016v10.435l2.613.17v.764zm6.954-12.336q.186.016.695.016 3.022 0 4.25-1.463 1.231-1.468 1.231-4.386 0-1.46-.347-2.477-.347-1.02-.992-1.579-.645-.562-1.426-.798-.782-.24-1.782-.24-.662 0-1.629.137zm14.916 12.336v-.765l2.613-.17V1.63l-2.613-.17V.7h9.567v.76l-2.613.17v22.345l2.613.17v.764zm10.703 0v-.765l2.054-.17L166.71 0h.765l8.297 23.974 2.236.17v.764h-9.074v-.765l2.29-.17-2-6.089h-7.603l-1.968 6.09 2.29.17v.764zm5.296-8.04l6.92-.137-3.394-10.418h-.066z"/>
+  </svg>
+</header>
+<nav id="project-miniatures" class="miniatures hidden">
+  <a class="miniature"
+     href="#civilizational-habits"
+     data-flickity-bg-lazyload="idea/civilizational-habits/civilizational-habits-miniature.jpg">
+    <h2>Civilizational Habits</h2>
+  </a>
+  <a class="miniature"
+     href="#industrial-shaders"
+     data-flickity-bg-lazyload="idea/industrial-shaders/industrial-shaders-miniature.jpg">
+    <h2>Industrial Shaders</h2>
+  </a>
+  <a class="miniature"
+     href="#online-presence"
+     data-flickity-bg-lazyload="idea/civilizational-habits/civilizational-habits-miniature.jpg">
+    <h2>Online Presence</h2>
+  </a>
+</nav>
+<section id="projects" class="hidden">
+  <article id="civilizational-habits">
+    <div class="media">
+      <div class="flickity">
+        <img class="medium" src="idea/civilizational-habits/dazzle-ship1.jpg" loading="lazy" />
+        <img class="medium" src="idea/civilizational-habits/dazzle-ship2.jpg" loading="lazy" />
+        <img class="medium" src="idea/civilizational-habits/dazzle-ship3.jpg" loading="lazy" />
+        <img class="medium" src="idea/civilizational-habits/Arthur_Lismer_-_Olympic_with_Returned_Soldiers.jpg" loading="lazy" />
+        <img class="medium" src="idea/civilizational-habits/Edward_Wadsworth_Dazzle_Ship_In_Drydock.jpg" loading="lazy" />
+        <img class="medium" src="idea/civilizational-habits/SSLepanto.jpg" loading="lazy" />
+        <div class="medium vimeo-video" data-video-id="183382345"></div>
+      </div>
+    </div>
+    <div class="description">
+      <h2>Civilizational Habits</h2>
+      <p class="intro">
+        An installation, involving a performer, featuring a space covered with dazzle camouflage
+        and meditating on the involvement of art and artists in military industrial complex.
+      </p>
+      <p>
+        The <a href="https://en.wikipedia.org/wiki/Dazzle_camouflage">dazzle camouflage</a> &mdash;
+        was designed and painted by artists on the surface of
+        naval ships. This peculiarity which happened in the evolution of military industry, is as
+        much picturesque as it is revealing the whole absurdity behind the war machine. It was not
+        only prepared, but also often depicted by the artists of the era.
+      </p>
+      <p>
+        The installation can be realized in many variants. The working version we have in mind
+        consists out of one space painted in the <em>dazzle</em> pattern. But more geometric
+        version of it, design to camouflage as much as to cause optical illusions.
+      </p>
+      <img src="idea/civilizational-habits/geometric-dazzle-pattern.png">
+      <p>
+        was protecting - like a grotesque of war machine writing a civilizational-habits
+        The artists contributed to the war machine. Not only by providing graphical design for
+        propaganda. Also by decorating military vessels in so called X. Like the
+        zebra pattern - paradoxically effective.
+        This website was born, because I wanted to adequately present all my work, spanning
+        across variety of disciplines and realized in a diverse media. I express myself with the
+        code, but it's not something one can easily perceive. Thus here is the wrapping.
+      </p>
+      <p>
+        I don't think we can paint the whole ship in dazzel camouflage. But we can do at least one
+        room. Let me pass the agency to our guest:
+      </p>
+      <blockquote>
+        There is a heavy black curtain in front of me, covering the entry. Above it I see a photograph
+        of a ship. Quite a long one. Looks like a military vessel, but it's covered in this weird
+        zebra-like pattern. I push through the velvet of the curtain to enter this space. It's
+        very dark in here, but there is a spotlight, a search light traversing
+        the walls and the floor. It's slightly annoying because of the black and white stripes
+        being continously revealed in the circle of light. But there is something more in there.
+        Some objects which for a glimpse I can see. The pattern is bending the space, so at the
+        beginning it's impossible to tell what is it. After a while I see a human there. Dressed
+        in the same pattern. This "zebra" camouflage makes it creepy. I see the person approaching me.
+        Now I can see more. The person is dressed as an aeroplane, with the same kind of black and
+        white pattern. Not speaking to me, but I'm given a costume as well - the battle ship also all in this weird zebra.
+        Interesting twist. Me being a ship inside the ship. And it's a battle ship, when I press
+        And the battle begins. The search lights are cheasing after me and the plane. I can hear
+        the machine gun of the Plane approaching me. My costumes has
+      </blockquote>
+      <p>
+        Industrial revolution was not only producing civilizational advancement. It was also producing
+        the machines of destruction. The installation is trying to metaforically meditate on it while
+        using the original camouflage aesthetics in more surreal setup. It is also inspired by
+        The film buttoners by Czech director peter zelenka. A masterpiece reflecting on the
+        relationship between fetishism, sources of pleasure and satisfaction, ambition,
+        ordinary civilizational habits and cultural scripts, and the motivation behind using
+        nuclear weapons.
+      </p>
+      <p>
+        The installation is documenting certain phenomenon from the industrial era, but also reflecting
+        upon it while elephantising the absurdity of it. Also questioning the role of art and design
+        in the war machine.
+      </p>
+    </div>
+  </article>
+  <article id="industrial-shaders">
+    <div class="media">
+
+    </div>
+    <div class="description">
+      <h2>Industrial Shaders</h2>
+      <p class="intro">
+        Any kind of interactive projection immersing in phenomenons of industrial process.
+      </p>
+      <p>
+        Kazik loves feedback loop shaders. Feedback loop brings the experience closer to naturally
+        occurring processes. The <q>steam</q>, <q>fire</q> and <q>water</q> can be visualized in
+        surreal representation in response to the movement of human body or sound. Therefore as a
+        projection it can be tuned to any immersive experience, projected on the wall, ceiling,
+        floor.
+      </p>
+      <p>
+        For example the background of this website is a very quick attempt to achieve steam like
+        movement shaped by procedural cog of some imaginary machine.
+      </p>
+    </div>
+  </article>
+  <article id="online-presence">
+    <div class="media">
+
+    </div>
+    <div class="description">
+      <h2>Online Presence</h2>
+      <p class="intro">
+        A website of Industria project with interactive content.
+      </p>
+      <p>
+        This website, which acts as a presentation of our ideas, can be transformed into a regular
+        website of the project. It is based on the engine running
+        <a href="https://xemantic.com">xemantic.com</a>, which emerged out of the need of presenting
+        art online, in the time of social distancing, where expression of creativity has to compete
+        for the attention span with movie streaming platforms.
+      </p>
+      <p>
+        The aesthetics of the beginning of the XX<sup>th</sup> century is brought back with
+        typography &mdash; <em>Vidaloka</em> typeface for titles, with baroquesque peculiarities,
+        and <em>Frank Rühl Libre</em> - an open source version of the typeface designed in 1908.
+      </p>
+      <p>
+        In the same time it is reflecting on the connection between elephantised form of victorian
+        era and purity of upcoming modernist geometrical structures. It can stay monochrome, with a
+        slight touch of chromatic aberration producing an illusion of space, or turn into explosion
+        of steam, fire and steel. The shader in the background can be interactive, reacting to
+        the mouse movement.
+      </p>
+    </div>
+  </article>
+</section>
+<h2>the (s)team</h2>
+<section id="team" class="content-container hidden">
+  <img class="width-longer left" src="images/nicki.jpg" loading="lazy" alt="Pumpernicki (Dominique Schwenner)"/>
+  <h3>Pumpernicki</h3>
+  <p>
+    Pumpernicki (Dominique Schwenner) wears many hats. She is a tribal fusion belly dancer first
+    trained in traditional Egyptian, singer, writer, arts manager and producer. She believes
+    that art is powerful in every form and swears by its therapeutic healing. She was inspired
+    by and pulled towards belly dance at age 5 in Morocco where she ran on the stage to join
+    beautiful belly dancers. In Middle School that spark was reignited where she ran a weekly
+    belly dance club. That spark seems to be an eternal flame. Pumpernicki's passion for the
+    arts has manifested in more than a decade of arts management experience in New York theaters
+    in arts in education, company management and programming. She joined the Sisters of
+    the Blooming Sun, a non gender specific dance community, in 2016, dancing at festivals,
+    clubs, private events and more. Now she is branching out in Berlin to expand the sisterhood
+    in dance community through Sisters of the Waking Moon and shares the New York City vibes by
+    producing Mermaid Parade Berlin, an immersive theater project on the Berlin Canal.
+  </p>
+  <img class="width-longer right" src="../../projects/emotional-robots/shumi-frenzy-of-exultations.jpg" loading="lazy"/>
+  <h3>Shumi Szumacher</h3>
+  <p>
+    Shumi, the <em>avant-garde</em> ballerina. Graduated from the <q>Design and Digital Arts</q>
+    program at the Edinburgh Napier University. Did her traineeship as a bicycle designer
+    for <a href="https://www.veloretti.com/">Veloretti</a> and worked as a cross-disciplinary
+    designer for the Dutch (<a href="https://innov8rs.co/">innov8rs.co</a> ) and German (afce.co)
+    network of tech incubators. Last summer worked as part of the Décor Team for two festivals:
+    Body&Soul and Another Love Story.
+    Passionate about arts, dance and theatre and a trained dancer.
+    Last summer toured in Portugal with a dance theatre show and a live ethnic orchestra to
+    showcase work from the Ethno Portugal art residence, performing on e.g. the main stage of
+    the FMM Sines (Festival Músicas do Mundo).
+  </p>
+  <img class="width-shorter left"
+       src="../../images/me/kazik-pogoda-at-coart-timisoara.jpg"
+       alt="Kazik Pogoda at co(art) Festival, Timișoara 2019"
+       loading="lazy"/>
+  <h3>Kazik Pogoda</h3>
+  <p>
+    He wants to evoke emotions with generative imagery. It is never drawn nor modeled, but always
+    expressed directly in the code and mathematics. Therefore his process becomes closer to
+    kabalistic meditation visualizing his philosophical beliefs, expressed in real time
+    immersive experiences sensing the space, sound and human bodies.
+  </p>
+  <p>
+    Kazik started working with creative technologist very recently. He majored in philosophy and
+    has years of experience with software architecture and development. He is also involved in
+    animal rights activism and LGBTQ+ activism in Poland. Inspired by evolutionary processes
+    extended from pure biology to the context of culture, organic forms in digital art, emergent
+    properties of complex systems and study of natural color models. He is on a personal
+    deconstructive journey of experiencing the surreal in reality. Since his childhood in communist
+    Poland he has been reflecting on being an ape during the period of emerging symbiosis of humans
+    and digital machines.
+  </p>
+  <p>
+    https://xemantic.com
+  </p>
+</section>
+<footer class="shadow hidden">
+  <p>
+    Copyright &copy; 2020 Kazimierz Pogoda, Dominique Schwenner, Patrycja Szumacher All Rights Reserved
+  </p>
+</footer>
+<canvas id="loopback-background"></canvas>
+</body>
+</html>
