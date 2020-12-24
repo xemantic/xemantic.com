@@ -27,6 +27,28 @@
   <link rel="apple-touch-icon" sizes="72x72" href="icons/apple-touch-icon-72x72.png">
   <link rel="apple-touch-icon" sizes="114x114" href="icons/apple-touch-icon-114x114.png">
 
+  <!-- don't touch this -->
+  <script>
+    const scriptsToLoad = []; const cssToLoad = []; const scriptsToPostLoad = [];
+    function addScript(src, extender) { scriptsToLoad.push([src, extender]); }
+    function addPostLoadScript(src, extender) { scriptsToPostLoad.push([src, extender]); }
+    function addCss(src) { cssToLoad.push(src); }
+  </script>
+  <script>
+    const fuckTheAiConfig = {
+      useVimeo: true
+    };
+    addScript("custom.js");
+    addScript("https://kit.fontawesome.com/0bbdfd8b39.js", (script) => {
+      script.setAttribute("crossorigin", "anonymous");
+    });
+    addCss("https://fonts.googleapis.com/css2?family=Arsenal:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+    // addPostLoadScript("analytics.js");
+
+    /* shadow settings, too much blur will make it super slow */
+    const MAX_SHADOW_DROP = 5.0;
+    const MAX_BLUR_RADIUS = .9;
+  </script>
   <style>
     :root {
       --logo-fade-in-duration: 9s;
@@ -75,14 +97,20 @@
       from { opacity: 0; }
       to   { opacity: 1; }
     }
-    #loopback-background {
-      background: black; /* covers everything */
+    #shader-background {
+      background: var(--background); /* covers everything */
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      z-index: var(--z-index-background);
+      z-index: var(--z-index-background-layer);
+    }
+    #shader-background.fallback {
+      background: var(--background-shader-fallback);
+      background-repeat: no-repeat;
+      background-position: center top;
+      background-size: cover;
     }
     .hidden {
       display: none;
@@ -102,42 +130,8 @@
     // moving shadow: end
   </style>
   <script>
-    const scriptsToLoad = [];
-    const cssToLoad = [];
-
-    // adjustable settings: start
-    const MAIN_JS = "main.js";
-    addCss("main.css");
-
-    addScript("custom.js");
-    addScript("https://kit.fontawesome.com/0bbdfd8b39.js", (script) => {
-      script.setAttribute("crossorigin", "anonymous");
-    });
-    addCss("https://fonts.googleapis.com/css2?family=Arsenal:ital,wght@0,400;0,700;1,400;1,700&display=swap");
-
-    const MAX_SHADOW_DROP = 5.0;
-    const MAX_BLUR_RADIUS = .9;
-    // adjustable settings: end
-
-    // LoopbackCanvas: start
-    function m(a){var c=0;return function(){return c<a.length?{done:!1,value:a[c++]}:{done:!0}}}function p(a){return Error(a)}p.prototype=Object.create(Error.prototype);
-    function r(a,c,f,e){this.a=a;this.b=a.createTexture();a.bindTexture(a.TEXTURE_2D,this.b);a.texImage2D(a.TEXTURE_2D,0,a.RGBA,c,f,0,a.RGBA,e.HALF_FLOAT_OES,null);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MIN_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MAG_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_S,a.CLAMP_TO_EDGE);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_T,a.CLAMP_TO_EDGE);this.c=a.createFramebuffer();a.bindFramebuffer(a.FRAMEBUFFER,this.c);a.framebufferTexture2D(a.FRAMEBUFFER,
-    a.COLOR_ATTACHMENT0,a.TEXTURE_2D,this.b,0)}r.prototype.release=function(){this.a.bindFramebuffer(this.a.FRAMEBUFFER,this.c);this.a.deleteTexture(this.b);this.a.bindFramebuffer(this.a.FRAMEBUFFER,null);this.a.deleteFramebuffer(this.c)};function t(a,c,f){c=a.createShader(c);a.shaderSource(c,f);a.compileShader(c);if(!a.getShaderParameter(c,a.COMPILE_STATUS)){var e=String(a.getShaderInfoLog(c));console.log(e,f);a.deleteShader(c);return e}return c}
-    function u(a,c){var f=t(a,a.VERTEX_SHADER,"\nattribute vec2 V;\n//attribute vec2 aUV;\n//varying vec2 vUV;\n\nvoid main() {\n    gl_Position = vec4(V, 0.0, 1.0);\n    //vUV = aUV;\n}\n");c=t(a,a.FRAGMENT_SHADER,c);var e=a.createProgram();a.attachShader(e,f);a.attachShader(e,c);a.linkProgram(e);return e}function x(a){var c=a.createBuffer();a.bindBuffer(a.ARRAY_BUFFER,c);a.bufferData(a.ARRAY_BUFFER,new Float32Array([-1,1,1,1,-1,-1,1,-1]),a.STATIC_DRAW);return c}
-    function y(a,c,f,e){var d=new r(a,c,f,e);a=new r(a,c,f,e);return[d,a]}
-    window.LoopbackCanvas=function(a,c){function f(){v=performance.now()/1E3;if(d.width!==d.clientWidth||d.height!==d.clientHeight){d.width=d.clientWidth;d.height=d.clientHeight;b.viewport(0,0,b.canvas.width,b.canvas.height);var g=k;var l="undefined"!=typeof Symbol&&Symbol.iterator&&g[Symbol.iterator];g=l?l.call(g):{next:m(g)};for(l=g.next();!l.done;l=g.next())l.value.release();k=y(b,d.width,d.height,q);e()}b.useProgram(h);b.uniform1f(z,v);b.uniform1i(A,w);b.bindFramebuffer(b.FRAMEBUFFER,k[0].c);b.bindTexture(b.TEXTURE_2D,
-    k[1].b);b.drawArrays(b.TRIANGLE_STRIP,0,4);b.useProgram(n);b.bindFramebuffer(b.FRAMEBUFFER,null);b.bindTexture(b.TEXTURE_2D,k[0].b);b.drawArrays(b.TRIANGLE_STRIP,0,4);k.reverse();w++;requestAnimationFrame(f)}function e(){var g=Math.min(d.width,d.height);b.useProgram(h);b.uniform2f(B,d.width,d.height);b.uniform1f(C,g);b.useProgram(n);b.uniform2f(D,d.width,d.height);b.uniform1f(E,g)}var d=document.getElementById(a);a=document.getElementById(c).text.trim();d.width=d.clientWidth;d.height=d.clientHeight;
-    var b=d.getContext("webgl");if(!b)throw new p("webgl context not supported on supplied canvas element: "+d);var q=b.getExtension("OES_texture_half_float");if(!q)throw new p("OES_texture_half_float is required but not supported here");if(!b.getExtension("OES_texture_half_float_linear"))throw new p("OES_texture_half_float_linear is required but not supported here");var k=y(b,d.width,d.height,q),h=u(b,a),n=u(b,"\nprecision mediump float;\n\nuniform vec2 R;\nuniform sampler2D T;\nvarying vec2 vUV;\n\nvoid main() {\n    // vUV is equal to gl_FragCoord/uScreenResolution\n    // do some pixel shader related work\n    gl_FragColor = texture2D(T, gl_FragCoord.xy/R);\n}\n\n");
-    b.useProgram(h);a=b.getAttribLocation(h,"V");c=x(b);b.bindBuffer(b.ARRAY_BUFFER,c);b.vertexAttribPointer(a,2,b.FLOAT,!1,0,0);b.enableVertexAttribArray(a);b.viewport(0,0,b.canvas.width,b.canvas.height);var B=b.getUniformLocation(h,"R"),C=b.getUniformLocation(h,"D"),z=b.getUniformLocation(h,"T"),A=b.getUniformLocation(h,"F");b.useProgram(n);var D=b.getUniformLocation(n,"R"),E=b.getUniformLocation(n,"D");e();var w=0,v=0;f()};window.WebglLoopbackException=p;
-    // LoopbackCanvas: end
-
-    function addScript(src, extender) {
-      scriptsToLoad.push([src, extender]);
-    }
-
-    function addCss(src) {
-      cssToLoad.push(src);
-    }
+    const MAIN_JS = "https://xemantic.github.io/fuck-the-ai-which-is-abusing-your-reptilian-brain-to-make-you-addicted-to-movies-instead-of-art/main.js";
+    addCss("https://xemantic.github.io/fuck-the-ai-which-is-abusing-your-reptilian-brain-to-make-you-addicted-to-movies-instead-of-art/main.css");
 
     const root = document.documentElement;
 
@@ -170,13 +164,35 @@
       if (lazyLoadingProcessor) {
         lazyLoadingProcessor.disconnect();
       }
-      new LoopbackCanvas("loopback-background", "loopback-shader");
+
+      try {
+        shaderCanvas("shader-background", "feedback-shader");
+      } catch (e) {
+        const shaderBackground = document.getElementById("shader-background");
+        shaderBackground.classList.add("fallback");
+      }
+
       const script = document.createElement("script");
       script.src = MAIN_JS;
+      script.async = true;
       document.head.appendChild(script);
     }, false);
+
+    // shaderCanvas: start
+    function m(a){var c=0;return function(){return c<a.length?{done:!1,value:a[c++]}:{done:!0}}}function r(a){return Error(a)}r.prototype=Object.create(Error.prototype);
+    function u(a,c,e){function f(){t=performance.now()/1E3;if(d.width!==d.clientWidth||d.height!==d.clientHeight){d.width=d.clientWidth;d.height=d.clientHeight;b.viewport(0,0,b.canvas.width,b.canvas.height);var g=k;var l="undefined"!=typeof Symbol&&Symbol.iterator&&g[Symbol.iterator];g=l?l.call(g):{next:m(g)};for(l=g.next();!l.done;l=g.next())l.value.release();k=w(b,d.width,d.height,q);p()}b.useProgram(h);b.uniform1f(A,t);b.uniform1i(B,v);b.bindFramebuffer(b.FRAMEBUFFER,k[0].c);b.bindTexture(b.TEXTURE_2D,
+    k[1].b);b.drawArrays(b.TRIANGLE_STRIP,0,4);b.useProgram(n);b.bindFramebuffer(b.FRAMEBUFFER,null);b.bindTexture(b.TEXTURE_2D,k[0].b);b.drawArrays(b.TRIANGLE_STRIP,0,4);k.reverse();v++;requestAnimationFrame(f)}function p(){var g=Math.min(d.width,d.height);b.useProgram(h);b.uniform2f(C,d.width,d.height);b.uniform1f(D,g);b.useProgram(n);b.uniform2f(E,d.width,d.height);b.uniform1f(F,g)}var d=document.getElementById(a);d.width=d.clientWidth;d.height=d.clientHeight;var b=d.getContext("webgl");if(!b)throw new r("webgl context not supported on supplied canvas element: "+
+    d);var q=b.getExtension("OES_texture_half_float");if(!q)throw new r("OES_texture_half_float is required but not supported here");if(!b.getExtension("OES_texture_half_float_linear"))throw new r("OES_texture_half_float_linear is required but not supported here");var k=w(b,d.width,d.height,q),h=x(b,c),n=x(b,e);b.useProgram(h);a=b.getAttribLocation(h,"V");c=y(b);b.bindBuffer(b.ARRAY_BUFFER,c);b.vertexAttribPointer(a,2,b.FLOAT,!1,0,0);b.enableVertexAttribArray(a);b.viewport(0,0,b.canvas.width,b.canvas.height);
+    var C=b.getUniformLocation(h,"R"),D=b.getUniformLocation(h,"D"),A=b.getUniformLocation(h,"T"),B=b.getUniformLocation(h,"F");b.useProgram(n);var E=b.getUniformLocation(n,"R"),F=b.getUniformLocation(n,"D");p();var v=0,t=0;f()}
+    function z(a,c,e,f){this.a=a;this.b=a.createTexture();a.bindTexture(a.TEXTURE_2D,this.b);a.texImage2D(a.TEXTURE_2D,0,a.RGBA,c,e,0,a.RGBA,f.HALF_FLOAT_OES,null);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MIN_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MAG_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_S,a.CLAMP_TO_EDGE);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_T,a.CLAMP_TO_EDGE);this.c=a.createFramebuffer();a.bindFramebuffer(a.FRAMEBUFFER,this.c);a.framebufferTexture2D(a.FRAMEBUFFER,
+    a.COLOR_ATTACHMENT0,a.TEXTURE_2D,this.b,0)}z.prototype.release=function(){this.a.bindFramebuffer(this.a.FRAMEBUFFER,this.c);this.a.deleteTexture(this.b);this.a.bindFramebuffer(this.a.FRAMEBUFFER,null);this.a.deleteFramebuffer(this.c)};function G(a,c,e){c=a.createShader(c);a.shaderSource(c,e);a.compileShader(c);if(!a.getShaderParameter(c,a.COMPILE_STATUS)){var f=String(a.getShaderInfoLog(c));console.log(f,e);a.deleteShader(c);return f}return c}
+    function x(a,c){var e=G(a,a.VERTEX_SHADER,"\nattribute vec2 V;\n//attribute vec2 aUV;\n//varying vec2 vUV;\n\nvoid main() {\n    gl_Position = vec4(V, 0.0, 1.0);\n    //vUV = aUV;\n}\n");c=G(a,a.FRAGMENT_SHADER,c);var f=a.createProgram();a.attachShader(f,e);a.attachShader(f,c);a.linkProgram(f);return f}function y(a){var c=a.createBuffer();a.bindBuffer(a.ARRAY_BUFFER,c);a.bufferData(a.ARRAY_BUFFER,new Float32Array([-1,1,1,1,-1,-1,1,-1]),a.STATIC_DRAW);return c}
+    function w(a,c,e,f){var p=new z(a,c,e,f);a=new z(a,c,e,f);return[p,a]}
+    window.shaderCanvas=function(a,c,e){return new u(a,c&&document.getElementById(c)&&document.getElementById(c).text.trim()||"\nprecision mediump float;\n\nuniform vec2 R;\nuniform sampler2D T;\nvarying vec2 vUV;\n\nvoid main() {\n    // vUV is equal to gl_FragCoord/uScreenResolution\n    // do some pixel shader related work\n    gl_FragColor = vec4(0.);\n}\n",e&&document.getElementById(e)&&document.getElementById(e).text.trim()||"\nprecision mediump float;\n\nuniform vec2 R;\nuniform sampler2D T;\nvarying vec2 vUV;\n\nvoid main() {\n    // vUV is equal to gl_FragCoord/uScreenResolution\n    // do some pixel shader related work\n    gl_FragColor = texture2D(T, gl_FragCoord.xy/R);\n}\n")};
+    window.WebglLoopbackException=r;
+    // shaderCanvas: end
   </script>
-  <script type="x-shader/x-fragment" id="loopback-shader">
+  <script type="x-shader/x-fragment" id="feedback-shader">
     precision lowp float; precision lowp int; precision lowp sampler2D; uniform vec2 R;uniform float D,T;
     uniform sampler2D T0;void main(){lowp vec3 v;highp vec2 f;f=gl_FragCoord.xy/R;
     highp vec2 m;m=(gl_FragCoord.xy*2.-R)/D;highp vec2 h;h=f-m/R*20.7;lowp vec2 i;i=(texture2D(T0,h).xy-vec2(.3,.3))*vec2(.002,.002);
@@ -207,6 +223,16 @@
   </svg>
 </header>
 <nav id="project-miniatures" class="miniatures hidden">
+<!--  <a class="miniature"-->
+<!--     href="#xemantic"-->
+<!--     data-flickity-bg-lazyload="projects/xemantic/xemantic-miniature.jpg">-->
+<!--    <h2>Industria</h2>-->
+<!--  </a>-->
+<!--  <a class="miniature"-->
+<!--     href="#xemantic"-->
+<!--     data-flickity-bg-lazyload="projects/xemantic/xemantic-miniature.jpg">-->
+<!--    <h2>Civilizational Habits</h2>-->
+<!--  </a>-->
   <a class="miniature"
      href="#xemantic"
      data-flickity-bg-lazyload="projects/xemantic/xemantic-miniature.jpg">
@@ -637,7 +663,8 @@
   <p>
     My name is Kazik Pogoda and
     <img src="logo/xemantic-logo.svg" class="logo-in-text" alt="xemantic logo" loading="lazy"/>
-    is a label I use for my projects. I am based in Berlin where I am working as a
+    is a label I use for my projects. I am based in Berlin and Szczecin (Poland) where I am working
+    as a
     <em><a href="https://en.wikipedia.org/wiki/Creative_technology">creative technologist</a></em>.
     A fancy phrase to say that instead
     of using Adobe products I write my own software. Achieving the aesthetics I desire requires
@@ -725,6 +752,6 @@
     </p>
   </div>
 </footer>
-<canvas id="loopback-background"></canvas>
+<canvas id="shader-background"></canvas>
 </body>
 </html>
