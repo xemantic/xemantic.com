@@ -1,5 +1,6 @@
 # new website todo
 
+* move svg inside h1 and add alt text https://css-tricks.com/accessible-svgs/
 * fix all the margins in all resolutions
 * add support for media galleries
 * fix footer style
