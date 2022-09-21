@@ -221,13 +221,49 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
       content: "Ups, this is unexpected. Are you sure your browser supports WebGL? Also check the console.";
       font-size: calc(16px + 4vw);
     }
+     blink {
+      animation: blinker 2.9s linear infinite;
+
+    }
+
+    @keyframes blinker {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .blink-one {
+      animation: blinker-one 5s linear infinite;
+    }
+
+    @keyframes blinker-one {
+      0% {
+        opacity: 0;
+      }
+    }
+
+    .blink-two {
+      animation: blinker-two 5.4s linear infinite;
+    }
+
+    @keyframes blinker-two {
+      100% {
+        opacity: 0;
+      }
+    }
+    .responsive {
+  width: 100%;
+  height: auto;
+}
   </style>
 </head>
 <body>
   <header>
-    <h1>404</h1>
+    <blink> <img src="404img.png" class="responsive"> </blink>
+
+
   </header>
-  <title>404</title>
+
   <section id="crew">
     <h2>Crew</h2>
     <p>
