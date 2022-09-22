@@ -190,10 +190,19 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
   </script>
   <style>
     html {
-      color: white;
+      color: yellow;
       font-size: calc(16px + .8vw);
     }
-
+    @font-face
+{
+    font-family:'Cormorant';
+    src:url(Cormorant-BoldItalic.ttf);
+}
+@font-face
+{
+    font-family:'Reg';
+    src:url(CormorantInfant-Medium.ttf);
+}
     header {
       height: 61.8vh;
       text-align: center;
@@ -201,14 +210,17 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
 
     header h1 {
       font-size: 20vw;
+      font-family:'Cormorant'
     }
 
     section h2 {
       font-size: 3rem;
+      font-family:'Cormorant'
     }
 
     p {
       font-size: 1rem;
+      font-family:'Reg'
     }
 
     .shader-web-background-fallback {
@@ -221,13 +233,49 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
       content: "Ups, this is unexpected. Are you sure your browser supports WebGL? Also check the console.";
       font-size: calc(16px + 4vw);
     }
+     blink {
+      animation: blinker 2.9s linear infinite;
+
+    }
+
+    @keyframes blinker {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .blink-one {
+      animation: blinker-one 5s linear infinite;
+    }
+
+    @keyframes blinker-one {
+      0% {
+        opacity: 0;
+      }
+    }
+
+    .blink-two {
+      animation: blinker-two 5.4s linear infinite;
+    }
+
+    @keyframes blinker-two {
+      100% {
+        opacity: 0;
+      }
+    }
+    .responsive {
+  width: 100%;
+  height: auto;
+}
   </style>
 </head>
 <body>
   <header>
-    <h1>404</h1>
+    <blink> <img src="404img.png" class="responsive"> </blink>
+
+
   </header>
-  <title>404</title>
+
   <section id="crew">
     <h2>Crew</h2>
     <p>
