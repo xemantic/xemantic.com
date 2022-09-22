@@ -192,35 +192,57 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
     html {
       color: yellow;
       font-size: calc(16px + .8vw);
+      font-family: 'Cormorant Infant', serif;
+      text-shadow: 4px 4px #000000;
     }
-    @font-face
-{
-    font-family:'Cormorant';
-    src:url(Cormorant-BoldItalic.ttf);
-}
-@font-face
-{
-    font-family:'Reg';
-    src:url(CormorantInfant-Medium.ttf);
-}
+
     header {
       height: 61.8vh;
       text-align: center;
     }
 
+    h1, h2 {
+      text-align: center;
+    }
+
     header h1 {
       font-size: 20vw;
-      font-family:'Cormorant'
     }
 
     section h2 {
       font-size: 3rem;
-      font-family:'Cormorant'
+      font-style: italic;
+      font-family: 'Cormorant Infant', serif;
     }
 
-    p {
+    p, dl, blockquote {
       font-size: 1rem;
-      font-family:'Reg'
+      font-family: 'Cormorant Infant', serif;
+      margin-left: 2vw;
+      margin-right: 2vw;
+    }
+
+    blockquote, footer {
+      text-align: center;
+    }
+
+    dl {
+      display: flex;
+      flex-flow: row wrap;
+    }
+
+    dt {
+      flex-basis: 49%;
+      text-align: right;
+    }
+
+    dt::after {
+      content: ": ";
+    }
+
+    dd {
+      flex-basis: 49%;
+      flex-grow: 1;
     }
 
     .shader-web-background-fallback {
@@ -233,9 +255,9 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
       content: "Ups, this is unexpected. Are you sure your browser supports WebGL? Also check the console.";
       font-size: calc(16px + 4vw);
     }
-     blink {
-      animation: blinker 2.9s linear infinite;
 
+    .blink {
+      animation: blinker 2.9s linear infinite;
     }
 
     @keyframes blinker {
@@ -263,115 +285,68 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
         opacity: 0;
       }
     }
+
     .responsive {
-  width: 100%;
-  height: auto;
-}
+      width: 100%;
+      height: auto;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,500;0,700;1,700&display=swap');
   </style>
 </head>
 <body>
   <header>
-    <blink> <img src="404img.png" class="responsive"> </blink>
-
-
+    <img src="404img.png" class="blink responsive">
   </header>
-
-  <section id="crew">
-    <h2>Crew</h2>
+  <section id="intro">
+    <blockquote>
+      404 opens the world to itself.
+    </blockquote>
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nulla quam, pretium in lacus
-      ut, condimentum cursus tortor. Nam molestie vestibulum purus vel consectetur. Fusce vel ante
-      justo. Integer porta magna non ligula pulvinar pharetra. Fusce vitae ultricies metus, eget
-      vehicula risus. Praesent ut cursus turpis. Aenean in urna velit. Aenean pellentesque pulvinar
-      aliquet.
+      Through multidisciplinary feedback loops, the audience and artists create a completely unique
+      piece which redefines what generative art can be. We will blur the lines between human and
+      machine, artificial and organic intelligence.
     </p>
     <p>
-      Maecenas lacinia hendrerit nisi eget aliquet. Praesent feugiat ac urna in condimentum. Proin
-      nunc nibh, ultricies quis tellus at, aliquet semper massa. Fusce condimentum lacus sit amet
-      magna consequat, sit amet tristique est gravida. Donec magna nibh, sagittis ut auctor vel,
-      dictum a orci. Etiam ut blandit purus. Aliquam erat volutpat. Morbi consequat nisi nec lacus
-      aliquam iaculis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-      inceptos himenaeos. Etiam non eros erat. Suspendisse luctus tortor sed massa vestibulum
-      aliquet.
+      You, the participatory audience, send instructions to the dancers, their movements motivate
+      the images they're immersed in, which in turn shape the sounds that surround us all, which
+      feedback back to the motion and movements. On, and in, and back through, this cycle continues,
+      until we find the 404 error. What we are dealing with in these feedback loops is the eternal
+      reflection of ourselves, and in 404, we seek to highlight the reflective and looping nature of
+      humanity’s contemporary relationship to technology. We invite you to participate in an
+      escalatory and surrealist experience with dance, acrobatics, electronic music and generative
+      art.
     </p>
   </section>
-  <section id="story">
-    <h2>Story</h2>
-    <p>
-      Nunc et tincidunt ex. Donec posuere euismod porttitor. Nullam sagittis neque nisi, ac placerat
-      risus vehicula at. Fusce ac hendrerit nulla, dictum malesuada mi. Sed id leo lacus. In a dui
-      eget nunc convallis porta vitae non orci. Vestibulum facilisis sapien quis volutpat aliquam.
-      Mauris viverra nunc ullamcorper euismod lacinia.
-    </p>
-    <p>
-      Duis tortor urna, ullamcorper ac lacus at, ornare tempus augue. Vestibulum volutpat nisi
-      nulla, eget viverra nibh euismod eu. Donec malesuada odio sed turpis gravida volutpat.
-      Maecenas luctus massa sit amet commodo maximus. Fusce lacinia eros ipsum, ac luctus lectus
-      aliquam quis. Etiam quam turpis, sollicitudin eget sapien euismod, rhoncus venenatis lorem.
-      Aenean in blandit nunc, eget iaculis augue. Nunc vulputate metus dolor, et viverra ex pretium
-      vestibulum. Sed a leo consectetur, tempor diam vel, sagittis dolor. Phasellus malesuada sem
-      sit amet finibus tincidunt. Mauris et enim aliquet erat sodales rutrum. Praesent vel
-      ullamcorper urna, eget convallis nunc. Mauris efficitur felis eget velit hendrerit feugiat.
-    </p>
-    <p>
-      Aliquam et mauris ut purus bibendum consectetur vitae sed nisl. Aenean a vestibulum enim.
-      Suspendisse congue aliquam ex vel venenatis. Pellentesque in metus ac leo imperdiet posuere.
-      Nam posuere, sem et pharetra blandit, arcu libero faucibus lectus, ut porta leo elit venenatis
-      massa. Cras quis pharetra ex. Proin est neque, semper ultricies mi id, luctus malesuada diam.
-      Cras lectus odio, ultrices sit amet magna sit amet, laoreet dignissim leo. Donec eget neque
-      eget elit tempor maximus venenatis eget orci. Etiam bibendum volutpat quam id venenatis.
-      Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
-    </p>
-    <p>
-      Nunc et tincidunt ex. Donec posuere euismod porttitor. Nullam sagittis neque nisi, ac placerat
-      risus vehicula at. Fusce ac hendrerit nulla, dictum malesuada mi. Sed id leo lacus. In a dui
-      eget nunc convallis porta vitae non orci. Vestibulum facilisis sapien quis volutpat aliquam.
-      Mauris viverra nunc ullamcorper euismod lacinia.
-    </p>
-    <p>
-      Duis tortor urna, ullamcorper ac lacus at, ornare tempus augue. Vestibulum volutpat nisi
-      nulla, eget viverra nibh euismod eu. Donec malesuada odio sed turpis gravida volutpat.
-      Maecenas luctus massa sit amet commodo maximus. Fusce lacinia eros ipsum, ac luctus lectus
-      aliquam quis. Etiam quam turpis, sollicitudin eget sapien euismod, rhoncus venenatis lorem.
-      Aenean in blandit nunc, eget iaculis augue. Nunc vulputate metus dolor, et viverra ex pretium
-      vestibulum. Sed a leo consectetur, tempor diam vel, sagittis dolor. Phasellus malesuada sem
-      sit amet finibus tincidunt. Mauris et enim aliquet erat sodales rutrum. Praesent vel
-      ullamcorper urna, eget convallis nunc. Mauris efficitur felis eget velit hendrerit feugiat.
-    </p>
-    <p>
-      Aliquam et mauris ut purus bibendum consectetur vitae sed nisl. Aenean a vestibulum enim.
-      Suspendisse congue aliquam ex vel venenatis. Pellentesque in metus ac leo imperdiet posuere.
-      Nam posuere, sem et pharetra blandit, arcu libero faucibus lectus, ut porta leo elit venenatis
-      massa. Cras quis pharetra ex. Proin est neque, semper ultricies mi id, luctus malesuada diam.
-      Cras lectus odio, ultrices sit amet magna sit amet, laoreet dignissim leo. Donec eget neque
-      eget elit tempor maximus venenatis eget orci. Etiam bibendum volutpat quam id venenatis.
-      Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
-    </p>
-    <p>
-      Nunc et tincidunt ex. Donec posuere euismod porttitor. Nullam sagittis neque nisi, ac placerat
-      risus vehicula at. Fusce ac hendrerit nulla, dictum malesuada mi. Sed id leo lacus. In a dui
-      eget nunc convallis porta vitae non orci. Vestibulum facilisis sapien quis volutpat aliquam.
-      Mauris viverra nunc ullamcorper euismod lacinia.
-    </p>
-    <p>
-      Duis tortor urna, ullamcorper ac lacus at, ornare tempus augue. Vestibulum volutpat nisi
-      nulla, eget viverra nibh euismod eu. Donec malesuada odio sed turpis gravida volutpat.
-      Maecenas luctus massa sit amet commodo maximus. Fusce lacinia eros ipsum, ac luctus lectus
-      aliquam quis. Etiam quam turpis, sollicitudin eget sapien euismod, rhoncus venenatis lorem.
-      Aenean in blandit nunc, eget iaculis augue. Nunc vulputate metus dolor, et viverra ex pretium
-      vestibulum. Sed a leo consectetur, tempor diam vel, sagittis dolor. Phasellus malesuada sem
-      sit amet finibus tincidunt. Mauris et enim aliquet erat sodales rutrum. Praesent vel
-      ullamcorper urna, eget convallis nunc. Mauris efficitur felis eget velit hendrerit feugiat.
-    </p>
-    <p>
-      Aliquam et mauris ut purus bibendum consectetur vitae sed nisl. Aenean a vestibulum enim.
-      Suspendisse congue aliquam ex vel venenatis. Pellentesque in metus ac leo imperdiet posuere.
-      Nam posuere, sem et pharetra blandit, arcu libero faucibus lectus, ut porta leo elit venenatis
-      massa. Cras quis pharetra ex. Proin est neque, semper ultricies mi id, luctus malesuada diam.
-      Cras lectus odio, ultrices sit amet magna sit amet, laoreet dignissim leo. Donec eget neque
-      eget elit tempor maximus venenatis eget orci. Etiam bibendum volutpat quam id venenatis.
-      Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;
-    </p>
+  <section id="credits">
+    <h2>Credits</h2>
+    <dl>
+      <dt>Dance performance, direction</dt>
+      <dd><a href="https://znomura.wixsite.com/homepage">Zinnia Nomura</a></dd>
+      <dt>Music, co-creation</dt>
+      <dd>Takumi Motokawa</dd>
+      <dt>Generative visuals, co-creation</dt>
+      <dd>Kazik Pogoda</dd>
+      <dt>Dance, co-creation</dt>
+      <dd>David Voigt</dd>
+      <dt>Outside eye, dramaturgy</dt>
+      <dd>Keith Lim</dd>
+      <dt>Production assistance</dt>
+      <dd>Alex Cuthbertson</dd>
+      <dt>Technical and rigging assistance</dt>
+      <dd>Paula Rizquelme</dd>
+      <dt>Digital design</dt>
+      <dd>Julie Amouzegar Kim</dd>
+      <dt>Costumes</dt>
+      <dd>Bridget Hollins</dd>
+      <dt>Photography and Videography</dt>
+      <dd>Tim Hayes</dd>
+      <dt>Spaces</dt>
+      <dd>Prachtsaal Studio, Monopol</dd>
+    </dl>
+  </section>
+  <section>
+    <h2>Shows</h2>
   </section>
   <footer>
     Copyright &copy; 2022 xemantic.com All Rights Reserved
