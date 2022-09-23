@@ -5,7 +5,7 @@
   <title>404</title>
   <meta name="author" content="Julie Amouzegar Kim, Kazik Pogoda" />
   <meta name="description" content="Through multidisciplinary feedback loops, the audience and artists create a completely unique piece which redefines what generative art can be. We will blur the lines between human and machine, artificial and organic intelligence." />
-  <meta name="keywords" content="art, berlin, berlin art, performance, show, generative, generative art, generative music, interactive art, Zinnia Nomura, Takumi Motokawa, Kazik Pogoda" />
+  <meta name="keywords" content="art, berlin, berlin art, performance, show, generative, generative art, generative music, interactive art, installation, interactive installation, Zinnia Nomura, Takumi Motokawa, Kazik Pogoda" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="generator" content="https://xemantic.com" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -249,7 +249,7 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
             iChromaticAberration:  () => osc.chromaticAberration(time),
             iPerspective:          () => osc.perspective(time),
             iCenter:               () => [osc.centerX(time), osc.centerY(time) - scroll],
-            iInitialLuma:          () => .5,
+            iInitialLuma:          () => .4,
             iLumaFade:             () => .85,
             iShapeSize:            () => osc.shapeSize(time),
             iShapeBlur:            () => .05,
@@ -265,24 +265,38 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
   </script>
   <style>
     html {
-      color: yellow;
-      font-size: calc(16px + .8vw);
+      color: #ffff00;
+      font-size: calc(18px + .8vw);
       font-family: 'Cormorant Infant', serif;
-      text-shadow: rgb(255, 242, 0) 1px 0 10px;
-      line-height: 1.618rem;
+      text-shadow: rgb(255, 255, 0) 1px 0 10px;
+      box-sizing: border-box;
+      background: black;
+    }
+
+    body, h1, h2, h3, h4, h5, h6, p, ol, ul, dl, blockquote {
+      margin: 0;
+      padding: 0;
     }
 
     header {
-      height: 61.8vh;
-      text-align: center;
+      height: 61.8vh; /* golden ratio */
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     section {
-      margin-left: 3.6vw;
-      margin-right: 3.6vw;
+      margin-left: calc(-60px + 20vw);
+      margin-right: calc(-60px + 20vw);
+    }
+
+    p, blockquote, dl, h1, h2 {
+      line-height: 1.618em;
+      margin-bottom: 1em;
     }
 
     h1, h2 {
+      margin-top: 1.618em;
       text-align: center;
     }
 
@@ -291,14 +305,13 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
     }
 
     section h2 {
-      font-size: 3rem;
+      font-size: 1.618rem;
       font-style: italic;
       font-family: 'Cormorant Infant', serif;
     }
 
-    p, dl, blockquote {
-      font-size: 1rem;
-      font-family: 'Cormorant Infant', serif;
+    blockquote {
+      font-style: italic;
     }
 
     blockquote, footer {
@@ -306,12 +319,12 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
     }
 
     dl {
-      display: flex;
-      flex-flow: row wrap;
+      display: grid;
+      grid-template-columns: 50% auto;
     }
 
     dt {
-      flex-basis: 49%;
+      gird-column: 1;
       text-align: right;
     }
 
@@ -320,8 +333,7 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
     }
 
     dd {
-      flex-basis: 49%;
-      flex-grow: 1;
+      gird-column: 2;
     }
 
     a {
@@ -330,6 +342,19 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
 
     a:hover {
       color: white;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    footer {
+      font-size: .618em;
+      text-align: center;
+      font-style: italic;
+      margin-top: 4em;
+      margin-bottom: 4.618em;
     }
 
     .shader-web-background-fallback {
@@ -373,17 +398,12 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
       }
     }
 
-    .responsive {
-      width: 100%;
-      height: auto;
-    }
-
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,500;0,700;1,700&display=swap');
   </style>
 </head>
 <body>
   <header>
-    <img src="404img.png" class="blink responsive">
+    <img src="404img.png" class="blink">
   </header>
   <section id="intro">
     <blockquote>
@@ -413,7 +433,7 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
       <li>Sa 19:00 - 20:00</li>
     </ul>
     <p>
-      Tickets
+      <a href="">Tickets</a>
     </p>
   </section>
   <section id="credits">
@@ -450,9 +470,6 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
     </blockquote>
   </section>
   <section>
-    <h2>Credits</h2>
-  </section>
-  <section>
     <h2>Description of Zinnia's dance movement practice</h2>
     <p>
       Working on the intersection of dance and circus, Zinnia is exploring alternative theatrical
@@ -465,12 +482,14 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
   <section>
     <h2>Description of Kazik’s visual coding practice</h2>
     <p>
-      Kazik is using computer codes to synthesize images and videos. This practice
-      is called creative coding and the outcome is called "generative art". The
-      algorithm is written as mathematical formulas in so called "shading language", describing
+      I am using computer codes to synthesize images and videos. This practice is called
+      <a href="https://en.wikipedia.org/wiki/Creative_coding">creative coding</a> and results
+      in forms of <a href="https://en.wikipedia.org/wiki/Generative_art">generative art</a>. The
+      algorithm is written as mathematical formulas in so called
+      <a href="https://en.wikipedia.org/wiki/Shading_language">shading language</a>, describing
       how to transform coordinates of the pixel into experience of color. Such a recipe is passed
-      to the GPU, the graphics processing unit of the computer, designed to perform millions of
-      such transformations in an instant. Other sources of signal can be mixed
+      to the graphics processing unit (GPU) of a computer, specialized element designed to perform
+      millions of such transformations in an instant. Other sources of signal can be mixed
       into the formula - the acoustic spectrum, video input, human body in motion.
       If the darkness is the canvas of generative video synthesis, then the process can be compared
       to sculpting in light, while preserving movement in time.
@@ -478,6 +497,22 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
   </section>
   <section>
     <h2>Description of Takumi's music</h2>
+    <p>
+      There’s a heavy portion of improvisatory elements involved in the music part of this show.
+      During the pandemic time, I’ve developed techniques for generative music making especially in
+      the live interactive sense - all came from that I wanted to have another “musician” to jam
+      with. The “device” uses Ableton Live as a nest to host everything, and within that I use Max
+      for Live and several other plug-ins connected and patched just like a modular synthesiser
+      setup. Along with live looping and grand arpeggiators, what makes this project special is the
+      linkage between music and visuals. This musical device is designed to take inputs from the
+      live coded visuals and the values passed on via OSC will be the musical gesture itself; also
+      at the same time what is generated musically will be passed back onto the visual side which
+      will make a feedback loop in this performance. To magnify this whole concept even more, this
+      whole setup is performed through a multi-speaker surround system with some sound objects
+      planted into the performance space. These sound objects are everyday objects you find in your
+      daily life but they have transducers attached to them, which then they become sound output
+      devices connected to this whole system.
+    </p>
   </section>
   <footer>
     Copyright &copy; 2022 <a href="https://xemantic.com">xemantic.com</a> All Rights Reserved
