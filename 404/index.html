@@ -5,7 +5,7 @@
   <title>404</title>
   <meta name="author" content="Julie Amouzegar Kim, Kazik Pogoda" />
   <meta name="description" content="Through multidisciplinary feedback loops, the audience and artists create a completely unique piece which redefines what generative art can be. We will blur the lines between human and machine, artificial and organic intelligence." />
-  <meta name="keywords" content="art, berlin, berlin art, performance, show, generative, generative art, generative music, interactive art, installation, interactive installation, Zinnia Nomura, Takumi Motokawa, Kazik Pogoda" />
+  <meta name="keywords" content="Zinnia Nomura, Takumi Motokawa, Kazik Pogoda, art, berlin, berlin art, performance, show, generative, generative art, generative music, interactive art, installation, interactive installation" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="generator" content="https://xemantic.com" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -151,6 +151,7 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
     uniform float iFocusDepth;
     uniform float iRefractionShapeScale;
     uniform float iRefractionBlur;
+    uniform float iScroll;
 
     const int ITERATIONS = 10;
     const float PI = 3.14159265359;
@@ -174,7 +175,8 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
       layerSt *= rotate2d(iRotationAngle);
 
       for (int i = 0; i < ITERATIONS; i++) {
-        vec2 gridSt = layerSt - iCenter;
+        vec2 gridSt = layerSt + vec2(0.0, iScroll) - iCenter;
+
         layerSt *= rotate2d(iLayerRotationAngle);
 
         float depth = (float(i) + .5) / float(ITERATIONS);
@@ -196,7 +198,7 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
     }
   </script>
   <script>
-    const PARALLAX_SCROLLING_RATE = .00045;
+    const PARALLAX_SCROLLING_RATE = .001;
 
     const rand        = Math.random;
     const mapFrom01   = (x, min, max) => min + x * (max - min);
@@ -244,11 +246,11 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
             iResolution:           () => ctx.resolution,
             iMinDimension:         () => minDimension,
             iScale:                () => osc.scale(time),
-            iRotationAngle:        () => 0,
+            iRotationAngle:        () => osc.rotationAngle(time),
             iLayerRotationAngle:   () => osc.layerRotationAngle(time),
             iChromaticAberration:  () => osc.chromaticAberration(time),
             iPerspective:          () => osc.perspective(time),
-            iCenter:               () => [osc.centerX(time), osc.centerY(time) - scroll],
+            iCenter:               () => [osc.centerX(time), osc.centerY(time)],
             iInitialLuma:          () => .4,
             iLumaFade:             () => .85,
             iShapeSize:            () => osc.shapeSize(time),
@@ -257,7 +259,8 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
             iRefractionShapeScale: () => 1,
             iRefractionBlur:       () => .5,
             iOutOfFocusImpact:     () => .5,
-            iFocusDepth:           () => osc.focusDepth(time)
+            iFocusDepth:           () => osc.focusDepth(time),
+            iScroll:               () => scroll
           }
         }
       }
@@ -470,17 +473,18 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
     </blockquote>
   </section>
   <section>
-    <h2>Description of Zinnia's dance movement practice</h2>
+    <h2>Zinnia on her dance movement practice</h2>
     <p>
-      Working on the intersection of dance and circus, Zinnia is exploring alternative theatrical
-      approaches to create innovative and immersive movement-based work. In her solo piece
-      Machine (un)learning, she created a simple interface which allowed for fully interactive
-      composition. By receiving the audience commands via MIDI Pad, she initiates a live feedback
-      loop that enables the audience to co-create her dance performance in real time.
+      I am working on the intersection of dance and circus, exploring alternative theatrical
+      approaches to create innovative and immersive movement-based work. In my solo piece
+      <a href="https://youtu.be/E6PR1Cirj-A">Machine (un)learning</a>, I created a simple
+      interface which allowed for fully interactive
+      composition. By receiving the audience commands via MIDI Pad, I initiates a live feedback
+      loop that enables the audience to co-create the dance performance in real time.
     </p>
   </section>
   <section>
-    <h2>Description of Kazik’s visual coding practice</h2>
+    <h2>Kazik on his visual coding practice</h2>
     <p>
       I am using computer codes to synthesize images and videos. This practice is called
       <a href="https://en.wikipedia.org/wiki/Creative_coding">creative coding</a> and results
@@ -496,7 +500,7 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
     </p>
   </section>
   <section>
-    <h2>Description of Takumi's music</h2>
+    <h2>Takumi on his music</h2>
     <p>
       There’s a heavy portion of improvisatory elements involved in the music part of this show.
       During the pandemic time, I’ve developed techniques for generative music making especially in
