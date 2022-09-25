@@ -22,6 +22,10 @@
   <meta property="og:locale"        content="en_US" />
 
 
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,700;1,500;1,700&display=swap" rel="stylesheet"/>
+
   <script>
     // -- https://xemantic.github.io/shader-web-background/
 const shaderWebBackground={};(()=>{'use strict';const r=(a,b)=>{b.initHalfFloatRGBATexture(b.width,b.height);a.texParameteri(a.TEXTURE_2D,
@@ -251,7 +255,7 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
             iChromaticAberration:  () => osc.chromaticAberration(time),
             iPerspective:          () => osc.perspective(time),
             iCenter:               () => [osc.centerX(time), osc.centerY(time)],
-            iInitialLuma:          () => .4,
+            iInitialLuma:          () => .3,
             iLumaFade:             () => .85,
             iShapeSize:            () => osc.shapeSize(time),
             iShapeBlur:            () => .05,
@@ -267,18 +271,37 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
     }));
   </script>
   <style>
-    html {
-      color: #ffff00;
-      font-size: calc(18px + .8vw);
-      font-family: 'Cormorant Infant', serif;
-      text-shadow: rgb(255, 255, 0) 1px 0 10px;
-      box-sizing: border-box;
-      background: black;
+
+    :root {
+      --main-color: #ffff00;
     }
 
-    body, h1, h2, h3, h4, h5, h6, p, ol, ul, dl, blockquote {
+    ::selection {
+      background-color: #ff00ff;
+    }
+
+    html {
+      color: var(--main-color);
+      background: #000000;
+      font-size: calc(20px + 1vw);
+      font-family: 'Cormorant', serif;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    * {
       margin: 0;
       padding: 0;
+    }
+
+    h2, p, ol, ul, dl, blockquote {
+      text-shadow: 0 0 .2rem #000000, 0 0 .2rem #000000, 0 0 .4rem #FFFF00;
+      line-height: 1.618em;
+      margin-bottom: 1em;
     }
 
     header {
@@ -286,61 +309,61 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-left: 13vw;
+      margin-right: 13vw;
+    }
+
+    h1 {
+      width: 100%;
+    }
+
+    header .logo {
+      color: var(--main-color);
+      width: 100%;
+      filter: drop-shadow(0 0 1vw var(--main-color)) drop-shadow(0 0 2vw var(--main-color));
+      animation: blinker 2.9s linear infinite;
     }
 
     section {
-      margin-left: calc(-60px + 20vw);
-      margin-right: calc(-60px + 20vw);
+      margin-left: 19vw;
+      margin-right: 19vw;
     }
 
-    p, blockquote, dl, h1, h2 {
-      line-height: 1.618em;
-      margin-bottom: 1em;
-    }
-
-    h1, h2 {
+    h2 {
       margin-top: 1.618em;
-      text-align: center;
-    }
-
-    header h1 {
-      font-size: 20vw;
-    }
-
-    section h2 {
-      font-size: 1.618rem;
+      font-weight: bold;
       font-style: italic;
-      font-family: 'Cormorant Infant', serif;
     }
 
     blockquote {
       font-style: italic;
     }
 
-    blockquote, footer {
+    h2, p, blockquote, footer {
       text-align: center;
     }
 
     dl {
       display: grid;
       grid-template-columns: 50% auto;
+      align-items: center;
     }
 
     dt {
       gird-column: 1;
       text-align: right;
-    }
-
-    dt::after {
-      content: ": ";
+      font-style: italic;
+      margin-right: .618em;
     }
 
     dd {
       gird-column: 2;
+      margin-left: .618em;
     }
 
     a {
-      color: yellow;
+      color: var(--main-color);
+      transition: color .618s;
     }
 
     a:hover {
@@ -353,22 +376,10 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
     }
 
     footer {
-      font-size: .618em;
       text-align: center;
       font-style: italic;
       margin-top: 4em;
       margin-bottom: 4.618em;
-    }
-
-    .shader-web-background-fallback {
-      background: url("https://placekitten.com/666/666");
-      background-position: center;
-      background-size: cover;
-      background-attachment: fixed;
-    }
-    .shader-web-background-fallback body::before {
-      content: "Ups, this is unexpected. Are you sure your browser supports WebGL? Also check the console.";
-      font-size: calc(16px + 4vw);
     }
 
     .blink {
@@ -381,32 +392,192 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
       }
     }
 
-    .blink-one {
-      animation: blinker-one 5s linear infinite;
+    .shader-web-background-fallback {
+      background: url("https://placekitten.com/666/666");
+      background-position: center;
+      background-size: cover;
+      background-attachment: fixed;
     }
 
-    @keyframes blinker-one {
-      0% {
-        opacity: 0;
+    .shader-web-background-fallback body::before {
+      content: "Ups, this is unexpected. Are you sure your browser supports WebGL? Also check the console.";
+      font-size: calc(18px + 4vw);
+    }
+
+    @media screen and (max-width: 1024px) {
+
+      header {
+        margin-left: 10vw;
+        margin-right: 10vw;
       }
-    }
 
-    .blink-two {
-      animation: blinker-two 5.4s linear infinite;
-    }
-
-    @keyframes blinker-two {
-      100% {
-        opacity: 0;
+      section {
+        margin-left: 10vw;
+        margin-right: 10vw;
       }
+
     }
 
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,500;0,700;1,700&display=swap');
+    @media screen and (max-width: 768px) {
+
+      header {
+        margin-left: 5vw;
+        margin-right: 5vw;
+      }
+
+      section {
+        margin-left: 5vw;
+        margin-right: 5vw;
+      }
+
+    }
+
+    @media screen and (max-width: 480px) {
+
+      header {
+        margin-left: -35vw;
+        margin-right: -35vw;
+      }
+
+      header .logo {
+        filter: drop-shadow(0 0 2vw var(--main-color)) drop-shadow(0 0 4vw var(--main-color));
+      }
+
+      section {
+        margin-left: 2vw;
+        margin-right: 2vw;
+      }
+
+      dl {
+        display: block;
+      }
+
+      dt {
+        text-align: center;
+        margin-right: 0;
+      }
+
+      dd {
+        text-align: center;
+        margin-left; 0;
+        margin-bottom: 1em;
+      }
+
+    }
   </style>
 </head>
 <body>
   <header>
-    <img src="404img.png" class="blink">
+    <h1>
+      <svg class="logo"
+           xmlns="http://www.w3.org/2000/svg"
+           xml:space="preserve"
+           viewBox="0 0 526.99 129.08"
+           aria-labelledby="logo-title logo-desc"
+           role="img">
+        <title id="logo-title">404</title>
+        <desc id="logo-desc">the logo of the 404 project</desc>
+        <defs/>
+        <path
+            fill="currentColor"
+            d="M203.32 0c-1.1 9.45-9.06 25.88-14.46 38.13l-1.32-.01h-.02c-26.87 0-53.03 6.1-77.3
+            12.74-24.14-16.53-44.73-24.57-62.96-24.57-16.75 0-29.31 3.34-37.34 9.94C3.43 41.56 0
+            49.03 0 57.87 0 67.93 3.21 76 9.54 81.85c7.48 6.92 19.15 10.43 34.67 10.46l.05.01h.5c.03
+            0 .05 0 .07-.02a53.2 53.2 0 0 0 6.62-.42c10.3-1.33 18.18-5.67 22.16-12.35a18.76 18.76
+            0 0 0 .85-17.8h.01c3.33-.8 7-1.76 11.48-2.98l.01-.01.11-.03 1.12-.31h.01a.04.04 0 0 1
+            .03-.01l.01-.01.03-.01c3.44-.94 6.94-1.92 10.63-2.95 2.12-.6 4.27-1.21
+            6.46-1.81l5.68-1.57C122.32 60.49 134 70 143.43 77.72c-3.24 7.16-3.45 15.1-.58
+            21.94l-.01.01-5.3 2.03c-8.67 3.3-17.64 6.75-25.4 9.52-8.83-3.88-16.67-7.08-23.18-7.08-12.8
+            0-18.55 3.62-18.55 7.21s5.82 7.44 18.6 7.44c3.52 0 10.86-2.03 23.1-6.4l2.85 1.27c15.26
+            6.76 34.25 15.19 56.97 15.19 14.03 0 25.82-3.91 34.08-11.31 7.33-6.56 14-15.35
+            14-24.75a31.6 31.6 0 0 0-4.3-15.8l.77-.02c3.52 0 7.13.26 11.59.69.26 0
+            .43-.17.43-.43s-.17-.34-.43-.43c-2.75-.77-7.3-5.37-7.3-8.12V54.6l12.44.03c2.42 12.16
+            9.55 20.97 23.19 20.97 13.72 0 20.85-8.86 23.22-21.1.54.43 1.3.58
+            2.13.58l25.49-.26h.01v14.01c0 2.74-4.55
+            7.35-7.3 8.12-.26.09-.43.17-.43.43s.17.43.43.43c2.55-.24 4.76-.42 6.84-.54a31.05 31.05
+            0 0 0-4.33 15.75c0 9.4 6.81 18.19 14.29 24.75 8.44 7.4 20.47 11.31 34.8 11.31 23.18 0
+            42.57-8.43 58.14-15.2l2.91-1.26c12.5 4.37 19.99 6.4 23.58 6.4 13.04 0 18.98-3.85
+            18.98-7.44 0-3.59-5.86-7.21-18.94-7.21-6.65 0-14.65 3.2-23.66
+            7.08-7.93-2.77-17.08-6.21-25.93-9.52l-5.4-2.03-.02-.01c2.93-6.84 2.72-14.78-.59-21.94
+            9.64-7.71 21.55-17.23 34.08-25.68l5.8 1.57c2.23.6 4.43 1.21 6.59 1.81 3.77 1.03 7.34
+            2.01 10.85 2.95h.03l.01.02h.04c.38.12.76.22 1.14.32l.11.03.01.01c4.57 1.22 8.32 2.17
+            11.72 2.98h.01a18.42 18.42 0 0 0 .86 17.8c4.05 6.68 12.11 11.02 22.61 12.35 1.98.26
+            4.18.38 6.53.41.27.03.3.02.44.03h.33l.22-.01c15.77-.05 27.64-3.56 35.25-10.46
+            6.46-5.85 9.74-13.92 9.74-23.98 0-8.83-3.5-16.31-10.13-21.64-8.19-6.6-21.02-9.94-38.1-9.94-18.62
+            0-39.63 8.04-64.27 24.57-24.76-6.63-51.46-12.74-78.89-12.74h-.02v1.09l.01-1.02v1.02c26.98
+            0 53.27 5.95 77.7 12.46-12.2 8.29-23.76 17.52-33.17
+            25.05-2.94-5.71-11.5-17.44-32.38-17.72-.5-.03-.43-.01-.64-.02h-2.84c-12.27 0-21.67
+            3.22-28.43 8.15V54.75l13.2.03c-.34-2.75-6.2-7.25-6.16-10.68.17-.35-.26-.77-.77-.26-1.64
+            1.63-3.78 3-6.27 4.2l.2-7.47a164.5 164.5 0 0 1 19.54-1.13v-1.09a166 166 0 0 0-19.5
+            1.11l.62-23.41c-1.64 4.55-9 10.9-10.98 12.14l-.1 12.89a131.14 131.14 0 0 0-24.01
+            7.03c6.88-10.54 32.49-24.45 34.83-37.62L298.38.15c-1.37 11.77-13.45 34.5-17.87
+            46.29.02-.73.04-1.47.04-2.21 0-17.24-6.82-31.28-24.25-31.3-17.32 0-24.05 14.05-24.05
+            31.2l.01.75c-3.7-1.22-7.47-2.27-11.32-3.16l.7-25.82c-1.65 4.55-9 10.9-10.99 12.14l-.1
+            11.72c-4.74-.7-9.62-1.18-14.65-1.43 10.13-8.7 23.79-18.53 25.47-27.99zm53.27 13.81c10.6
+            0 10.61 19.68 10.61 29.73s-.19 31.2-10.89 31.19c-10.32 0-9.14-20.8-9.14-30.6
+            0-10.04-1.18-30.32 9.42-30.32zM47.28 27.38c17.8 0 37.97 7.81 61.58 23.85-3.84 1.06-7.6
+            2.1-11.25 3.13a1545.81 1545.81 0 0 1-11.87 3.31h-.01l-.21.06-.09.03a.35.35 0 0
+            1-.14.03l-.13.04h-.01a.19.19 0 0 1-.07.02h-.02a481.79 481.79 0 0 1-11.1
+            2.87c-3.93-7.4-12.07-12.19-22.32-13.32-1.4-.16-2.9-.24-4.56-.23-1.66.02-2.7.1-3.6.28-5.4.96-10.13
+            4.19-10.13 9.03 0 4.16 4.18 9.04 15.97 9.07h.08c4.62 0 10.03-.63 16.76-1.97 1.5-.3
+            3.07-.63 4.71-1A23.38 23.38 0 0 1 72 69.9c0 4.15-1.01 10.06-5.83 14.62-3.62 3.43-8.77
+            5.55-15.37 6.36-1.92.23-3.93.34-5.09.35h-1.2v-.01h-.07c-13.01
+            0-22.75-3.37-28.95-10.02-5.26-5.63-7.93-13.48-7.93-23.34 0-8.11 3.2-15.5 9.05-20.81
+            6.95-6.33 17.55-9.67 30.67-9.67zm431.46.23c13.38 0 24.21 3.34 31.3 9.67a27.5 27.5 0 0
+            1 9.23 20.81c0 9.86-2.73 17.71-8.1 23.34-6.33 6.65-16.27 10.02-29.54 10.02h-.43c-2.1
+            0-4.16-.1-6.1-.34-6.74-.81-12-2.93-15.69-6.36-4.92-4.56-5.95-10.47-5.95-14.62
+            0-2.58.39-5.04 1.15-7.32 1.68.37 3.28.7 4.81 1 6.66 1.3 12.02 1.9 16.65 1.94a.1.1 0 0 0
+            .06.02h.52c12.02-.02 16.29-4.9 16.29-9.06 0-4.84-4.8-8.07-10.32-9.03a29 29 0 0
+            0-3.78-.3c-1.6.01-3.13.09-4.55.25-10.46 1.13-18.77 5.92-22.78
+            13.32-3.31-.8-6.93-1.71-11.33-2.87h-.02c-.02 0-.04 0-.07-.02l-.15-.04a.35.35 0 0
+            1-.14-.03l-.09-.03-.22-.06-.06-.02c-3.89-1.04-7.86-2.13-12.06-3.29l-11.48-3.13C440
+            35.42 460.56 27.6 478.74 27.6zM187.53 39.2h.85c-2.36 5.4-4.2 9.98-4.52 12.46-.35 2.66
+            1.1 3.26 2.83 3.26l25.49-.26h.01v14.01c0 .72-.32 1.58-.84
+            2.45-6.67-7.13-17.3-12.14-32.33-12.15h-2.85l-.19.01h-.03c-20.7.15-29.15 12-32.04
+            17.74l-.01-.01c-9.22-7.53-20.55-16.76-32.5-25.05 23.94-6.51 49.7-12.46
+            76.13-12.46zm7.18.15c5.44.23 10.72.74 15.84 1.5l-.08 10.12a90.21 90.21 0 0 1-23.52
+            3.01c-1.89 0-2.49-.77-1.89-2.92.94-3.49 4.8-7.45 9.65-11.7zM305.6 42.2l-.07 8.93a90.21
+            90.21 0 0 1-23.52 3c-1.32 0-2-.38-2.09-1.34.09-.54.16-1.1.23-1.65.14-.49.34-.98.58-1.49
+            7.95-3.27 16.2-5.76 24.87-7.45zm-84.7.64c1.87.43 3.72.9 5.55 1.4a24.24 24.24 0 0 1-5.68
+            3.66zm6.98 1.83c1.48.43 2.95.89 4.4 1.37.06 2.12.24
+            4.18.52 6.17-1.63-2.34-4.44-5.14-4.92-7.54zM47.13 48.24l.96.02h.02c11.29.33 19.19 5
+            22.39 13.28-8.83 1.99-15.55 2.9-21.1
+            2.9v.01h-.08c-5.17-.01-8.73-1.01-10.59-3-1.19-1.26-1.72-2.96-1.63-5.19.21-5.26
+            3.42-7.96 9.52-8.02h.01zm432.1.23h.16c6.23.06 9.5 2.76 9.72 8.02.08 2.23-.45 3.93-1.67
+            5.2-1.89 1.97-5.49 2.96-11.12 2.96-5.62 0-12.41-.91-21.33-2.88 3.26-8.27 11.32-12.95
+            22.85-13.28h.02l1.15-.02h.22zm-302.66 11.6c11.04.04 20.1 3.45 26.16 9.88a28.7 28.7 0 0
+            1 4.2 5.82 7.4 7.4 0 0 1-2.04 1.03c-.26.09-.43.17-.43.43s.17.43.43.43l2.91-.26a35.1 35.1
+            0 0 1 3.23 16.49c-.34 9.09-3.76 17.36-9.64 23.27-6.89 6.92-17.06 10.59-29.42 10.59-22.5
+            0-41.38-8.38-56.54-15.1l-1.79-.8c7.52-2.7 16.06-5.96 24.34-9.13l5.38-2.06c4.35 9.24
+            13.77 14.53 25.93 14.54h2.67c1.78 0 2.41-1.03 2.41-1.91 0-1.06-.84-1.91-1.87-1.91-1.53
+            0-1.97 1.07-2.25 1.78-.29.71-.42.94-.93.94h-.03c-10.67-.01-18.1-5.44-20.99-15.32a874.19
+            874.19 0 0 1 14.75-5.47c9.93 7.4 16.44 10.7 21.08 10.7h.03l1.31-.02c4.6-.16 8.45-1.14
+            11.2-2.86 2.73-1.7 4.24-4.04 4.24-6.57 0-5.87-7.23-8.94-14.38-8.94-3.54 0-10.95 2.06-23.3
+            6.47a475.2 475.2 0 0 1-15.09-11.97c4.01-16.42 17.36-19.97
+            27.91-20.04h.47l.05-.01zm170.22.22h.02c.24 0 .21.02.5.02 10.77.07 24.4 3.62 28.48
+            20.04a487.93 487.93 0 0 1-15.39 11.97c-12.62-4.41-20.18-6.47-23.8-6.47-7.28 0-14.66
+            3.07-14.66 8.94 0 2.53 1.53 4.87 4.32 6.57 2.81 1.72 6.75 2.7 11.44 2.86l1.34.02h.03c4.73
+            0 11.37-3.31 21.51-10.7A905.6 905.6 0 0 1 375.63 99c-2.94 9.88-10.53 15.31-21.42
+            15.32h-.03c-.52 0-.66-.23-.95-.94-.29-.71-.74-1.78-2.3-1.78a1.9 1.9 0 0 0-1.91 1.91c0
+            .88.64 1.91 2.46 1.91h2.73c12.41-.01 22.02-5.3 26.46-14.54l5.49 2.06c8.44 3.17 17.17
+            6.43 24.84 9.14l-1.83.79c-15.48 6.72-34.74 15.1-57.7 15.1-12.62
+            0-23-3.67-30.03-10.6-6-5.9-9.49-14.17-9.84-23.26a34.37 34.37 0 0 1 3.53-16.9c2.45.1
+            5.03.3 8 .6.26 0 .43-.18.43-.44s-.17-.34-.43-.43c-1.59-.44-3.75-2.17-5.32-4.07.7-.94
+            1.45-1.85 2.27-2.7 6.2-6.44 15.44-9.84 26.71-9.89zm-198.98 21a472.6 472.6 0 0 0 14.12
+            11.23 951.6 951.6 0 0 0-14 5.2 35.9 35.9 0 0
+            1-.79-11.88c.14-1.56.37-3.1.67-4.54zm228.31.25c.3 1.45.54 2.98.68 4.54.38 4.16.1
+            8.25-.82 11.88a959.38 959.38 0 0 0-14.28-5.2 477 477 0 0 0 14.42-11.22zm-189.65
+            5.18c6.64-.01 10.06 4.2 10.43 8.14a5.99 5.99 0 0 1-1.44 4.69c-1.96 2.19-5.87
+            3.35-11.32 3.37h-.08c-4.3 0-10.45-3.11-19.85-10.04 11.82-4.21 18.91-6.16
+            22.26-6.16zm150.18.23c3.42 0 10.65 1.95 22.72 6.16-9.6 6.93-15.87 10.04-20.26
+            10.04h-.08c-5.56-.02-9.55-1.18-11.55-3.37a5.86 5.86 0 0 1-1.47-4.69c.38-3.92 3.87-8.15
+            10.64-8.14zm-247.7 18.28c6.05 0 13.41 2.9 21.7 6.52-11.47 4.05-18.37 5.95-21.65
+            5.95-11.71-.01-13.12-4.45-13.18-6.35a4.16 4.16 0 0 1 1.17-3.1c1.88-1.98 6.01-3.02
+            11.96-3.02zm347.23.23c6.07 0 10.3 1.04 12.21 3.02a4.1 4.1 0 0 1 1.2 3.1c-.06
+            1.91-1.5 6.34-13.46 6.35-3.35 0-10.39-1.9-22.09-5.95 8.46-3.62 15.96-6.52 22.14-6.52z"
+        />
+      </svg>
+    </h1>
   </header>
   <section id="intro">
     <blockquote>
@@ -428,15 +599,18 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
       art.
     </p>
   </section>
-  <section>
+  <section id="shows">
     <h2>Shows</h2>
-    <ul>
-      <li>Fri 19:00 - 20:00</li>
-      <li>Sa 16:00 - 17:00</li>
-      <li>Sa 19:00 - 20:00</li>
-    </ul>
+    <dl>
+      <dt>Friday, October 14, 2022</dt>
+      <dd>19:00 - 20:00</dd>
+      <dt>Saturday, October 15, 2022</dt>
+      <dd>16:00 - 17:00</dd>
+      <dt>Saturday, October 15, 2022</dt>
+      <dd>19:00 - 20:00</dd>
+    </dl>
     <p>
-      <a href="">Tickets</a>
+      <a href="https://pretix.eu/xemantic/404/" class="blink">Tickets</a>
     </p>
   </section>
   <section id="credits">
@@ -463,7 +637,7 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
       <dt>Photography and Videography</dt>
       <dd><a href="https://www.instagram.com/nowtographs/">Tim Hayes</a></dd>
       <dt>Spaces</dt>
-      <dd><a href="https://xemantic.com/">Xemantic @ Prachtsaal Studio</a>, <a href="">Monopol</a></dd>
+      <dd><a href="https://xemantic.com/">Xemantic @ Prachtsaal Studio</a><br/><a href="">Monopol</a></dd>
     </dl>
     <blockquote>
       This project has been made possible with the support of the
@@ -476,10 +650,12 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
     <h2>Zinnia on her dance movement practice</h2>
     <p>
       I am working on the intersection of dance and circus, exploring alternative theatrical
-      approaches to create innovative and immersive movement-based work. In my solo piece
+      approaches to create innovative and
+      <a href="https://en.wikipedia.org/wiki/Immersion_(virtual_reality)">immersive</a> movement-based work.
+      In my solo piece
       <a href="https://youtu.be/E6PR1Cirj-A">Machine (un)learning</a>, I created a simple
       interface which allowed for fully interactive
-      composition. By receiving the audience commands via MIDI Pad, I initiates a live feedback
+      composition. By receiving the audience commands via MIDI Pad, I initiate a live feedback
       loop that enables the audience to co-create the dance performance in real time.
     </p>
   </section>
@@ -488,33 +664,50 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
     <p>
       I am using computer codes to synthesize images and videos. This practice is called
       <a href="https://en.wikipedia.org/wiki/Creative_coding">creative coding</a> and results
-      in forms of <a href="https://en.wikipedia.org/wiki/Generative_art">generative art</a>. The
+      in <a href="https://en.wikipedia.org/wiki/Generative_art">generative</a> forms. The
       algorithm is written as mathematical formulas in so called
       <a href="https://en.wikipedia.org/wiki/Shading_language">shading language</a>, describing
       how to transform coordinates of the pixel into experience of color. Such a recipe is passed
-      to the graphics processing unit (GPU) of a computer, specialized element designed to perform
-      millions of such transformations in an instant. Other sources of signal can be mixed
+      to the
+      <a href="https://en.wikipedia.org/wiki/Graphics_processing_unit">graphics processing unit (GPU)</a>
+      of a computer, which is specialized in performing
+      millions of pixel calculations in an instant. Other sources of signal can be mixed
       into the formula - the acoustic spectrum, video input, human body in motion.
       If the darkness is the canvas of generative video synthesis, then the process can be compared
-      to sculpting in light, while preserving movement in time.
+      to sculpting in light, while preserving movement in time. For the 404 show I prepared a
+      specialized programming language for binding
+      <a href="https://en.wikipedia.org/wiki/Synesthesia">synaesthetic</a> effects according to
+      <a href="https://en.wikipedia.org/wiki/Phenomenology_(philosophy)">phenomenological</a>
+      model of mind. During the show I will perform by
+      <a href="https://en.wikipedia.org/wiki/Live_coding">live coding</a> synaesthesia.
     </p>
   </section>
   <section>
     <h2>Takumi on his music</h2>
     <p>
       There’s a heavy portion of improvisatory elements involved in the music part of this show.
-      During the pandemic time, I’ve developed techniques for generative music making especially in
-      the live interactive sense - all came from that I wanted to have another “musician” to jam
-      with. The “device” uses Ableton Live as a nest to host everything, and within that I use Max
-      for Live and several other plug-ins connected and patched just like a modular synthesiser
-      setup. Along with live looping and grand arpeggiators, what makes this project special is the
+      During the pandemic time, I’ve developed techniques for
+      <a href="https://en.wikipedia.org/wiki/Generative_music">generative music</a>
+      making especially in
+      the live interactive sense - all came from that I wanted to have another <q>musician</q> to jam
+      with. The <q>device</q> uses <a href="https://www.ableton.com/">Ableton Live</a> as a nest
+      to host everything, and within that I use
+      <a href="https://www.ableton.com/en/live/max-for-live/">Max for Live</a> and several other
+      plug-ins connected and patched just like a
+      <a href="https://en.wikipedia.org/wiki/Modular_synthesizer">modular synthesiser</a>
+      setup. Along with live looping and grand
+      <a href="https://de.wikipedia.org/wiki/Arpeggiator">arpeggiators</a>, what makes this project
+      special is the
       linkage between music and visuals. This musical device is designed to take inputs from the
-      live coded visuals and the values passed on via OSC will be the musical gesture itself; also
+      live coded visuals and the values passed on via
+      <a href="https://en.wikipedia.org/wiki/Open_Sound_Control">OSC</a> will be the musical gesture itself; also
       at the same time what is generated musically will be passed back onto the visual side which
-      will make a feedback loop in this performance. To magnify this whole concept even more, this
+      will make a <a href="https://en.wikipedia.org/wiki/Feedback">feedback loop</a> in this performance.
+      To magnify this whole concept even more, this
       whole setup is performed through a multi-speaker surround system with some sound objects
       planted into the performance space. These sound objects are everyday objects you find in your
-      daily life but they have transducers attached to them, which then they become sound output
+      daily life but they have <a href="https://en.wikipedia.org/wiki/Transducer">transducers</a>
+      attached to them, which then they become sound output
       devices connected to this whole system.
     </p>
   </section>
