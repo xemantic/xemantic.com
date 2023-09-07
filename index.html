@@ -68,15 +68,16 @@
       background: black;
     }
     body {
-      // prevents from future resizing of the background canvas and from flickering when
-      // content appears
+      /* prevents from future resizing of the background canvas and from flickering when
+       content appears
+       */
       overflow-x: hidden;
       overflow-y: scroll;
     }
     *, *:before, *:after {
       box-sizing: inherit;
     }
-    body, h1, h2, h3, h4, h5, h6, p, ol, ul, blockquote {
+    body, h1, h2, h3, h4, h5, h6, p, ol, ul, blockquote, dl, dt, dd {
       margin: 0;
       padding: 0;
     }
@@ -116,7 +117,7 @@
       display: none;
     }
 
-    // moving shadow: start (optional)
+    /* moving shadow: start (optional) */
     :root {
       /* initial shadow values - later on supplied from mouse or touch events */
       --shadow-x: 1.3vw;
@@ -127,7 +128,30 @@
     .shadow {
       filter: drop-shadow(var(--shadow-x) var(--shadow-y) var(--shadow-blur-radius) rgba(0, 0, 0, var(--shadow-opacity)));
     }
-    // moving shadow: end
+    /* moving shadow: end */
+
+    /* should be in the library */
+    ul {
+      padding-left: 1.68rem;
+    }
+    h3 {
+      font-style: italic;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    dl {
+      display: grid;
+      grid-gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    dt {
+      grid-column-start: 1;
+      text-align: right;
+    }
+    dd {
+      grid-column-start: 2;
+      font-style: italic;
+    }
   </style>
   <script>
     const MAIN_JS = "https://xemantic.github.io/fuck-the-ai-which-is-abusing-your-reptilian-brain-to-make-you-addicted-to-movies-instead-of-art/main.js";
@@ -682,6 +706,40 @@
   <a href="https://www.facebook.com/kazimierz.pogoda" title="facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
 </section>
 <section id="me" class="hidden content-container">
+  <img src="images/xemantic-collective.jpg"
+       alt="Xemantic collective after 404 show staged at Monopol, Berlin, 2022"
+       class="left width-shorter"
+       loading="lazy" />
+  <h2>Xemantic Manifesto</h2>
+  <h3>A Collective of Applied Philosophy</h3>
+  <p>
+    We recognize that the relationship between humans and our digital machines evolved into a form of <q>symbiosis</q>.
+    Exponential growth of technical complexity results in an unprecedented amount of information processors. The
+    quantity emerges a new quality of cognition &mdash; new forms of culture. In all these processes we view code as a medium,
+    analogous to the role genetic code plays in biology. Most of the code written today follows the demand and supply
+    chains of the market economy. We advocate for the code manifesting our humanistic values instead of anticipated
+    profit. We code with ethical and aesthetic motivation &mdash; for a better society and for arts. We embrace technological
+    progress, while remaining critical towards the outcomes. Therefore we help effective organizations to be even more
+    efficient in their use of technology, we connect generative practices with performative practices, and we engage in
+    various forms of activism and artivism.
+  </p>
+  <p>
+    Signed by:
+  </p>
+  <dl>
+    <dt>Alan Pogoda</dt><dd>digital native storyteller (Gen Alpha)</dd>
+    <dt>Julie Amouzegar Kim</dt><dd>visual artist and composer (Gen Z)</dd>
+    <dt>Julia Thomas</dt>
+    <dd>psychologist, philosopher, machine learning specialist at krisenchat.de (crisis counseling for Gen Z)</dd>
+    <dt>Zinnia Nomura</dt><dd>director, dancer, choreographer</dd>
+    <dt>Keith Lim</dt><dd>director of immersive theaters, dancer, programmer</dd>
+    <dt>Takumi Motokawa</dt><dd>generative composer</dd>
+    <dt>Alex Cuthbertson</dt><dd>co-founder of Dream World immersive theater, flow artist, builder</dd>
+    <dt>Monika <q>pacyfka</q> Tichy</dt><dd> the founder of Lambda Poland Foundation (LGBTQ+ rights in Poland)</dd>
+    <dt>Dan Gorelick</dt><dd>sound artist, live-coder, organizer</dd>
+    <dt>Omii Chen</dt><dd>visual artist, graphic novelist, pornographist</dd>
+    <dt>Kazik Pogoda</dt><dd>generative visualist, philosopher, the mother of Xemantic</dd>
+  </dl>
   <img src="images/me/kazik-pogoda-at-coart-timisoara.jpg"
        alt="Kazik Pogoda at co(art) Festival, Timișoara 2019"
        class="left width-shorter"
@@ -689,10 +747,15 @@
   <p>
     My name is Kazik Pogoda and
     <img src="logo/xemantic-logo.svg" class="logo-in-text" alt="xemantic logo" loading="lazy"/>
-    is a label I use for my projects. I am based in Berlin and Szczecin (Poland) where I am working
-    as a
-    <em><a href="https://en.wikipedia.org/wiki/Creative_technology">creative technologist</a></em>.
-    A fancy phrase to say that instead
+    is a label I have been using as an umbrella for my projects. The Xemantic collective
+    was born out of numerous collaborations with people sharing the same values.
+    We usually meet and collaborate in Berlin, at <a href="https://prachtsaal.berlin/">Prachtsaal Studio</a>, a beautiful space
+    in the middle of Neukölln district.
+  </p>
+  <p>
+    I am working as a software architect for NGOs like <a href="https://krisenchat.de/">Krisenchat</a>, and as a
+    <em><a href="https://en.wikipedia.org/wiki/Creative_technology">creative technologist</a></em> &mdash;
+    a fancy phrase to say that instead
     of using Adobe products I write my own software. Achieving the aesthetics I desire requires
     writing a custom code. The practice is called <em>creative coding</em>, and the outcome is
     called <em><a href="https://en.wikipedia.org/wiki/Generative_art">generative art</a></em>
@@ -706,13 +769,7 @@
     I enjoy speaking their languages and I understand them well. But my love stays with humans.
     I love to collaborate, because it always brings additional humanistic narrative and
     dimension to my own work, when it is becoming part of some bigger story to tell.
-    I can help you translate any crazy idea into code, and the code will
-    become an experience.
-    If you need my skills or feel like using some of my generative aesthetics in your work -
-    an interactive media art installation,
-    a performance, a show, a film, a website, a theatrical play, a sustainable product,
-    ... &mdash; you name it,
-    then feel free to <a class="email"><i class="fas fa-envelope-square"></i> contact me</a>.
+    Feel free to <a class="email"><i class="fas fa-envelope-square"></i> contact me</a>.
   </p>
   <img class="right width-shorter"
        src="images/me/kazik-pogoda-synthesizing-videos.jpg"
@@ -729,8 +786,8 @@
     <a href="https://www.linkedin.com/in/kpogoda/"><i class="fab fa-linkedin"></i> LinkedIn</a>.
   </p>
   <p>
-    But now I what to use code for a different purposes. I want to evoke affectionate states with
-    the use of machines - <em>emotional generative art</em>. Make you feel something when you
+    But now I want to use code for different purposes. I want to evoke affectionate states with
+    the use of machines &mdash; <em>emotional generative art</em>. Make you feel something when you
     perceive a product of an algorithm. Either thanks to purely aesthetic and synaesthetic
     experience, or thanks to the conceptual relevance, when the narrative accurately meditates
     on our post-human condition.
@@ -768,7 +825,7 @@
 <footer class="shadow hidden">
   <div>
     <p>
-      Copyright &copy; 2020 Kazimierz Pogoda / xemantic.com All Rights Reserved
+      Copyright &copy; 2023 Kazimierz Pogoda / xemantic.com All Rights Reserved
     </p>
     <p>
       <img src="logo/xemantic-logo.svg"
