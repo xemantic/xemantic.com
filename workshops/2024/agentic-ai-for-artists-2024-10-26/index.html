@@ -148,7 +148,7 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
     void main() {
     vec2 u = gl_FragCoord.xy;
     vec2  R = iResolution.xy, P,
-          U = ( u+u - R ) / min(R.x, R.y);
+          U = ( u+u - R ) / min(R.x, R.y) * .5;
     float d = length(U),
           t = iTime,
           blur = .4 + sin(t * .52) * .2,
@@ -176,30 +176,12 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
 
     vec3 C = 1.+mix(  sin(t * vec3(1.13,1.23,1.33) * .3),
                     - sin(t * vec3(1.43,1.53,1.63) * .3), d-.5) *.4*vec3(1,1,-1);
-    O = vec4(pow(O.rgb, C), 1) * smoothstep(2.1, .7, d);
+    O = vec4(pow(O.rgb, C), 1) * smoothstep(2.1, .7, d / .5);
     O = O * O;
 }
   </script>
   <script>
     const PARALLAX_SCROLLING_RATE = .0003;
-
-    const rand        = Math.random;
-    const mapFrom01   = (x, min, max) => min + x * (max - min);
-    const randRange   = (min, max) => mapFrom01(rand(), min, max);
-    const cos         = (x) => Math.cos(x);
-    const wave        = (phase) => cos(phase) * .5 + .5;
-    const period      = (seconds) => ((seconds % 1) * Math.PI * 2) % (Math.PI * 2);
-    const secondWave  = (time) => wave(period(time));
-    const oscillator  = (min, max) => (time) => mapFrom01(secondWave(time), min, max);
-
-    function fxOscillator(minLower, minUpper, maxLower, maxUpper, minSpeed, maxSpeed) {
-      const osc = oscillator(
-        randRange(minLower, minUpper),
-        randRange(maxLower, maxUpper)
-      );
-      const speed = randRange(minSpeed, maxSpeed);
-      return (time) => osc(time * speed);
-    }
 
     let scroll = 0;
     shaderWebBackground.shade((ctx) => ({
@@ -207,7 +189,7 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
         minDimension = Math.min(width, height);
       },
       onBeforeFrame: () => {
-        time = performance.now() / 5000;
+        time = performance.now() / 10000;
         scroll = (window.scrollY * ctx.cssPixelRatio) * -PARALLAX_SCROLLING_RATE;
       },
       shaders: {
@@ -473,6 +455,10 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
       If you want to participate in this workshop, but the date does not fit you,
       please write to <span class="email"></span>. We will inform you about upcoming editions.
     </blockquote>
+    <p>
+      Direct questions related to the workshop can be asked on
+      <a href="https://discord.gg/vQktqqN2Vn">xemantic discord server</a>.
+    </p>
   </section>
   <section id="knowledge">
     <h2>Knowledge</h2>
@@ -526,6 +512,12 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
       skills can be useful in general.
     </p>
     <p>
+      The experience with conversational AI is not required, but helpful. People interested
+      in learning or refreshing knowledge and vocabulary related to this part, are strongly
+      advised to come to the workshop starting from 10:00. If you feel familiar with the
+      topic, then it is OK to come at 11:00.
+    </p>
+    <p>
       You should bring your computer. Only Linux and macOS were tested with Claudine.
       Integration with Windows PowerShell should be easy, however I don't have a Windows machine
       around to try it out. If you need to use Windows, please contact me before the workshop,
@@ -553,7 +545,8 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
     <ul>
       <li>
         10:00–10:50 — The first hour is reserved as an introduction to conversational AI assistants for people
-        without prior experience, to learn basic prompting.
+        without prior experience, to learn basic prompting, if you feel confident in this topic, you can
+        come at 11:00.
       </li>
       <li>
         11:00–11:55 — We will talk about safety precautions. Creating a virtual machine, or a separate user account
@@ -584,6 +577,59 @@ this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,th
       Note: this is the first workshop of this kind we are preparing, therefore we are still figuring out what works and
       what does not work in such a formula. The agenda is more informational than strict, but it covers the overall plan.
     </blockquote>
+  </section>
+  <section id="software">
+    <h2>Software and services used during the workshop</h2>
+    <ul>
+      <li><a href="https://claude.ai/">Claude AI</a> — conversational AI</li>
+      <li>
+        <a href="https://www.anthropic.com/api">Anthropic API</a> —
+        Anthropic is the mother company of Claude AI model. Using their API
+        directly allows to create own <q>flavors</q> of Claude, and also achieve
+        much more thanks to use of tools, which we are going to explore during the workshop.
+      </li>
+      <li>
+        Supported Operating Systems: Linux, macOS, Windows
+        (we are currently testing Claudine on Windows, but this part is not guaranteed to work
+        during the workshop)
+      </li>
+      <li>
+        <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> — the programming
+        environment (IDE) which works the best with <a href="https://kotlinlang.org/">Kotlin</a>,
+        the implementation language of Claudine and OPENRNDR.
+        (the open source Community Edition of IntelliJ IDEA is good enough)
+      </li>
+      <li>
+        <a href="https://www.oracle.com/java/technologies/downloads/">Java Development Kit</a>
+        suitable version comes with IntelliJ IDEA software.
+      </li>
+      <li>
+        <a href="https://git-scm.com/">git</a> — distributed version control system
+        there is a chance that you already have it in your system. If not we will help
+        you with the installation.
+      </li>
+      <li>
+        Having a <a href="https://github.com/">GitHub account</a> is highly
+        recommended, but not necessary.
+      </li>
+      <li>
+        <a href="https://github.com/xemantic/anthropic-sdk-kotlin">anthropic-sdk-kotlin</a> —
+        An unofficial version of Anthropic SDK is used by Claudine. Your custom agents
+        will be built on top of this library.
+      </li>
+      <li>
+        <a href="https://github.com/xemantic/claudine">claudine</a> — the AI agent managing
+        your computer.
+      </li>
+      <li>
+        <a href="https://github.com/xemantic/claude-ai-artist">claude-ai-artist</a> — a template
+        project for your creative experimentation with artistic use of AI agents.
+      </li>
+      <li>
+        <a href="https://openrndr.org/">OPENRNDR</a> — a creative coding framework based on Kotlin, the base for
+        many examples in claude-ai-artist.
+      </li>
+    </ul>
   </section>
   <section id="artwork">
     <h2>Artwork</h2>
