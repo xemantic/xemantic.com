@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Agentic AI for Artists workshop on 26.10.2024</title>
+  <meta name="author" content="Kazik Pogoda" />
+  <meta name="description" content="Agentic AI for Artists workshop on 26.10.2024 at Prachtsaal" />
+  <meta name="keywords" content="AI, agents, AI agents, Agentic AI, Kotlin, creative technologies, art, media art" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="generator" content="https://xemantic.com" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <meta property="og:title"         content="Agentic AI for Artists workshop on 26.10.2024" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:url"           content="https://xemantic.com/workshops/2024/agentic-ai-for-artists-2024-10-26/" />
+  <meta property="og:image"         content="https://xemantic.com/workshops/2024/agentic-ai-for-artists-2024-10-26/images/fibonacci-anthropic-tool.webp" />
+  <meta property="og:image:type"    content="image/webp" />
+  <meta property="og:image:width"   content="1200" />
+  <meta property="og:image:height"  content="1410" />
+  <meta property="og:image:alt"     content="404 project logo" />
+  <meta property="og:description"   content="Agentic AI for Artists workshop on 26.10.2024 at Prachtsaal" />
+  <meta property="og:locale"        content="en_US" />
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,500;0,700;1,500;1,700&display=swap" rel="stylesheet"/>
+
+  <script>
+    // -- https://xemantic.github.io/shader-web-background/
+const shaderWebBackground={};(()=>{'use strict';const r=(a,b)=>{b.initHalfFloatRGBATexture(b.width,b.height);a.texParameteri(a.TEXTURE_2D,
+a.TEXTURE_MIN_FILTER,a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_MAG_FILTER,
+a.LINEAR);a.texParameteri(a.TEXTURE_2D,a.TEXTURE_WRAP_S,a.CLAMP_TO_EDGE);a.texParameteri(a.TEXTURE_2D,
+a.TEXTURE_WRAP_T,a.CLAMP_TO_EDGE);return{width:b.width,height:b.height}},y=(a,b)=>
+{console.warn("shader-web-background cannot shade, adding fallback CSS classes");
+document.documentElement.classList.add("shader-web-background-fallback");b.classList.add("shader-web-background-fallback");
+if(a instanceof shaderWebBackground.GlError)console.warn("Not sufficient WebGL support:",
+a);else throw a;};
+function z(a,b){if(!a)throw new shaderWebBackground.ConfigError(b);}
+function A(a){z(a instanceof HTMLCanvasElement,"config.canvas must be instance of canvas");
+return a}
+function B(){const a=document.createElement("canvas"),b=a.style;a.id="shader-web-background";b.width=
+"100vw";b.height="100vh";b.position="fixed";b.top="0";b.left="0";b.zIndex=-9999;return a}
+function C(a,b,d){z(a instanceof HTMLScriptElement&&a.type===b,'Shader source element of id "'+
+d+'" should be of type: <script type="'+(b+'" id="'+d+'">'))}
+function E(a){const b=document.getElementById(a);z(b,'Missing shader source: <script type="x-shader/x-fragment" id="'+
+(a+'">'));C(b,"x-shader/x-fragment",a);return b.text}
+function F(a){a+="Vertex";const b=document.getElementById(a);return b?(C(b,"x-shader/x-vertex",
+a),b.text):"attribute vec2 V;void main(){gl_Position=vec4(V,0,1);}"}
+function G(a,b){"loading"!==document.readyState?b():window.addEventListener(a,b)}
+class H{constructor(a,b,d){this.g=b;this.h=()=>{for(const c of d)c()};this.i=()=>
+{var c=b.u,e=a.gl;e.bindBuffer(e.ARRAY_BUFFER,a.j);e.enableVertexAttribArray(c);e.vertexAttribPointer(c,
+2,e.FLOAT,!1,0,0);e.drawArrays(e.TRIANGLE_STRIP,0,4);e.disableVertexAttribArray(c);
+e.bindBuffer(e.ARRAY_BUFFER,null);c=a.gl;for(e=0;e<a.g;e++)c.activeTexture(c.TEXTURE0+
+e),c.bindTexture(c.TEXTURE_2D,null);a.g=0}}}
+function I(a){var b={antialias:!1,depth:!1,alpha:!1};try{return new J(a,b)}catch(d){throw new shaderWebBackground.GlError(d.message);
+}}
+function K(a,b,d,c,e,n,u){function w(f,k,m){try{{var h=g;const p=h.gl,R=L(h,f,p.VERTEX_SHADER,k),
+S=L(h,f,p.FRAGMENT_SHADER,m),x=p.createProgram();p.attachShader(x,R);p.attachShader(x,
+S);p.linkProgram(x);var q=x}return q}catch(p){throw new shaderWebBackground.ConfigError(p.message);
+}}const g=I(b),l=[];a.gl=g.gl;a.canvas=b;a.width=0;a.height=0;a.cssPixelRatio=0;a.cssWidth=
+0;a.cssHeight=0;a.isOverShader=(f,k)=>{const m=b.getBoundingClientRect();return f>=
+m.left&&f<=m.right&&k>=m.top&&k<=m.bottom};a.toShaderX=f=>(f-b.getBoundingClientRect().left)*
+a.cssPixelRatio+.5;a.toShaderY=f=>b.height-(f-b.getBoundingClientRect().top)*a.cssPixelRatio-
+.5;const v=()=>{const f=window.devicePixelRatio||1,k=b.clientWidth,m=b.clientHeight,
+h=Math.floor(k*f),q=Math.floor(m*f);b.width=h;b.height=q;a.width=h;a.height=q;a.cssPixelRatio=
+f;a.cssWidth=k;a.cssHeight=m;a.resolution=[h,q];for(const p of l)p.g.l(h,q)};a.buffers=
+{};a.initHalfFloatRGBATexture=(f,k)=>{g.h.g(f,k)};const T=Object.keys(d).length-1;
+let U=0;for(const f in d){if(U++<T){const h=d[f].texture||r;a.buffers[f]=M(g,()=>
+h(g.gl,a))}const k=N(g,w(f,F(f),E(f)),a.buffers[f]),m=d[f].uniforms||{};var t=Object.keys(m);
+for(const h of k.o)z(m[h.name],'No configuration for uniform "'+h.name+'" defined in shader "'+
+f+'"'),t=t.filter(q=>q!==h.name);0!==t.length&&console.warn('Extra uniforms configured for shader "'+
+f+'", which are not present in the shader code - might have been removed by GLSL compiler if not used: '+
+t.join(", "));t=k.o.map(h=>{const q=m[h.name];return"function"===typeof q?()=>{const p=
+q(h.location);h.m(p)}:()=>{h.m(q)}});l.push(new H(g,k,t))}const D=()=>{requestAnimationFrame(D);
+if(0<b.getBoundingClientRect().top+b.height&&b.getBoundingClientRect().top<(window.innerHeight||
+document.documentElement.clientHeight)){if(a.cssWidth!==b.clientWidth||a.cssHeight!==
+b.clientHeight){v();var f=!0}else f=!1;f&&e&&e(a.width,a.height);n&&n();for(const k of l)k.g.i(k.h,
+k.i);u&&u()}};G("load",()=>{v();c&&c();e&&e(a.width,a.height);requestAnimationFrame(D)})}
+shaderWebBackground.Error=class extends Error{constructor(a){super(a);this.name="shaderWebBackground.Error"}};
+shaderWebBackground.ConfigError=class extends shaderWebBackground.Error{constructor(a){super(a);
+this.name="shaderWebBackground.ConfigError"}};
+shaderWebBackground.GlError=class extends shaderWebBackground.Error{constructor(a){super(a);this.name=
+"shaderWebBackground.GlError"}};
+shaderWebBackground.shade=function(a){z(a,"Missing configurer argument");const b=
+{};a=a(b);const d=a.canvas?A(a.canvas):B();z(a.shaders,"No shaders specified in config");
+try{return K(b,d,a.shaders,a.onInit,a.onResize,a.onBeforeFrame,a.onAfterFrame),a.canvas||
+G("DOMContentLoaded",()=>{document.body.appendChild(d)}),b}catch(c){(a.onError||y)(c,
+d)}};const O=[-1,1,1,1,-1,-1,1,-1];
+function P(a,b){return a.j(a.gl.getExtension(b),b+" extension is not supported")}
+class Q{constructor(a,b){this.gl=a;this.j=b}g(){}}
+class V extends Q{constructor(a,b){super(a,b);this.h=P(this,"OES_texture_half_float");
+P(this,"OES_texture_half_float_linear")}g(a,b){const d=this.gl;d.texImage2D(d.TEXTURE_2D,
+0,d.RGBA,a,b,0,d.RGBA,this.h.HALF_FLOAT_OES,null)}}
+class W extends Q{constructor(a,b){super(a,b);P(this,"EXT_color_buffer_float");this.gl.getExtension("OES_texture_float_linear")}g(a,
+b){const d=this.gl;d.texImage2D(d.TEXTURE_2D,0,d.RGBA16F,a,b,0,d.RGBA,d.HALF_FLOAT,
+null)}}
+function aa(a){a=a.split(/\r?\n/);const b=a.length.toString().length;var d=[];a.forEach((c,
+e)=>{e=(e+1).toString();e=e.length>=b?e:" ".repeat(b-e.length)+e;d.push(e+": "+c+
+"\n")});return d.join("")}const X=a=>a.map(b=>b?1:0);
+function M(a,b){return new Y(a.gl,()=>b(a.gl))}
+function N(a,b,d){const c=a.gl,e=[],n=c.getProgramParameter(b,c.ACTIVE_UNIFORMS);
+for(let g=0;g<n;g++){const l=c.getActiveUniform(b,g),v=c.getUniformLocation(b,l.name);
+e.push({name:l.name,info:l,location:v,m:ba(a,v,l.type)})}let u=0,w=0;return{u:c.getAttribLocation(b,
+"V"),o:e,l:d?(g,l)=>d.l(g,l):(g,l)=>{u=g;w=l},i:(g,l)=>{c.useProgram(b);g();d?(c.viewport(0,
+0,d.width,d.height),g=d.g,d.g=d.h,d.h=g,d.i(l)):(c.viewport(0,0,u,w),l())}}}
+function L(a,b,d,c){a=a.gl;d=a.createShader(d);a.shaderSource(d,c);a.compileShader(d);
+if(!a.getShaderParameter(d,a.COMPILE_STATUS)){const e=String(a.getShaderInfoLog(d));
+a.deleteShader(d);b="Cannot compile shader - "+b+": "+e;console.log(b);console.log(aa(c));
+throw Error(b);}return d}
+function ba(a,b,d){const c=a.gl;switch(d){case c.FLOAT:d=e=>c.uniform1f(b,e);break;
+case c.FLOAT_VEC2:d=e=>c.uniform2fv(b,e);break;case c.FLOAT_VEC3:d=e=>c.uniform3fv(b,
+e);break;case c.FLOAT_VEC4:d=e=>c.uniform4fv(b,e);break;case c.INT:d=e=>c.uniform1i(b,
+e);break;case c.INT_VEC2:d=e=>c.uniform2iv(b,e);break;case c.INT_VEC3:d=e=>c.uniform3iv(b,
+e);break;case c.INT_VEC4:d=e=>c.uniform4iv(b,e);break;case c.BOOL:d=e=>c.uniform1i(b,
+e?1:0);break;case c.BOOL_VEC2:d=e=>c.uniform2iv(b,X(e));break;case c.BOOL_VEC3:d=
+e=>c.uniform3iv(b,X(e));break;case c.BOOL_VEC4:d=e=>c.uniform4iv(b,X(e));break;case c.FLOAT_MAT2:d=
+e=>c.uniformMatrix2fv(b,!1,e);break;case c.FLOAT_MAT3:d=e=>c.uniformMatrix3fv(b,!1,
+e);break;case c.FLOAT_MAT4:d=e=>c.uniformMatrix4fv(b,!1,e);break;case c.SAMPLER_2D:d=
+e=>{{const n=a.gl;e=e instanceof Y?e.g:e;n.activeTexture(n.TEXTURE0+a.g);n.bindTexture(n.TEXTURE_2D,
+e);n.uniform1i(b,a.g++)}};break;default:throw Error("unknown type");}return d}
+class J{constructor(a,b){this.canvas=a;const d=(e,n)=>{if(!e)throw Error(n);return e};
+let c=a.getContext("webgl2",b);if(c)this.h=new W(c,d);else if(c=a.getContext("webgl",
+b))this.h=new V(c,d);d(c,"webgl context not supported on supplied canvas element: "+
+a);this.gl=c;a=c.createBuffer();c.bindBuffer(c.ARRAY_BUFFER,a);c.bufferData(c.ARRAY_BUFFER,
+new Float32Array(O),c.STATIC_DRAW);c.bindBuffer(c.ARRAY_BUFFER,null);this.j=a;this.buffers=
+{};this.g=0}}
+function Z(a){const b=a.gl,d=b.createTexture();b.bindTexture(b.TEXTURE_2D,d);const c=
+a.s(b);a.width=c.width;a.height=c.height;b.bindTexture(b.TEXTURE_2D,null);return d}
+class Y{constructor(a,b){this.j=a.createFramebuffer();this.gl=a;this.s=b;this.g=this.h=
+null;this.height=this.width=0}l(){this.h&&this.gl.deleteTexture(this.h);this.g&&this.gl.deleteTexture(this.g);
+this.h=Z(this);this.g=Z(this)}i(a){const b=this.gl;b.bindFramebuffer(b.FRAMEBUFFER,
+this.j);b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,this.g,
+0);a();b.framebufferTexture2D(b.FRAMEBUFFER,b.COLOR_ATTACHMENT0,b.TEXTURE_2D,null,
+0);b.bindFramebuffer(b.FRAMEBUFFER,null)}};})()
+  </script>
+  <script type="x-shader/x-fragment" id="image">
+    precision highp float;
+
+    uniform vec2  iResolution;
+    uniform float iTime;
+    uniform float iScroll;
+
+    #define rot(a) mat2(cos(a + vec4(0,33,11,0)))
+    #define C(U,w) smoothstep( w, -w, sin(length(fract(U)*2.-1.) * 3.) *.5  -.118 )
+    #define O gl_FragColor
+
+    void main() {
+    vec2 u = gl_FragCoord.xy;
+    vec2  R = iResolution.xy, P,
+          U = ( u+u - R ) / min(R.x, R.y) * .5;
+    float d = length(U),
+          t = iTime,
+          blur = .4 + sin(t * .52) * .2,
+          luma = .5,
+          abber = .01;
+    U *= rot( sin(t * .14) * .3 )
+       * (sin(t * .15) + 2.) * .3;
+    U *= log(length(U)*.428) * 1.1;
+
+    for (float i = 0.; i < 3.; i++) {
+        P = U + vec2(sin(t*.12), cos(t*.13));
+        P.y -= iScroll;
+
+        O.rgb += vec3(
+            C( P - U * abber, blur),
+            C( P, blur),
+            C( P + U * abber, blur)
+        ) * luma;
+        O = min(O,1.);
+        U *= ( 1.1 + C(P,.04) * 1.2 )
+          *   rot( sin(t*.05) * 1.33 );
+        luma *= .6;
+        blur *= .63;
+    }
+
+    vec3 C = 1.+mix(  sin(t * vec3(1.13,1.23,1.33) * .3),
+                    - sin(t * vec3(1.43,1.53,1.63) * .3), d-.5) *.4*vec3(1,1,-1);
+    O = vec4(pow(O.rgb, C), 1) * smoothstep(2.1, .7, d / .5);
+    O = O * O;
+}
+  </script>
+  <script>
+    const PARALLAX_SCROLLING_RATE = .0003;
+
+    let scroll = 0;
+    shaderWebBackground.shade((ctx) => ({
+      onResize: (width, height) => {
+        minDimension = Math.min(width, height);
+      },
+      onBeforeFrame: () => {
+        time = performance.now() / 10000;
+        scroll = (window.scrollY * ctx.cssPixelRatio) * -PARALLAX_SCROLLING_RATE;
+      },
+      shaders: {
+        image: {
+          uniforms: {
+            iResolution:           () => ctx.resolution,
+            iTime:                 () => time,
+            iScroll:               () => scroll
+          }
+        }
+      }
+    }));
+  </script>
+  <script>
+    function unscrambleEmail(encodedEmail) {
+      return encodedEmail.replace(/[a-zA-Z]/g, function(c) {
+        return String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26);
+      });
+    }
+
+    function displayEmails() {
+      var encodedEmail = "bssvpr@krznagvp.pbz";
+      var emailElements = document.getElementsByClassName("email");
+      for (var i = 0; i < emailElements.length; i++) {
+        var decodedEmail = unscrambleEmail(encodedEmail);
+        emailElements[i].innerHTML = "<a href='mailto:" + decodedEmail + "'>" + decodedEmail + "</a>";
+      }
+    }
+
+    window.addEventListener("load", (event) => {
+      displayEmails();
+    });
+  </script>
+  <style>
+
+    :root {
+      --main-color: #ffffff;
+    }
+
+    ::selection {
+      background-color: #ff00ff;
+    }
+
+    html {
+      color: var(--main-color);
+      background: #000000;
+      font-size: calc(20px + 1vw);
+      font-family: 'Cormorant', serif;
+      box-sizing: border-box;
+      overflow-x: hidden;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, p, ol, ul, dl, blockquote, address {
+      text-shadow: 0 0 .2rem #000000, 0 0 .2rem #000000, 0 0 .4rem #000000;
+      line-height: 1.618em;
+      margin-bottom: 1em;
+    }
+
+    header {
+      margin-left: 13vw;
+      margin-right: 13vw;
+    }
+
+    section {
+      margin-left: 19vw;
+      margin-right: 19vw;
+    }
+
+    h1 {
+      margin-top: 1.618em;
+      font-size: 10rem;
+      line-height: 1rem;
+    }
+
+    h2 {
+      margin-top: 1.618em;
+      font-weight: bold;
+      font-style: italic;
+    }
+
+    blockquote {
+      font-style: italic;
+    }
+
+    address {
+      font-style: normal;
+    }
+
+    h1, h2, p, blockquote, footer, address {
+      text-align: center;
+    }
+
+    dl {
+      display: grid;
+      grid-template-columns: 50% auto;
+      align-items: center;
+    }
+
+    dt {
+      gird-column: 1;
+      text-align: right;
+      font-style: italic;
+      margin-right: .618em;
+    }
+
+    dd {
+      gird-column: 2;
+      margin-left: .618em;
+    }
+
+    a {
+      color: var(--main-color);
+      transition: color .618s;
+    }
+
+    a:hover {
+      color: white;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    footer {
+      text-align: center;
+      font-style: italic;
+      margin-top: 4em;
+      margin-bottom: 4.618em;
+    }
+
+    #video {
+      margin-bottom: 1.3em;
+    }
+
+    .action {
+      font-size: 1.618em;
+      font-weight: bold;
+    }
+
+    .blink {
+      animation: blinker 2.9s linear infinite;
+    }
+
+    @keyframes blinker {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .shader-web-background-fallback {
+      background: url("https://placekitten.com/666/666");
+      background-position: center;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+
+    .shader-web-background-fallback body::before {
+      content: "Ups, this is unexpected. Are you sure your browser supports WebGL? Also check the console.";
+      font-size: calc(18px + 4vw);
+    }
+
+    @media screen and (max-width: 1024px) {
+
+      header {
+        margin-left: 10vw;
+        margin-right: 10vw;
+      }
+
+      section {
+        margin-left: 10vw;
+        margin-right: 10vw;
+      }
+
+    }
+
+    @media screen and (max-width: 768px) {
+
+      header {
+        margin-left: 5vw;
+        margin-right: 5vw;
+      }
+
+      section {
+        margin-left: 5vw;
+        margin-right: 5vw;
+      }
+
+    }
+
+    @media screen and (max-width: 480px) {
+
+      header {
+        margin-left: 2vw;
+        margin-right: 2vw;
+      }
+
+      header .logo {
+        filter: drop-shadow(0 0 2vw var(--main-color)) drop-shadow(0 0 4vw var(--main-color));
+      }
+
+      section {
+        margin-left: 2vw;
+        margin-right: 2vw;
+      }
+
+      ul {
+        margin-left: 5vw;
+      }
+
+      dl {
+        display: block;
+      }
+
+      dt {
+        text-align: center;
+        margin-right: 0;
+      }
+
+      dd {
+        text-align: center;
+        margin-left; 0;
+        margin-bottom: 1em;
+      }
+
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <header>
+      <h1>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100.00371 18.35874"><path fill="#fff" d="M111.76521 27.543993c-.38686 0-.73074.138889-.99736.40566-.2653.265301-.40566.600468-.40566.973068 0 .386659.13926.727912.40721.987019.26705.258234.61012.39119.99581.39119.39995 0 .75072-.131855 1.01906-.39119.26781-.258971.40721-.600202.40721-.987019 0-.373868-.14551-.710284-.4191-.975136-.27409-.265335-.62043-.403592-1.00717-.403592zm-7.43676.0021v3.809589h-2.73058v1.848466h2.73058v8.42791c0 .721235-.18454 1.261205-.54312 1.648995-.35939.38882-.83666.5824-1.47226.5824-.17714 0-.35585-.0204-.5364-.0568l-.19069-.0387v2.05258l.13281.0222c.23674.04.47464.06.71365.06 1.22601 0 2.22319-.3601 2.95641-1.08521.73592-.72736 1.09864-1.76161 1.09864-3.065446v-8.547799h2.55747v-1.848466h-2.55747v-3.809586zm-15.352026 2.1885v13.72371h2.13527v-5.823934c0-1.471814.35788-2.590827 1.05936-3.383773.70294-.794603 1.64421-1.189075 2.86805-1.189075.93504 0 1.67024.317138 2.2474.962732.57697.645241.86817 1.488445.86817 2.5585v6.87555h2.135266V36.24789c0-1.528655-.448236-2.786464-1.346166-3.74189-.89813-.95564-2.09322-1.436605-3.54604-1.436605-1.82266 0-3.2639.654545-4.28604 1.932698v-3.2675zm-4.3956.000526v3.235969c-1.10999-1.258954-2.62913-1.901693-4.52531-1.901693-1.64734 0-3.07777.598474-4.25917 1.779736-1.18478 1.184782-1.77922 2.720081-1.77922 4.570264s.59444 3.385482 1.77922 4.570264c1.1814 1.181404 2.61184 1.779744 4.25917 1.779744 1.89625 0 3.41533-.64305 4.52531-1.902217v3.677297h2.13527V29.735074Zm-30.962452.05064v15.790234h2.135787v-8.300261c0-1.345287.31505-2.375304.930693-3.112471.616694-.738576 1.43243-1.101742 2.494421-1.101742.842207 0 1.513916.264898 2.05052.801502.534981.534732.802019 1.230269.802019 2.121834v7.473438h2.135271v-6.182561c0-1.344966.318919-2.37467.94206-3.111954.624772-.738983 1.445281-1.102259 2.507341-1.102259.85859 0 1.53822.265429 2.07429.801502.53487.534741.8015 1.230284.8015 2.121834v7.473438h2.13527V35.67428c0-1.356078-.43526-2.477853-1.30224-3.328479-.86508-.848489-1.9611-1.276408-3.25458-1.276408-1.924669 0-3.416839.764499-4.430224 2.251025-.360807-.663959-.865269-1.203499-1.522906-1.595251-.734856-.43759-1.574934-.655774-2.507857-.655774-1.643389 0-2.941992.592519-3.855578 1.750281V29.78575Zm67.783458 1.283643c-1.74092 0-3.23892.596239-4.46123 1.777669-1.22496 1.184262-1.84071 2.720865-1.84071 4.572331 0 1.867071.61571 3.407504 1.84123 4.584216 1.22239 1.173445 2.72004 1.765785 4.46071 1.765785 1.35106 0 2.56534-.36439 3.62717-1.09141 1.06357-.727988 1.76805-1.709038 2.09599-2.922299l.0413-.153996-1.97455-.535885-.046.145728c-.26127.830005-.7253 1.451293-1.40353 1.885673-.6831.43742-1.45867.655774-2.34042.655774-1.20727 0-2.19846-.39566-3.00705-1.19631-.80591-.798308-1.20768-1.832141-1.20768-3.137276 0-1.28862.40544-2.322638 1.22059-3.137793.81716-.817153 1.80389-1.22008 2.99414-1.22008.87985 0 1.64873.233174 2.32337.700732.67156.465506 1.1257 1.110136 1.37201 1.95647l.045.154512 2.05-.617533-.0444-.151929c-.36004-1.227602-1.07927-2.214465-2.1425-2.942456-1.06153-.726817-2.26803-1.091923-3.6034-1.091923zm-75.165436.000513c-1.709776 0-3.191356.596068-4.413168 1.777152-1.225223 1.184508-1.841231 2.729027-1.841231 4.596097 0 1.851006.607776 3.383255 1.816944 4.559929 1.205387 1.17259 2.654808 1.76578 4.317565 1.76578 1.364149 0 2.557865-.33054 3.565674-.99426 1.008473-.66424 1.75201-1.623687 2.224154-2.860799l.06511-.170015-1.931665-.454753-.05374.120923c-.728301 1.64264-1.988106 2.439128-3.869532 2.439128-1.029062 0-1.932079-.367247-2.73575-1.116728-.760055-.708919-1.180499-1.637013-1.28726-2.795695h10.08569v-.834057c-.06494-1.76895-.65896-3.228829-1.77922-4.349089-1.119168-1.119169-2.518335-1.683618-4.16357-1.683618zm-19.042249.286282 4.612122 6.133993-4.617806 5.968623h2.602425l3.554305-4.607466 3.554822 4.607466h2.602425l-4.618323-5.968623 4.612638-6.133993h-2.597774l-3.553788 4.745447-3.553271-4.745447zm83.502905.001v12.102106h2.15956V31.357197Zm-64.460656 1.63297c.970487 0 1.795369.29895 2.501139.904854.660254.567211 1.069267 1.352123 1.245402 2.36058h-7.79849c.194549-.973823.647997-1.748655 1.390096-2.332158.795265-.625406 1.675676-.933276 2.661853-.933276zm34.10644 0c1.12433 0 2.10145.405198 2.96055 1.233516.85399.823015 1.27744 1.875975 1.27744 3.195671 0 1.303241-.42305 2.347727-1.27744 3.171383-.85913.82834-1.83627 1.234033-2.96055 1.234033-1.20701 0-2.20231-.399197-3.01893-1.208195-.81364-.805913-1.21957-1.859694-1.21957-3.197221s.40602-2.395684 1.22009-3.209623c.81675-.816878 1.81173-1.219564 3.01841-1.219564z" transform="translate(-27.188461 -27.543993)"/></svg>
+        AI
+      </h1>
+    </header>
+  </header>
+  <section id="intro">
+    <p>
+      I have a pleasure to invite you to the workshop <q>Agentic AI for Artists</q>, on the 26th of October 2024 (Saturday),
+      at <a href="https://prachtsaal.berlin">Prachtsaal</a> (Berlin Neukölln). The workshop will be conducted by me
+      (Kazik Pogoda), with support from Julia Thomas, mothers of <a href="https://xemantic.com">xemantic</a>, a collective of applied
+      philosophy.
+    </p>
+    <p>
+      We believe that coding AI agents should be as easy as possible. In the
+      <a href="https://creativecode.berlin/">Creative Code Berlin</a> community, we
+      are teaching artists, often without prior programming experience, how to express their creations through code as a
+      medium. For this purpose we use creative coding environments like <a href="https://processing.org/">Processing</a>,
+      <a href="https://p5js.org/">p5.js</a>, or <a href="https://openrndr.org/">OPENRNDR</a>.
+      I developed a set of AI assistants and development tools intended to be equally accessible,
+      so that creators of all kinds
+      can turn their own machines into an outside window, through which, the AI system can perceive our world, values
+      and needs, and act upon this information.
+    </p>
+    <p>
+      <img src="images/fibonacci-anthropic-tool.webp"
+           alt="An example how to use Fibonacci tool calling with AI agent using Anthropic API">
+    </p>
+    <blockquote>
+      If you want to participate in this workshop, but the date does not fit you,
+      please write to <span class="email"></span>. We will inform you about upcoming editions.
+    </blockquote>
+    <p>
+      Direct questions related to the workshop can be asked on
+      <a href="https://discord.gg/vQktqqN2Vn">xemantic discord server</a>.
+    </p>
+  </section>
+  <section id="knowledge">
+    <h2>Knowledge</h2>
+    <p>
+      During the workshop you will learn:
+    </p>
+    <ul>
+      <li>A glossary of AI related terms.</li>
+      <li>How to assist Claudine AI agent in using your computer (indeed, the roles are reversing).</li>
+      <li>How to give a Large Language Model access to performative tools.</li>
+      <li>Development of AI agents which can interact with the world.</li>
+      <li>How to write agentic prompts for creative purposes.</li>
+    </ul>
+  </section>
+  <section id="tickets">
+    <h2>Tickets</h2>
+    <dl>
+      <dt>Standard</dt>
+      <dd>190 €</dd>
+      <dt>Solidarity</dt>
+      <dd>90 €</dd>
+      <dt>Students</dt>
+      <dd>65 €</dd>
+    </dl>
+    <blockquote>
+      A limited number of reduced-price <q>Solidarity</q> tickets are available for those who would otherwise
+      find the regular price a barrier to participation. No questions asked.
+    </blockquote>
+    <p>
+      All prices include 19% VAT. Members of Prachtsaal cooperative can participate in the workshop
+      for free.
+    </p>
+    <p>
+      If you are interested in the workshop, please send email to <span class="email"></span> containing
+      Information which ticket you choose + data for issuing an invoice:
+    <ul>
+      <li>Full name</li>
+      <li>Complete address</li>
+      <li>If business: Company name</li>
+      <li>If applicable: VAT ID (USt-IdNr.)</li>
+    </ul>
+    <blockquote>
+      Please make sure to read this page fully for further details.
+    </blockquote>
+  </section>
+  <section id="preconditions">
+    <h2>Preconditions before attending the workshop</h2>
+    <p>
+      You should bring your computer. :)
+    </p>
+    <p>
+      The programming knowledge is not absolutely necessary to participate in this workshop,
+      especially the first part introducing tools and the theory, however rudimentary coding
+      skills can be useful in general.
+    </p>
+    <p>
+      The experience with conversational AI is not required, but helpful. People interested
+      in learning or refreshing knowledge and vocabulary related to this part, are strongly
+      advised to come to the workshop starting from 10:00. If you feel familiar with the
+      topic, then it is OK to come at 11:00.
+    </p>
+    <p>
+      We will help you set up everything during the workshop, however we are going to use
+      Anthropic API directly, and it's a paid service. You should preferably <a href="https://console.anthropic.com/">purchase API
+      tokens before the workshop</a>, and the minimal amount is $5, which should be more than
+      sufficient for the workshop. Note: API use tokens are a different product than conversational
+      <a href="https://claude.ai/">Claude AI</a> interface.
+    </p>
+  </section>
+  <section id="location">
+    <h2>Workshop location</h2>
+    <address>
+      <a href="https://prachtsaal.berlin">Prachtsaal</a><br/>
+      Jonasstraße 22<br/>
+      12053 Berlin
+    </address>
+  </section>
+  <section id="agenda">
+    <h2>Workshop agenda</h2>
+    <ul>
+      <li>
+        10:00–10:50 — The first hour is reserved as an introduction to conversational AI assistants for people
+        without prior experience, to learn basic prompting, if you feel confident in this topic, you can
+        come at 11:00.
+      </li>
+      <li>
+        11:00–11:55 — We will talk about safety precautions. Creating a virtual machine, or a separate user account
+        is advised. We start by ensuring access to all the APIs and installing all the required software:
+        <a href="https://www.jetbrains.com/idea/">IntelliJ IDE</a>,
+        <a href="https://github.com/xemantic/claudine/">Claudine</a>, and setting up our computers.
+      </li>
+      <li>
+        12:00–13:00 — An introduction to Claudine and trying different use cases.
+      </li>
+      <li>
+        13:00–14:00 — Launch break.
+      </li>
+      <li>
+        14:00–15:00 — How to program a simple "hello world" AI agent which can use tools, and be integrated with
+        a media art installation.
+      </li>
+      <li>
+        15:00–16:00 — Expanding our agents, and writing system prompts for creative purposes.
+      </li>
+      <li>
+        16:00–17:00 — We can collaborate creating AI based conceptual artwork attempting to understand the context,
+        operating on meanings and performing reasoning process.
+      </li>
+    </ul>
+    <p>
+    <blockquote>
+      Note: this is the first workshop of this kind we are preparing, therefore we are still figuring out what works and
+      what does not work in such a formula. The agenda is more informational than strict, but it covers the overall plan.
+    </blockquote>
+  </section>
+  <section id="software">
+    <h2>Software and services used during the workshop</h2>
+    <ul>
+      <li><a href="https://claude.ai/">Claude AI</a> — conversational AI</li>
+      <li>
+        <a href="https://www.anthropic.com/api">Anthropic API</a> —
+        Anthropic is the mother company of Claude AI model. Using their API
+        directly allows to create own <q>flavors</q> of Claude, and also achieve
+        much more thanks to use of tools, which we are going to explore during the workshop.
+      </li>
+      <li>
+        Supported Operating Systems: Linux, macOS, Windows
+      </li>
+      <li>
+        <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> — the programming
+        environment (IDE) which works the best with <a href="https://kotlinlang.org/">Kotlin</a>,
+        the implementation language of Claudine and OPENRNDR.
+        (the open source Community Edition of IntelliJ IDEA is good enough)
+      </li>
+      <li>
+        <a href="https://www.oracle.com/java/technologies/downloads/">Java Development Kit</a>
+        suitable version comes with IntelliJ IDEA software.
+      </li>
+      <li>
+        <a href="https://git-scm.com/">git</a> — distributed version control system
+        there is a chance that you already have it in your system. If not we will help
+        you with the installation.
+      </li>
+      <li>
+        Having a <a href="https://github.com/">GitHub account</a> is highly
+        recommended, but not necessary.
+      </li>
+      <li>
+        <a href="https://github.com/xemantic/anthropic-sdk-kotlin">anthropic-sdk-kotlin</a> —
+        An unofficial version of Anthropic SDK is used by Claudine. Your custom agents
+        will be built on top of this library.
+      </li>
+      <li>
+        <a href="https://github.com/xemantic/claudine">claudine</a> — the AI agent managing
+        your computer.
+      </li>
+      <li>
+        <a href="https://github.com/xemantic/claude-ai-artist">claude-ai-artist</a> — a template
+        project for your creative experimentation with artistic use of AI agents.
+      </li>
+      <li>
+        <a href="https://openrndr.org/">OPENRNDR</a> — a creative coding framework based on Kotlin, the base for
+        many examples in claude-ai-artist.
+      </li>
+    </ul>
+  </section>
+  <section id="artwork">
+    <h2>Artwork</h2>
+    <p>
+      The artwork used as a background of this page is a variation of
+      <a href="https://www.shadertoy.com/view/mds3DX">Generative Art Deco 4</a> by Kazik Pogoda. It is powered by
+      the <a href="https://xemantic.github.io/shader-web-background/">shader-web-background</a> library.
+    </p>
+  </section>
+  <footer>
+    Copyright &copy; 2024 <a href="https://xemantic.com">xemantic.com</a> All Rights Reserved
+  </footer>
+</body>
+</html>
