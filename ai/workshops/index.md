@@ -1,4 +1,9 @@
-# Agentic AI &amp; Creative Coding<br/> workshop
+---
+layout: default
+title: Agentic AI & Creative Coding workshop
+---
+
+# Agentic AI & Creative Coding workshop
 
 ![screenshot.png](images/screenshot.png)
 
