@@ -1,6 +1,5 @@
-# idea files
-/.idea/*
-!/.idea/copyright/
-!/.idea/dictionaries/
-!/.idea/codeStyles/
-/*.iml
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+.idea/
