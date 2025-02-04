@@ -1,0 +1,19 @@
+title: Xemantic
+description: applied philosophy collective
+url: "https://xemantic.com"
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - .idea/
+  - README.md
+  - TODO.md
+  - Gemfile
+  - Gemfile.lock
+  - .gitignore
