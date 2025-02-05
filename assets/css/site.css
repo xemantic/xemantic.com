@@ -25,6 +25,10 @@ body {
 }
 
 /* Typography with relative units */
+h1, h2, h3, h4, h5, h6 {
+  text-align: center;
+}
+
 h1 {
   font-size: 2.5rem;  /* 40px - 50px */
   line-height: 1.1;
@@ -62,6 +66,7 @@ img, picture, video, canvas, svg {
   display: block;
   max-width: 100%;
   height: auto;
+  border-radius: 0.5rem; /* Added rounded corners */
 }
 
 /* Form elements */
@@ -80,6 +85,19 @@ ol[class] {
   list-style: none;
 }
 
+/* Main content container */
+main {
+  width: min(100% - 2rem, 80ch);
+  margin-inline: auto;
+  padding-block: 2rem;
+}
+
+/* Wider container for media content */
+main :where(img, video, .full-width) {
+  width: min(100%, 120ch);
+  margin-inline: auto;
+}
+
 /* Responsive container with relative units */
 .container {
   width: 100%;
@@ -93,10 +111,19 @@ ol[class] {
   .container {
     padding: 0 2rem;
   }
+
+  main {
+    width: min(100% - 4rem, 80ch);
+    padding-block: 3rem;
+  }
 }
 
 @media (min-width: 64rem) { /* 1024px */
   .container {
     padding: 0 4rem;
+  }
+
+  main {
+    padding-block: 4rem;
   }
 }
