@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
+    <title>{% if page.title %}{{ page.title }}{% else %}{{ page.name | titleize }}{% endif %}</title>
     <script src="{{ '/assets/js/shader-web-background.js' | relative_url }}"></script>
     <script type="x-shader/x-fragment" id="image">
         precision highp float;
@@ -83,6 +83,8 @@
 </head>
 <body>
     {% include header.html %}
-    {{ content }}
+    <main>
+        {{ content }}
+    </main>
 </body>
 </html>
