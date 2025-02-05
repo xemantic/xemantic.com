@@ -1,25 +1,3 @@
 <header>
-    <nav class="main-nav">
-        <div class="nav-brand">
-            <a href="{{ '/' | relative_url }}" class="logo"><img src="{{ '/assets/images/logo.svg' | relative_url }}"></a>
-        </div>
-
-        <button class="nav-toggle" aria-label="toggle navigation">
-            <span class="hamburger"></span>
-        </button>
-
-        <ul class="nav-links">
-            <li><a href="{{ '/' | relative_url }}" {% if page.url == '/' %}aria-current="page"{% endif %}>Home</a></li>
-            <li><a href="{{ '/ai/' | relative_url }}" {% if page.url contains '/ai/' %}aria-current="page"{% endif %}>AI</a></li>
-            <li><a href="{{ '/projects/' | relative_url }}" {% if page.url contains '/projects/' %}aria-current="page"{% endif %}>Projects</a></li>
-            <li><a href="{{ '/services/' | relative_url }}" {% if page.url contains '/services/' %}aria-current="page"{% endif %}>Services</a></li>
-        </ul>
-    </nav>
-
-    <script>
-        document.querySelector('.nav-toggle').addEventListener('click', () => {
-            document.querySelector('.nav-links').classList.toggle('nav-active');
-            document.querySelector('.nav-toggle').classList.toggle('nav-open');
-        });
-    </script>
+    <img src="{{ '/assets/images/logo.svg' | relative_url }}" class="nav-logo" alt="Logo">
 </header>
