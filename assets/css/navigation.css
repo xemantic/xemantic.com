@@ -1,70 +1,149 @@
+/* Navigation styles */
 header {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   position: sticky;
   top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid #333;
   z-index: 1000;
-  padding: 1rem;
-  background: white;
   transition: all 0.3s ease;
+  height: 3.75rem;
 }
 
-/* Initial large state */
 .nav-logo {
-  width: 50vw;  /* Start at 50% of viewport width */
-  max-width: 600px;
-  min-width: 50px;
-  margin: 0 auto;
+  max-height: 1.875rem;
+}
+
+/* Main navigation */
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  height: 100%;
+}
+
+/* Navigation links */
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  height: 100%;
+}
+
+.nav-links li {
+  margin-left: 1.5rem;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  display: inline-block;
+  line-height: 1;
+}
+
+.nav-links a:hover {
+  color: #007bff;
+}
+
+.nav-links a[aria-current="page"] {
+  color: #007bff;
+}
+
+/* Hamburger menu button */
+.nav-toggle {
+  display: none;
+  padding: 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  height: 100%;
+  align-items: center;
+  position: relative;
+  width: 2rem;
+}
+
+.hamburger,
+.hamburger::before,
+.hamburger::after {
   display: block;
-  transform-origin: left top;
-  transition: all 0.3s ease;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 1.5rem;
+  height: 0.125rem;
+  background: white;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
-/* Shrinking effect using CSS scroll properties */
-@media (prefers-reduced-motion: no-preference) {
-  header {
-    view-timeline-name: --header;
-    view-timeline-axis: block;
-  }
-
-  .nav-logo {
-    animation: shrink linear both;
-    animation-timeline: --header;
-    animation-range: entry 25% cover 50%;
-  }
-
-  @keyframes shrink {
-    from {
-      width: 50vw;
-      transform: translateX(calc(50vw - 50%));
-    }
-    to {
-      width: 150px;
-      transform: translateX(0);
-    }
-  }
+.hamburger {
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-/* Fallback for browsers that don't support scroll-timeline */
-@media (prefers-reduced-motion: reduce) {
-  .nav-logo {
-    width: 150px;
-    transform: none;
-  }
+.hamburger::before {
+  content: '';
+  top: -0.5rem;
 }
 
-/* Mobile optimization */
+.hamburger::after {
+  content: '';
+  bottom: -0.5rem;
+}
+
+/* Hamburger menu animation */
+.nav-toggle.active .hamburger {
+  background: transparent;
+}
+
+.nav-toggle.active .hamburger::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.nav-toggle.active .hamburger::after {
+  bottom: 0;
+  transform: rotate(-45deg);
+}
+
+/* Mobile responsive styles */
 @media screen and (max-width: 768px) {
-  .nav-logo {
-    width: 120px;
+  .nav-toggle {
+    display: flex;
   }
-  
-  @keyframes shrink {
-    from {
-      width: 80vw;
-      transform: translateX(calc(50vw - 50%));
-    }
-    to {
-      width: 120px;
-      transform: translateX(0);
-    }
+
+  .main-nav {
+    order: 2;
+    margin-left: auto;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 3.75rem;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    flex-direction: column;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    height: auto;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links li {
+    margin: 0.75rem 0;
+    margin-left: 0;
   }
 }
