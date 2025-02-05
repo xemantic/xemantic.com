@@ -1,4 +1,11 @@
 source "https://rubygems.org"
 
-gem "github-pages", group: :jekyll_plugins
+gem "jekyll"
 gem "webrick" # Required for Ruby 3.0+
+gem "kramdown"
+
+group :jekyll_plugins do
+  gem "jekyll-feed"
+  gem "jekyll-seo-tag"
+  gem "jekyll-optional-front-matter"
+end

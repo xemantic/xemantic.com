@@ -3,11 +3,24 @@ description: applied philosophy collective
 url: "https://xemantic.com"
 baseurl: ""
 
+render_drafts: true
+unpublished: true
+# This tells Jekyll to process even files without front matter
+
 # Build settings
 markdown: kramdown
+kramdown:
+  input: GFM  # GitHub Flavored Markdown
+  parse_block_html: true
+  hard_wrap: false
+
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+
+include:
+  - "*.md"
+  - "**/*.md"
 
 # Exclude from processing
 exclude:
@@ -26,6 +39,4 @@ defaults:
     values:
       layout: "default" # Set default layout
 
-kramdown:
-  parse_block_html: true
-
+plugins_dir: _plugins

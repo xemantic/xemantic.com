@@ -11,7 +11,7 @@ header {
   border-bottom: 1px solid #333;
   z-index: 1000;
   transition: all 0.3s ease;
-  height: 3.75rem;
+  height: 3rem;
 }
 
 .nav-logo {

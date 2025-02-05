@@ -10,8 +10,9 @@
             <span class="hamburger"></span>
         </button>
         <ul class="nav-links">
-            <li><a href="{{ '/ai/' | relative_url }}" {% if page.url contains '/ai/' %}aria-current="page"{% endif %}>AI</a></li>
             <li><a href="{{ '/projects/' | relative_url }}" {% if page.url contains '/projects/' %}aria-current="page"{% endif %}>Projects</a></li>
+            <li><a href="{{ '/ai/' | relative_url }}" {% if page.url contains '/ai/' %}aria-current="page"{% endif %}>AI</a></li>
+            <li><a href="{{ '/ai/' | relative_url }}" {% if page.url contains '/art/' %}aria-current="page"{% endif %}>Art</a></li>
             <li><a href="{{ '/services/' | relative_url }}" {% if page.url contains '/services/' %}aria-current="page"{% endif %}>Services</a></li>
         </ul>
     </nav>
