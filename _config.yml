@@ -17,3 +17,10 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - .gitignore
+
+defaults:
+  -
+    scope:
+      path: "" # Apply to all files
+    values:
+      layout: "default" # Set default layout
