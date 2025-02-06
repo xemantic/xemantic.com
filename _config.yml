@@ -38,5 +38,3 @@ defaults:
       path: "" # Apply to all files
     values:
       layout: "default" # Set default layout
-
-plugins_dir: _plugins
