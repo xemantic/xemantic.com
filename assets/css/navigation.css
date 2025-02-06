@@ -1,5 +1,6 @@
 /* Navigation styles */
 header {
+  background: rgb(0, 0, 0, .7);
   width: 100%;
   padding: 0.5rem 1rem;
   display: flex;
@@ -7,15 +8,25 @@ header {
   justify-content: space-between;
   position: sticky;
   top: 0;
-  background: rgba(0, 0, 0, 0.5);
-  border-bottom: 1px solid #333;
   z-index: 1000;
   transition: all 0.3s ease;
   height: 3rem;
 }
 
+.nav-logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* Removes the default underline from links */
+  height: 100%;
+  width: 100%;
+}
+
+.nav-logo-link:hover {
+  opacity: 0.9; /* Optional: adds a subtle hover effect */
+}
+
 .nav-logo {
-  max-height: 1.875rem;
+  max-height: 1.5rem;
 }
 
 /* Main navigation */
@@ -41,7 +52,7 @@ header {
 }
 
 .nav-links a {
-  color: white;
+  color: var(--primary-color);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
@@ -50,11 +61,13 @@ header {
 }
 
 .nav-links a:hover {
-  color: #007bff;
+  color: white;
 }
 
 .nav-links a[aria-current="page"] {
-  color: #007bff;
+  text-decoration: underline;
+  text-decoration-color: var(--accent-color);
+  text-decoration-thickness: .2rem;
 }
 
 /* Hamburger menu button */
