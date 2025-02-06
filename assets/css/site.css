@@ -32,13 +32,7 @@ body {
   line-height: 1.618;
 }
 
-main p,
-main ul,
-main ol,
-main h3 {
-  padding-left: max(calc((100% - 40rem) / 2), 1rem);
-  padding-right: max(calc((100% - 40rem) / 2), 1rem);
-}
+
 
 main p:has(img) {
   padding-left: 0;
@@ -125,6 +119,20 @@ main ul {
 
 main {
 
+  p, h3 {
+    padding-left: max(calc((100% - 40rem) / 2), 1rem);
+    padding-right: max(calc((100% - 40rem) / 2), 1rem);
+  }
+
+  ul, ol {
+    padding-left: max(calc((100% - 40rem) / 2 + 1.5rem), calc(1rem + 1.5rem));
+    padding-right: max(calc((100% - 40rem) / 2 + 1.5rem), calc(1rem + 1.5rem));
+  }
+
+  ul {
+    list-style: disc;
+  }
+
   img, picture, video, svg {
     display: block;
     max-width: 100%;
@@ -135,6 +143,18 @@ main {
 
   small {
     font-size: 0.875rem;
+  }
+
+  /* Add some spacing between list items */
+  ul li,
+  ol li {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Remove margin from last item */
+  ul li:last-child,
+  ol li:last-child {
+    margin-bottom: 0;
   }
 
 }

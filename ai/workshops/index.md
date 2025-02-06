@@ -4,7 +4,7 @@
 
 ## Invitation
 
-We are <a href="https://xemantic.com/">Xemantic</a>, applied philosophy collective from Berlin, and we would like to invite you to our workshops, where you will learn <b>how to write powerful AI agents</b>. Your instructor, [Kazik Pogoda](#about-your-instructor), will take you on a journey of developing autonomous and highly potent AI systems, like [Claudine AI agent](https://github.com/xemantic/claudine/), capable of fully controlling a Unix-compliant machine (which also means your computer, even if you are using Windows ;) ).
+We are <a href="https://xemantic.com/">Xemantic</a>, applied philosophy collective from Berlin, and we would like to invite you to our workshops, where you will learn <b>how to write powerful AI agents</b>. Your instructor, [Kazik Pogoda](#about-kazik-your-instructor), will take you on a journey of developing autonomous and highly potent AI systems, like [Claudine AI agent](https://github.com/xemantic/claudine/), capable of fully controlling a Unix-compliant machine (which also means your computer, even if you are using Windows ;) ).
 
 Claudine won AI hack Berlin hackathon.
 
@@ -26,7 +26,7 @@ All of this as approachable as possible, illustrated with elements of creative c
 
 Machines are becoming more intelligent with every single day and keeping up with their advancement is becoming a job on its own. We are entering the Agentic AI era, which creates unprecedented possibilities for software developers, to integrate our systems with machine-based autonomous reasoning.
 
-Since few months I've been conducting my independent AI research, which led me to some unique discoveries, and resulted in plethora of [open source AI libraries](../ai), which make creation of Agentic AI super-approachable, especially for Kotlin and Java/JVM stack developers.
+Since few months I've been conducting my independent AI research, which led me to some unique discoveries, and resulted in plethora of [open source AI libraries](../), which make creation of Agentic AI super-approachable, especially for Kotlin and Java/JVM stack developers.
 
 Together with [Victor Diaz]() we won AI Hack Berlin hackathon, while introducing the team "Robots will steal your food", which presented an autonomous, omnipotent, open source AI agent named
 <a href="https://github.com/xemantic/claudine/">Claudine</a>.
@@ -35,7 +35,7 @@ Together with [Victor Diaz]() we won AI Hack Berlin hackathon, while introducing
 
 ## About Kazik, your instructor
 
-I am an independent AI researcher, open source enthusiast, open society advocate, computational artist and live coder. A programmer and software architect by trade, a philosopher by education, specialized in cognitive science and ethics. Co-founder of [Xemantic](https://xematnic.com/) (applied philosophy collective) and [Prachtsaal](https://prachtsaal.berlin) (non-profit art cooperative).
+I am an independent AI researcher, open source enthusiast, open society advocate, computational artist and live coder. A programmer and software architect by trade, a philosopher by education, interested in cognitive science and ethics. Co-founder of [Xemantic](https://xematnic.com/) (applied philosophy collective) and [Prachtsaal](https://prachtsaal.berlin) (non-profit art cooperative).
 
 ![Kazik Pogoda live coding during Algorave at Prachtsaal](../../assets/images/people/Kazik_Pogoda-Algorave_at_Prachtsaal.jpg)
 
@@ -67,7 +67,7 @@ Most likely you cannot see it, because you need to sponsor Xemantic first throug
 
 ## Location
 
-All the workshops are happening at [Prachtsaal](https://prachtsaal.berlin), a non-profit art cooperative, hosting many resident artists, including Xemantic collective. Prachtsaal is located on Neukölln, between Körnerpark and Tempelhof. Workshops are happening at our Venue, while in our Foyer you can experience the art exhibition, get some drinks, and take a break in our garden while talking to artist.
+All the workshops are happening at [Prachtsaal](https://prachtsaal.berlin), a non-profit art cooperative, hosting many resident artists, including our Xemantic collective. Prachtsaal is located on Neukölln, between Körnerpark and Tempelhof. Workshops are happening at our Venue, while in our Foyer you can experience the art exhibition, get some drinks, and take a break in our garden while talking to artist, maybe buying an artwork?
 
 Cafe Augusta in front of the building is serving delicious coffee and food, there are also many other lunch options around.
 
@@ -105,6 +105,6 @@ A very basic programming experience is needed. The workshop is using very basic 
 - 14:00-15:00 
 - 15:00-16:00
 
-## Workshop at your company
+## Workshop at your organization
 
 It is possible to take the workshops at the office of your organization. If this is your desire, please write us.
