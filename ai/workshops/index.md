@@ -4,32 +4,30 @@
 
 ## Invitation
 
-We are <a href="https://xemantic.com/">Xemantic</a>, applied philosophy collective from Berlin, and we would like to invite you to our workshops, where you will learn <b>how to write powerful AI agents</b>. Your instructor, [Kazik Pogoda](#about-kazik-your-instructor), will take you on a journey of developing autonomous and highly potent AI systems, like [Claudine AI agent](https://github.com/xemantic/claudine/), capable of fully controlling a Unix-compliant machine (which also means your computer, even if you are using Windows ;) ).
-
-Claudine won AI hack Berlin hackathon.
+We are <a href="https://xemantic.com/">Xemantic</a>, applied philosophy collective from Berlin, and we would like to invite you to our workshops, where you will learn <b>how to write powerful AI agents</b>. Your instructor, [Kazik Pogoda](#about-kazik-your-instructor), will take you on a journey of developing autonomous and highly potent AI systems, like [Claudine AI agent](https://github.com/xemantic/claudine/), capable of fully controlling a Unix-compliant machine (which also means your computer, even if you are using Windows ;) ). Claudine won AI hack Berlin hackathon.
 
 ![Hero-Robot-Berlin-Hackathon-Website.png](images/Hero-Robot-Berlin-Hackathon-Website.png)
 
 ## You will learn ...
 
-- A glossary of AI related terms.
-- How to write custom conversational bot?
-- How to utilize so-called structured generation?
-- How to give agent tools, so it can interact with your machine?
-- How to adapt these tools to IT systems and needs of your organization?
-- How to assist Claudine AI in using your computer and coding (indeed, the roles are reversing)?
-- Ethical alignment
+- The glossary of AI development terms.
+- How to write custom conversational bots?
+- How to engineer prompts *(when used well, plain English is becoming the most powerful programming language)*?
+- How to use structured generation for parsing unstructured data?
+- How to give tools to an agent, so it can interact with your machine?
+- How to adapt these tools to IT systems of your organization?
+- How to assist Claudine agent in using your computer and coding *(indeed, the roles are reversing)*?
+- A bit of AI ethics, security and alignment.
 
-All of this as approachable as possible, illustrated with elements of creative coding for boosting fun factor and accessibility.
+*All materials as approachable as possible, illustrated with elements of creative coding to boost fun factor and accessibility.*
 
 ## Backstory
 
-Machines are becoming more intelligent with every single day and keeping up with their advancement is becoming a job on its own. We are entering the Agentic AI era, which creates unprecedented possibilities for software developers, to integrate our systems with machine-based autonomous reasoning.
+Machines are becoming more intelligent with every single day and keeping up with their exponential advancement is becoming a job on its own. We are entering the Agentic AI era, which creates unprecedented possibilities for software developers, to integrate our systems with machine-based autonomous reasoning.
 
-Since few months I've been conducting my independent AI research, which led me to some unique discoveries, and resulted in plethora of [open source AI libraries](../), which make creation of Agentic AI super-approachable, especially for Kotlin and Java/JVM stack developers.
+We have been conducting independent AI research, which led us to some unique discoveries, and resulted in plethora of [open source AI libraries](../), which make creation of Agentic AI very approachable, especially for developers working with Kotlin and Java/JVM stack.
 
-Together with [Victor Diaz]() we won AI Hack Berlin hackathon, while introducing the team "Robots will steal your food", which presented an autonomous, omnipotent, open source AI agent named
-<a href="https://github.com/xemantic/claudine/">Claudine</a>.
+We had a chance to put this research into action. Together with [Victor Diaz]() we won AI Hack Berlin hackathon under "Robots will steal your food" team, which presented an autonomous, omnipotent, open source AI agents, freely controlling remote Unix machine according to intentions expressed in simple sketches created by the user in the web browser.
 
 ![robots_will_steal_your_food.jpg](images/robots_will_steal_your_food.jpg)
 
@@ -41,14 +39,20 @@ I am an independent AI researcher, open source enthusiast, open society advocate
 
 ## Dates
 
-There will be a workshop every Tuesday in February and March 2025:
+We are offering a workshop every Tuesday 10:00-17:00 in February and March 2025, starting from:
 
-* 11.02.2025
-* 12.02.2025
+* 18.02.2025
+* 25.02.2025
+* 04.03.2025
+* 11.03.2025
+* 18.03.2025
+* 25.03.2025
+
+In case of popularity of the workshop, more dates will follow. Each time we can host up to 15 participants.
 
 ## Tickets
 
-Tickets must be obtained in 2 steps
+Tickets must be obtained in 2 steps:
 
 ### 1. Choose date
 
@@ -56,9 +60,7 @@ Go to [Xamantic page at OpenCollective](https://opencollective.com/xemantic/even
 
 ### 2. Gain access to workshop GitHub repository
 
-The repository is:
-
-https://github.com/xemantic/xemantic-ai-workshop
+The [xemantic-ai-workshop](https://github.com/xemantic/xemantic-ai-workshop) repository can be accessed only after sponsoring Xemantic one time on GitHub. You are more than welcome to become a recurring sponsor, especially if 
 
 Most likely you cannot see it, because you need to sponsor Xemantic first through the GitHub sponsors program.
 

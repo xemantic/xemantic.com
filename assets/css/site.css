@@ -26,13 +26,12 @@ html {
   font-family: "Poppins", serif;
   font-weight: 400;
   font-style: normal;
+  scroll-behavior: smooth;
 }
 
 body {
   line-height: 1.618;
 }
-
-
 
 main p:has(img) {
   padding-left: 0;
@@ -49,8 +48,8 @@ h1 {
 
 h2 {
   text-align: center;
-  margin-top: 1em;
-  margin-bottom: 1em;
+  padding-top: 5rem;
+  margin-bottom: 2rem;
 }
 
 h1 {
@@ -106,18 +105,18 @@ main :is(p:not(:has(img)), ul, ol, h3, h4) {
   background: var(--background-color);
 }
 
-main p,
-main ul {
-  padding-bottom: 1rem;
-  padding-top: 1rem;
-  text-align: justify;
-  hyphens: auto;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-}
 
 
 main {
+
+  p, ul {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+    text-align: justify;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+  }
 
   p, h3 {
     padding-left: max(calc((100% - 40rem) / 2), 1rem);
@@ -138,7 +137,7 @@ main {
     max-width: 100%;
     height: auto;
     margin-top: 4rem;
-    margin-bottom: 4rem;
+    margin-bottom: 0;
   }
 
   small {

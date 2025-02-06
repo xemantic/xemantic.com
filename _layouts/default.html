@@ -53,6 +53,7 @@
     </script>
     <script>
         const PARALLAX_SCROLLING_RATE = .0003;
+        const randomSeed = Math.random() * 100;
 
         let scroll = 0;
         shaderWebBackground.shade((ctx) => ({
@@ -60,7 +61,7 @@
             minDimension = Math.min(width, height);
           },
           onBeforeFrame: () => {
-            time = performance.now() / 10000;
+            time = performance.now() / 10000 + randomSeed;
             scroll = (window.scrollY * ctx.cssPixelRatio) * -PARALLAX_SCROLLING_RATE;
           },
           shaders: {
@@ -68,7 +69,7 @@
               uniforms: {
                 iResolution:           () => ctx.resolution,
                 iTime:                 () => time,
-                iScroll:               () => scroll
+                iScroll:               () => scroll,
               }
             }
           }
