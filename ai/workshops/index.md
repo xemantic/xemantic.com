@@ -33,10 +33,11 @@ Together with [Victor Diaz]() we won AI Hack Berlin hackathon, while introducing
 
 ![robots_will_steal_your_food.jpg](images/robots_will_steal_your_food.jpg)
 
-## About your instructor
+## About Kazik, your instructor
+
+I am an independent AI researcher, open source enthusiast, open society advocate, computational artist and live coder. A programmer and software architect by trade, a philosopher by education, specialized in cognitive science and ethics. Co-founder of [Xemantic](https://xematnic.com/) (applied philosophy collective) and [Prachtsaal](https://prachtsaal.berlin) (non-profit art cooperative).
 
 ![Kazik Pogoda live coding during Algorave at Prachtsaal](../../assets/images/people/Kazik_Pogoda-Algorave_at_Prachtsaal.jpg)
-I am an independent AI researcher, open source enthusiast, open society practitioner, computational artist, live coder. A programmer and software architect by trade, a philosopher by education, specialized in cognitive science and ethics. Co-founder of [Xemantic](https://xematnic.com/) (applied philosophy collective) and [Prachtsaal](https://prachtsaal.berlin) (non-profit art cooperative).
 
 ## Dates
 

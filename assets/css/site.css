@@ -2,6 +2,7 @@
   --primary-color: #a9b0be;
   --accent-color: #c676dc;
   --link-color: #65ade9;
+  --nav-background-color: rgba(0, 0, 0, .7);
   --background-color: rgba(24, 24, 24, .8);
   --window-highlight-color: rgba(80, 80, 80, .9);
   --window-shadow-color: rgba(0, 0, 0, .9);
@@ -121,18 +122,25 @@ main ul {
   -ms-hyphens: auto;
 }
 
-small {
-  font-size: 0.875rem;
+
+main {
+
+  img, picture, video, svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+  }
+
+  small {
+    font-size: 0.875rem;
+  }
+
 }
 
 /* Media elements */
-img, picture, video, svg {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  margin-top: 4rem;
-  margin-bottom: 4rem;
-}
+
 
 /* Form elements */
 input, button, textarea, select {
