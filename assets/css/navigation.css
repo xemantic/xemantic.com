@@ -18,7 +18,7 @@ header {
     align-items: center;
     text-decoration: none; /* Removes the default underline from links */
     align-items: center;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.5s ease;
     opacity: 1.0;
   }
 
@@ -57,13 +57,13 @@ header {
   .nav-links a {
     color: var(--primary-color);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.5s ease;
     display: inline-block;
     line-height: 1;
   }
 
   .nav-links a:hover {
-    color: white;
+    color: var(--link-highlight-color);
   }
 
   .nav-links a[aria-current="page"] {

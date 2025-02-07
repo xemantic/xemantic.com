@@ -12,7 +12,7 @@ We are <a href="https://xemantic.com/">Xemantic</a>, applied philosophy collecti
 
 - The glossary of AI development terms.
 - How to write custom conversational bots?
-- How to engineer prompts *(when used well, plain English is becoming the most powerful programming language)*?
+- How to engineer prompts *(English is becoming the most powerful programming language)*?
 - How to use structured generation for parsing unstructured data?
 - How to give tools to an agent, so it can interact with your machine?
 - How to adapt these tools to IT systems of your organization?

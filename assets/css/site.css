@@ -2,6 +2,7 @@
   --primary-color: #a9b0be;
   --accent-color: #c676dc;
   --link-color: #65ade9;
+  --link-highlight-color: white;
   --nav-background-color: rgba(0, 0, 0, .7);
   --background-color: rgba(24, 24, 24, .8);
   --window-highlight-color: rgba(80, 80, 80, .9);
@@ -105,9 +106,18 @@ main :is(p:not(:has(img)), ul, ol, h3, h4) {
   background: var(--background-color);
 }
 
-
-
 main {
+
+  a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color .5s ease;
+  }
+
+  a:hover {
+    color: var(--link-highlight-color);
+    text-decoration: none;
+  }
 
   p, ul {
     padding-bottom: 1rem;
@@ -201,7 +211,3 @@ main :where(img, video, .full-width) {
 
 }
 
-main a {
-  color: var(--link-color);
-  text-decoration: none;
-}
