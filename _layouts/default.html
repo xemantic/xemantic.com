@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% if page.title %}{{ page.title }}{% else %}{{ page.name | titleize }}{% endif %}</title>
+    {% seo %}
     <script src="{{ '/assets/js/shader-web-background.js' | relative_url }}"></script>
     <script type="x-shader/x-fragment" id="image">
         precision highp float;
@@ -81,7 +81,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
     <link rel="stylesheet" href="{{ '/assets/css/navigation.css' | relative_url }}">
-    {% seo %}
 </head>
 <body>
     {% include header.html %}
@@ -89,7 +88,7 @@
         {{ content }}
     </main>
     <footer>
-        &copy; 2025 <a href="https://xemantic.com">Xemantic</a>
+        <span>&copy; 2025 <a href="https://xemantic.com">Xemantic</a></span>
     </footer>
 </body>
 </html>

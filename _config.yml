@@ -17,6 +17,8 @@ kramdown:
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-optional-front-matter
+  - jekyll-titles-from-headings
 
 include:
   - "*.md"
@@ -38,3 +40,7 @@ defaults:
       path: "" # Apply to all files
     values:
       layout: "default" # Set default layout
+
+titles_from_headings:
+  enabled: true
+  collections: true
