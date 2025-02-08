@@ -224,6 +224,7 @@ footer {
     border: 1px solid white;
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
+    transition: color .5s ease, background .5s ease;
   }
 
   input[type="email"] {
