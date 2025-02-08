@@ -302,3 +302,12 @@ ol[class] {
 
 
 }
+
+p:has(#prachtsaal-banner) {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#prachtsaal-banner {
+  border-radius: 0;
+}

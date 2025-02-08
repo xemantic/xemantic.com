@@ -95,9 +95,14 @@ You have to choose
 
 ## Location
 
-All the workshops are held at [Prachtsaal](https://prachtsaal.berlin), a non-profit art cooperative, hosting many resident artists, including our Xemantic collective. Prachtsaal is located in Neukölln, between Körnerpark and Tempelhof. Workshops are happening at our Venue, while in our Foyer you can experience the art exhibition, get some drinks, and take a break in our garden while talking to artists, maybe buying an artwork?
+<a href="https://prachtsaal.berlin/"><img src="images/prachtsaal_banner.webp" id="prachtsaal-banner"/></a>
+
+All the workshops are held at [Prachtsaal](https://prachtsaal.berlin), a non-profit art cooperative, hosting many resident artists, including our Xemantic collective.
+
+Prachtsaal is located in Neukölln, between Körnerpark and Tempelhof. Workshops are happening at our Venue, while in our Foyer you can experience the art exhibition, get some drinks, and take a break in our garden while talking to artists, maybe buying an artwork?
 
 Cafe Augusta, in front of the building, is serving delicious coffee and food, there are also numerous lunch options in the area.
+
 
 ```
 Jonas Str. 22
