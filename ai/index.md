@@ -4,6 +4,8 @@
 
 We are offering [a series of workshops](workshops/) teaching how to build autonomous AI agents.
 
+![An example code of a claude.ai clone written in 16 lines of Kotlin code](workshops/images/AnthropicAiIn16LinesOfCode.webp)
+
 The programme involves creative coding techniques, therefore is adaptable to groups with minimal, or even no prior programming experience.
 
 ## AI consulting

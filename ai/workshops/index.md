@@ -3,7 +3,7 @@ description: Learn how to build your own powerful AI agents
 ---
 # Agentic AI & Creative Coding workshops
 
-![An example code of ChatGP clone written in 16 lines of Kotlin code](images/AnthropicAiIn16LinesOfCode.webp)
+![An example code of a claude.ai clone written in 16 lines of Kotlin code](images/AnthropicAiIn16LinesOfCode.webp)
 
 ## Invitation
 
