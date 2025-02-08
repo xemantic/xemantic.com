@@ -19,7 +19,7 @@
 /* Fluid base size in the root element */
 html {
   /* Scales from 16px at 320px viewport to 20px at 1200px viewport */
-  font-size: clamp(16px, 14px + 0.5vw, 30px);
+  font-size: clamp(18px, 16px + 0.5vw, 26px);
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   background: black;
@@ -139,7 +139,7 @@ main {
 
   ul, ol {
     padding-left: max(calc((100% - 40rem) / 2 + 1.5rem), calc(1rem + 1.5rem));
-    padding-right: max(calc((100% - 40rem) / 2 + 1.5rem), calc(1rem + 1.5rem));
+    padding-right: max(calc((100% - 40rem) / 2 + 1.5rem), 1.5rem);
   }
 
   ul {
@@ -155,7 +155,7 @@ main {
   }
 
   small {
-    font-size: 0.875rem;
+    font-size: 0.875em;
   }
 
   /* Add some spacing between list items */

@@ -19,6 +19,7 @@ plugins:
   - jekyll-seo-tag
   - jekyll-optional-front-matter
   - jekyll-titles-from-headings
+  - jekyll-loading-lazy
 
 include:
   - "*.md"
