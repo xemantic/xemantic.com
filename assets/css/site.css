@@ -211,6 +211,7 @@ footer {
     justify-content: center;
     align-items: center;
     gap: 1.618rem;
+    width: 100%;
   }
 
   label {
@@ -228,7 +229,8 @@ footer {
   }
 
   input[type="email"] {
-    width: 17rem;
+    width: 100%;
+    max-width: 17rem;
   }
 
   input[type="email"]::placeholder {
@@ -252,6 +254,9 @@ footer {
   .email-box {
     display: flex;
     gap: 0.618rem;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
 }
