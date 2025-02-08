@@ -230,6 +230,14 @@ footer {
     width: 17rem;
   }
 
+  input[type="email"]::placeholder {
+    color: var(--primary-color);
+  }
+
+  input[type="email"]:focus {
+    outline: none;
+  }
+
   input[type="submit"] {
 
   }
