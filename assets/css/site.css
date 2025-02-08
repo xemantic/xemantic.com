@@ -239,7 +239,13 @@ footer {
   }
 
   input[type="submit"] {
+    color: white;
+    background: var(--accent-color);
+  }
 
+  input[type="submit"]:disabled {
+    background: transparent;
+    color: var(--primary-color);
   }
 
   .email-box {
