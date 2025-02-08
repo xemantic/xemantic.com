@@ -108,7 +108,6 @@ main {
   h3 {
     padding-top: .618rem;
     font-size: 1.32rem;
-    font-style: italic;
   }
 
   h1, h2 {
@@ -173,15 +172,73 @@ main {
     margin-bottom: 0;
   }
 
+  /* Wider container for media content */
+  :where(.full-width) {
+    width: min(100%, 120ch);
+    margin-inline: auto;
+  }
+
 }
 /* main end */
 
 /* footer: start */
 footer {
-  display: flex;
-  height: 10rem;
-  justify-content: center;
-  align-items: center;
+
+  color: white;
+
+  margin-left: max(calc((100% - 40rem) / 2), 1rem);
+  margin-right: max(calc((100% - 40rem) / 2), 1rem);
+
+  section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #newsletter {
+    margin-top: 3rem;
+  }
+
+  #copyright {
+    min-height: 8rem;
+  }
+
+  form {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.618rem;
+  }
+
+  label {
+    color: white;
+    font-size: 1.32rem;
+  }
+
+  input {
+    color: white;
+    background: transparent;
+    border: 1px solid white;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+  }
+
+  input[type="email"] {
+    width: 17rem;
+  }
+
+  input[type="submit"] {
+
+  }
+
+  .email-box {
+    display: flex;
+    gap: 0.618rem;
+  }
+
 }
 
 /* footer: end */
@@ -205,27 +262,21 @@ ol[class] {
   list-style: none;
 }
 
-/* Wider container for media content */
-main :where(img, video, .full-width) {
-  width: min(100%, 120ch);
-  margin-inline: auto;
-}
 
 /* Responsive breakpoints */
 @media (min-width: 640px) {
 
-  img, picture, video, svg {
-    border-radius: 0.5rem;
+  main {
+    img, picture, video, svg {
+      border-radius: 0.5rem;
+    }
+
+    p:has(img) {
+      padding-left: max(calc((100% - 40rem) / 2), 1rem);
+      padding-right: max(calc((100% - 40rem) / 2), 1rem);
+    }
+
   }
 
-  main p:has(img) {
-    padding-left: max(calc((100% - 40rem) / 2), 1rem);
-    padding-right: max(calc((100% - 40rem) / 2), 1rem);
-  }
 
 }
-
-@media (min-width: 1024px) {
-
-}
-

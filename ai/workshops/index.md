@@ -57,7 +57,7 @@ We are offering workshops on Tuesdays, between 10:00-17:00, in February and Marc
 
 *In case of popularity of the workshop, more dates will follow, including sessions on the weekend. If you want to take the workshop, and none of these dates fit you, please write to <office@xemantic.com>. For bigger groups we can consider also other days, and most likely we will also offer some workshops over the weekend.*
 
-TODO put contact us link
+If you want to stay informed, [subscribe to our newsletter](#newsletter).
 
 ## Tickets
 
@@ -65,11 +65,23 @@ Tickets must be obtained in 2 steps:
 
 ### 1. Choose a date and book a free ticket
 
-Go to [Xemantic events](https://opencollective.com/xemantic/events) page at OpenCollective and pick your date.
+Open: <https://opencollective.com/xemantic/events>
 
-### 2. Gain access to workshop GitHub repository
+Pick the date of your workshops. This way we can track the attendance.
 
-The [xemantic-ai-workshop](https://github.com/xemantic/xemantic-ai-workshop) repository can be accessed only after sponsoring Xemantic one time on GitHub.
+### 2. Gain access to workshop's GitHub repository
+
+Open: <https://github.com/sponsors/xemantic>
+
+Choose: Here is the repository link:
+
+<https://github.com/xemantic/xemantic-ai-workshop>
+
+Note: The repository can be accessed only after sponsoring Xemantic on GitHub:
+
+
+
+You have to choose 
 
 *You are more than welcome to become a monthly sponsor, especially if you will use our open source software in your own commercial solutions.*
 
