@@ -244,11 +244,13 @@ footer {
   input[type="submit"] {
     color: white;
     background: var(--accent-color);
+    cursor: pointer;
   }
 
   input[type="submit"]:disabled {
     background: transparent;
     color: var(--primary-color);
+    cursor: auto;
   }
 
   .email-box {
