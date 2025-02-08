@@ -306,8 +306,25 @@ ol[class] {
 p:has(#prachtsaal-banner) {
   padding-left: 0;
   padding-right: 0;
+  overflow: hidden;
+  position: relative;
 }
 
-#prachtsaal-banner {
-  border-radius: 0;
+p:has(#prachtsaal-banner) a {
+  display: block;
+  width: 100%;
+  min-height: 58vh;
+  background-image: url('/ai/workshops/images/prachtsaal_banner.webp');
+  background-repeat: repeat-x;
+  animation: scroll-banner 100s linear infinite;
+  background-size: auto 100%;
+}
+
+@keyframes scroll-banner {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 2000px 0;
+  }
 }
