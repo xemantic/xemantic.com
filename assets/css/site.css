@@ -34,48 +34,10 @@ body {
   line-height: 1.618;
 }
 
-main p:has(img) {
-  padding-left: 0;
-  padding-right: 0;
-}
 
-h1 {
-  margin-left: 1rem;
-  margin-right: 1rem;
-  margin-top: 6rem;
-  margin-bottom: 0rem;
-  text-align: center;
-}
-
-h2 {
-  text-align: center;
-  padding-top: 5rem;
-  margin-bottom: 2rem;
-}
-
-h1 {
-  font-size: 2.5rem;  /* 40px - 50px */
-}
-
-h2 {
-  font-size: 1.618rem;    /* 32px - 40px */
-}
-
-h3 {
-  font-size: 1.6rem; /* 28px - 35px */
-  font-style: italic;
-}
-
-h4 {
-  font-size: 1.5rem;  /* 24px - 30px */
-}
-
-h1, h2 {
-  color: white;
-}
 
 /* First, select elements after img/headers */
-:is(h2) + :is(p:not(:only-child > img), ul, ol),
+:is(h2) + :is(p:not(:only-child > img), ul, ol, h3),
 /* Additional selector for paragraphs to ensure we exclude p that only contain img */
 :is(h2) + p:not(:has(> img:only-child)) {
   border-top: 1px solid var(--window-highlight-color);
@@ -123,6 +85,42 @@ main, footer {
 
 main {
 
+  h1 {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 6rem;
+    margin-bottom: 0rem;
+  }
+
+  h2 {
+    padding-top: 5rem;
+    margin-bottom: 2rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.618rem;
+  }
+
+  h3 {
+    padding-top: .618rem;
+    font-size: 1.32rem;
+    font-style: italic;
+  }
+
+  h1, h2 {
+    color: white;
+    text-align: center;
+  }
+
+  p:has(img) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   p, ul {
     padding-bottom: 1rem;
     padding-top: 1rem;
@@ -136,6 +134,11 @@ main {
     padding-left: max(calc((100% - 40rem) / 2), 1rem);
     padding-right: max(calc((100% - 40rem) / 2), 1rem);
   }
+
+
+
+
+
 
   ul, ol {
     padding-left: max(calc((100% - 40rem) / 2 + 1.5rem), calc(1rem + 1.5rem));
