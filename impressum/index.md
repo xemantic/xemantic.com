@@ -15,7 +15,7 @@ Jonasstraße 22
 E-Mail: <office@xemantic.com>  
 Telefon / Phone: <a href="tel:&#32;&#43;&#52;&#57;&#49;&#53;&#57;&#48;&#51;&#49;&#54;&#55;&#53;&#50;&#49;">&#32;&#43;&#52;&#57;&#32;&#49;&#53;&#57;&#32;&#48;&#32;&#51;&#49;&#32;&#54;&#55;&#32;&#53;&#50;&#49;</a>
 
-See the full [Contact](../contact/) page for more details.
+See the full [Contact](../contact/) page for additional details.
 
 ## Umsatzsteuer-ID / VAT ID
 

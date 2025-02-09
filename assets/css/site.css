@@ -42,6 +42,12 @@ main :is(h2) + p:not(:has(> img:only-child)) {
   padding-top: 2rem;
 }
 
+main p:has(img) + p:not(:has(img)) {
+  border-top: 1px solid var(--window-highlight-color);
+  padding-top: 2rem;
+  margin-top: 4rem;
+}
+
 main p:not(:has(img)):has(+ p > img) {
   border-bottom: 1px solid var(--window-shadow-color);
   padding-bottom: 2rem;
