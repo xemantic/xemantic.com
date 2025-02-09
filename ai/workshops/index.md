@@ -42,7 +42,7 @@ We had a chance of validating the value of our research during the [AI hack Berl
 
 An independent AI researcher, open source enthusiast, open society advocate, computational artist and live coder. A programmer and software architect by trade, a philosopher by education, interested in cognitive science and ethics. Co-founder of [Xemantic](https://xematnic.com/) (applied philosophy collective) and [Prachtsaal](https://prachtsaal.berlin) (non-profit art cooperative).
 
-![Kazik Pogoda live coding during Algorave at Prachtsaal](../../assets/images/people/Kazik_Pogoda-Algorave_at_Prachtsaal.jpg)
+![Kazik Pogoda live coding during Algorave at Prachtsaal](../../assets/images/people/kazik/Kazik_Pogoda-Algorave_at_Prachtsaal.jpg)
 
 ## Dates
 

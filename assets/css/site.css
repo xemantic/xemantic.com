@@ -34,234 +34,209 @@ body {
   line-height: 1.618;
 }
 
-
-
 /* First, select elements after img/headers */
-:is(h2) + :is(p:not(:only-child > img), ul, ol, h3, address),
+main :is(h2) + :is(p:not(:only-child > img), ul, ol, h3, address, pre),
 /* Additional selector for paragraphs to ensure we exclude p that only contain img */
-:is(h2) + p:not(:has(> img:only-child)) {
+main :is(h2) + p:not(:has(> img:only-child)) {
   border-top: 1px solid var(--window-highlight-color);
   padding-top: 2rem;
 }
 
-p:not(:has(img)):has(+ p > img) {
+main p:not(:has(img)):has(+ p > img) {
   border-bottom: 1px solid var(--window-shadow-color);
   padding-bottom: 2rem;
 }
 
-p:not(:has(img)):has(+ :is(h2)) {
+main p:not(:has(img)):has(+ :is(h2)) {
   border-bottom: 1px solid var(--window-shadow-color);
   padding-bottom: 2rem;
 }
 
-main ul:has(+ :is(h2)) {
+main main ul:has(+ :is(h2)) {
   border-bottom: 1px solid var(--window-shadow-color);
   padding-bottom: 2rem;
 }
 
-p:not(:has(img)):last-child, address {
+main p:not(:has(img)):last-child, address, pre {
   border-bottom: 1px solid var(--window-shadow-color);
   padding-bottom: 2rem;
 }
 
-main :is(p:not(:has(img)), ul, ol, h3, h4, address) {
+main :is(p:not(:has(img)), ul, ol, h3, h4, address, pre) {
   background: var(--background-color);
 }
 
-main, footer {
-
-  a {
-    color: var(--link-color);
-    text-decoration: none;
-    transition: color .5s ease;
-  }
-
-  a:hover {
-    color: var(--link-highlight-color);
-    text-decoration: none;
-  }
-
+main a, footer a {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color .5s ease;
 }
 
-main {
+main a:hover, a:hover {
+  color: var(--link-highlight-color);
+  text-decoration: none;
+}
 
-  h1 {
-    margin-left: 1rem;
-    margin-right: 1rem;
-    margin-top: 6rem;
-    margin-bottom: 0rem;
-  }
+main h1 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-top: 6rem;
+  margin-bottom: 0rem;
+  font-size: 2.5rem;
+}
 
-  h2 {
-    padding-top: 5rem;
-    margin-bottom: 2rem;
-  }
+main h2 {
+  padding-top: 5rem;
+  margin-bottom: 2rem;
+  font-size: 1.618rem;
+}
 
-  h1 {
-    font-size: 2.5rem;
-  }
+main h3 {
+  padding-top: .618rem;
+  font-size: 1.32rem;
+}
 
-  h2 {
-    font-size: 1.618rem;
-  }
+main h1, main h2 {
+  color: white;
+  text-align: center;
+}
 
-  h3 {
-    padding-top: .618rem;
-    font-size: 1.32rem;
-  }
+main p:has(img) {
+  padding-left: 0;
+  padding-right: 0;
+}
 
-  h1, h2 {
-    color: white;
-    text-align: center;
-  }
+main p, main ul {
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+}
 
-  p:has(img) {
-    padding-left: 0;
-    padding-right: 0;
-  }
+main p, main h3, address, pre {
+  padding-left: max(calc((100% - 40rem) / 2), 1rem);
+  padding-right: max(calc((100% - 40rem) / 2), 1rem);
+}
 
-  p, ul {
-    padding-bottom: 1rem;
-    padding-top: 1rem;
-    text-align: justify;
-    hyphens: auto;
-    -webkit-hyphens: auto;
-    -ms-hyphens: auto;
-  }
+main ul, main ol {
+  padding-left: max(calc((100% - 40rem) / 2 + 1.5rem), calc(1rem + 1.5rem));
+  padding-right: max(calc((100% - 40rem) / 2 + 1.5rem), 1.5rem);
+}
 
-  p, h3, address {
-    padding-left: max(calc((100% - 40rem) / 2), 1rem);
-    padding-right: max(calc((100% - 40rem) / 2), 1rem);
-  }
+main ul {
+  list-style: disc;
+}
 
-  ul, ol {
-    padding-left: max(calc((100% - 40rem) / 2 + 1.5rem), calc(1rem + 1.5rem));
-    padding-right: max(calc((100% - 40rem) / 2 + 1.5rem), 1.5rem);
-  }
+main img, main picture, main video, main svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-top: 4rem;
+  margin-bottom: 0;
+}
 
-  ul {
-    list-style: disc;
-  }
+main small {
+  font-size: 0.875em;
+}
 
-  img, picture, video, svg {
-    display: block;
-    max-width: 100%;
-    height: auto;
-    margin-top: 4rem;
-    margin-bottom: 0;
-  }
-
-  small {
-    font-size: 0.875em;
-  }
-
-  /* Add some spacing between list items */
-  ul li,
-  ol li {
-    margin-bottom: 0.5rem;
-  }
+/* Add some spacing between list items */
+main  ul li, main ol li {
+  margin-bottom: 0.5rem;
+}
 
   /* Remove margin from last item */
-  ul li:last-child,
-  ol li:last-child {
-    margin-bottom: 0;
-  }
+main ul li:last-child, main ol li:last-child {
+  margin-bottom: 0;
+}
 
-  /* Wider container for media content */
-  :where(.full-width) {
-    width: min(100%, 120ch);
-    margin-inline: auto;
-  }
-
+/* Wider container for media content */
+main :where(.full-width) {
+  width: min(100%, 120ch);
+  margin-inline: auto;
 }
 /* main end */
 
 /* footer: start */
 footer {
-
   color: white;
-
   margin-left: max(calc((100% - 40rem) / 2), 1rem);
   margin-right: max(calc((100% - 40rem) / 2), 1rem);
-
-  section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  #newsletter {
-    margin-top: 3rem;
-  }
-
-  #copyright {
-    min-height: 8rem;
-  }
-
-  form {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1.618rem;
-    width: 100%;
-  }
-
-  label {
-    color: white;
-    font-size: 1.32rem;
-  }
-
-  input {
-    color: white;
-    background: transparent;
-    border: 1px solid white;
-    border-radius: 0.5rem;
-    padding: 0.5rem 1rem;
-    transition: color .5s ease, background .5s ease;
-  }
-
-  input[type="email"] {
-    width: 100%;
-    max-width: 17rem;
-  }
-
-  input[type="email"]::placeholder {
-    color: var(--primary-color);
-  }
-
-  input[type="email"]:focus {
-    outline: none;
-  }
-
-  input[type="submit"] {
-    color: white;
-    background: var(--accent-color);
-    cursor: pointer;
-  }
-
-  input[type="submit"]:disabled {
-    background: transparent;
-    color: var(--primary-color);
-    cursor: auto;
-  }
-
-  .email-box {
-    display: flex;
-    gap: 0.618rem;
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
 }
 
+footer section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#newsletter {
+  margin-top: 3rem;
+}
+
+#copyright {
+  min-height: 8rem;
+}
+
+#newsletter form {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.618rem;
+  width: 100%;
+}
+
+#newsletter label {
+  color: white;
+  font-size: 1.32rem;
+}
+
+#newsletter input {
+  color: white;
+  background: transparent;
+  border: 1px solid white;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  transition: color .5s ease, background .5s ease;
+}
+
+#newsletter input[type="email"] {
+  width: 100%;
+  max-width: 17rem;
+}
+
+#newsletter input[type="email"]::placeholder {
+  color: var(--primary-color);
+}
+
+#newsletter input[type="email"]:focus {
+  outline: none;
+}
+
+#newsletter input[type="submit"] {
+  color: white;
+  background: var(--accent-color);
+  cursor: pointer;
+}
+
+#newsletter input[type="submit"]:disabled {
+  background: transparent;
+  color: var(--primary-color);
+  cursor: auto;
+}
+
+#newsletter .email-box {
+  display: flex;
+  gap: 0.618rem;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 /* footer: end */
-
-/* Media elements */
-
 
 /* Form elements */
 input, button, textarea, select {
@@ -279,22 +254,17 @@ ol[class] {
   list-style: none;
 }
 
-
 /* Responsive breakpoints */
 @media (min-width: 640px) {
 
-  main {
-    img, picture, video, svg {
-      border-radius: 0.5rem;
-    }
-
-    p:has(img) {
-      padding-left: max(calc((100% - 40rem) / 2), 1rem);
-      padding-right: max(calc((100% - 40rem) / 2), 1rem);
-    }
-
+  main img, picture, video, svg {
+    border-radius: 0.5rem;
   }
 
+  main p:has(img) {
+    padding-left: max(calc((100% - 40rem) / 2), 1rem);
+    padding-right: max(calc((100% - 40rem) / 2), 1rem);
+  }
 
 }
 

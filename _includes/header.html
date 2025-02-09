@@ -11,7 +11,7 @@
             <li><a href="{{ '/ai/' | relative_url }}" {% if page.url contains '/ai/' %}aria-current="page"{% endif %}>AI</a></li>
             <li><a href="{{ '/' | relative_url }}">Art</a></li>
             <li><a href="{{ '/services/' | relative_url }}" {% if page.url contains '/services/' %}aria-current="page"{% endif %}>Services</a></li>
-            <li><a href="mailto:{{ 'office@xemantic.com' | encode_email }}">Contact</a></li>
+            <li><a href="{{ '/contact/' | relative_url }}" {% if page.url contains '/contact/' %}aria-current="page"{% endif %}>Contact</a></li>
         </ul>
     </nav>
 </header>
