@@ -12,6 +12,8 @@ The programme involves creative coding techniques, therefore is adaptable to gro
 
 Deep experience in system integration makes us a perfect partner in enabling autonomous AI agents in your organization.
 
+See other [Xemantic Services](../services/) for comprehensive list of the areas of our expertise, which can be combined with AI solutions.
+
 ## Open Source AI software
 
 Our own agentic AI software stack exploded in the recent months, and is delivered as a set of Open Source Kotlin multiplatform libraries.

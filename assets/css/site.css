@@ -37,7 +37,7 @@ body {
 
 
 /* First, select elements after img/headers */
-:is(h2) + :is(p:not(:only-child > img), ul, ol, h3),
+:is(h2) + :is(p:not(:only-child > img), ul, ol, h3, address),
 /* Additional selector for paragraphs to ensure we exclude p that only contain img */
 :is(h2) + p:not(:has(> img:only-child)) {
   border-top: 1px solid var(--window-highlight-color);
@@ -59,12 +59,12 @@ main ul:has(+ :is(h2)) {
   padding-bottom: 2rem;
 }
 
-p:not(:has(img)):last-child {
+p:not(:has(img)):last-child, address {
   border-bottom: 1px solid var(--window-shadow-color);
   padding-bottom: 2rem;
 }
 
-main :is(p:not(:has(img)), ul, ol, h3, h4) {
+main :is(p:not(:has(img)), ul, ol, h3, h4, address) {
   background: var(--background-color);
 }
 
@@ -129,15 +129,10 @@ main {
     -ms-hyphens: auto;
   }
 
-  p, h3 {
+  p, h3, address {
     padding-left: max(calc((100% - 40rem) / 2), 1rem);
     padding-right: max(calc((100% - 40rem) / 2), 1rem);
   }
-
-
-
-
-
 
   ul, ol {
     padding-left: max(calc((100% - 40rem) / 2 + 1.5rem), calc(1rem + 1.5rem));
@@ -325,6 +320,15 @@ p:has(#prachtsaal-banner) a {
     background-position: 0 0;
   }
   to {
-    background-position: 2000px 0;
+    background-position: 1999px 0;
   }
+}
+
+address {
+  white-space: pre;
+}
+
+iframe {
+  width: 100%;
+  height: 50vh;
 }

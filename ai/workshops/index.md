@@ -61,37 +61,50 @@ If you want to stay informed, [subscribe to our newsletter](#newsletter).
 
 ## Tickets
 
+**The regular ticket price is 150 EUR.**
+
+*Note: 25% of profit from tickets will go to [Prachtsaal](https://prachtsaal.berlin) non-profit cooperative.*
+
 Tickets must be obtained in 2 steps:
 
 ### 1. Choose a date and book a free ticket
 
 Open: <https://opencollective.com/xemantic/events>
 
-Pick the date of your workshops. This way we can track the attendance.
+Pick the date of your workshops - this way we can track the attendance.
+
+*Note: Each time we can host up to 15 participants.*
 
 ### 2. Gain access to workshop's GitHub repository
 
-Open: <https://github.com/sponsors/xemantic>
+Open [Agentic AI & Creative Coding workshop 💜](https://github.com/sponsors/xemantic/sponsorships?tier_id=464965) tier on Xemantic's GitHub Sponsors page (requires GitHub account) and proceed with the payment.
 
-Choose: Here is the repository link:
+Afterward you will gain access to this repository:
 
 <https://github.com/xemantic/xemantic-ai-workshop>
 
-Note: The repository can be accessed only after sponsoring Xemantic on GitHub:
+*Note: The repository can be accessed only after sponsoring Xemantic on GitHub. Business details can be provided, so that the invoice can be obtained directly from GitHub.*
 
+You can cancel this monthly sponsorship after the workshop. However, we strongly encourage you to stay in the loop, and if you continue using our open source software, you can always pick lower monthly sponsorship amount, and send email to <office@xemantic.com> that you want to continue having access to the `xemantic-ai-workshop` repository.
 
-
-You have to choose 
-
-*You are more than welcome to become a monthly sponsor, especially if you will use our open source software in your own commercial solutions.*
-
-*If for some reason, GitHub sponsors is not feasible, please write me an email.*
+*Note: If, for some reason, GitHub sponsors is not feasible, please write to <office@xemantic.com>. We can also write an invoice and give you access to the `xemantic-ai-workshop` repository individually*
 
 **
 
-*We also offer a **solidarity ticket**, for students, If you want to take a workshop, but cannot afford the one time sponsorship on GitHub, please sponsor us one time, only as much as you can, and then write us a message to access the workshop repository* 
+### Solidarity tickets
+
+If you find the amount of regular workshop GitHub sponsoring tier a barrier to participation, then:
+
+1. Write to <office@xemantic.com> to express your interest in the solidarity ticket.
+2. No questions asked, but our confirmation is needed.
+3. Once you receive it, you can 
+please contact us beforehand, and request to ask . No questions asked.
+
+We also offer a **solidarity ticket**, for students, If you want to take a workshop, but cannot afford the one time sponsorship on GitHub, please sponsor us one time, only as much as you can, and then write us a message to access the workshop repository* 
 
 *Each time we can host up to 15 participants.*
+
+A limited number of reduced-price Solidarity tickets are available for those who would otherwise
 
 ## Location
 
@@ -104,11 +117,16 @@ Prachtsaal is located in Neukölln, between Körnerpark and Tempelhof. Workshops
 [Café Augusta](https://cafeaugusta.de/), in front of the building, is serving delicious coffee and food, there are also numerous lunch options in the area.
 
 
-```
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4860.810281427363!2d13.43115427705981!3d52.47179983979637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a84f09c11740b7%3A0x9f3c3a7993df62cc!2sPrachtsaal%20Studio!5e0!3m2!1sen!2sde!4v1739059455750!5m2!1sen!2sde" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+
+### Address
+
+<address>
+Prachtsaal
 Jonas Str. 22
-12053
-Berlin, Neukolln
-```
+12053 Berlin
+</address>
 
 ## Requirements
 
