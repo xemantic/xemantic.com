@@ -2,7 +2,11 @@
 
 ## Email
 
-Send all general inquiries to <office@xemantic.com>. Consider subscribing to our [newsletter](#newsletter).
+For general inquiries, please email <office@xemantic.com>
+
+Consider subscribing to our [newsletter](#newsletter)
+
+See also full [Legal notice / impressum](../impressum)
 
 ## Stay Connected
 

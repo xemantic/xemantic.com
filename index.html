@@ -155,6 +155,73 @@
     footer {
       text-align: center;
     }
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+    #newsletter {
+  margin-top: 3rem;
+}
+
+#newsletter form {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.618rem;
+  width: 100%;
+}
+
+#newsletter label {
+  color: white;
+  font-size: 1.32rem;
+}
+
+#newsletter input {
+  color: white;
+  background: transparent;
+  border: 1px solid white;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  transition: color .5s ease, background .5s ease;
+}
+
+#newsletter input[type="email"] {
+  width: 100%;
+  max-width: 17rem;
+}
+
+#newsletter input[type="email"]::placeholder {
+  color: rgba(255, 255, 255, .4);
+}
+
+#newsletter input[type="email"]:focus {
+  outline: none;
+}
+
+#newsletter input[type="submit"] {
+  color: black;
+  background: white;
+  cursor: pointer;
+}
+
+#newsletter input[type="submit"]:disabled {
+  background: transparent;
+  color: rgba(255, 255, 255, .4);
+  cursor: auto;
+}
+
+#newsletter .email-box {
+  display: flex;
+  gap: 0.618rem;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
   </style>
   <script>
     const MAIN_JS = "https://xemantic.github.io/fuck-the-ai-which-is-abusing-your-reptilian-brain-to-make-you-addicted-to-movies-instead-of-art/main.js";
@@ -258,19 +325,14 @@
 <!--    <h2>Civilizational Habits</h2>-->
 <!--  </a>-->
   <a class="miniature"
-     href="#agentic-ai-for-artists"
-     data-flickity-bg-lazyload="workshops/2024/agentic-ai-for-artists-2024-10-26/images/agentic-ai-workshop-miniature.jpg">
-    <h2>Agentic AI for Artists</h2>
+     href="#ai"
+     data-flickity-bg-lazyload="ai/images/AnthropicAiIn16LinesOfCode-miniature.webp">
+    <h2>AI @ Xemantic</h2>
   </a>
   <a class="miniature"
      href="#project404"
      data-flickity-bg-lazyload="404/404-miniature.jpg">
     <h2>404</h2>
-  </a>
-  <a class="miniature"
-     href="#xemantic"
-     data-flickity-bg-lazyload="projects/xemantic/xemantic-miniature.jpg">
-    <h2>xemantic.com</h2>
   </a>
   <a class="miniature"
      href="#emotional-robots"
@@ -322,28 +384,28 @@
      data-flickity-bg-lazyload="projects/music-of-the-eclipse/music-of-the-eclipse-miniature.jpg">
     <h2>Music of the eclipse</h2>
   </a>
+  <a class="miniature"
+     href="#xemantic"
+     data-flickity-bg-lazyload="projects/xemantic/xemantic-miniature.jpg">
+    <h2>xemantic.com</h2>
+  </a>
 </nav>
 <section id="projects" class="hidden">
-  <article id="agentic-ai-for-artists">
+  <article id="ai">
     <div class="media">
-      <img src="workshops/2024/agentic-ai-for-artists-2024-10-26/images/fibonacci-anthropic-tool.webp" loading="lazy" />
+      <img src="ai/workshops/images/AnthropicAiIn16LinesOfCode.webp" loading="lazy" />
     </div>
     <div class="description">
-      <h2>Agentic AI for Artists, a series of workshops</h2>
+      <h2>Xemantic AI</h2>
       <p>
-        We believe that coding AI agents should be as easy as possible. In the
-        <a href="https://creativecode.berlin/">Creative Code Berlin</a> community, we
-        are teaching artists, often without prior programming experience, how to express their creations through code as a
-        medium. For this purpose we use creative coding environments like <a href="https://processing.org/">Processing</a>,
-        <a href="https://p5js.org/">p5.js</a>, or <a href="https://openrndr.org/">OPENRNDR</a>.
-        Xemantic developed a set of AI assistants and development tools intended to be equally accessible,
-        so that creators of all kinds
-        can turn their own machines into an outside window, through which, the AI system can perceive our world, values
-        and needs, and act upon this information.
+        Check out our <a href="ai/">Xemantic AI</a> for details. We are offering:
       </p>
-      <p>
-        <a href="workshops/2024/agentic-ai-for-artists-2024-10-26/">the most recent workshop</a>
-      </p>
+      <ul>
+        <li>Agentic AI workshops</li>
+        <li>AI consulting</li>
+        <li>Open Source AI software</li>
+      </ul>
+
     </div>
   </article>
   <article id="project404">
@@ -361,41 +423,7 @@
       </p>
     </div>
   </article>
-  <article id="xemantic">
-    <div class="media">
-      <iframe class="iframe" data-src="index.html" loading="lazy"></iframe>
-      <div class="caption">
-        Enjoy this recursive fractal. I <i class="fas fa-heart"></i> going meta. :)
-      </div>
-    </div>
-    <div class="description">
-      <h2>xemantic.com</h2>
-      <p class="intro">
-        This website was born, because I wanted to adequately present all my work, spanning
-        across variety of disciplines and realized in a diverse media. I express myself with the
-        code, but it's not something one can easily perceive. Thus here is the wrapping.
-      </p>
-      <p>
-        I wanted to make it visually rich, using state of the art web technologies:
-        WebGL2, CSS calculations and animations. Instead of using any existing responsive web design
-        framework, I design everything from scratch, having certain experience in mind and actively
-        shaping it. The initial page loads blazing fast, because everything is encoded in the base
-        HTML with the conceptual layer of my generative mathematics, which creates the ultimate
-        form of compression. The font is scaling linearly adjusting to any resolution.
-        I added a shader, generating a slow synaesthetic background in real time, where the natural
-        colors of the rainbow transform into movement. It is light enough to run on mobile devices.
-        In terms of proportions, I applied golden ratio everywhere I could think of.
-      </p>
-      <p>
-        The <em>xemantic.com</em> website is listed here, because it represents a significant
-        project on it's own. As you can see I can also create websites and frontend apps.
-        Maybe you need one? I can help build it or consult on techniques.
-        I didn't intent to copy Netflix navigation, but the comparison seems inevitable.
-        Maybe it's a seed of an art-streaming platform &mdash; a presentation form more suitable
-        for the time of social distancing?
-      </p>
-    </div>
-  </article>
+
   <article id="emotional-robots">
     <div class="media">
       <img src="projects/emotional-robots/shumi-frenzy-of-exultations.jpg" loading="lazy" />
@@ -720,6 +748,57 @@
       </ul>
     </div>
   </article>
+  <article id="xemantic">
+    <div class="media">
+      <iframe class="iframe" data-src="index.html" loading="lazy"></iframe>
+      <div class="caption">
+        Enjoy this recursive fractal. I <i class="fas fa-heart"></i> going meta. :)
+      </div>
+    </div>
+    <div class="description">
+      <h2>xemantic.com</h2>
+      <p class="intro">
+        This website was born, because I wanted to adequately present all my work, spanning
+        across variety of disciplines and realized in a diverse media. I express myself with the
+        code, but it's not something one can easily perceive. Thus here is the wrapping.
+      </p>
+      <p>
+        I wanted to make it visually rich, using state of the art web technologies:
+        WebGL2, CSS calculations and animations. Instead of using any existing responsive web design
+        framework, I design everything from scratch, having certain experience in mind and actively
+        shaping it. The initial page loads blazing fast, because everything is encoded in the base
+        HTML with the conceptual layer of my generative mathematics, which creates the ultimate
+        form of compression. The font is scaling linearly adjusting to any resolution.
+        I added a shader, generating a slow synaesthetic background in real time, where the natural
+        colors of the rainbow transform into movement. It is light enough to run on mobile devices.
+        In terms of proportions, I applied golden ratio everywhere I could think of.
+      </p>
+      <p>
+        The <em>xemantic.com</em> website is listed here, because it represents a significant
+        project on it's own. As you can see I can also create websites and frontend apps.
+        Maybe you need one? I can help build it or consult on techniques.
+        I didn't intent to copy Netflix navigation, but the comparison seems inevitable.
+        Maybe it's a seed of an art-streaming platform &mdash; a presentation form more suitable
+        for the time of social distancing?
+      </p>
+    </div>
+  </article>
+</section>
+<section id="newsletter">
+  <form action="https://buttondown.com/api/emails/embed-subscribe/xemantic"
+        method="post"
+        target="popupwindow"
+        onsubmit="window.open('https://buttondown.com/xemantic', 'popupwindow')"
+        class="embeddable-buttondown-form">
+    <label for="bd-email">Subscribe to our newsletter</label>
+    <div class="email-box">
+      <input type="email" name="email" id="bd-email" placeholder="your email ..."/>
+      <input type="submit" value="Subscribe" disabled/>
+    </div>
+    <div class="buttondown-box">
+      <small><a href="https://buttondown.com/refer/xemantic" target="_blank">Powered by Buttondown.</a></small>
+    </div>
+  </form>
 </section>
 <section id="social-media" class="shadow">
   <a href="https://www.instagram.com/xemantic.berlin/" title="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
@@ -857,10 +936,11 @@
                        alt="xemantic logo" loading="lazy"/>
     </p>
     <p>
-      <a href="impressum.html">Impressum</a>
+      <a href="impressum/">Impressum</a>
     </p>
   </div>
 </footer>
 <canvas id="shader-background"></canvas>
+<script src="/assets/js/newsletter.js"></script>
 </body>
 </html>

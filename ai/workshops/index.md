@@ -7,6 +7,8 @@ description: Learn how to build your own powerful AI agents
 
 ## Invitation
 
+Do you want to learn how to build your own AI agents?
+
 We are <a href="https://xemantic.com/">Xemantic</a>, an applied philosophy collective based in Berlin, offering workshops on <b>building powerful AI agents</b>. Your instructor, [Kazik Pogoda](#about-kazik-your-instructor), will take you on a journey of developing autonomous and highly potent AI systems, like [Claudine AI agent](https://github.com/xemantic/claudine/), capable of fully controlling a Unix-compliant machine (which also means your computer, even if you are using Windows ;) ). Claudine won [AI hack Berlin](https://rsvp.withgoogle.com/events/ai-hack-berlin) hackathon.
 
 ![AI hack Berlin 2024 promo image](images/Hero-Robot-Berlin-Hackathon-Website.png)
