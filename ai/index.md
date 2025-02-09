@@ -12,7 +12,7 @@ Our tools are designed to simplify the process, making Agentic AI techniques acc
 
 ### AI education for various audiences
 
-We can hold our [Agentic AI workshops](workshops/) at the premises of your organization, with agenda adapted to your needs.
+We can hold our [Agentic AI & Creative Coding workshop](workshops/) at the premises of your organization, with agenda adapted to your needs.
 
 ### Agentic AI integration
 
@@ -22,7 +22,7 @@ Years-long experience in IT system integration and expertise in various business
 
 ## Open Source AI software
 
-Our own agentic AI software stack exploded in the recent months, and is delivered as a set of Open Source Kotlin multiplatform libraries.
+Our own agentic AI software stack exploded in the recent months, and is delivered as a set of open source Kotlin multiplatform libraries.
 
 <!-- include-start:https://raw.githubusercontent.com/xemantic/xemantic-ai/refs/heads/main/README.md -->
 ### List of Xemantic AI projects

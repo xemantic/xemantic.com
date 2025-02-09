@@ -68,6 +68,11 @@ main p:not(:has(img)):last-child, address, pre {
   padding-bottom: 2rem;
 }
 
+main h3 + ul {
+  border-bottom: 1px solid var(--window-shadow-color);
+  padding-bottom: 2rem;
+}
+
 main :is(p:not(:has(img)), ul, ol, h3, h4, address, pre) {
   background: var(--background-color);
 }
