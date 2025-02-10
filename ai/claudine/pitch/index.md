@@ -17,7 +17,15 @@ Towards autonomous and omnipotent agentic AI
 </div>
 
 ---
-## Examples of what Claudine can do
+## The challenge
+
+* Organizations increasingly need AI expertise but face high costs for specialized talent
+* Small organizations struggle to access AI capabilities that could help them thrive
+* Current AI agents are [limited to specific workflows rather than being true autonomous agents](https://www.anthropic.com/research/building-effective-agents)
+* Make AI fully *see* our organizations, and autonomously decide on using tools to improve what has been discovered
+
+---
+### Examples of what Claudine can do
 
 - research the internet, call APIs
 - write and update documents and contracts
@@ -25,17 +33,12 @@ Towards autonomous and omnipotent agentic AI
 - administer OS, Cloud, Databases, etc.
 - develop complete software products
 - self-modify by coding new tools for itself
+- etc. - the sky is the limit
 
 ---
-## The Problem
-* Organizations increasingly need AI expertise but face high costs for specialized talent
-* Small organizations struggle to access AI capabilities that could help them thrive
-* Current AI agents are limited to specific workflows rather than being true autonomous agents
-
----
-## How Claudine came into being?
-* Developed through independent research in philosophy and cognitive science ([Xemantic](https://xemantic.com))
-* Built on years of experience in software development, architecture and system administration, and building NGOs
+### How Claudine came into being?
+* Developed through independent research in philosophy and cognitive science ([Xemantic collective](https://xemantic.com))
+* Built on years of experience in software development, architecture, system administration, and working with NGOs
 * The whole [ecosystem of open source tools](https://xemantic.com/ai/) has been developed to make Claudine possible
 
 ---
@@ -43,8 +46,10 @@ Towards autonomous and omnipotent agentic AI
 
 ---
 ## UN Sustainability Goals
-Our project contributes to:
-1. SDG 9: Industry, Innovation and Infrastructure (Building resilient infrastructure and fostering innovation)
+
+Claudine is contributing to:
+
+1. SDG 9: Industry, Innovation and Infrastructure (Building highly innovative technology)
 2. SDG 10: Reduced Inequalities (Making AI capabilities accessible to smaller organizations)
 3. SDG 4: Quality Education (Providing open educational resources for AI development)
 
@@ -58,6 +63,27 @@ Our project contributes to:
 * Promotes transparency through open-source development
 
 ---
+## Environmental Impact
+
+* Reduces travel needs through autonomous system administration and remote operations
+* Optimizes resource utilization through intelligent system monitoring and management
+* Enables more efficient energy use through automated system analysis and optimization
+
+
+---
+### Alignment with YC Requests for Startups Spring 2025
+
+* Compliance and Audit
+* DocuSign 2.0
+* Browser & Computer Automation
+* AI Personal Staff for Everyone
+* Devtools for AI Agents
+* The Future of Software Engineering
+* AI Commercial Open Source Software
+
+https://www.ycombinator.com/rfs
+
+---
 ## Target Market
 
 * Small and medium-sized organizations requiring AI capabilities
@@ -67,11 +93,16 @@ Our project contributes to:
 * AI consulting clients seeking expertise in agent development
 
 ---
-## Market gap
+## Market gap Claudine is addressing
 
 * Most AI systems are limited "workflow systems"
 * Existing solutions are often closed-source and expensive
 * Limited educational resources for building autonomous AI agents
+
+---
+## Innovation level
+
+> We delivered open source Claudine as an autonomous and omnipotent AI agent, weeks before frontier AI companies, Anthropic and Open AI, introduced technology preview of Computer Use and Operator, and before Devin, AI software engineer, was released.
 
 ---
 ## Our Solution
@@ -82,14 +113,15 @@ Our project contributes to:
 * Comprehensive ecosystem of tools
 
 ---
-### Technical Innovation
+## Technical Innovation
+
 * Omnipotent design allowing full system control
 * Autonomous reasoning and task execution
 * Unique semantic input processing
 * Custom agentic framework with structured output
 
 ---
-### Market Innovation
+## Market Innovation
 * Open-source educational approach
 * Multiplatform deployment capability
 * Distributed agent architecture potential
@@ -136,11 +168,13 @@ Our project contributes to:
 * Limited availability
 * Our advantage: Ready for deployment, multiplatform, extensible
 
+*Our ecosystem is utilizing unique capabilities of Anthropic API, but through alignment with [Model Context Protocol](https://modelcontextprotocol.io/) it is becoming model-agnostic.*
+
 ---
 ### OpenAI Operator
 
-* Early research stage
-* Closed ecosystem
+* Proprietary non-extensible technology
+* Limited availability (unavailable in Germany, and many other regions)
 * Our advantage: Open architecture, educational focus, immediate availability
 
 ---
@@ -153,6 +187,7 @@ Our project contributes to:
 
 ---
 ## Value Proposition
+
 * Immediate ROI through productivity gains
 * Reduced dependency on expensive specialists
 * Access to cutting-edge AI capabilities
@@ -164,7 +199,6 @@ Our project contributes to:
 * Built on Anthropic's Claude model
 * Custom Kotlin multiplatform implementation
 * Integrated agentic framework
-* Essential for all core functionalities
 
 ---
 ## AI Implementation
@@ -189,17 +223,40 @@ https://xemantic.com
 ---
 ## Kazik Pogoda
 
-* Founder
+* Founder and CTO
 * Expertise in:
   * AI Development
   * System Architecture
   * Software Engineering
   * Philosophy and Cognitive Science
+  * Computational Art and Creative Technologies
 * Track record of successful project delivery
+
+https://www.linkedin.com/in/kpogoda/
+
+---
+## Julia Thomas
+
+* Machine Learning Specialist ([Krisenchat](https://krisenchat.de/))
+* Data Scientist
+* Clinical Psychologist
+* Counselor
+
+https://www.linkedin.com/in/julia-thomas-a5ba27214/
+
+---
+## Julie Amouzegar Kim
+
+* Designer, UX specialist
+* with interest in generative feeling for GenZ aesthetics and generative art
+* Composer, inventor and media artist
+* Generative design and media art
+* Collaborated with Kazik on the *Synaesthesia and the Mathematics of Perception* project through Erasmus programme
+
+https://www.linkedin.com/in/julie-amouzegar-b72bb120b/
 
 ---
 ## Thank You
 
 * Xemantic: https://xemantic.com
-* LinkedIn: https://linkedin.com/in/kpogoda
 * GitHub: https://github.com/xemantic
