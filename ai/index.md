@@ -24,6 +24,10 @@ Years-long experience in IT system integration and expertise in various business
 
 Our own agentic AI software stack exploded in the recent months, and is delivered as a set of open source Kotlin multiplatform libraries.
 
+### Claudine AI agent
+
+[Claudine](claudine/) is an open source research prototype of an autonomous and **omnipotent** AI agent.
+
 <!-- include-start:https://raw.githubusercontent.com/xemantic/xemantic-ai/refs/heads/main/README.md -->
 ### List of Xemantic AI projects
 
