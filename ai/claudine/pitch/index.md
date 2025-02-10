@@ -232,7 +232,7 @@ https://xemantic.com
   * Computational Art and Creative Technologies
 * Track record of successful project delivery
 
-https://www.linkedin.com/in/kpogoda/
+<small>https://www.linkedin.com/in/kpogoda/</small>
 
 ---
 ## Julia Thomas
@@ -242,18 +242,21 @@ https://www.linkedin.com/in/kpogoda/
 * Clinical Psychologist
 * Counselor
 
-https://www.linkedin.com/in/julia-thomas-a5ba27214/
+<small>https://www.linkedin.com/in/julia-thomas-a5ba27214/</small>
 
 ---
 ## Julie Amouzegar Kim
 
-* Designer, UX specialist
-* with interest in generative feeling for GenZ aesthetics and generative art
-* Composer, inventor and media artist
-* Generative design and media art
-* Collaborated with Kazik on the *Synaesthesia and the Mathematics of Perception* project through Erasmus programme
+<div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+<img src="images/julie.jpeg" alt="AI hack Berlin hackathon promo" style="width: 45%;">
+<ul style="width: 45%; font-size: .7em;">
+<li>Designer, 3D modeler, UX specialist, embracing new aesthetics</li>
+<li>Composer, inventor and new media artist</li>
+<li>Collaborated with Kazik on the <a href="https://xemantic.com/404/">404</a> and <a href="https://youtu.be/KGK2W7cwQuw">Synaesthesia and the Mathematics of Perception</a> projects through Erasmus programme</li>
+</ul>
+</div>
 
-https://www.linkedin.com/in/julie-amouzegar-b72bb120b/
+<small>https://www.linkedin.com/in/julie-amouzegar-b72bb120b/</small>
 
 ---
 ## Thank You
