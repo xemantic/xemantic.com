@@ -40,6 +40,7 @@ The agent can fully control a [Unix-compliant](https://en.wikipedia.org/wiki/POS
 - ⚙️ **Administer** OS, Cloud, databases, etc.
 - 🔧 **Develop** complete software products
 - 📈 **Self-modify** by coding new tools for itself
+- 🔬 **Conduct** scientific research
 - etc. - **the sky is the limit**
 
 ---
@@ -73,10 +74,10 @@ Claudine is contributing to:
 ---
 ## Environmental Impact
 
+* Discovers scientific breakthroughs in green energies
 * Reduces travel needs through autonomous system administration and remote operations
 * Optimizes resource utilization through intelligent system monitoring and management
 * Enables more efficient energy use through automated system analysis and optimization
-
 
 ---
 ### Alignment with YC Requests for Startups Spring 2025
@@ -98,17 +99,18 @@ https://www.ycombinator.com/rfs
 * Software development companies and individual developers
 * Educational institutions teaching AI development
 * Organizations needing autonomous AI systems
-* AI consulting clients seeking expertise in agent development
+* Scientific organizations seeking research support/automation
 
 *We are already advising [Anthropic](https://www.anthropic.com/), [JetBrains](https://www.jetbrains.com/), [Stainless](https://www.stainless.com/), [Processing Foundation](https://processingfoundation.org/)*
 
 ---
-## Market gap Claudine is addressing
+## Market gap to address
 
 * Most AI systems are limited "[workflow systems](https://www.anthropic.com/research/building-effective-agents)"
 * Existing solutions are often closed-source and expensive
 * Limited educational resources for building autonomous AI agents
 * Lack of AI dev tools in [Kotlin](https://kotlinlang.org/) multiplatform ecosystem (Android, iOS, mobile, backend)
+* We need more science than our scientists can produce
 
 ---
 ## Innovation level
@@ -138,6 +140,7 @@ https://www.ycombinator.com/rfs
 * Open-source educational approach
 * Multiplatform deployment capability
 * Distributed agent architecture potential
+* Automated scientific research
 
 ---
 ## Market Potential
@@ -155,6 +158,7 @@ https://www.ycombinator.com/rfs
 * Enterprise Software
 * Small Business Solutions
 * Non-Government Organizations
+* Scientific Institutions
 
 ---
 ### Market Size
