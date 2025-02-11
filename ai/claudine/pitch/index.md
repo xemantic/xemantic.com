@@ -1,19 +1,26 @@
 ---
 layout: reveal
 ---
-# Claudine AI Agent
-Towards autonomous and omnipotent agentic AI
+# Claudine
+## AI Agent
+towards autonomous and omnipotent agentic AI  
+
+https://xemantic.com/ai/claudine
+
+<small>*This presentation online: https://xemantic.com/ai/claudine/pitch*</small>
 
 ---
 ## About Claudine
+ 
+[Claudine](https://xemantic.com/ai/claudine) is an open-source research prototype of an autonomous and **omnipotent** AI agent, which already won highly competitive [AI hack Berlin hackathon](https://rsvp.withgoogle.com/events/ai-hack-berlin) at Google.
 
-> [Claudine](https://github.com/xemantic/claudine/) is an open source research prototype of an autonomous **omnipotent** AI agent, which already won highly competitive [AI hack Berlin hackathon](https://rsvp.withgoogle.com/events/ai-hack-berlin) at Google HQ, sponsored by many other key AI companies, which also formed the jury. The agent can fully control a [Unix-compliant](https://en.wikipedia.org/wiki/POSIX) machine, therefore perform any task a human agent could do with such a system.
+The agent can fully control a [Unix-compliant](https://en.wikipedia.org/wiki/POSIX) machine, therefore **perform any task a human agent could do with such a system**.
 
 ---
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
-    <img src="../../workshops/images/Hero-Robot-Berlin-Hackathon-Website.png" alt="AI hack Berlin hackathon promo" style="width: 45%;">
-    <img src="../../workshops/images/robots_will_steal_your_food.jpg" alt="Robots will steal your food" style="width: 45%;">
+<div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
+    <img src="../../workshops/images/Hero-Robot-Berlin-Hackathon-Website.png" alt="AI hack Berlin hackathon promo" style="width: 38%;">
+    <img src="../../workshops/images/robots_will_steal_your_food.jpg" alt="Robots will steal your food" style="width: 53%;">
 </div>
 
 ---
@@ -22,21 +29,22 @@ Towards autonomous and omnipotent agentic AI
 * Organizations increasingly need AI expertise but face high costs for specialized talent
 * Small organizations struggle to access AI capabilities that could help them thrive
 * Current AI agents are [limited to specific workflows rather than being true autonomous agents](https://www.anthropic.com/research/building-effective-agents)
-* Make AI fully *see* our organizations, and autonomously decide on using tools to improve what has been discovered
+* These systems cannot fully *see* our organizations and autonomously reason on using tools to cause actions and join typical processes
 
 ---
 ### Examples of what Claudine can do
 
-- research the internet, call APIs
-- write and update documents and contracts
-- exchange information with 3rd parties
-- administer OS, Cloud, Databases, etc.
-- develop complete software products
-- self-modify by coding new tools for itself
-- etc. - the sky is the limit
+- 🌐 **Research** the internet, call APIs
+- ✍ **Author** documents and contracts
+- 🤝 **Exchange** information with 3rd parties
+- ⚙️ **Administer** OS, Cloud, databases, etc.
+- 🔧 **Develop** complete software products
+- 📈 **Self-modify** by coding new tools for itself
+- etc. - **the sky is the limit**
 
 ---
 ### How Claudine came into being?
+
 * Developed through independent research in philosophy and cognitive science ([Xemantic collective](https://xemantic.com))
 * Built on years of experience in software development, architecture, system administration, and working with NGOs
 * The whole [ecosystem of open source tools](https://xemantic.com/ai/) has been developed to make Claudine possible
@@ -79,7 +87,7 @@ Claudine is contributing to:
 * AI Personal Staff for Everyone
 * Devtools for AI Agents
 * The Future of Software Engineering
-* AI Commercial Open Source Software
+* AI Commercial Open-Source Software
 
 https://www.ycombinator.com/rfs
 
@@ -92,17 +100,20 @@ https://www.ycombinator.com/rfs
 * Organizations needing autonomous AI systems
 * AI consulting clients seeking expertise in agent development
 
+*We are already advising [Anthropic](https://www.anthropic.com/), [JetBrains](https://www.jetbrains.com/), [Stainless](https://www.stainless.com/), [Processing Foundation](https://processingfoundation.org/)*
+
 ---
 ## Market gap Claudine is addressing
 
-* Most AI systems are limited "workflow systems"
+* Most AI systems are limited "[workflow systems](https://www.anthropic.com/research/building-effective-agents)"
 * Existing solutions are often closed-source and expensive
 * Limited educational resources for building autonomous AI agents
+* Lack of AI dev tools in [Kotlin](https://kotlinlang.org/) multiplatform ecosystem (Android, iOS, mobile, backend)
 
 ---
 ## Innovation level
 
-> We delivered open source Claudine as an autonomous and omnipotent AI agent, weeks before frontier AI companies, Anthropic and Open AI, introduced technology preview of Computer Use and Operator, and before Devin, AI software engineer, was released.
+*We delivered open-source Claudine as an autonomous and omnipotent AI agent, weeks before frontier AI companies, Anthropic and Open AI, introduced technology preview of "Computer Use" and "Operator", and before "Devin", AI software engineer, was released.*
 
 ---
 ## Our Solution
@@ -117,11 +128,13 @@ https://www.ycombinator.com/rfs
 
 * Omnipotent design allowing full system control
 * Autonomous reasoning and task execution
-* Unique semantic input processing
-* Custom agentic framework with structured output
+* Unique [semantic input processing](https://github.com/xemantic/xemantic-ai-text-diff)
+* Custom [agentic framework](https://github.com/xemantic/xemantic-ai) with [automatic structured output](https://github.com/xemantic/xemantic-ai-tool-schema)
+* Designed for [Kotlin multiplatform](https://kotlinlang.org/docs/multiplatform.html) - agents can be deployed on any type of device, including embedded systems, watch, mobile, etc.
 
 ---
 ## Market Innovation
+
 * Open-source educational approach
 * Multiplatform deployment capability
 * Distributed agent architecture potential
@@ -129,9 +142,9 @@ https://www.ycombinator.com/rfs
 ---
 ## Market Potential
 
-* Initial focus on DACH region
-* European Union market
-* Global English-speaking markets
+* Initial focus on Berlin / Germany during evaluation phase of AI consulting / education potential
+* Broader European Union market in case of finding joint-venture partners - e.g. educational institutions
+* Global English-speaking markets (technology knows no borders)
 
 ---
 ### Target Sectors
@@ -154,12 +167,13 @@ https://www.ycombinator.com/rfs
 ## Competitive analysis
 
 ---
-
 ### Devin ($500/month)
 
 * Focused only on software development
 * Closed source solution
-* Our advantage: General-purpose capability, open source, educational value
+* Our advantage: General-purpose capability, open source, educational value, *(Claudine is equally capable, and it counts ~500 lines of code on top of our agentic framework)*
+
+https://devin.ai/
 
 ---
 ### Anthropic Computer Use
@@ -168,7 +182,9 @@ https://www.ycombinator.com/rfs
 * Limited availability
 * Our advantage: Ready for deployment, multiplatform, extensible
 
-*Our ecosystem is utilizing unique capabilities of Anthropic API, but through alignment with [Model Context Protocol](https://modelcontextprotocol.io/) it is becoming model-agnostic.*
+*Our ecosystem is utilizing unique capabilities of [Anthropic API](https://www.anthropic.com/api), however through the alignment with [Model Context Protocol](https://modelcontextprotocol.io/), it is becoming model-agnostic.*
+
+<small>https://www.anthropic.com/news/3-5-models-and-computer-use</small>
 
 ---
 ### OpenAI Operator
@@ -177,10 +193,13 @@ https://www.ycombinator.com/rfs
 * Limited availability (unavailable in Germany, and many other regions)
 * Our advantage: Open architecture, educational focus, immediate availability
 
+https://openai.com/index/introducing-operator/
+
 ---
 ## Pricing Strategy
 
-* Open-source core (GPL licensed)
+* Open-source core (GPL 3.0 and Apache 2.0 licensed)
+* Double-licensing possible for particular implementations
 * Premium support and consulting services
 * Educational workshops and training programs
 * Custom development and integration services
@@ -194,25 +213,41 @@ https://www.ycombinator.com/rfs
 * Educational and community benefits
 
 ---
-## Core Technology
+## AI technology in use
 
-* Built on Anthropic's Claude model
-* Custom Kotlin multiplatform implementation
-* Integrated agentic framework
+* LLM as a reasoning engine (Anthropic API / Claude - others will follow)
+* Structured generation for stable input from LLM
+* Tool Use / function calling
 
 ---
-## AI Implementation
+### AI software developed in-house
 
-* Custom Anthropic SDK development
-* In-house developed agentic framework
-* Uses structured output and semantic input
-* Specialized testing infrastructure
+* [anthropic-sdk-kotlin](https://github.com/xemantic/anthropic-sdk-kotlin): official Anthropic SDK for Kotlin still does not exist, so we made one
+* [xemantic-ai-tool-schema](https://github.com/xemantic/xemantic-ai-tool-schema): automatic "Tool Use" schema generation
+* [xemantic-ai-file-magic](https://github.com/xemantic/xemantic-ai-file-magic): automatic input media type detection
+* [xemantic-ai-money](https://github.com/xemantic/xemantic-ai-money): AI API usage cost calculation
+* [semantic input](https://github.com/xemantic/xemantic-ai-text-diff): for automated [Test Driven Development process](https://github.com/xemantic/xemantic-kotlin-test)
+* and many more [xemantic-ai](https://github.com/xemantic/xemantic-ai) libraries from our agentic AI framework
 
+---
+### Data sources in use
+
+*The omnipotent nature of our solution does not limit future deployments to particular data sources. Our track record of integrating Big Data and ETL workflows of many organizations, allows us to tap into existing data sources, while transforming them into the most digestible form an LLM can effectively reason about.*
+
+---
 ## IP Protection
 
-* Core technology open-sourced under GPL
-* Proprietary extensions possible
-* Ecosystem tools with separate licensing
+* Claudine agent open-sourced under GPL
+* Can be double-licensed for customers
+* Other elements of [Xemantic AI](https://xemantic.com/ai/) open-sourced under Apache 2.0 (for unconstrained inclusion in other software products)
+* Specialized custom tools with separate proprietary licensing
+
+---
+## AI Education
+
+In February/March 2025 we are offering several editions of the 1-day "Agentic AI & Creative Coding" workshop in Berlin, which allows participants to learn how to build powerful autonomous AI agents using Kotlin open source libraries developed by Xemantic.
+
+https://xemantic.com/ai/workshops/
 
 ---
 ## Our Team
@@ -221,38 +256,50 @@ https://www.ycombinator.com/rfs
 https://xemantic.com
 
 ---
-## Kazik Pogoda
+### Kazik Pogoda
 
-* Founder and CTO
-* Expertise in:
-  * AI Development
-  * System Architecture
-  * Software Engineering
-  * Philosophy and Cognitive Science
-  * Computational Art and Creative Technologies
-* Track record of successful project delivery
+<div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
+<img src="../../../assets/images/people/kazik/Kazik_Pogoda-Algorave_at_Prachtsaal.jpg" alt="Kazik Pogoda" style="width: 45%;">
+<ul style="width: 45%; font-size: .8em;">
+<li>Founder and CTO</li>
+<li>AI Developer</li>
+<li>Software Architect and Developer</li>
+<li>Philosopher (Cognitive Science)</li>
+<li>Computational Artist and Creative Technologist</li>
+<li>Track record of successful project delivery and technical leadership</li>
+</ul>
+</div>
 
 <small>https://www.linkedin.com/in/kpogoda/</small>
 
 ---
-## Julia Thomas
+### Julia Thomas
 
-* Machine Learning Specialist ([Krisenchat](https://krisenchat.de/))
-* Data Scientist
-* Clinical Psychologist
-* Counselor
+<div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
+<img src="images/julia.jpeg" alt="Julia Thomas" style="width: 45%;">
+<ul style="width: 45%; font-size: .7em;">
+<li>Co-Founder of Xemantic collective</li>
+<li>Machine Learning Specialist (<a href="https://krisenchat.de/">Krisenchat</a>)</li>
+<li>Data Scientist</li>
+<li>Clinical Psychologist</li>
+<li>Counselor</li>
+<li>Author of several papers on the intersection of ML, psychology and society</li>
+<li>Track record of significant fundraising and ML deployment</li>
+</ul>
+</div>
 
 <small>https://www.linkedin.com/in/julia-thomas-a5ba27214/</small>
 
 ---
-## Julie Amouzegar Kim
+### Julie Amouzegar Kim
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
-<img src="images/julie.jpeg" alt="AI hack Berlin hackathon promo" style="width: 45%;">
+<div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
+<img src="images/julie.jpeg" alt="Julie Amouzegar Kim" style="width: 45%;">
 <ul style="width: 45%; font-size: .7em;">
 <li>Designer, 3D modeler, UX specialist, embracing new aesthetics</li>
 <li>Composer, inventor and new media artist</li>
 <li>Collaborated with Kazik on the <a href="https://xemantic.com/404/">404</a> and <a href="https://youtu.be/KGK2W7cwQuw">Synaesthesia and the Mathematics of Perception</a> projects through Erasmus programme</li>
+<li>Track record of successful and highly acclaimed commercial design projects</li>
 </ul>
 </div>
 
