@@ -7,22 +7,22 @@ description: Learn how to build your own powerful AI agents
 
 ## Invitation
 
-Do you want to learn how to build your own AI agents?
+### Do you want to learn how to build your own AI agents?
 
-We are <a href="https://xemantic.com/">Xemantic</a>, an applied philosophy collective based in Berlin, offering workshops on <b>building powerful AI agents</b>. Your instructor, [Kazik Pogoda](#about-kazik-your-instructor), will take you on a journey of developing autonomous and highly potent AI systems, like [Claudine AI agent](https://github.com/xemantic/claudine/), capable of fully controlling a Unix-compliant machine (which also means your computer, even if you are using Windows ;) ). Claudine won [AI hack Berlin](https://rsvp.withgoogle.com/events/ai-hack-berlin) hackathon.
+We are <a href="https://xemantic.com/">Xemantic</a>, an applied philosophy collective based in Berlin, offering workshops on <b>building powerful AI agents</b>. Your instructor, [Kazik Pogoda](#about-kazik-your-instructor), will take you on a journey of developing autonomous and highly potent AI systems, like [Claudine AI agent](https://github.com/xemantic/claudine/), capable of fully controlling your machine. Claudine won [AI hack Berlin](https://rsvp.withgoogle.com/events/ai-hack-berlin) hackathon.
 
 ![AI hack Berlin 2024 promo image](images/Hero-Robot-Berlin-Hackathon-Website.png)
 
 ## You will learn ...
 
-- The glossary of AI development terms.
-- How to write custom conversational bots using [Anthropic API](https://www.anthropic.com/) - as a prerequisite for building agents.
-- How to engineer prompts for agents, moving beyond the simple conversational AI paradigm - natural language is becoming a powerful programming language.
-- How to use structured output from a model for parsing data from unstructured sources - extracting semantic information from images and documents.
-- How to give tools (function calling) to your agent, so it can interact with your machine.
-- How to adapt these tools to IT systems of your organization.
-- How to assist [Claudine](https://github.com/xemantic/claudine) agent in using your computer and coding - where the traditional roles of human and machine are reversed.
-- The architecture and meta-principles behind design powerful AI agents.
+- The **glossary** of AI development terms.
+- How to write **custom conversational bots** using [Anthropic API](https://www.anthropic.com/), as a prerequisite for building agents.
+- How to **engineer prompts for agents**, moving beyond the simple conversational AI paradigm - natural language is becoming a powerful programming language.
+- How to use **structured output** from a model for parsing data from unstructured sources - extracting semantic information from images and documents.
+- How to **give tools to your agent** (function calling), so it can interact with your machine.
+- How to **integrate an agent with IT systems** of your organization.
+- How to assist [Claudine](https://github.com/xemantic/claudine) agent in using your computer and coding - where traditional roles of human and machine are reversed.
+- The architecture and meta-principles behind design of powerful AI agents.
 - Anthropic's [Model Context Protocol](https://modelcontextprotocol.io/), which standardizes how applications provide context to LLMs.
 - A bit on AI ethics, privacy, security considerations and alignment.
 
@@ -32,9 +32,9 @@ We are <a href="https://xemantic.com/">Xemantic</a>, an applied philosophy colle
 
 Machines are becoming more intelligent with every single day and keeping pace with their exponential advancement has become a full-time endeavor. We are entering the **Agentic AI era**, which creates unprecedented possibilities for software developers, to integrate our systems with autonomous reasoning of non-human origin.
 
-Here, at Xemantic, we have been conducting independent AI research through the lenses of applied philosophy, which led us to some unique discoveries, and resulted in extensive collection of [open source AI libraries](../), making creation of Agentic AI very approachable, especially for developers working with [Kotlin](https://kotlinlang.org/) and Java/JVM stack.
+Here, at Xemantic, we have been conducting independent AI research through the lenses of applied philosophy, which led us to some unique discoveries, and resulted in extensive collection of [open source AI libraries](../#xemantics-open-source-ai-software), making creation of Agentic AI very approachable, especially for developers working with [Kotlin](https://kotlinlang.org/) and Java/JVM stack.
 
-If you are not familiar with Kotlin, don't worry, the workshop starts with optional Kotlin crash course, and all the code examples presented during the workshop are minimal and self-explanatory. **What matters here, is not the implementation language, but the meta-theory of writing powerful AI agents. And this is the main focus of the workshop.**
+*If you are not familiar with Kotlin, don't worry, the workshop starts with optional Kotlin crash course, and all the code examples presented during the workshop are minimal and self-explanatory. **What matters here, is not the implementation language, but the meta-theory of writing powerful AI agents. And this is the main focus of the workshop.***
 
 We had a chance of validating the value of our research during the [AI hack Berlin](https://rsvp.withgoogle.com/events/ai-hack-berlin) hackathon at Google. Together with [Victor Diaz](https://github.com/victordiaz) we formed our *ad hoc* "Robots will steal your food" team, which presented an autonomous AI agent, freely controlling a remote Unix machine, according to intentions expressed in simple sketches created by the user in the web browser. Our team won the hackathon.
 
@@ -57,7 +57,7 @@ We are offering workshops on Tuesdays, between 10:00-17:00, in February and Marc
 * 18.03.2025
 * 25.03.2025
 
-*In case of popularity of the workshop, more dates will follow, including sessions on the weekend. If you want to take the workshop, and none of these dates fit you, please write to <office@xemantic.com>. For bigger groups we can consider also other days, and most likely we will also offer some workshops over the weekend.*
+*In case of popularity of the workshop, more dates will follow, including sessions on the weekend. If you want to take the workshop, and none of these dates fit you, please write to <office@xemantic.com>. For bigger groups we can consider also other days.*
 
 If you want to stay informed, [subscribe to our newsletter](#newsletter).
 
@@ -65,7 +65,7 @@ If you want to stay informed, [subscribe to our newsletter](#newsletter).
 
 **The regular ticket price is 150 EUR.**
 
-*Note: 25% of profit from tickets will go to [Prachtsaal](https://prachtsaal.berlin) non-profit cooperative.*
+*Note: 25% of the profit from tickets will go to [Prachtsaal](https://prachtsaal.berlin) non-profit cooperative.*
 
 Tickets must be obtained in 2 steps:
 
@@ -91,22 +91,13 @@ You can cancel this monthly sponsorship after the workshop. However, we strongly
 
 *Note: If, for some reason, GitHub sponsors is not feasible, please write to <office@xemantic.com>. We can also write an invoice and give you access to the `xemantic-ai-workshop` repository individually*
 
-**
-
 ### Solidarity tickets
 
 If you find the amount of regular workshop GitHub sponsoring tier a barrier to participation, then:
 
-1. Write to <office@xemantic.com> to express your interest in the solidarity ticket.
-2. No questions asked, but our confirmation is needed.
-3. Once you receive it, you can 
-please contact us beforehand, and request to ask . No questions asked.
-
-We also offer a **solidarity ticket**, for students, If you want to take a workshop, but cannot afford the one time sponsorship on GitHub, please sponsor us one time, only as much as you can, and then write us a message to access the workshop repository* 
-
-*Each time we can host up to 15 participants.*
-
-A limited number of reduced-price Solidarity tickets are available for those who would otherwise
+1. Write to <office@xemantic.com> to express your interest in the solidarity ticket and provide your GitHub user id.
+2. No questions asked, but our confirmation is needed, you will get access to the workshop repository.
+3. [Sponsor us one time](https://github.com/sponsors/xemantic?frequency=one-time) on GitHub in the amount of your choosing.
 
 ## Location
 

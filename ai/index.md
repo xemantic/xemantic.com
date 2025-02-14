@@ -2,7 +2,7 @@
 
 ## Agentic AI & Creative Coding workshops
 
-In February / March 2025 we are offering several editions of the 1-day [Agentic AI & Creative Coding workshop](workshops/) in Berlin, which allows participants to learn **how to build powerful autonomous AI agents** using [open-source software](#xemantics-open-source-ai-software) developed by Xemantic.
+In February / March 2025 we are offering several editions of the 1-day [Agentic AI & Creative Coding workshop](workshops/) in Berlin, which allows participants to learn **how to build powerful autonomous AI agents** using [open-source software developed by Xemantic](#xemantics-open-source-ai-software).
 
 ![An example code of a claude.ai clone written in 16 lines of Kotlin code](https://xemantic.com/ai/workshops/images/AnthropicAiIn16LinesOfCode.webp)
 
@@ -26,7 +26,7 @@ Our own agentic AI software stack exploded in the recent months, and is delivere
 
 ### Claudine AI agent
 
-[Claudine](claudine/) is an open source research prototype of an autonomous and **omnipotent** AI agent.
+[Claudine](claudine/) is an award-winning open-source research prototype of an autonomous and **omnipotent** AI agent.
 
 <!-- include-start:https://raw.githubusercontent.com/xemantic/xemantic-ai/refs/heads/main/README.md -->
 ### List of Xemantic AI projects
