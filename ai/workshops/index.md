@@ -1,5 +1,6 @@
 ---
 description: Learn how to build your own powerful AI agents
+image: images/agentic-ai-and-creative-coding-2025-social-media.png
 ---
 # Agentic AI & Creative Coding Workshops
 
