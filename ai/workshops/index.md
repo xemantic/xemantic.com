@@ -84,7 +84,7 @@ Registration is a two-step process:
 
 **Important Notes:**
 
-- The *Agentic AI Workshop Tier* is a **monthly sponsorship tier** providing access to the workshop repository. **If you don't need this access anymore, please cancel your sponsorship after the workshop**.
+- The *Agentic AI & Creative Coding Workshop Tier* is a **monthly sponsorship tier** providing access to the workshop repository. **If you don't need this access anymore, please cancel your sponsorship after the workshop**.
 - If you find our workshop helpful, and continue using our open source software, we strongly encourage you to [keep sponsoring Xemantic](https://github.com/sponsors/xemantic), at the contribution amount of your choosing.
 - To retain workshop repository access, email <office@xemantic.com>
 - For alternative payment methods or direct B2B invoices in Germany, contact <office@xemantic.com> (+19% VAT applies)
