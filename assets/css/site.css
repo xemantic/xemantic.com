@@ -58,7 +58,7 @@ main p:not(:has(img)):has(+ :is(h2)) {
   padding-bottom: 2rem;
 }
 
-main main ul:has(+ :is(h2)) {
+main ul:has(+ :is(h2)) {
   border-bottom: 1px solid var(--window-shadow-color);
   padding-bottom: 2rem;
 }
@@ -68,7 +68,8 @@ main p:not(:has(img)):last-child, address, pre {
   padding-bottom: 2rem;
 }
 
-main h3 + ul {
+/* this is wrong */
+main > :last-child {
   border-bottom: 1px solid var(--window-shadow-color);
   padding-bottom: 2rem;
 }
@@ -117,7 +118,7 @@ main p:has(img) {
   padding-right: 0;
 }
 
-main p, main ul {
+main p, main ul, main ol {
   padding-bottom: 1rem;
   padding-top: 1rem;
   text-align: justify;
@@ -138,6 +139,10 @@ main ul, main ol {
 
 main ul {
   list-style: disc;
+}
+
+main ol ul {
+  background: transparent;
 }
 
 main img, main picture, main video, main svg {
