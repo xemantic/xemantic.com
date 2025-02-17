@@ -63,7 +63,7 @@ If you want to stay informed, [subscribe to our newsletter](#newsletter).
 
 ## Supporting Open Source & Workshop Access
 
-**Workshop Contribution: 150 EUR** via GitHub Sponsors
+**Workshop Contribution: 150 EUR** via GitHub Sponsors (see also [Solidarity Access] below)
 
 *25% of proceeds support our [Prachtsaal](https://prachtsaal.berlin) non-profit cooperative.*
 
