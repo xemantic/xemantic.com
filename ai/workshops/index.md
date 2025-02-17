@@ -61,13 +61,15 @@ We offer workshops on Tuesdays from 10:00 to 17:00 in February and March 2025:
 
 If you want to stay informed, [subscribe to our newsletter](#newsletter).
 
-## Tickets
+## Supporting Open Source & Workshop Access
 
-**Regular Price: 150 EUR**
+**Workshop Contribution: 150 EUR** via GitHub Sponsors
 
-*25% of proceeds support the [Prachtsaal](https://prachtsaal.berlin) non-profit cooperative.*
+*25% of proceeds support our [Prachtsaal](https://prachtsaal.berlin) non-profit cooperative.*
 
-Registration is a two-step process:
+**Joining the workshop is a way to both learn and support open source AI development.**
+
+You need to follow these 2 steps:
 
 ### Step 1: Reserve Your Spot
 
@@ -77,28 +79,35 @@ Registration is a two-step process:
 
 *Space is limited to 15 participants per workshop.*
 
-### Step 2: Gain Workshop Access
+### Step 2: Become a GitHub Sponsor
 
-1. Visit the [Agentic AI Workshop Tier](https://github.com/sponsors/xemantic/sponsorships?tier_id=464965) on GitHub Sponsors (GitHub account required)
-2. Complete the payment
-3. Gain immediate access to the workshop repository (required for participation): <https://github.com/xemantic/xemantic-ai-workshop>
+1. Visit our [Agentic AI Workshop Tier](https://github.com/sponsors/xemantic/sponsorships?tier_id=464965) on GitHub Sponsors (GitHub account required)
+2. Start your sponsorship
+3. Gain immediate access to the workshop repository: <https://github.com/xemantic/xemantic-ai-workshop>
 
-**Important Notes:**
+### Why GitHub Sponsors?
 
-- The *Agentic AI & Creative Coding Workshop Tier* is a **monthly sponsorship tier** providing access to the workshop repository. **If you don't need this access anymore, please cancel your sponsorship after the workshop**.
-- If you find our workshop helpful, and continue using our open source software, we strongly encourage you to [keep sponsoring Xemantic](https://github.com/sponsors/xemantic), at the contribution amount of your choosing.
-- To retain workshop repository access, email <office@xemantic.com>
-- For alternative payment methods or direct B2B invoices in Germany, contact <office@xemantic.com> (+19% VAT applies)
+- Support ongoing open source AI development for Kotlin ecosystem
+- Get access to workshop materials and future updates
+- Join a community of AI developers and enthusiasts
+- Help maintain and improve our [open source AI libraries](../#xemantics-open-source-ai-software)
 
-### Solidarity Tickets
+### Important Notes
 
-We offer reduced-price tickets for those who need them:
+- Your workshop sponsorship is a monthly tier. **Feel free to cancel after the workshop if you don't need continued access**.
+- If you find value in our work, consider continuing your sponsorship at any amount to support future development.
+- Repository access remains available to active sponsors.
+- For B2B invoices in Germany or alternative payment methods, contact <office@xemantic.com> (+19% VAT applies)
 
-1. Email <office@xemantic.com> with your GitHub username and request for a solidarity ticket
-2. Upon confirmation, you'll receive repository access (no questions asked)
-3. Make a one-time [GitHub sponsorship](https://github.com/sponsors/xemantic?frequency=one-time) in any amount you can afford
+### Solidarity Access
 
-We are looking forward to seeing you at Prachtsaal!
+We believe in making AI education accessible:
+
+1. Email <office@xemantic.com> with your GitHub username requesting solidarity access
+2. Upon approval, receive repository access (no questions asked)
+3. Contribute what you can via a one-time or monthly [GitHub sponsorship]((https://github.com/sponsors/xemantic))
+
+We look forward to welcoming you to our community at Prachtsaal!
 
 ## Location
 
