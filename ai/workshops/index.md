@@ -29,6 +29,11 @@ We are [Xemantic](https://xemantic.com/), offering intensive one-day workshops o
 
 *You'll gain access to a tailored workshop repository featuring approachable, well-documented examples and blueprints. These are illustrated using the [OPENRNDR](https://openrndr.org/) creative coding framework (to which we are contributors), making them both self-explanatory and engaging.*
 
+## Direct discussions
+
+Jump into the [Xemantic Discord server](https://discord.com/invite/vQktqqN2Vn) to ask questions or discuss anything related to our workshops. Our community is here to help!
+
+
 ## Backstory
 
 Machines are becoming more intelligent every day, and keeping pace with their exponential advancement has become a full-time endeavor. We are entering the **Agentic AI era**, which creates unprecedented possibilities for software developers to integrate systems with autonomous, non-human reasoning.
