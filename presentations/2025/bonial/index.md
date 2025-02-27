@@ -145,7 +145,7 @@ We are at the tipping point. Every project we are working on at the moment might
 2. Well documented (therefore internalized by the model) information exchange standard.
 3. Vast amount of data to operate on.
 
-What cay you substitution at Bonial?
+What can you substitute for these categories at Bonial?
 
 ---
 ## Thank You!
