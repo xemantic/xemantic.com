@@ -1,21 +1,51 @@
 ---
 layout: reveal
 ---
-# Agentic AI & Creative Coding
+## Agentic AI<br>&<br>Creative Coding
 
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides)
 
 <small><https://xemantic.com/ai/workshops/slides></small>
 
 ---
+## Communication - Discord
+
+![Xemantic discord server](https://quickchart.io/qr?text=https://discord.gg/vQktqqN2Vn)
+
+[Xemantic discord server](https://discord.gg/vQktqqN2Vn)
+
+---
+## Internet
+
+![PRACHTSAALstudio wifi QR code](https://quickchart.io/qr?text=WIFI:S:PRACHTSAALstudio;T:WPA;P:04692645027246925387;;)
+
+- PRACHTSAALstudio
+- 04692645027246925387
+
+---
 ## Agenda
 
-- Kotlin crash course
-- Aboout Xemantic & Prach
-- What is Agentic AI?
-- Claudine
-- Agentic AI & Creative Coding Workshops
-- AI & Philosophy
+- **10:00**: Kotlin crash course
+- **11:00**: introductions, expectations
+- **11:30**: setting up our environments (hello world)
+- **12:00**: quick session with Claudine AI agent
+- **13:00**: lunch break
+- **14:00**: going through examples and experimenting
+- **16:00**: discussion on AI philosophy and ethics
+
+_5-minute breaks provided at the top of each hour_
+
+---
+## Please stop me anytime!
+
+If something is unclear, or I am using new term which was not explained, please stop me, and we will update materials together.
+
+---
+## Prachtsaal
+
+Prachtsaal is a non-profit art cooperative, established by resident artists of the space together with the owners of this building, to democratically manage this very premise, so it is not only a vibrant art community, but also an experimental cultural center open to the public with own cultural offering.
+
+Talk with artists!
 
 ---
 ## Xemantic
@@ -29,11 +59,7 @@ We publish our research as open source software.
 <https://github.com/xemantic>
 
 ---
-## About Kazik
-
-I used to work at Bonial as lead developer of the legendary Team 42!
-
-_I heard that you are still using some of the common libraries I developed back then ;)_
+## Introductions
 
 ---
 ## 404
@@ -151,10 +177,7 @@ What can you substitute for these categories at Bonial?
 ---
 ## AI & Philosophy
 
-Dario Amodei, Anthropic's CEO
-
-
-https://darioamodei.com/machines-of-loving-grace#5-work-and-meaning
+Dario Amodei, Anthropic's CEO, wrote [Machines of Loving Grace](https://darioamodei.com/machines-of-loving-grace#5-work-and-meaning) - an extremely insightful essay on machine intelligence, with predictions for the upcoming decade.
 
 ---
 ## Thank You!
