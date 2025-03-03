@@ -9,7 +9,7 @@ layout: reveal
 ---
 ## Agenda
 
-- Aboout Prachtsaal / Xemantic
+- About Prachtsaal / Xemantic
 - What is Agentic AI?
 - Which tools do we have in Kotlin?
 - Claudine
