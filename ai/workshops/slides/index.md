@@ -41,6 +41,16 @@ _5-minute breaks provided at the top of each hour_
 If something is unclear, or I am using new term which was not explained, please stop me, and we will update materials together.
 
 ---
+## Software to install
+
+1. IntelliJ: https://www.jetbrains.com/idea/
+2. Optionally GitHub Desktop if it is your first time with Git
+3. Clone GitHub repository: https://github.com/xemantic/xemantic-ai-workshop
+
+---
+## Kotlin crash course
+
+---
 ## Prachtsaal
 
 Prachtsaal is a non-profit art cooperative, established by resident artists of the space together with the owners of this building, to democratically manage this very premise, so it is not only a vibrant art community, but also an experimental cultural center open to the public with own cultural offering.
