@@ -23,6 +23,14 @@ layout: reveal
 - 04692645027246925387
 
 ---
+## Software to install
+
+1. IntelliJ: https://www.jetbrains.com/idea/
+2. Optionally GitHub Desktop if it is your first time with git: https://github.com/apps/desktop
+3. Clone workshop GitHub repository: https://github.com/xemantic/xemantic-ai-workshop
+4. Clone Claudine GitHub repository: https://github.com/xemantic/claudine
+
+---
 ## Agenda
 
 - **10:00**: Kotlin crash course
@@ -36,19 +44,9 @@ layout: reveal
 _5-minute breaks provided at the top of each hour_
 
 ---
-## Please stop me anytime!
+## Please stop me anytime to ask a question!
 
 If something is unclear, or I am using new term which was not explained, please stop me, and we will update materials together.
-
----
-## Software to install
-
-1. IntelliJ: https://www.jetbrains.com/idea/
-2. Optionally GitHub Desktop if it is your first time with Git
-3. Clone GitHub repository: https://github.com/xemantic/xemantic-ai-workshop
-
----
-## Kotlin crash course
 
 ---
 ## Prachtsaal
@@ -67,9 +65,6 @@ We publish our research as open source software.
 <https://xemantic.com>
 
 <https://github.com/xemantic>
-
----
-## Introductions
 
 ---
 ## 404
@@ -92,12 +87,14 @@ We publish our research as open source software.
 </div>
 
 ---
-## Which AI tech are you using at Bonial?
+# Introductions
+
+Please tell us a bit about yourself and your experience with AI tech.
 
 - Generative AI
 - Vision models
 - AI assisted development
-- Retrieval augmented generation
+- Retrieval Augmented Generation
 - AI agents
 
 ---
@@ -121,17 +118,37 @@ _We invested in building anthropic-sdk-kotlin, good intuition regarding who will
 ## Claudine
 ### Live session
 
+![claudine on GitHub - QR code](https://quickchart.io/qr?text=https://github.com/xemantic/claudine)
+
 <https://github.com/xemantic/claudine/>
 
 ---
-## Claudine on GitHub
-
-![claudine on GitHub - QR code](https://quickchart.io/qr?text=https://github.com/claudine)
-
-<https://github.com/claudine>
+# Workshop repository
 
 ---
-# Why is it even possible?
+## What you will learn?
+
+- **AI Development**: particular techniques of programming against LLM systems
+- **Cognitive Science**: the psychological and philosophical foundation of a technique
+- **Kotlin**: particular Kotlin idioms used in the source code
+
+---
+## A glossary of AI-related terms
+
+Navigating through Agentic AI development requires particular vocabulary:
+
+# `ai_glossary.md`
+
+---
+## Let's start with demonstrations
+
+# `Demo01HelloWorld.kt`
+
+---
+# Back to meta ...
+
+---
+## Why is it even possible?
 
 ---
 ## Emergence
@@ -159,7 +176,7 @@ _from ML to AI_
 ---
 ### Are robots gonna steal our job?
 
-It's a very complex topic, noone can tell, but most likely **the opposite will happen**.
+It's a very complex topic, no one can tell, but most likely **the opposite will happen**.
 
 For sure, we need to adapt, and we need to adapt extremely fast.
 
