@@ -12,7 +12,7 @@ layout: reveal
 
 ![Xemantic discord server](https://quickchart.io/qr?text=https://discord.gg/vQktqqN2Vn)
 
-[Xemantic discord server](https://discord.gg/vQktqqN2Vn)
+[Xemantic discord server - follow this link](https://discord.gg/vQktqqN2Vn)
 
 ---
 ## Internet
