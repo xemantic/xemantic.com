@@ -128,7 +128,7 @@ _We invested in building anthropic-sdk-kotlin, good intuition regarding who will
 ---
 ## What you will learn?
 
-- **AI Development**: particular techniques of programming against LLM systems
+- **AI Development**: particular techniques of programming for LLM integration
 - **Cognitive Science**: the psychological and philosophical foundation of a technique
 - **Kotlin**: particular Kotlin idioms used in the source code
 
