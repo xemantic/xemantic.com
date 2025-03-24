@@ -54,13 +54,18 @@ Kazik is an independent AI researcher, open source enthusiast, open society advo
 
 ## Workshop Dates
 
-We offer workshops on Tuesdays from 10:00 to 17:00 in February and March 2025:
+We offer workshops on Tuesdays from 10:00 to 17:00 in February, March and April 2025:
 
 * February 25, 2025
 * March 4, 2025
 * March 11, 2025
 * March 18, 2025
 * March 25, 2025
+* April 01, 2025
+* April 08, 2025
+* April 15, 2025
+* April 22, 2025
+* April 29, 2025
 
 *Additional dates, including weekend sessions, may be added based on demand. If none of these dates work for you, please contact us at <office@xemantic.com>. We can also arrange alternative dates for larger groups.*
 
@@ -68,7 +73,7 @@ If you want to stay informed, [subscribe to our newsletter](#newsletter).
 
 ## Supporting Open Source & Workshop Access
 
-**Workshop Contribution: 150 EUR** via GitHub Sponsors (see also [Solidarity Access](#solidarity-access) below)
+**Workshop Contribution: $150** via GitHub Sponsors (see also [Solidarity Access](#solidarity-access) below)
 
 *25% of proceeds support our [Prachtsaal](https://prachtsaal.berlin) non-profit cooperative.*
 
@@ -76,11 +81,10 @@ If you want to stay informed, [subscribe to our newsletter](#newsletter).
 
 You need to follow these 2 steps:
 
-### Step 1: Reserve Your Spot
+### Step 1: Reserve Your Spot on Meetup
 
-1. Visit <https://opencollective.com/xemantic/events>
-2. Select your preferred workshop date
-3. Book your free reservation ticket
+1. Visit <https://www.meetup.com/ai-x-prachtsaal-berlin/>
+2. Select your preferred workshop date and RSVP
 
 *Space is limited to 15 participants per workshop.*
 
