@@ -2,7 +2,7 @@
 
 ## Agentic AI & Creative Coding workshops
 
-In February / March 2025 we are offering several editions of the one-day [Agentic AI & Creative Coding workshop](workshops/) in Berlin, which allows participants to learn **how to build powerful autonomous AI agents** using [open-source software developed by Xemantic](#xemantics-open-source-ai-software).
+In Spring 2025 we are offering several editions of the one-day [Agentic AI & Creative Coding workshop](workshops/) in Berlin, which allows participants to learn **how to build powerful autonomous AI agents** using [open-source software developed by Xemantic](#xemantics-open-source-ai-software).
 
 ![An example code of a claude.ai clone written in 16 lines of Kotlin code](https://xemantic.com/ai/workshops/images/AnthropicAiIn16LinesOfCode.webp)
 

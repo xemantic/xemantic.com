@@ -33,7 +33,6 @@ We are [Xemantic](https://xemantic.com/), offering intensive one-day workshops o
 
 Jump into the [Xemantic Discord server](https://discord.com/invite/vQktqqN2Vn) to ask questions or discuss anything related to our workshops. Our community is here to help!
 
-
 ## Backstory
 
 Machines are becoming more intelligent every day, and keeping pace with their exponential advancement has become a full-time endeavor. We are entering the **Agentic AI era**, which creates unprecedented possibilities for software developers to integrate systems with autonomous, non-human reasoning.
@@ -61,7 +60,6 @@ We offer workshops on Tuesdays from 10:00 to 17:00 in February, March and April 
 * March 11, 2025
 * March 18, 2025
 * March 25, 2025
-* April 01, 2025
 * April 08, 2025
 * April 15, 2025
 * April 22, 2025
@@ -106,7 +104,7 @@ You need to follow these 2 steps:
 - Your workshop sponsorship is a monthly tier. **Feel free to cancel after the workshop if you don't need continued access**.
 - If you find value in our work, consider continuing your sponsorship at any amount to support future development.
 - Repository access remains available to active sponsors.
-- For B2B invoices in Germany or alternative payment methods, contact <office@xemantic.com> (+19% VAT applies)
+- For B2B invoices in Germany or alternative payment methods, contact <office@xemantic.com> (150 EUR +19% VAT applies)
 
 ### Solidarity Access
 
@@ -201,11 +199,11 @@ Our workshop adheres to the [Berlin Code of Conduct](https://berlincodeofconduct
 
 Our workshop is designed to be accessible to developers of all skill levels. The key requirements are:
 
-- Basic programming concepts understanding
+- Basic programming concepts understanding (Python, JavaScript, TypeScript, Swift, Java, Scala, Rust, C, C++, etc.)
 - Ability to express ideas in natural language
 - Willingness to learn and experiment
 
-The [workshop repository](https://github.com/xemantic/xemantic-ai-workshop) features self-explanatory code that follows a "clone, modify, play" approach. **Natural language skills are more crucial than advanced programming expertise** for this workshop.
+The [workshop repository](https://github.com/xemantic/xemantic-ai-workshop) features self-explanatory Kotlin code that follows a "clone, modify, play" approach. **Natural language skills are more crucial than advanced programming expertise** for this workshop. Many examples are presented together with their Python and TypeScript version.
 
 *Beginners are encouraged to attend the optional Kotlin crash course at 10:00.*
 
