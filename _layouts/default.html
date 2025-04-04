@@ -109,6 +109,14 @@
         </section>
     </footer>
     <script src="{{ '/assets/js/newsletter.js' | relative_url }}"></script>
+    <script>
+        if (
+            window.location.hash === '#nebulousWombatParadox' || localStorage.getItem('excludeFromAnalytics') === 'true') {
+            // This flag works across all pages on the domain
+            localStorage.setItem('excludeFromAnalytics', 'true');
+            window.cfBeaconDisable = true;
+          }
+    </script>
     <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "73a557a24c9141e1b59eff3ca83f6ac4"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
