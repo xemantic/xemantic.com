@@ -112,7 +112,6 @@
     <script>
         if (
             window.location.hash === '#nebulousWombatParadox' || localStorage.getItem('excludeFromAnalytics') === 'true') {
-            // This flag works across all pages on the domain
             localStorage.setItem('excludeFromAnalytics', 'true');
             window.cfBeaconDisable = true;
           }
