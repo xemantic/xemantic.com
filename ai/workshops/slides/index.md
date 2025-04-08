@@ -3,9 +3,16 @@ layout: reveal
 ---
 ## Agentic AI<br>&<br>Creative Coding
 
+<table>
+<tr>
+<td>
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides)
-
+</td>
+<td>
 <small><https://xemantic.com/ai/workshops/slides></small>
+</td>
+</tr>
+</table>
 
 ---
 ## Communication - Discord
