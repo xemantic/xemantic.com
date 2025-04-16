@@ -13,6 +13,7 @@ Artificial intelligence has evolved dramatically—today's advanced reasoning AI
 We can offer:
 
 - Expertise in AI development ([Claudine](https://github.com/xemantic/claudine/) AI agent, [Anthropic API](https://www.anthropic.com/api), [Model Context Protocol](https://modelcontextprotocol.io/i))
+- Expertise in cognitive science
 - A collaborative testing ground for AI-research applications
 - Potential venue at [Prachtsaal](https://prachtsaal.berlin/), our experimental cultural center in Neukölln
 
