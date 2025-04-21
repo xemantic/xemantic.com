@@ -4,6 +4,8 @@ image: ai/science-hackathon/images/xemantic-ai-science-hackathon.png
 ---
 # Science Hackathon
 
+![AI-generated Science Hackathon banner](images/xemantic-ai-science-hackathon.png)
+
 ## Call for Collaboration: Exploring AI-Augmented Scientific Research
 
 Artificial intelligence has evolved dramatically—today's advanced reasoning AI agents can now develop complete software products and significantly enhance scientific research.
