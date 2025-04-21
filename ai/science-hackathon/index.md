@@ -1,6 +1,6 @@
 ---
 description: Call for Collaboration - Exploring AI-Augmented Scientific Research
-image: ai/workshops/images/agentic-ai-and-creative-coding-2025-social-media-landscape.png
+image: ai/science-hackathon/images/xemantic-ai-science-hackathon.png
 ---
 # Science Hackathon
 
