@@ -1,8 +1,8 @@
 # Xemantic AI
 
-## Science Hackathon
-
 ![AI-generated Science Hackathon banner](science-hackathon/images/xemantic-ai-science-hackathon.webp)
+
+## Science Hackathon
 
 Xemantic is seeking scientists interested in evaluating how Agentic AI can support their research fields. We're proposing a [hackathon and coding jam](science-hackathon/) where scientists could collaborate with AI experts to test the quality and effectiveness of AI-conducted research.
 
