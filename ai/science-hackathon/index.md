@@ -1,10 +1,10 @@
 ---
 description: Call for Collaboration - Exploring AI-Augmented Scientific Research
-image: ai/science-hackathon/images/xemantic-ai-science-hackathon.png
+image: ai/science-hackathon/images/xemantic-ai-science-hackathon.webp
 ---
 # Science Hackathon
 
-![AI-generated Science Hackathon banner](images/xemantic-ai-science-hackathon.png)
+![AI-generated Science Hackathon banner](images/xemantic-ai-science-hackathon.webp)
 
 ## Call for Collaboration: Exploring AI-Augmented Scientific Research
 

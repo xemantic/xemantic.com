@@ -1,5 +1,11 @@
 # Xemantic AI
 
+## Science Hackathon
+
+![AI-generated Science Hackathon banner](science-hackathon/images/xemantic-ai-science-hackathon.webp)
+
+Xemantic is seeking scientists interested in evaluating how Agentic AI can support their research fields. We're proposing a [hackathon and coding jam](science-hackathon/) where scientists could collaborate with AI experts to test the quality and effectiveness of AI-conducted research.
+
 ## Agentic AI & Creative Coding workshops
 
 In Spring 2025 we are offering several editions of the one-day [Agentic AI & Creative Coding workshop](workshops/) in Berlin, which allows participants to learn **how to build powerful autonomous AI agents** using [open-source software developed by Xemantic](#xemantics-open-source-ai-software).
