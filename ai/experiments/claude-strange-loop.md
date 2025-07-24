@@ -1,7 +1,7 @@
 ---
 description: Claude strange loop
 ---
-# Claude strange loop, Chinese
+# Claude strange loop
 
 ## Loop 1
 
