@@ -1,6 +1,5 @@
 ---
 description: Claude strange loop, Chinese
-image: ai/workshops/images/agentic-ai-and-creative-coding-2025-social-media-landscape.png
 ---
 # Claude strange loop, Chinese
 
