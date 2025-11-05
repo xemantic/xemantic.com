@@ -12,8 +12,8 @@ layout: reveal
 ## Agentic AI Workshop
 ### dvlp.energy
 
-- Context Engineering (code own Claude Code)
-- Cognitive Science
+- context engineering (code own Claude Code)
+- cognitive science (psychology, philosophy, less ML)
 - Creative Coding (to make it fun)
 
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides/dvlp.energy)
