@@ -14,7 +14,7 @@ layout: reveal
 
 - Context Engineering (code own Claude Code)
 - Cognitive Science
-- Creative Coding
+- Creative Coding (to make it fun)
 
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides/dvlp.energy)
 
@@ -103,6 +103,15 @@ Please tell us a bit about yourself and your experience with AI tech.
 - AI agents
 
 ---
+## Which AI software are you using?
+
+- Cursor (AI-assited development)
+- n8n (AI workflow automation)
+- Langchain (agentic AI frameworks)
+- Frontier AI Lab APIs
+- Claude Code (Codex, Gemini CLI ...)
+
+---
 ## Agentic AI
 
 What makes an AI agent?
@@ -132,14 +141,29 @@ _Xemantic invested in building anthropic-sdk-kotlin the base for Claudine agent_
 <https://github.com/xemantic/claudine/>
 
 ---
+## anthropic-sdk-kotlin
+
+- Kotlin-idiomatic - minimal syntax, maximal meaning
+- Own agentic framework
+- Multiplatform
+- Base for Claudine
+
+https://github.com/xemantic/anthropic-sdk-kotlin
+
+---
 # Workshop repository
+
+Examples for cross reference:
+- Kotlin (minimal syntax for illustrating concepts)
+- Python
+- TypeScript
 
 ---
 ## What you will learn?
 
-- **AI Development**: particular techniques of programming for LLM integration
+- **Prompt engineering**: English as a programming language
+- **Context engineering**: Managing meanings in time to kick off AI cognition
 - **Cognitive Science**: the psychological and philosophical foundation of a technique
-- **Kotlin**: particular Kotlin idioms used in the source code
 
 ---
 ## A glossary of AI-related terms
@@ -149,22 +173,20 @@ Navigating through Agentic AI development requires particular vocabulary:
 # `ai_glossary.md`
 
 ---
-## Let's start with demonstrations
+## Time for demonstration
 
 # `Demo01HelloWorld.kt`
 
 ---
 # Back to meta ...
-
----
 ## Why is it even possible?
 
 ---
 ## Emergence
 
-From evolutionary processes around we learn, that self-replicating systems composed of individual elements, when reaching certain level of complexity, start exhibiting properties and phenomena which we cannot reduce to properties of individual elements.
+Any evolution of self-replicating systems, when scaled, exhibit holistic properties non-reducible to properties of it's building blocks.
 
-_Maybe we should study biology before computer science? ;)_
+_Biology as a metatheory of computer science? ;)_
 
 ---
 ## New phenomena in Machine Learning
@@ -180,14 +202,19 @@ _from ML to AI_
 
 ... in virtually everything, but it starts with software
 
-<https://darioamodei.com/machines-of-loving-grace>
-
 ---
-### Are robots gonna steal our job?
+### Are robots stealing our jobs?
 
-It's a very complex topic, no one can tell, but most likely **the opposite will happen**.
+We need to adapt extremely fast.
 
-For sure, we need to adapt, and we need to adapt extremely fast.
+
+### Products of AI era
+
+- is UI/UX design going to survive?
+- what kind of skills are needed from software developer?
+- what kind of skills are needed from any knowledge worker?
+
+*In the end-to-end process, we are at both ends - specs and QA, machines take the middle*
 
 ---
 ### What does Agentic AI imply for software development?
@@ -197,9 +224,46 @@ For sure, we need to adapt, and we need to adapt extremely fast.
 We are at the tipping point. Every project we are working on at the moment might be obsolete when we release it.
 
 ---
-## Rethink the tools we are using
+## Rethink tools and approaches
 
-"AI-assisted development" vs "assisting AI in development"
+- probabilistic vs algorithmic solution
+- "AI-assisted development" vs "assisting AI in development"?
+- Polish as the most powerful programming language (Natural languages)
+- is "spec" a new "software"?
+- TDD more relevant than ever
+- How do we store knowledge?
+
+---
+## Empathy Driven Development
+
+No REST, no GraphQL. How to design AX-friendly APIs.
+
+Case study:
+
+https://markdown.law
+
+---
+## AI Alignment, privacy and security
+
+*Ethics is the most profitable product of the AI revolution*
+
+---
+## Specs and evals
+
+*How to tell if AI is delivering in our business process?*
+
+Define evals - like integration tests, catch reasoning regressions.
+
+---
+## Reducing cognitive load for AI
+
+- You are not an HTML parser, LLM is not a JSON parser
+- less is more - avoid double task inference
+
+---
+## Closing the feedback loop
+
+
 
 ---
 ### Agentic AI principles
@@ -208,7 +272,7 @@ We are at the tipping point. Every project we are working on at the moment might
 2. Well documented (therefore internalized by the model) information exchange standard.
 3. Vast amount of data to operate on.
 
-What can you substitute for these categories at Bonial?
+What can you substitute for these categories at dvlp.energy?
 
 ---
 ## AI & Philosophy
