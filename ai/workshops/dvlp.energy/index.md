@@ -18,14 +18,9 @@ layout: reveal
 
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides/dvlp.energy)
 
-<small><https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides/dvlp.energy></small>
+<small><https://xemantic.com/ai/workshops/slides/dvlp.energy></small>
 
----
-## Communication - Discord
 
-![Xemantic discord server](https://quickchart.io/qr?text=https://discord.gg/vQktqqN2Vn)
-
-[Xemantic discord server - follow this link](https://discord.gg/vQktqqN2Vn)
 
 ---
 ## Software to install
@@ -281,12 +276,8 @@ Dario Amodei, Anthropic's CEO, wrote [Machines of Loving Grace](https://darioamo
 
 ---
 ## Thank You!
-### Agentic AI & Creative Coding Workshops
+### Stay in touch
 
-You will learn how to make your own Claudine!
+![Xemantic discord server](https://quickchart.io/qr?text=https://discord.gg/vQktqqN2Vn)
 
-![Agentic AI & Creative Coding Workshops - link QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops)
-
-<https://xemantic.com/ai/workshops/>
-
----
+[Xemantic discord server - follow this link](https://discord.gg/vQktqqN2Vn)
