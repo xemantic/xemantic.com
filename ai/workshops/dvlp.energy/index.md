@@ -8,7 +8,7 @@ layout: reveal
 - Prachtsaal guest
 - password: cooperative
 
-Remote call: <small><https://meet.google.com/axr-nugs-npk></small>
+<small>Remote call: <https://meet.google.com/axr-nugs-npk></small>
 
 ---
 ## Agentic AI Workshop
@@ -28,10 +28,10 @@ Remote call: <small><https://meet.google.com/axr-nugs-npk></small>
 - **10:00**: introductions, expectations
 - **10:30**: Setup, software, etc.
 - **11:00**: quick session with Claudine AI agent
-- **11:30**: 
+- **11:30**: workshop hands on
 - **13:00**: lunch break
-- **14:00**: going through examples and experimenting
-- **16:00**: discussion on AI philosophy and ethics
+- **14:00**: workshop continues, going through examples and experimenting
+- **16:00**: discussion on AI, philosophy, ethics and the future
 
 _5-minute breaks provided at the top of each hour_
 
@@ -154,9 +154,9 @@ _Xemantic invested in building anthropic-sdk-kotlin the base for Claudine agent_
 ## anthropic-sdk-kotlin
 
 - Kotlin-idiomatic - minimal syntax, maximal meaning
-- Own agentic framework
-- Multiplatform
-- Base for Claudine
+- own agentic framework
+- multiplatform
+- base for Claudine
 
 https://github.com/xemantic/anthropic-sdk-kotlin
 
@@ -186,6 +186,11 @@ Navigating through Agentic AI development requires particular vocabulary:
 ## Time for demonstration
 
 # `Demo01HelloWorld.kt`
+
+---
+## Looking at Claudine again
+
+Now all the patterns should be clear
 
 ---
 # Back to meta ...
