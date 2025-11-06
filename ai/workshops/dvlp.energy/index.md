@@ -255,16 +255,23 @@ We are at the tipping point. Every project we are working on at the moment might
 - in agentic AI era RAGs seem to be less efficient.
 
 ---
+## AX - AI/Agent experience
+
+Code is to be regenerated. Specs are what metters:
+
+https://github.com/xemantic/xemantic-kotlin-test
+
+Test Driven Development with AI:
+
+---
 ## Empathy Driven Development
 
-No REST, no GraphQL. How to design AX-friendly APIs.
+How to design AX-friendly APIs?
+Goodbye REST and JSON - Welcome, Wikipedia.
 
 Case study:
 
 https://markdown.law
-
----
-## AX - AI/Agent experience
 
 ---
 ## Model Context Protocol
