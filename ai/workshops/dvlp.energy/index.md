@@ -8,7 +8,7 @@ layout: reveal
 - Prachtsaal guest
 - password: cooperative
 
-<small>Remote call: <https://meet.google.com/axr-nugs-npk></small>
+<small>Remote: <https://meet.google.com/axr-nugs-npk></small>
 
 ---
 ## Agentic AI Workshop
