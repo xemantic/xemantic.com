@@ -115,26 +115,26 @@ Tell us a bit about yourself and your AI experience.
 ---
 ## Ask me questions, anytime!
 
-If something is unclear, or I am using new term which was not explained, or you need to correct me, please stop me. AI field is changing so fast, that we are learning each and every hour.
+If something is unclear, or I am using a new term which was not explained, or you need to correct me, please let me know immediately. AI field is changing so fast, that we are learning each and every hour.
 
 ---
 ## Agentic AI
 
 What makes an AI agent?
 
-- workflow
-- agent
+- workflow systems
+- agent with autonomy
 
-https://www.anthropic.com/research/building-effective-agents
+<small>https://www.anthropic.com/research/building-effective-agents</small>
 
 ---
 ## Why Anthropic?
 
 *instead of OpenAI, DeepSeek, Mistral ...*
 
-* Structured generation/output (not so good in open source models)
-* Reduced *context rot* for long contexts
-* Long-run reasoning
+* structured generation/output (not so good in open source models)
+* reduced *context rot* for long contexts
+* long-run reasoning
 
 _Claude Sonnet 3.5 - the first model which made truly autonomous agentic use cases feasible (SWE-Bench)_
 _Xemantic invested in building anthropic-sdk-kotlin the base for Claudine agent_
@@ -155,10 +155,10 @@ https://github.com/xemantic/claudine/
 - multiplatform
 - base for Claudine
 
-https://github.com/xemantic/anthropic-sdk-kotlin
+<small>https://github.com/xemantic/anthropic-sdk-kotlin</small>
 
 ---
-# Workshop repository
+### Workshop repository
 
 Examples for cross-reference:
 - Kotlin (minimal syntax for illustrating concepts)
@@ -168,21 +168,21 @@ Examples for cross-reference:
 ---
 ## What you will learn?
 
-- **Prompt engineering**: English as a programming language
-- **Context engineering**: Managing meanings in time to kick off AI cognition
-- **Cognitive Science**: the psychological and philosophical foundation of a technique
+- **prompt engineering**: English as a programming language
+- **context engineering**: managing meanings in time to kick off AI cognition
+- **cognitive Science**: the psychological and philosophical foundation of a technique
 
 ---
 ## A glossary of AI-related terms
 
 Navigating through Agentic AI development requires particular vocabulary:
 
-## `ai_glossary.md`
+### `ai_glossary.md`
 
 ---
 ## Time for demonstration
 
-## `Demo01HelloWorld.kt`
+### `Demo01HelloWorld.kt`
 
 ---
 ## Looking at Claudine again
@@ -225,8 +225,8 @@ https://openai.com/index/gdpval/
 ### Products of AI era
 
 - is UI/UX design going to survive?
-- what kind of skills are needed from software developer?
-- what kind of skills are needed from any knowledge worker?
+- what kind of skills are needed from software developers?
+- what kind of skills are needed from knowledge workers?
 
 *In the end-to-end process, we are at both ends - specs and QA, machines take the middle*
 
@@ -320,8 +320,6 @@ What can you substitute for these categories at dvlp.energy?
 > "We predict that the impact of superhuman AI over the next decade will be enormous, exceeding that of the Industrial Revolution."
 
 https://ai-2027.com/
-
-Dario Amodei, Anthropic's CEO, wrote [Machines of Loving Grace](https://darioamodei.com/machines-of-loving-grace#5-work-and-meaning) - an extremely insightful essay on machine intelligence, with predictions for the upcoming decade.
 
 ---
 ## The Intelligence Curse
