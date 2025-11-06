@@ -8,7 +8,7 @@ layout: reveal
 - Prachtsaal guest
 - password: cooperative
 
-<small>Remote: <https://meet.google.com/axr-nugs-npk></small>
+<small>remote: <https://meet.google.com/axr-nugs-npk></small>
 
 ---
 ## Agentic AI Workshop
@@ -18,17 +18,17 @@ layout: reveal
 - cognitive science (psychology, philosophy, less ML)
 - creative coding (a bit of, to make it fun)
 
-![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides/dvlp.energy)
+![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/dvlp.energy/)
 
-<small><https://xemantic.com/ai/workshops/slides/dvlp.energy></small>
+<small><https://xemantic.com/ai/workshops/dvlp.energy/></small>
 
 ---
 ## Agenda
 
 - **10:00**: introductions, expectations
-- **10:30**: Setup, software, etc.
+- **10:30**: setup, software, etc.
 - **11:00**: quick session with Claudine AI agent
-- **11:30**: workshop hands on
+- **11:30**: workshop - going through examples
 - **13:00**: lunch break
 - **14:00**: workshop continues, going through examples and experimenting
 - **16:00**: discussion on AI, philosophy, ethics and the future
@@ -36,27 +36,29 @@ layout: reveal
 _5-minute breaks provided at the top of each hour_
 
 ---
-## Prachtsaal
+## About Prachtsaal
 
-Prachtsaal is a non-profit art cooperative, established by resident artists of the space together with the owners of this building, to democratically manage this very premise, so it is not only a vibrant art community, but also an experimental cultural center open to the public with own cultural offering.
+Prachtsaal is a non-profit art cooperative, established by resident artists of the space together with the owners of this building. We are democratically managing Prachtsaal as an experimental and diverse cultural center, inviting our community.
 
-Talk with artists!
+https://prachtsaal.berlin
 
-## Xemantic
+---
+## About Xemantic
 
-Xemantic is a collective of applied philosophy based at [Prachtsaal](https://prachtsaal.berlin) cooperative, founded by Julia Thomas and Kazik Pogoda, conducting independent AI research and creating immersive computational art.
+Xemantic is a collective of applied philosophy based at Prachtsaal cooperative, founded by Julia Thomas and Kazik Pogoda, conducting independent AI research and creating immersive computational art.
 
 We publish our research as open source software.
 
-<https://xemantic.com>
+https://xemantic.com
 
-<https://github.com/xemantic>
+https://github.com/xemantic
 
 ---
-## 404
-### Xemantic's immersive work
+## Xemantic's computational art
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Hb-P2f0cyMI?si=uDb8Uo-zzsxmzXtT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+https://www.instagram.com/xemantic.berlin
 
 ---
 ### Xemantic @ AI hack Berlin
