@@ -38,14 +38,14 @@ _5-minute breaks provided at the top of each hour_
 ---
 ## About Prachtsaal
 
-Prachtsaal is a non-profit art cooperative, established by resident artists of the space together with the owners of this building. We are democratically managing Prachtsaal as an experimental and diverse cultural center, inviting our community.
+Prachtsaal is a non-profit art cooperative, established by resident artists of the space together with the owners of this building. We are democratically managing Prachtsaal as an experimental and diverse cultural center, while inviting our community in.
 
 https://prachtsaal.berlin
 
 ---
 ## About Xemantic
 
-Xemantic is a collective of applied philosophy based at Prachtsaal cooperative, founded by Julia Thomas and Kazik Pogoda, conducting independent AI research and creating immersive computational art.
+Xemantic is a collective of applied philosophy based at Prachtsaal, founded by Julia Thomas and Kazik Pogoda, conducting independent AI research and creating immersive computational art.
 
 We publish our research as open source software.
 
@@ -54,7 +54,7 @@ https://xemantic.com
 https://github.com/xemantic
 
 ---
-## Xemantic's computational art
+### Xemantic's shows
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Hb-P2f0cyMI?si=uDb8Uo-zzsxmzXtT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -75,9 +75,9 @@ https://www.instagram.com/xemantic.berlin
 </div>
 
 ---
-# Introductions
+## Introductions
 
-Tell us a bit about yourself and your experience with AI tech.
+Tell us a bit about yourself and your AI experience.
 
 - Generative AI
 - Vision models
@@ -86,16 +86,17 @@ Tell us a bit about yourself and your experience with AI tech.
 - AI agents
 
 ---
-## Which AI software are you using?
+### Which AI software are you using?
 
-- Cursor (AI-assited development)
+- ChatGPT (etc.)
+- Cursor (AI-assisted development)
 - n8n (AI workflow automation)
 - Langchain (agentic AI frameworks)
 - Frontier AI Lab APIs
 - Claude Code (Codex, Gemini CLI ...)
 
 ---
-## Wishlist
+## dvlp.energy wishlist
 
 - authoring emails using private knowledge
 - chatbot understanding dvlp.energy
@@ -111,17 +112,10 @@ Tell us a bit about yourself and your experience with AI tech.
 3. Clone workshop GitHub repository: https://github.com/xemantic/xemantic-ai-workshop
 4. Clone Claudine GitHub repository: https://github.com/xemantic/claudine
 
-
-
-
 ---
+## Ask me questions, anytime!
 
-## Please stop me anytime to ask a question!
-
-If something is unclear, or I am using new term which was not explained, please stop me, and we will update materials together.
-
----
-
+If something is unclear, or I am using new term which was not explained, or you need to correct me, please stop me. AI field is changing so fast, that we are learning each and every hour.
 
 ---
 ## Agentic AI
@@ -135,10 +129,11 @@ https://www.anthropic.com/research/building-effective-agents
 
 ---
 ## Why Anthropic?
-### instead of OpenAI, DeepSeek, Mistral ...
+
+*instead of OpenAI, DeepSeek, Mistral ...*
 
 * Structured generation/output (not so good in open source models)
-* Low *context rot*
+* Reduced *context rot* for long contexts
 * Long-run reasoning
 
 _Claude Sonnet 3.5 - the first model which made truly autonomous agentic use cases feasible (SWE-Bench)_
@@ -150,7 +145,7 @@ _Xemantic invested in building anthropic-sdk-kotlin the base for Claudine agent_
 
 ![claudine on GitHub - QR code](https://quickchart.io/qr?text=https://github.com/xemantic/claudine)
 
-<https://github.com/xemantic/claudine/>
+https://github.com/xemantic/claudine/
 
 ---
 ## anthropic-sdk-kotlin
@@ -165,7 +160,7 @@ https://github.com/xemantic/anthropic-sdk-kotlin
 ---
 # Workshop repository
 
-Examples for cross reference:
+Examples for cross-reference:
 - Kotlin (minimal syntax for illustrating concepts)
 - Python
 - TypeScript
@@ -182,12 +177,12 @@ Examples for cross reference:
 
 Navigating through Agentic AI development requires particular vocabulary:
 
-# `ai_glossary.md`
+## `ai_glossary.md`
 
 ---
 ## Time for demonstration
 
-# `Demo01HelloWorld.kt`
+## `Demo01HelloWorld.kt`
 
 ---
 ## Looking at Claudine again
@@ -224,6 +219,8 @@ _from ML to AI_
 
 We need to adapt extremely fast.
 
+https://openai.com/index/gdpval/
+
 ---
 ### Products of AI era
 
@@ -259,11 +256,11 @@ We are at the tipping point. Every project we are working on at the moment might
 ---
 ## AX - AI/Agent experience
 
-Code is to be regenerated. Specs are what metters:
-
-https://github.com/xemantic/xemantic-kotlin-test
+Code is to be regenerated each time with LLM. Specs are what matters:
 
 Test Driven Development with AI:
+
+https://github.com/xemantic/xemantic-kotlin-test
 
 ---
 ## Empathy Driven Development
@@ -278,16 +275,16 @@ https://markdown.law
 ---
 ## Model Context Protocol
 
+USB for LLMs - protocol over our tool use:
+
+https://modelcontextprotocol.io/docs/getting-started/intro
+
 ---
 ## Skills
 
----
+Tools and MCP exhibit serious limits with agents - new approach, direct code execution and skills:
 
-
----
-## AI Alignment, privacy and security
-
-*Ethics is the most profitable product of the AI revolution*
+https://claude.com/blog/skills
 
 ---
 ## Specs and evals
@@ -301,11 +298,7 @@ Define evals - like integration tests, catch reasoning regressions.
 
 - You are not an HTML parser, LLM is not a JSON parser
 - less is more - avoid double task inference
-
----
-## Closing the feedback loop
-
-
+- agent work in a feedback loop - make sure they comprehend your errors
 
 ---
 ### Agentic AI principles
@@ -315,6 +308,11 @@ Define evals - like integration tests, catch reasoning regressions.
 3. Vast amount of data to operate on.
 
 What can you substitute for these categories at dvlp.energy?
+
+---
+## AI Alignment, privacy and security
+
+*Ethics is the most profitable product of the AI revolution*
 
 ---
 ## AI 2027
