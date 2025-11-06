@@ -8,45 +8,32 @@ layout: reveal
 - Prachtsaal guest
 - password: cooperative
 
+Remote call: <small><https://meet.google.com/axr-nugs-npk></small>
+
 ---
 ## Agentic AI Workshop
 ### dvlp.energy
 
-- context engineering (code own Claude Code)
+- context engineering (code your own Claude Code)
 - cognitive science (psychology, philosophy, less ML)
-- Creative Coding (to make it fun)
+- creative coding (a bit of, to make it fun)
 
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides/dvlp.energy)
 
 <small><https://xemantic.com/ai/workshops/slides/dvlp.energy></small>
 
-
-
----
-## Software to install
-
-1. IntelliJ: https://www.jetbrains.com/idea/
-2. Optionally GitHub Desktop if it is your first time with git: https://github.com/apps/desktop
-3. Clone workshop GitHub repository: https://github.com/xemantic/xemantic-ai-workshop
-4. Clone Claudine GitHub repository: https://github.com/xemantic/claudine
-
 ---
 ## Agenda
 
-- **10:00**: Kotlin crash course
-- **11:00**: introductions, expectations
-- **11:30**: setting up our environments (hello world)
-- **12:00**: quick session with Claudine AI agent
+- **10:00**: introductions, expectations
+- **10:30**: Setup, software, etc.
+- **11:00**: quick session with Claudine AI agent
+- **11:30**: 
 - **13:00**: lunch break
 - **14:00**: going through examples and experimenting
 - **16:00**: discussion on AI philosophy and ethics
 
 _5-minute breaks provided at the top of each hour_
-
----
-## Please stop me anytime to ask a question!
-
-If something is unclear, or I am using new term which was not explained, please stop me, and we will update materials together.
 
 ---
 ## Prachtsaal
@@ -55,7 +42,6 @@ Prachtsaal is a non-profit art cooperative, established by resident artists of t
 
 Talk with artists!
 
----
 ## Xemantic
 
 Xemantic is a collective of applied philosophy based at [Prachtsaal](https://prachtsaal.berlin) cooperative, founded by Julia Thomas and Kazik Pogoda, conducting independent AI research and creating immersive computational art.
@@ -89,7 +75,7 @@ We publish our research as open source software.
 ---
 # Introductions
 
-Please tell us a bit about yourself and your experience with AI tech.
+Tell us a bit about yourself and your experience with AI tech.
 
 - Generative AI
 - Vision models
@@ -105,6 +91,35 @@ Please tell us a bit about yourself and your experience with AI tech.
 - Langchain (agentic AI frameworks)
 - Frontier AI Lab APIs
 - Claude Code (Codex, Gemini CLI ...)
+
+---
+## Wishlist
+
+- authoring emails using private knowledge
+- chatbot understanding dvlp.energy
+- prerequirement: semantic knowledge extraction
+- data sources: website, blog, loom videos
+- n8n: setting up agentic workflows (is it still relevant with autonomous agents)
+
+---
+## Software to install
+
+1. IntelliJ: https://www.jetbrains.com/idea/
+2. Optionally GitHub Desktop if it is your first time with git: https://github.com/apps/desktop
+3. Clone workshop GitHub repository: https://github.com/xemantic/xemantic-ai-workshop
+4. Clone Claudine GitHub repository: https://github.com/xemantic/claudine
+
+
+
+
+---
+
+## Please stop me anytime to ask a question!
+
+If something is unclear, or I am using new term which was not explained, please stop me, and we will update materials together.
+
+---
+
 
 ---
 ## Agentic AI
@@ -202,7 +217,7 @@ _from ML to AI_
 
 We need to adapt extremely fast.
 
-
+---
 ### Products of AI era
 
 - is UI/UX design going to survive?
@@ -229,6 +244,12 @@ We are at the tipping point. Every project we are working on at the moment might
 - How do we store knowledge?
 
 ---
+## Retrieval Augmented Generation (RAG)
+
+- hard to set it right (chunking).
+- in agentic AI era RAGs seem to be less efficient.
+
+---
 ## Empathy Driven Development
 
 No REST, no GraphQL. How to design AX-friendly APIs.
@@ -236,6 +257,18 @@ No REST, no GraphQL. How to design AX-friendly APIs.
 Case study:
 
 https://markdown.law
+
+---
+## AX - AI/Agent experience
+
+---
+## Model Context Protocol
+
+---
+## Skills
+
+---
+
 
 ---
 ## AI Alignment, privacy and security
@@ -270,7 +303,21 @@ Define evals - like integration tests, catch reasoning regressions.
 What can you substitute for these categories at dvlp.energy?
 
 ---
-## AI & Philosophy
+## AI 2027
+
+> "We predict that the impact of superhuman AI over the next decade will be enormous, exceeding that of the Industrial Revolution."
+
+https://ai-2027.com/
+
+Dario Amodei, Anthropic's CEO, wrote [Machines of Loving Grace](https://darioamodei.com/machines-of-loving-grace#5-work-and-meaning) - an extremely insightful essay on machine intelligence, with predictions for the upcoming decade.
+
+---
+## The Intelligence Curse
+
+https://intelligence-curse.ai/
+
+---
+## Predicting the future
 
 Dario Amodei, Anthropic's CEO, wrote [Machines of Loving Grace](https://darioamodei.com/machines-of-loving-grace#5-work-and-meaning) - an extremely insightful essay on machine intelligence, with predictions for the upcoming decade.
 
