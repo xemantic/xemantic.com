@@ -17,7 +17,7 @@ layout: reveal
 - questions
 
 ---
-## Key topics
+## Keywords
 
 - agentic AI
 - context engineering
@@ -61,8 +61,9 @@ Kazik Pogoda, co-founder of Xemantic:
 
 https://github.com/xemantic/claudine/
 
-Since Claudine, I am only writing code which machines still cannot write.
+_Since Claudine, I am only writing code which machines still cannot write._
 
+---
 ### Xemantic's open source software
 
 https://github.com/xemantic/
