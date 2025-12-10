@@ -6,7 +6,7 @@ layout: reveal
 
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/presentations/2025/42/)
 
-<small><https://xemantic.com/presentations/2025/42/></small>
+<small>https://xemantic.com/presentations/2025/42/</small>
 
 ---
 ## Agenda
@@ -115,4 +115,6 @@ Premise: necessary for achieving "AGI"
 ## Thank You!
 ### Stay in touch
 
-![Kazik on LinkedIn](https://www.linkedin.com/in/kpogoda/)
+![Kazik on LinkedIn](https://quickchart.io/qr?text=https://www.linkedin.com/in/kpogoda/)
+
+<small>https://www.linkedin.com/in/kpogoda/</small>
