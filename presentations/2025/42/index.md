@@ -33,6 +33,7 @@ Independent AI lab from Berlin:
 
 - humanistic computation
 - applied philosophy
+- AI education
 
 Xemantic resides at [Prachtsaal](https://prachtsaal.berlin)
 
