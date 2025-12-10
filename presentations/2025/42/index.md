@@ -109,6 +109,7 @@ Premise: necessary for achieving "AGI"
 
 ---
 ## Live session with Golem
+### Very alpha ...
 
 ---
 ## Thank You!
