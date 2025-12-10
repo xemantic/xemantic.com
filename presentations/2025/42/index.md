@@ -73,40 +73,43 @@ https://github.com/xemantic/
 ---
 ## What is "cognition"
 
-Cognition defines reasoning process in abstraction from the biological substrate
+Cognition defines reasoning process in abstraction from the biological substrate:
 
 - carbon (biological)
 - silicon (tech)
 - alien (sci-fi)
 
-Cognitive science is focused on defining models of mind regardless of what makes the "mind".
+_Cognitive science is focused on defining models of mind regardless of what makes the "mind"_
 
 ---
 ## Is LLM a cognitive machine?
 
 Very controversial topic:
 
-Apple: [The Illusion of Thinking](https://machinelearning.apple.com/research/illusion-of-thinking)
-OpenAI: next model will be AGI
-Singularity:
-Teilhard de Chardin:
+- Apple: [The Illusion of Thinking](https://machinelearning.apple.com/research/illusion-of-thinking)
+- OpenAI: next model will be AGI
+- Singularity
+- Teilhard de Chardin
 
 ---
 ## About metacognition
 
-Metacognition: the capability of "thinking about own thinking".
+Metacognition: the ability of "thinking about own thinking".
 
-Attributed to humans and many animal species. In popular culture called self-consciousness.
+Attributed to humans and many animal species.
+
+_In popular culture called self-consciousness_
+
+Premise: necessary for achieving "AGI"
 
 ---
 ## About Golem XIV
 
-Golem XIV is a fictional AI character from the book of Stanisław Lem (the author of Solaris). On the 1980s Lem predicted "AGI" in 2027-2029. It's the most difficult book I've ever read, written from the perspective of superintelligence lecturing humankind.
+> Golem XIV is a fictional AI character from the book of Stanisław Lem (the author of Solaris). In the 1980s Lem predicted "AGI" in 2027-2029. It's the most difficult book I've ever read, written from the perspective of superintelligence lecturing humankind.
 
 ---
 ## Live session with Golem
 
---
 ---
 ## Thank You!
 ### Stay in touch
