@@ -87,7 +87,7 @@ _Cognitive science is focused on defining models of mind regardless of what make
 Very controversial topic:
 
 - Apple: [The Illusion of Thinking](https://machinelearning.apple.com/research/illusion-of-thinking)
-- OpenAI: next model will be AGI
+- OpenAI: our next model will be AGI...
 - Singularity
 - Teilhard de Chardin
 
