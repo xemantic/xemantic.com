@@ -2,6 +2,10 @@
 layout: reveal
 ---
 ## Golem XIV
+
+![Golem](golem.jpg)
+
+---
 ### towards metacognitive AI
 
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/presentations/2025/42/)
