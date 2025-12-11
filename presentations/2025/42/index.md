@@ -1,17 +1,9 @@
 ---
 layout: reveal
 ---
-## Golem XIV
+## Golem XIV & metacognition
 
 ![Golem](golem.jpg)
-
----
-### towards metacognitive AI
-
-![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/presentations/2025/42/)
-
-<small>https://xemantic.com/presentations/2025/42/</small>
-
 ---
 ## Agenda
 
@@ -20,6 +12,9 @@ layout: reveal
 - live demo
 - questions
 
+![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/presentations/2025/42/)
+
+<small>https://xemantic.com/presentations/2025/42/</small>
 ---
 ## Keywords
 
