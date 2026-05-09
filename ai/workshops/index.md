@@ -2,17 +2,55 @@
 description: Learn how to build your own powerful AI agents
 image: ai/workshops/images/agentic-ai-and-creative-coding-2025-social-media-landscape.png
 ---
-# Agentic AI & Creative Coding Workshops
+# Xemantic AI Workshops
 
 ![An example code of a claude.ai clone written in 16 lines of Kotlin code](images/AnthropicAiIn16LinesOfCode.webp)
 
 ## Invitation
 
-### Do you want to learn how to build your own AI agents?
+### Do you want to build your own ChatGPT, Claude Code or OpenClaw?
 
-We are [Xemantic](https://xemantic.com/), offering intensive one-day workshops on **building powerful AI agents**. Your instructor, [Kazik Pogoda](#about-kazik-your-instructor), will take you on a journey of developing autonomous and highly potent AI systems, like [Claudine AI agent](https://github.com/xemantic/claudine/), capable of fully controlling your machine. Claudine won [AI hack Berlin](https://rsvp.withgoogle.com/events/ai-hack-berlin) hackathon.
+But why would you build these tools if you can just use them? Learning simple yet powerful patterns of context and **harness engineering** lets you:
+
+- use any existing agentic AI tools to full extent by understanding their internal mechanics
+- augment your projects with a machine-reasoning layer
+- autonomously conduct parts of your scientific research
+
+We are [Xemantic](https://xemantic.com/), offering intensive one-day workshops and buildathons on **building powerful AI agents**. Your instructor, [Kazik Pogoda](#about-kazik-your-instructor), will take you on a journey of developing autonomous and highly capable AI systems, like [Claudine](https://github.com/xemantic/claudine/) (older sister of Claude Code) and [Golem XIV](https://github.com/xemantic/golem-xiv) (a metacognitive AI system with knowledge-graph memory and self-directed research).
+
+Since 2025, Xemantic has trained more than a hundred people — individuals as well as whole organizations — in the arcane of Agentic AI, with applications in scientific research, creative technologies, management, and beyond, while winning [AI Hack Berlin 2024](https://rsvp.withgoogle.com/events/ai-hack-berlin/home) at Google and mentoring the Agentic AI track at the [Berlin Bio × AI Hackathon](https://www.biohack.berlin/).
 
 ![AI hack Berlin 2024 promo image](images/Hero-Robot-Berlin-Hackathon-Website.png)
+
+## Workshop Editions
+
+We currently offer three editions, sharing a common core curriculum but tailored to different audiences.
+
+### Bootstrapping Research Agents — Hands-On for Scientists
+
+A new edition organized in collaboration with the [Foresight Institute](https://foresight.org/), tailored to researchers and scientists. Focuses on building agents that assist scientific work — parsing literature, extracting structured data from papers, and connecting to research sources. Held at the [Foresight Institute](https://foresight.org/)'s Berlin AI Node, part of the [AI for Science & Safety programme](https://foresight.org/grants/grants-ai-for-science-safety/).
+
+*Registration via a dedicated lu.ma page — link coming soon.*
+
+### Hands-On Agentic AI for Tech Teams
+
+Tailored to tech teams at startups and established companies — software developers and data scientists benefit most, but only minimal programming skills are required, making it accessible to colleagues from management, product, and other functions. Can be held either at your organization's premises or at [Prachtsaal](#prachtsaal).
+
+### Agentic AI & Creative Coding
+
+Our edition for developers, artists, and creative technologists. Examples are illustrated using the [OPENRNDR](https://openrndr.org/) creative coding framework, making agentic concepts tangible through visual, generative work. Held at [Prachtsaal](#prachtsaal) in Berlin's Neukölln district.
+
+## Happy Customers
+
+Organizations whose teams we've trained:
+
+- [dvlp.energy](https://www.dvlp.energy/)
+- [Bonial](https://www.bonial.com/en/)
+- [ImmoScout24](https://www.scout24.com/)
+
+> Thank you for having us at Pratchsaal! The workshop you prepared for us was very insightful 💡 we’re already brainstorming multiple ideas how to incorporate AI agents in the dvlp.energy platform! I’m excited about how this technology could improve our product and day-to-day workflow.
+> 
+> -- [Oliwia Golec](https://www.linkedin.com/in/oliwia-golec-3678a7114/), Co-founder & CTO @ dvlp.energy
 
 ## What You Will Learn
 
@@ -24,10 +62,11 @@ We are [Xemantic](https://xemantic.com/), offering intensive one-day workshops o
 - How to **integrate an agent with IT systems** of your organization (discussion with examples)
 - How to assist [Claudine](https://github.com/xemantic/claudine) agent in using your computer and autonomous coding - where traditional roles of human and machine are reversed.
 - Understand the architecture and meta-principles of powerful AI agents
-- Apply Anthropic's [Model Context Protocol](https://modelcontextprotocol.io/), which standardizes how applications provide context to LLMs.
 - Navigate AI ethics, privacy, security, and alignment considerations
 
-*You'll gain access to a tailored workshop repository featuring approachable, well-documented examples and blueprints. These are illustrated using the [OPENRNDR](https://openrndr.org/) creative coding framework (to which we are contributors), making them both self-explanatory and engaging.*
+*You'll gain access to a tailored workshop repository featuring approachable, well-documented examples and blueprints. Examples are provided in **Python**, **TypeScript**, and **Kotlin** — since the meta-principles of agent design are language-agnostic, you can evaluate them across all three in parallel.*
+
+*For the Creative Coding edition, examples are additionally illustrated using the [OPENRNDR](https://openrndr.org/) creative coding framework, to which we are contributors.*
 
 ## Direct discussions
 
@@ -35,15 +74,13 @@ Jump into the [Xemantic Discord server](https://discord.com/invite/vQktqqN2Vn) t
 
 ## Backstory
 
-Machines are becoming more intelligent every day, and keeping pace with their exponential advancement has become a full-time endeavor. We are entering the **Agentic AI era**, which creates unprecedented possibilities for software developers to integrate systems with autonomous, non-human reasoning.
+We are entering the **Agentic AI era**, opening unprecedented possibilities for integrating software systems with autonomous, non-human reasoning. At Xemantic, we conduct independent AI research through the lens of applied philosophy — work that has led to unique discoveries and an extensive collection of [open source AI libraries](../#xemantics-open-source-ai-software), making Agentic AI development highly approachable, especially for developers working with the [Kotlin](https://kotlinlang.org/) and Java/JVM stack.
 
-At Xemantic, we conduct independent AI research through the lens of applied philosophy. This work has led to unique discoveries and an extensive collection of [open source AI libraries](../#xemantics-open-source-ai-software). These tools make Agentic AI development highly approachable, especially for developers working with the [Kotlin](https://kotlinlang.org/) and Java/JVM stack.
+We validated this research at the [AI hack Berlin](https://rsvp.withgoogle.com/events/ai-hack-berlin) hackathon at Google, where together with [Victor Diaz](https://github.com/victordiaz) we formed the *ad hoc* "Robots will steal your food" team and won first prize with an autonomous AI agent that freely controlled a remote Unix machine based on intentions expressed in simple browser sketches.
+
+![Kazik Pogoda and Victor Diaz receiving the 1st prize of the AI hack Berlin hackathon](images/robots_will_steal_your_food.webp)
 
 *Not familiar with Kotlin? Don't worry — the workshop begins with an optional Kotlin crash course, and all code examples are minimal and self-explanatory. **What matters here is not the implementation language but the meta-theory of writing powerful AI agents, which is the main focus of the workshop.***
-
-We had a chance of validating the value of our research during the [AI hack Berlin](https://rsvp.withgoogle.com/events/ai-hack-berlin) hackathon at Google. Together with [Victor Diaz](https://github.com/victordiaz) we formed our *ad hoc* "Robots will steal your food" team, which presented an autonomous AI agent, freely controlling a remote Unix machine, according to intentions expressed in simple sketches created by the user in the web browser. Our team won the hackathon.
-
-![Kazik Pogoda and Victor Diaz receiving the 1st prize of the AI hack Berlin hackathon](images/robots_will_steal_your_food.jpg)
 
 ## About Kazik, Your Instructor
 
@@ -51,76 +88,27 @@ Kazik is an independent AI researcher, open source enthusiast, open society advo
 
 ![Kazik Pogoda live coding during Algorave at Prachtsaal](../../assets/images/people/kazik/Kazik_Pogoda-Algorave_at_Prachtsaal.jpg)
 
-## Workshop Dates
+## Upcoming Sessions
 
-We offer workshops on Tuesdays from 10:00 to 17:00 in February, March and April 2025:
+The workshop runs as an ongoing initiative, with new dates announced regularly. Sessions typically run from 10:00 to 17:00.
 
-* February 25, 2025
-* March 4, 2025
-* March 11, 2025
-* March 18, 2025
-* March 25, 2025
-* April 08, 2025
-* April 15, 2025
-* April 22, 2025
-* April 29, 2025
+For the latest schedule and to register, contact us at <office@xemantic.com>, or [subscribe to our newsletter](#newsletter) to be notified of upcoming editions.
 
-*Additional dates, including weekend sessions, may be added based on demand. If none of these dates work for you, please contact us at <office@xemantic.com>. We can also arrange alternative dates for larger groups.*
+*We can also arrange alternative dates and on-site sessions for larger groups.*
 
-If you want to stay informed, [subscribe to our newsletter](#newsletter).
+## Locations
 
-## Supporting Open Source & Workshop Access
+### Foresight Institute - Berlin AI Node
 
-**Workshop Contribution: $150** via GitHub Sponsors (see also [Solidarity Access](#solidarity-access) below)
+Workshops held in collaboration with the [Foresight Institute](https://foresight.org/) will be hosted at [CIC Berlin](https://cic.com/de/berlin/).
 
-*25% of proceeds support our [Prachtsaal](https://prachtsaal.berlin) non-profit cooperative.*
-
-**Joining the workshop is a way to both learn and support open source AI development.**
-
-You need to follow these 2 steps:
-
-### Step 1: Reserve Your Spot on Meetup
-
-1. Visit <https://www.meetup.com/ai-x-prachtsaal-berlin/>
-2. Select your preferred workshop date and RSVP
-
-*Space is limited to 15 participants per workshop.*
-
-### Step 2: Become a GitHub Sponsor
-
-1. Visit our [Agentic AI Workshop Tier](https://github.com/sponsors/xemantic/sponsorships?tier_id=464965) on GitHub Sponsors (GitHub account required)
-2. Start your sponsorship
-3. Gain immediate access to the workshop repository: <https://github.com/xemantic/xemantic-ai-workshop>
-
-### Why GitHub Sponsors?
-
-- Support ongoing open source AI development for Kotlin ecosystem
-- Get access to workshop materials and future updates
-- Join a community of AI developers and enthusiasts
-- Help maintain and improve our [open source AI libraries](../#xemantics-open-source-ai-software)
-
-### Important Notes
-
-- Your workshop sponsorship is a monthly tier. **Feel free to cancel after the workshop if you don't need continued access**.
-- If you find value in our work, consider continuing your sponsorship at any amount to support future development.
-- Repository access remains available to active sponsors.
-- For B2B invoices in Germany or alternative payment methods, contact <office@xemantic.com> (150 EUR +19% VAT applies)
-
-### Solidarity Access
-
-We believe in making AI education accessible:
-
-1. Email <office@xemantic.com> with your GitHub username requesting solidarity access
-2. Upon approval, receive repository access (no questions asked)
-3. Contribute what you can via a one-time or monthly [GitHub sponsorship]((https://github.com/sponsors/xemantic))
-
-We look forward to welcoming you to our community at Prachtsaal!
-
-## Location
+### Prachtsaal
 
 <a href="https://prachtsaal.berlin/" id="prachtsaal-banner"></a>
 
-The workshops take place at [Prachtsaal](https://prachtsaal.berlin), a vibrant non-profit art cooperative in Berlin's Neukölln district. As home to many resident artists, including our [Xemantic](https://xemantic.com) collective, it offers a unique and inspiring learning environment.
+Our past workshops have been taking place at [Prachtsaal](https://prachtsaal.berlin), a vibrant non-profit art community in Berlin's Neukölln district. As home to many resident artists, including our [Xemantic](https://xemantic.com) collective, it offers a unique and inspiring learning environment.
+
+![dvlp.energy team during AI workshop at Prachtsaal](images/dvld-energy-ai-workshop-at-prachtsaal.webp)
 
 ### Venue Highlights
 
@@ -129,12 +117,7 @@ The workshops take place at [Prachtsaal](https://prachtsaal.berlin), a vibrant n
 - Art exhibition in the foyer
 - Garden area for breaks
 - Opportunities to meet resident artists and view their work
-
-
-### Dining Options
-
-- [Café Augusta](https://cafeaugusta.de/) directly in front of the building offers excellent coffee and food
-- Numerous restaurants and cafés within walking distance
+- [Café Augusta](https://cafeaugusta.de/) directly in front of the building, plus many restaurants and cafés within walking distance
 
 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4860.810281427363!2d13.43115427705981!3d52.47179983979637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a84f09c11740b7%3A0x9f3c3a7993df62cc!2sPrachtsaal%20Studio!5e0!3m2!1sen!2sde!4v1739059455750!5m2!1sen!2sde" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
@@ -169,26 +152,6 @@ You'll need an Anthropic API key to participate in the hands-on exercises:
 
 **Important:** Anthropic API credits are separate from [Claude.ai](https://claude.ai/) subscriptions. You'll need API credits specifically.
 
-### Development Environment
-
-You'll need a Kotlin-compatible IDE. Either:
-- [IntelliJ IDEA](https://www.jetbrains.com/idea/) (Community Edition is sufficient)
-- Android Studio
-
-*Note: If you attend the first hour (10:00-11:00), we'll guide you through IDE installation and provide a Kotlin crash course.*
-
-## Workshop Schedule
-
-10:00 - 17:00 (Tuesday)
-
-* **10:00 - 11:00**: Kotlin Crash Course (Optional)
-* **11:00 - 11:30**: Introduction & Setup
-* **11:30 - 13:00**: Morning Session
-* **13:00 - 14:00**: Lunch Break
-* **14:00 - 17:00**: Afternoon Session
-
-*5-minute breaks provided at the top of each hour*
-
 ## Code of Conduct
 
 Our workshop adheres to the [Berlin Code of Conduct](https://berlincodeofconduct.org/), and we are committed to providing a friendly, safe and welcoming environment for all, regardless of gender, sexual orientation, ability, ethnicity, socioeconomic status and religion (or lack thereof).
@@ -203,9 +166,9 @@ Our workshop is designed to be accessible to developers of all skill levels. The
 - Ability to express ideas in natural language
 - Willingness to learn and experiment
 
-The [workshop repository](https://github.com/xemantic/xemantic-ai-workshop) features self-explanatory Kotlin code that follows a "clone, modify, play" approach. **Natural language skills are more crucial than advanced programming expertise** for this workshop. Many examples are presented together with their Python and TypeScript version.
+The [workshop repository](https://github.com/xemantic/xemantic-ai-workshop) features self-explanatory examples in **Python**, **TypeScript**, and **Kotlin**, following a "clone, modify, play" approach. **Natural language skills are more crucial than advanced programming expertise** for this workshop — since the meta-principles of agent design are language-agnostic, you can pick whichever language you're most comfortable with, or compare across all three.
 
-*Beginners are encouraged to attend the optional Kotlin crash course at 10:00.*
+*An optional Kotlin crash course can be provided, if you're new to Kotlin or want to explore Xemantic's Kotlin-based AI libraries.*
 
 ### Do you offer on-site corporate workshops?
 
@@ -218,23 +181,8 @@ Yes! We can deliver the workshop at your company location.
 
 We are working on that. Depending on popularity, we might also consider a pre-recorded version of the workshop published on YouTube.
 
-### Why Kotlin for AI Development?
+### Why does Xemantic build AI tools in Kotlin?
 
-Kotlin offers unique advantages for AI development:
-
-1. **Powerful Language Features**
-    - [Domain-Specific Languages](https://en.wikipedia.org/wiki/Domain-specific_language) support
-    - Our [anthropic-sdk-kotlin](https://github.com/xemantic/anthropic-sdk-kotlin) simplifies LLM integration
-    - [Extension functions](https://kotlinlang.org/docs/extensions.html#extension-functions) for elegant APIs
-
-2. **Developer-Friendly**
-    - Clean, minimal syntax
-    - Reduced boilerplate code
-    - Excellent for learning and teaching
-
-3. **Technical Benefits**
-    - [Multiplatform support](https://kotlinlang.org/docs/multiplatform.html) for cross-platform deployment
-    - [Type inference](https://kotlinlang.org/spec/type-inference.html) for concise code
-    - Optimal for LLM code generation
+While our workshop examples are available in Python, TypeScript, and Kotlin, Xemantic's own AI tooling is built primarily in Kotlin. Kotlin offers unique and powerful language features, making the code read almost like a natural language, while being fully executable with outstanding IDE support. Kotlin code can be also compiled to multiple targets, including web, mobile, and native platforms.
 
 *While Kotlin AI libraries are currently limited, we're actively working to expand the ecosystem.*
