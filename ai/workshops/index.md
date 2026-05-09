@@ -18,9 +18,11 @@ But why would you build these tools if you can just use them? Learning simple ye
 
 We are [Xemantic](https://xemantic.com/), offering intensive one-day workshops and buildathons on **building powerful AI agents**. Your instructor, [Kazik Pogoda](#about-kazik-your-instructor), will take you on a journey of developing autonomous and highly capable AI systems, like [Claudine](https://github.com/xemantic/claudine/) (older sister of Claude Code) and [Golem XIV](https://github.com/xemantic/golem-xiv) (a metacognitive AI system with knowledge-graph memory and self-directed research).
 
-Since 2025, Xemantic has trained more than a hundred people — individuals as well as whole organizations — in the arcane of Agentic AI, with applications in scientific research, creative technologies, management, and beyond, while winning [AI Hack Berlin 2024](https://rsvp.withgoogle.com/events/ai-hack-berlin/home) at Google and mentoring the Agentic AI track at the [Berlin Bio × AI Hackathon](https://www.biohack.berlin/).
+Since 2025, Xemantic has trained more than a hundred people — individuals as well as whole organizations — in the arcane of Agentic AI, with applications in scientific research, creative technologies, management, and beyond, while winning [AI Hack Berlin 2024](https://rsvp.withgoogle.com/events/ai-hack-berlin/home) at Google (with "Robots will steal your food" project) and mentoring the Agentic AI track at the [Berlin Bio × AI Hackathon](https://www.biohack.berlin/).
 
 ![AI hack Berlin 2024 promo image](images/Hero-Robot-Berlin-Hackathon-Website.png)
+
+![Kazik Pogoda and Victor Diaz receiving the 1st prize of the AI hack Berlin hackathon](images/robots_will_steal_your_food.webp)
 
 ## Workshop Editions
 
@@ -48,7 +50,7 @@ Organizations whose teams we've trained:
 - [Bonial](https://www.bonial.com/en/)
 - [ImmoScout24](https://www.scout24.com/)
 
-> Thank you for having us at Pratchsaal! The workshop you prepared for us was very insightful 💡 we’re already brainstorming multiple ideas how to incorporate AI agents in the dvlp.energy platform! I’m excited about how this technology could improve our product and day-to-day workflow.
+> "Thank you for having us at Pratchsaal! The workshop you prepared for us was very insightful 💡 we’re already brainstorming multiple ideas how to incorporate AI agents in the dvlp.energy platform! I’m excited about how this technology could improve our product and day-to-day workflow."
 > 
 > -- [Oliwia Golec](https://www.linkedin.com/in/oliwia-golec-3678a7114/), Co-founder & CTO @ dvlp.energy
 
@@ -64,7 +66,7 @@ Organizations whose teams we've trained:
 - Understand the architecture and meta-principles of powerful AI agents
 - Navigate AI ethics, privacy, security, and alignment considerations
 
-*You'll gain access to a tailored workshop repository featuring approachable, well-documented examples and blueprints. Examples are provided in **Python**, **TypeScript**, and **Kotlin** — since the meta-principles of agent design are language-agnostic, you can evaluate them across all three in parallel.*
+*You'll gain access to a tailored [workshop repository](https://github.com/xemantic/xemantic-ai-workshop) featuring approachable, well-documented examples and blueprints. Examples are provided in **Python**, **TypeScript**, and **Kotlin** — since the meta-principles of agent design are language-agnostic, you can evaluate them across all three in parallel.*
 
 *For the Creative Coding edition, examples are additionally illustrated using the [OPENRNDR](https://openrndr.org/) creative coding framework, to which we are contributors.*
 
@@ -72,19 +74,11 @@ Organizations whose teams we've trained:
 
 Jump into the [Xemantic Discord server](https://discord.com/invite/vQktqqN2Vn) to ask questions or discuss anything related to our workshops. Our community is here to help!
 
-## Backstory
-
-We are entering the **Agentic AI era**, opening unprecedented possibilities for integrating software systems with autonomous, non-human reasoning. At Xemantic, we conduct independent AI research through the lens of applied philosophy — work that has led to unique discoveries and an extensive collection of [open source AI libraries](../#xemantics-open-source-ai-software), making Agentic AI development highly approachable, especially for developers working with the [Kotlin](https://kotlinlang.org/) and Java/JVM stack.
-
-We validated this research at the [AI hack Berlin](https://rsvp.withgoogle.com/events/ai-hack-berlin) hackathon at Google, where together with [Victor Diaz](https://github.com/victordiaz) we formed the *ad hoc* "Robots will steal your food" team and won first prize with an autonomous AI agent that freely controlled a remote Unix machine based on intentions expressed in simple browser sketches.
-
-![Kazik Pogoda and Victor Diaz receiving the 1st prize of the AI hack Berlin hackathon](images/robots_will_steal_your_food.webp)
-
-*Not familiar with Kotlin? Don't worry — the workshop begins with an optional Kotlin crash course, and all code examples are minimal and self-explanatory. **What matters here is not the implementation language but the meta-theory of writing powerful AI agents, which is the main focus of the workshop.***
-
 ## About Kazik, Your Instructor
 
-Kazik is an independent AI researcher, open source enthusiast, open society advocate, computational artist, and live coder. With a background as a programmer and software architect by trade and philosopher by education, he brings deep expertise in cognitive science and ethics. He is the co-founder of [Xemantic](https://xemantic.com/) (an applied philosophy collective) and [Prachtsaal](https://prachtsaal.berlin) (a non-profit art cooperative).
+Kazik is an independent AI researcher, open source enthusiast, open society advocate, computational artist, and live coder. A programmer and software architect by trade, and a philosopher by education, he brings a longstanding interest in cognitive science and ethics. He founded [Xemantic](https://xemantic.com/) (an applied philosophy collective) and [Prachtsaal](https://prachtsaal.berlin) (an art community), and is currently affiliated with the [Foresight Institute](https://foresight.org/), working at its Berlin AI Node.
+
+As lead instructor at Xemantic, Kazik has personally trained over a hundred participants — from individual practitioners to entire organizations — in building agentic AI systems, and mentored the Agentic AI track at the [Berlin Bio × AI Hackathon](https://www.biohack.berlin/).
 
 ![Kazik Pogoda live coding during Algorave at Prachtsaal](../../assets/images/people/kazik/Kazik_Pogoda-Algorave_at_Prachtsaal.jpg)
 
