@@ -32,7 +32,7 @@ We currently offer three editions, sharing a common core curriculum but tailored
 
 A new edition organized in collaboration with the [Foresight Institute](https://foresight.org/), tailored to researchers and scientists. Focuses on building agents that assist scientific work — parsing literature, extracting structured data from papers, and connecting to research sources. Held at the [Foresight Institute](https://foresight.org/)'s Berlin AI Node, part of the [AI for Science & Safety programme](https://foresight.org/grants/grants-ai-for-science-safety/).
 
-*Registration via a dedicated lu.ma page — link coming soon.*
+*Registration via the dedicated [lu.ma page](https://luma.com/eplieia1).*
 
 ### Hands-On Agentic AI for Tech Teams
 
