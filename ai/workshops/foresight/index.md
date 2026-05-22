@@ -1,7 +1,7 @@
 ---
 layout: reveal
 ---
-## Bootstrapping Research Agents
+#### Bootstrapping Research Agents
 
 <table>
 <tr>
@@ -19,20 +19,23 @@ This presentation
 [Discord server](https://discord.gg/vQktqqN2Vn)
 
 </td>
+<td>
+
+1. https://github.com/apps/desktop <br><small>(only if you are not using git daily)</small>
+2. https://www.jetbrains.com/idea/ <br><small>(only if you want to try Kotlin)</small>
+3. Go to: https://github.com/xemantic/ and clone:
+- [xemantic-ai-workshop](https://github.com/xemantic/xemantic-ai-workshop)
+- [claudine](https://github.com/xemantic/xemantic-ai-workshop)
+
+</td>
 </tr>
 </table>
 
 https://xemantic.com/ai/workshops/foresight
 
 ---
-## Software to install
+### Software to install
 
-1. https://github.com/apps/desktop <br><small>(only if you are not using git daily)</small>
-2. https://www.jetbrains.com/idea/
-2. Go to: https://github.com/xemantic/ and clone:
-  - xemantic-ai-workshop
-  - claudine
-3. No IDE? - ry
 
 
 ---
