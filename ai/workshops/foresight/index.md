@@ -19,7 +19,7 @@ layout: reveal
    - [xemantic-ai-workshop](https://github.com/xemantic/xemantic-ai-workshop)
    - [claudine](https://github.com/xemantic/xemantic-ai-workshop)
 4. https://platform.claude.com/ <br><small>(only if you want to try Kotlin)</small>
-5. FORESIGHT_API_KEY="sk-33489d6e26ce4073ae690be9cea780b6"
+5. <small>FORESIGHT_API_KEY="sk-33489d6e26ce4073ae690be9cea780b6"</small>
 
 </small></td>
 <td style="width: 20%;">
@@ -31,23 +31,16 @@ layout: reveal
 </tr>
 </table>
 
-https://xemantic.com/ai/workshops/foresight
-
----
-### Software to install
-
-
+<https://xemantic.com/ai/workshops/foresight>
 
 ---
 ## Agenda
 
-- **10:00**: Kotlin crash course
-- **11:00**: introductions, expectations
-- **11:30**: setting up our environments (hello world)
-- **12:00**: quick session with Claudine AI agent
-- **13:00**: lunch break
-- **14:00**: going through examples and experimenting
-- **16:00**: discussion on AI philosophy and ethics
+- **10:00**: doors open
+- **11:00–13:00**: introduction to Agentic AI (part 1)
+- **13:00**: lunch
+- **14:00–15:00**: introduction to Agentic AI (part 2)
+- **15:00**: building together till late night :)
 
 _5-minute breaks provided at the top of each hour_
 
