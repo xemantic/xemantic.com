@@ -25,8 +25,8 @@ layout: reveal
 1. https://github.com/apps/desktop <br><small>(only if you are not using git daily)</small>
 2. https://www.jetbrains.com/idea/ <br><small>(only if you want to try Kotlin)</small>
 3. Go to: https://github.com/xemantic/ and clone:
-- [xemantic-ai-workshop](https://github.com/xemantic/xemantic-ai-workshop)
-- [claudine](https://github.com/xemantic/xemantic-ai-workshop)
+  - [xemantic-ai-workshop](https://github.com/xemantic/xemantic-ai-workshop)
+  - [claudine](https://github.com/xemantic/xemantic-ai-workshop)
 
 </small>
 </td>
