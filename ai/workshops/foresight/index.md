@@ -9,10 +9,14 @@ layout: reveal
 
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides)
 
+This presentation
+
 </td>
 <td>
 
 ![Xemantic discord server](https://quickchart.io/qr?text=https://discord.gg/vQktqqN2Vn)
+
+[Discord server](https://discord.gg/vQktqqN2Vn)
 
 </td>
 </tr>
