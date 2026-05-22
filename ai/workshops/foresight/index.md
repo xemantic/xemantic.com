@@ -5,7 +5,7 @@ layout: reveal
 
 <table>
 <tr>
-<td><small>
+<td>
 
 1. https://github.com/apps/desktop <br><small>(only if you are not using git daily)</small>
 2. https://www.jetbrains.com/idea/ <br><small>(only if you want to try Kotlin)</small>
@@ -13,9 +13,9 @@ layout: reveal
    - [xemantic-ai-workshop](https://github.com/xemantic/xemantic-ai-workshop)
    - [claudine](https://github.com/xemantic/xemantic-ai-workshop)
 4. https://platform.claude.com/ <br><small>(only if you want to try Kotlin)</small>
-5. <small>FORESIGHT_API_KEY="sk-33489d6e26ce4073ae690be9cea780b6"</small>
+5. FORESIGHT_API_KEY="sk-33489d6e26ce4073ae690be9cea780b6"
 
-</small></td>
+</td>
 <td style="width: 20%;">
 
 ![Xemantic discord server](https://quickchart.io/qr?text=https://discord.gg/vQktqqN2Vn)
@@ -28,7 +28,7 @@ layout: reveal
 </tr>
 </table>
 
-<https://xemantic.com/ai/workshops/foresight>
+<small>https://xemantic.com/ai/workshops/foresight</small>
 
 ---
 ## Agenda
