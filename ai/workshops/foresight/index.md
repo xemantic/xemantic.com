@@ -5,7 +5,7 @@ layout: reveal
 
 <table>
 <tr>
-<td style="font-size: 0.6em;">
+<td style="font-size: 0.8em;">
 
 1. https://github.com/apps/desktop <br><small>(only if you are not using git daily)</small>
 2. https://www.jetbrains.com/idea/ <br><small>(only if you want to try Kotlin)</small>
@@ -13,13 +13,12 @@ layout: reveal
    - [xemantic-ai-workshop](https://github.com/xemantic/xemantic-ai-workshop)
    - [claudine](https://github.com/xemantic/xemantic-ai-workshop)
 4. https://platform.claude.com/ <br>(only if you want to try Kotlin)
-5. FORESIGHT_API_KEY="sk-33489d6e26ce4073ae690be9cea780b6"
 
 </td>
-<td style="width: 20%; font-size: 0.6em;">
+<td style="width: 20%; font-size: 0.8em;">
 
 ![Xemantic discord server](https://quickchart.io/qr?text=https://discord.gg/vQktqqN2Vn)
-[discord](https://discord.gg/vQktqqN2Vn)</small>
+[discord](https://discord.gg/vQktqqN2Vn)
 
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides)
 presentation
@@ -27,8 +26,13 @@ presentation
 </td>
 </tr>
 </table>
+<small>
 
-<small>https://xemantic.com/ai/workshops/foresight</small>
+FORESIGHT_API_KEY="sk-33489d6e26ce4073ae690be9cea780b6"
+
+https://xemantic.com/ai/workshops/foresight
+
+</small>
 
 ---
 ## Agenda
