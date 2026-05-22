@@ -5,12 +5,6 @@ layout: reveal
 
 <table>
 <tr>
-<td style="width: 20%;">
-
-![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides)
-<small>presentation</small>
-
-</td>
 <td><small>
 
 1. https://github.com/apps/desktop <br><small>(only if you are not using git daily)</small>
@@ -26,6 +20,9 @@ layout: reveal
 
 ![Xemantic discord server](https://quickchart.io/qr?text=https://discord.gg/vQktqqN2Vn)
 <small>[discord](https://discord.gg/vQktqqN2Vn)</small>
+
+![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides)
+<small>presentation</small>
 
 </td>
 </tr>
