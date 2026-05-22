@@ -1,20 +1,24 @@
 ---
 layout: reveal
 ---
-## Agentic AI workshop
+## Bootstrapping Research Agents
 
 <table>
 <tr>
 <td>
+
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides)
+
 </td>
 <td>
+
 ![Xemantic discord server](https://quickchart.io/qr?text=https://discord.gg/vQktqqN2Vn)
+
 </td>
 </tr>
 </table>
 
-<small><https://xemantic.com/ai/workshops/slides></small>
+https://xemantic.com/ai/workshops/foresight
 
 ---
 ## Software to install
