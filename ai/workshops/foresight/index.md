@@ -1,22 +1,22 @@
 ---
 layout: reveal
 ---
-#### Bootstrapping Research Agents
+### Bootstrapping Research Agents
 
 <table>
 <tr>
-<td>
+<td style="width: 20%;">
+
+<small>presentation</small>
 
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides)
 
-<small>This presentation</small>
-
 </td>
-<td>
+<td style="width: 20%;">
+
+<small>[Discord](https://discord.gg/vQktqqN2Vn)</small>
 
 ![Xemantic discord server](https://quickchart.io/qr?text=https://discord.gg/vQktqqN2Vn)
-
-<small>[Discord server](https://discord.gg/vQktqqN2Vn)</small>
 
 </td>
 <td>
