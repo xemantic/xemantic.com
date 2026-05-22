@@ -11,7 +11,7 @@ layout: reveal
 <small>presentation</small>
 
 </td>
-<td>
+<td><small>
 
 1. https://github.com/apps/desktop <br><small>(only if you are not using git daily)</small>
 2. https://www.jetbrains.com/idea/ <br><small>(only if you want to try Kotlin)</small>
@@ -21,7 +21,7 @@ layout: reveal
 4. https://platform.claude.com/ <br><small>(only if you want to try Kotlin)</small>
 5. FORESIGHT_API_KEY="sk-33489d6e26ce4073ae690be9cea780b6"
 
-</td>
+</small></td>
 <td style="width: 20%;">
 
 ![Xemantic discord server](https://quickchart.io/qr?text=https://discord.gg/vQktqqN2Vn)
