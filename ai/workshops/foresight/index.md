@@ -5,8 +5,7 @@ layout: reveal
 
 <table>
 <tr>
-<td>
-<small>
+<td style="font-size: 0.8rem;">
 
 1. https://github.com/apps/desktop <br><small>(only if you are not using git daily)</small>
 2. https://www.jetbrains.com/idea/ <br><small>(only if you want to try Kotlin)</small>
@@ -16,15 +15,14 @@ layout: reveal
 4. https://platform.claude.com/ <br><small>(only if you want to try Kotlin)
 5. FORESIGHT_API_KEY="sk-33489d6e26ce4073ae690be9cea780b6"
 
-</small>
 </td>
-<td style="width: 20%;">
+<td style="width: 20%; font-size: 0.8rem;">
 
 ![Xemantic discord server](https://quickchart.io/qr?text=https://discord.gg/vQktqqN2Vn)
-<small>[discord](https://discord.gg/vQktqqN2Vn)</small><br>
+[discord](https://discord.gg/vQktqqN2Vn)</small>
 
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides)
-<small>presentation</small>
+presentation
 
 </td>
 </tr>
