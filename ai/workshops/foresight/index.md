@@ -13,7 +13,8 @@ layout: reveal
    - [xemantic-ai-workshop](https://github.com/xemantic/xemantic-ai-workshop)
    - [claudine](https://github.com/xemantic/xemantic-ai-workshop)
 4. https://platform.claude.com/ <br><small>(only if you want to try Kotlin)</small>
-5. FORESIGHT_API_KEY="sk-33489d6e26ce4073ae690be9cea780b6"
+
+<small>FORESIGHT_API_KEY="sk-33489d6e26ce4073ae690be9cea780b6"</small>
 
 </td>
 <td style="width: 20%;">
