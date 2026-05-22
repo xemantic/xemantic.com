@@ -8,15 +8,7 @@ layout: reveal
 <td style="width: 20%;">
 
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides)
-
 <small>presentation</small>
-
-</td>
-<td style="width: 20%;">
-
-![Xemantic discord server](https://quickchart.io/qr?text=https://discord.gg/vQktqqN2Vn)
-
-<small>[discord](https://discord.gg/vQktqqN2Vn)</small>
 
 </td>
 <td>
@@ -31,6 +23,12 @@ layout: reveal
 5. Foresight compute token: 
 
 </small>
+</td>
+<td style="width: 20%;">
+
+![Xemantic discord server](https://quickchart.io/qr?text=https://discord.gg/vQktqqN2Vn)
+<small>[discord](https://discord.gg/vQktqqN2Vn)</small>
+
 </td>
 </tr>
 </table>
