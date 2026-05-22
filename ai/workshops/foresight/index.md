@@ -9,17 +9,18 @@ layout: reveal
 
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides)
 
-This presentation
+<small>This presentation</small>
 
 </td>
 <td>
 
 ![Xemantic discord server](https://quickchart.io/qr?text=https://discord.gg/vQktqqN2Vn)
 
-[Discord server](https://discord.gg/vQktqqN2Vn)
+<small>[Discord server](https://discord.gg/vQktqqN2Vn)</small>
 
 </td>
 <td>
+<small>
 
 1. https://github.com/apps/desktop <br><small>(only if you are not using git daily)</small>
 2. https://www.jetbrains.com/idea/ <br><small>(only if you want to try Kotlin)</small>
@@ -27,11 +28,12 @@ This presentation
 - [xemantic-ai-workshop](https://github.com/xemantic/xemantic-ai-workshop)
 - [claudine](https://github.com/xemantic/xemantic-ai-workshop)
 
+</small>
 </td>
 </tr>
 </table>
 
-https://xemantic.com/ai/workshops/foresight
+<small>https://xemantic.com/ai/workshops/foresight</small>
 
 ---
 ### Software to install
