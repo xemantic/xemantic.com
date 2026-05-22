@@ -50,18 +50,21 @@ _5-minute breaks provided at the top of each hour_
 This knowledge is just few months old - every question is relevant, and we can try to answer them together.
 
 ---
-## Foresight Institute
+## About Foresight Institute
+
+https://foresight.org/
 
 ---
-## Xemantic
+## About Xemantic
 
-Xemantic is a collective of applied philosophy based at [Prachtsaal](https://prachtsaal.berlin) cooperative, founded by Julia Thomas and Kazik Pogoda, conducting independent AI research and creating immersive computational art.
+- AI research (cognitive science)
+- humanistic computation
+- applied philosophy
+- computational, immersive art
 
-We publish our research as open source software.
+🏠 [Prachtsaal](https://prachtsaal.berlin) art community / Neukölln
 
-<https://xemantic.com>
-
-<https://github.com/xemantic>
+<https://xemantic.com> | <https://github.com/xemantic>
 
 ---
 ## 404
@@ -70,18 +73,13 @@ We publish our research as open source software.
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Hb-P2f0cyMI?si=uDb8Uo-zzsxmzXtT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ---
-### Xemantic @ AI hack Berlin
-
-<div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
-    <img src="../../../ai/workshops/images/Hero-Robot-Berlin-Hackathon-Website.png" alt="AI hack Berlin hackathon promo" style="width: 38%;">
-</div>
-
----
-### Robots will steal your food
+### Xemantic @ Hackathons
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
     <img src="../../../ai/workshops/images/robots_will_steal_your_food.jpg" alt="Robots will steal your food" style="width: 53%;">
 </div>
+
+AI Hack Berlin 2024 | [AI4Science](https://luma.com/70jztzt8?tk=ePTkUF)
 
 ---
 # Introductions
@@ -92,7 +90,7 @@ What's your expectation from the workshop.
 ## Agentic AI
 
 - prompt engineering
-- context enginnering
+- context engineering
 - harness engineering
 
 What makes an AI agent, **the difference between "a workflow" and "an agent"**:
@@ -100,16 +98,8 @@ What makes an AI agent, **the difference between "a workflow" and "an agent"**:
 https://www.anthropic.com/research/building-effective-agents
 
 ---
-## Why Anthropic?
-
-
----
 ## Claudine
 ### Live session
-
-![claudine on GitHub - QR code](https://quickchart.io/qr?text=https://github.com/xemantic/claudine)
-
-<https://github.com/xemantic/claudine/>
 
 ---
 # Workshop repository
@@ -117,9 +107,10 @@ https://www.anthropic.com/research/building-effective-agents
 ---
 ## What you will learn?
 
+- **Prompt Engineering**: how to talk to machines so that they listen
 - **Context Engineering**: programming for LLM integration
-- **Cognitive Science**: the psychological and philosophical foundation of a technique
-- **Kotlin**: particular Kotlin idioms used in the source code
+- **Harness Engineering**: building own autonomous agents
+- **Cognitive Science**: the psychological and philosophical foundation of these techniques
 
 ---
 ## A glossary of AI-related terms
@@ -156,44 +147,11 @@ _from ML to AI_
 - emergent theory of mind
 
 ---
-## The tectonic paradigm shift
-
-... in virtually everything, but it starts with software
-
-<https://darioamodei.com/machines-of-loving-grace>
-
----
 ### Are robots gonna steal our job?
 
 It's a very complex topic, no one can tell, but most likely **the opposite will happen**.
 
 For sure, we need to adapt, and we need to adapt extremely fast.
-
----
-### What does Agentic AI imply for software development?
-
-**Stop the world! ... and rethink.**
-
-We are at the tipping point. Every project we are working on at the moment might be obsolete when we release it.
-
----
-## Rethink the tools we are using
-
-"AI-assisted development" vs "assisting AI in development"
-
----
-### Agentic AI principles
-
-1. A language model with emergent reasoning capabilities.
-2. Well documented (therefore internalized by the model) information exchange standard.
-3. Vast amount of data to operate on.
-
-What can you substitute for these categories at Bonial?
-
----
-## AI & Philosophy
-
-Dario Amodei, Anthropic's CEO, wrote [Machines of Loving Grace](https://darioamodei.com/machines-of-loving-grace#5-work-and-meaning) - an extremely insightful essay on machine intelligence, with predictions for the upcoming decade.
 
 ---
 ## Thank You!
