@@ -9,7 +9,7 @@ layout: reveal
 2. https://www.jetbrains.com/idea/ <br><small>(if you want to try Kotlin)</small>
 3. https://github.com/xemantic/ | clone:
    - [xemantic-ai-workshop](https://github.com/xemantic/xemantic-ai-workshop)
-   - [claudine](https://github.com/xemantic/xemantic-ai-workshop)
+   - [claudine](https://github.com/xemantic/claudine)
 4. https://platform.claude.com/ <br><small>(if you want to try Anthropic API)</small>
 
 </small>
