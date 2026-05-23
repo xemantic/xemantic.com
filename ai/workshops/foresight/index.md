@@ -94,10 +94,10 @@ https://foresight.org/
 ### Xemantic @ Hackathons
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
-    <img src="../../../ai/workshops/images/robots_will_steal_your_food.jpg" alt="Robots will steal your food" style="width: 53%;">
+    <img src="../images/robots_will_steal_your_food.webp" alt="Robots will steal your food" style="width: 53%;">
 </div>
 
-AI Hack Berlin 2024 | [AI4Science](https://luma.com/70jztzt8?tk=ePTkUF)
+[AI Hack Berlin 2024](https://gdg.community.dev/events/details/google-gdg-cloud-berlin-presents-ai-hack-2024/) (Google) | [AI4Science](https://luma.com/70jztzt8?tk=ePTkUF) (Merantix)
 
 ---
 # Introductions
@@ -106,10 +106,6 @@ What's your expectation from the workshop.
 
 ---
 ## Agentic AI
-
-- prompt engineering
-- context engineering
-- harness engineering
 
 What makes an AI agent, **the difference between "a workflow" and "an agent"**:
 
@@ -165,20 +161,6 @@ _from ML to AI_
 - emergent theory of mind
 
 ---
-### Are robots gonna steal our job?
-
-It's a very complex topic, no one can tell, but most likely **the opposite will happen**.
-
-For sure, we need to adapt, and we need to adapt extremely fast.
-
----
 ## Thank You!
-### Agentic AI & Creative Coding Workshops
-
-You will learn how to make your own Claudine!
-
-![Agentic AI & Creative Coding Workshops - link QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops)
-
-<https://xemantic.com/ai/workshops/>
 
 ---
