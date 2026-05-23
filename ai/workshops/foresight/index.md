@@ -127,16 +127,16 @@ https://www.anthropic.com/research/building-effective-agents
 - **Cognitive Science**: the psychological and philosophical foundation of these techniques
 
 ---
-## A glossary of AI-related terms
+### A glossary of AI-related terms
 
 Navigating through Agentic AI development requires particular vocabulary:
 
-## `ai_glossary.md`
+### `ai_glossary.md`
 
 ---
-## Let's start with demonstrations
+### Let's start with demonstrations
 
-## `Demo01HelloWorld.kt`
+### `Demo01HelloWorld.kt`
 
 ---
 # Back to meta ...
