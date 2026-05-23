@@ -3,30 +3,31 @@ layout: reveal
 ---
 ### Bootstrapping Research Agents
 
-1. https://github.com/apps/desktop <br><small>(only if you are not using git daily)</small>
-2. https://www.jetbrains.com/idea/ <br><small>(only if you want to try Kotlin)</small>
+<small>
+
+1. https://github.com/apps/desktop <br><small>(if you are not using git daily)</small>
+2. https://www.jetbrains.com/idea/ <br><small>(if you want to try Kotlin)</small>
 3. https://github.com/xemantic/ | clone:
    - [xemantic-ai-workshop](https://github.com/xemantic/xemantic-ai-workshop)
    - [claudine](https://github.com/xemantic/xemantic-ai-workshop)
-4. https://platform.claude.com/ <br>(only if you want to try Kotlin)
+4. https://platform.claude.com/ <br><small>(if you want to try Anthropic API)</small>
 
+</small>
+
+<small>
 <table>
-<thead>
 <tr>
-<th>
+<td>
 
 [discord](https://discord.gg/vQktqqN2Vn)
 
-
-</th>
-<th>
+</td>
+<td>
 
 presentation
 
-</th>
+</td>
 </tr>
-</thead>
-<tbody>
 <tr>
 <td>
 
@@ -39,8 +40,8 @@ presentation
 
 </td>
 </tr>
-</tbody>
 </table>
+</small>
 
 <small>
 
