@@ -159,6 +159,12 @@ _from ML to AI_
 - emergent theory of mind
 
 ---
+## Golem XIV
+### metacognitive AI
+
+https://github.com/xemantic/golem-xiv
+
+---
 ## Thank You!
 
 ---
