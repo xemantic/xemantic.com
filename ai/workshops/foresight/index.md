@@ -112,8 +112,8 @@ What makes an AI agent, **the difference between "a workflow" and "an agent"**:
 https://www.anthropic.com/research/building-effective-agents
 
 ---
-## Claudine
-### Live session
+# Claudine
+## Live session
 
 ---
 # Workshop repository
