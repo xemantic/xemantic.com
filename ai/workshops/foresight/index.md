@@ -36,7 +36,7 @@ presentation
 </td>
 <td>
 
-![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides)
+![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/foresight/)
 
 </td>
 </tr>
