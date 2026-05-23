@@ -3,29 +3,27 @@ layout: reveal
 ---
 ### Bootstrapping Research Agents
 
-<table>
-<tr>
-<td style="font-size: 0.8em;">
+:::: {.columns}
 
+::: {.column width="80%"}
 1. https://github.com/apps/desktop <br><small>(only if you are not using git daily)</small>
 2. https://www.jetbrains.com/idea/ <br><small>(only if you want to try Kotlin)</small>
 3. https://github.com/xemantic/ | clone:
    - [xemantic-ai-workshop](https://github.com/xemantic/xemantic-ai-workshop)
    - [claudine](https://github.com/xemantic/xemantic-ai-workshop)
 4. https://platform.claude.com/ <br>(only if you want to try Kotlin)
+:::
 
-</td>
-<td style="width: 20%; font-size: 0.8em;">
-
+::: {.column width="20%"}
 ![Xemantic discord server](https://quickchart.io/qr?text=https://discord.gg/vQktqqN2Vn)
 [discord](https://discord.gg/vQktqqN2Vn)
 
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/slides)
 presentation
+:::
 
-</td>
-</tr>
-</table>
+::::
+
 <small>
 
 FORESIGHT_API_KEY="sk-33489d6e26ce4073ae690be9cea780b6"
