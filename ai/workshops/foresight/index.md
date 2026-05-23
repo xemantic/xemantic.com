@@ -131,17 +131,15 @@ https://www.anthropic.com/research/building-effective-agents
 
 Navigating through Agentic AI development requires particular vocabulary:
 
-# `ai_glossary.md`
+## `ai_glossary.md`
 
 ---
 ## Let's start with demonstrations
 
-# `Demo01HelloWorld.kt`
+## `Demo01HelloWorld.kt`
 
 ---
 # Back to meta ...
-
----
 ## Why is it even possible?
 
 ---
