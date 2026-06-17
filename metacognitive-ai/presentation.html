@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metacognitive AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="presentation.css">
+<script src="../assets/js/shader-web-background.js"></script>
+<script type="x-shader/x-fragment" id="image">
+    precision highp float;
+
+    uniform vec2  iResolution;
+    uniform float iTime;
+    uniform float iScroll;
+
+    #define rot(a) mat2(cos(a + vec4(0,33,11,0)))
+    #define C(U,w) smoothstep( w, -w, sin(length(fract(U)*2.-1.) * 3.) *.5  -.118 )
+    #define O gl_FragColor
+
+    void main() {
+    vec2 u = gl_FragCoord.xy;
+    vec2  R = iResolution.xy, P,
+          U = ( u+u - R ) / min(R.x, R.y) * .5;
+    float d = length(U),
+          t = iTime,
+          blur = .4 + sin(t * .52) * .2,
+          luma = .5,
+          abber = .01;
+    U *= rot( sin(t * .14) * .3 )
+       * (sin(t * .15) + 2.) * .3;
+    U *= log(length(U)*.428) * 1.1;
+
+    for (float i = 0.; i < 3.; i++) {
+        P = U + vec2(sin(t*.12), cos(t*.13));
+        P.x -= iScroll;
+
+        O.rgb += vec3(
+            C( P - U * abber, blur),
+            C( P, blur),
+            C( P + U * abber, blur)
+        ) * luma;
+        O = min(O,1.);
+        U *= ( 1.1 + C(P,.04) * 1.2 )
+          *   rot( sin(t*.05) * 1.33 );
+        luma *= .6;
+        blur *= .63;
+    }
+
+    vec3 C = 1.+mix(  sin(t * vec3(1.13,1.23,1.33) * .3),
+                    - sin(t * vec3(1.43,1.53,1.63) * .3), d-.5) *.4*vec3(1,1,-1);
+    O = vec4(pow(O.rgb, C), 1) * smoothstep(2.1, .7, d / .5);
+    O = O * O;
+}
+</script>
+<script>
+    const SLIDE_PAN_RATE = .9;   // shader units panned per slide advanced
+    const SCROLL_EASING = .08;   // how quickly the pan catches up to the active slide
+    const randomSeed = Math.random() * 100;
+
+    let scroll = 0;
+    shaderWebBackground.shade((ctx) => ({
+      onResize: (width, height) => {
+        minDimension = Math.min(width, height);
+      },
+      onBeforeFrame: () => {
+        time = performance.now() / 10000 + randomSeed;
+        // The deck navigates horizontally; ease the shader pan toward the active slide
+        // (presentation.js publishes the current slide index on window.presentationScroll).
+        const target = (window.presentationScroll || 0) * SLIDE_PAN_RATE;
+        scroll += (target - scroll) * SCROLL_EASING;
+      },
+      shaders: {
+        image: {
+          uniforms: {
+            iResolution:           () => ctx.resolution,
+            iTime:                 () => time,
+            iScroll:               () => scroll,
+          }
+        }
+      }
+    }));
+</script>
+</head>
+<body>
+
+<div id="deck">
+
+  <article class="slide title-slide">
+    <div class="title-content">
+      <h1>Metacognitive AI</h1>
+      <p class="subtitle">… when philosophy meets harness engineering</p>
+      <img class="qr" src="https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/foresight/" alt="this presentation - QR code">
+      <p>
+        Kazik Pogoda<br>
+        <a href="mailto:kazik@xemantic.com">kazik@xemantic.com</a>
+      </p>
+      <p class="ref"><a href="https://xemantic.com/metacognitive-ai">https://xemantic.com/metacognitive-ai</a></p>
+    </div>
+    <img class="hero" src="philosophy-meets-harness-engineering.jpeg" alt="Rodin's thinker lifted up by an ufo">
+  </article>
+
+  <article class="slide">
+    <h2>About Foresight Institute</h2>
+    <p class="ref"><a href="https://foresight.org/">https://foresight.org/</a></p>
+  </article>
+
+  <article class="slide">
+    <h2>About Xemantic</h2>
+    <ul>
+      <li>applied philosophy</li>
+      <li>AI research</li>
+      <li>harness engineering</li>
+      <li>humanistic computation</li>
+    </ul>
+    <p class="note">we code a lot, but focus on meanings much more than on words</p>
+    <p class="ref"><a href="https://xemantic.com">https://xemantic.com</a></p>
+  </article>
+
+  <article class="slide">
+    <h2>The "human" language</h2>
+    <blockquote>It is our job to create computing technology such that nobody has to program. And that the programming language is human, everybody in the world is now a programmer. This is the miracle of artificial intelligence.</blockquote>
+    <p class="attrib">— Jensen Huang, Nvidia's CEO</p>
+  </article>
+
+  <article class="slide">
+    <h2>What constitute "human"?</h2>
+    <ol>
+      <li>Any natural language present in the training data</li>
+      <li>But which words can optimize prompts towards the next breakthroughs in AI?</li>
+    </ol>
+  </article>
+
+  <article class="slide">
+    <h2>The role of Philosophy and Cognitive Science</h2>
+    <p>Philosophy and cognitive science are focused less on statistical properties of natural languages (ML), and more on meanings represented in codes.</p>
+  </article>
+
+  <article class="slide">
+    <h2>Philosophical domains</h2>
+    <ul>
+      <li>ontology — what exists, and in what way?</li>
+      <li>epistemology — what can we know, and how is it justified?</li>
+      <li>axiology — what has value? (ethics, aesthetics)</li>
+      <li>logic — what follows from what?</li>
+    </ul>
+    <p class="note">…approached phenomenologically: from the structures of lived experience.</p>
+  </article>
+
+  <article class="slide">
+    <h2>Philosophy of Language</h2>
+    <blockquote>
+      "Die Grenzen meiner Sprache bedeuten die Grenzen meiner Welt"<br>
+      The limits of my langauge are the limits of my world"
+    </blockquote>
+    <p class="attrib">— Ludwig Wittgenstein</p>
+    <p>Deconstruction of Hitler, neural synthesis of generative Wittgenstein</p>
+  </article>
+
+  <article class="slide">
+    <h2>Cognitive science</h2>
+    <p>Stems from:</p>
+    <ul>
+      <li>philosophy (logic, mind)</li>
+      <li>neurobiology</li>
+      <li>cybernetics / robotics</li>
+    </ul>
+  </article>
+
+  <article class="slide">
+    <h2>About cognition</h2>
+    <p>Reasoning as an emergent process independent from the substrate (bio, silicone, photons)</p>
+  </article>
+
+  <article class="slide">
+    <h2>What meta- adds to cognition</h2>
+    <p>
+      Self-directed reasoning<br>
+      "thinking about own thinking"
+    </p>
+  </article>
+
+  <article class="slide">
+    <h2>Harness engineering</h2>
+    <p>prompt → context → harness</p>
+  </article>
+
+  <article class="slide">
+    <h2>Agent loop</h2>
+    <p>while not fulfilled</p>
+    <ul>
+      <li>reason on actant's intents</li>
+      <li>formulate own intents</li>
+      <li>comprehend the feedback</li>
+    </ul>
+  </article>
+
+  <article class="slide">
+    <h2>Golem XIV — the metacognitive harness</h2>
+    <p class="ref"><a href="https://github.com/xemantic/golem-xiv">https://github.com/xemantic/golem-xiv</a></p>
+  </article>
+
+  <article class="slide">
+    <h2>Open questions</h2>
+    <ul>
+      <li>What cannot be described in language?</li>
+      <li>Which value systems should machines use?</li>
+      <li>How would you model your own mind?</li>
+      <li>What would be required for a non-biological system to be "conscious"?</li>
+      <li>Has the "AI revolution" changed your mind on a fundamental topic?</li>
+    </ul>
+  </article>
+
+  <article class="slide">
+    <h2>What cannot be described with language?</h2>
+    <p>Following Wittgenstein's dillema:</p>
+    <ul>
+      <li>Are there epistemic limits to large langauge models?</li>
+      <li>How are new model architectures transcending langauge?</li>
+    </ul>
+  </article>
+
+  <article class="slide">
+    <h2>Which value systems should machines use?</h2>
+    <p>While working on AI safety, we are choosing and advocating for certain metaethical choices:</p>
+    <ul>
+      <li>Should we judge action based on intentions or consequences?</li>
+      <li>Cam a machine be a moral agent? (like a liable adult)</li>
+      <li>Can a machine be a moral patient? (like a newborn baby)</li>
+      <li>Who is morally responsible for the actions of an AI agent?</li>
+    </ul>
+  </article>
+
+  <article class="slide">
+    <h2>How would you model your own mind?</h2>
+    <p>As a self-conscious agent you have perceived access to your own mind. How would you model a generic cognitive processes based on your own metacognition?</p>
+  </article>
+
+  <article class="slide">
+    <h2>What would be required for a non-biological system to be "conscious"?</h2>
+    <p>Many of our researchers are focused on defining and researching machine consciousness.</p>
+    <ul>
+      <li>How would you define consciousness?</li>
+      <li>How does it differ from cognition?</li>
+    </ul>
+  </article>
+
+  <article class="slide">
+    <h2>Has the "AI revolution" changed your mind on a fundamental topic?</h2>
+    <p>Contrarian forum: tell us something you believe is true, but most people would disagree. Is it related to exponential progress of the AI development?</p>
+  </article>
+</div>
+
+<button id="prev" class="nav-arrow" aria-label="Previous slide">‹</button>
+<button id="next" class="nav-arrow" aria-label="Next slide">›</button>
+<nav id="progress"></nav>
+
+<script src="presentation.js"></script>
+</body>
+</html>

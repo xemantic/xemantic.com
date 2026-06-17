@@ -1,0 +1,261 @@
+/* Lazenby Computer by Andrew Young (Disaster Fonts), CC BY-SA 4.0.
+   See assets/fonts/LazenbyComputer-LICENSE.txt */
+@font-face {
+  font-family: "Lazenby Computer";
+  src: url("../../../fonts/LazenbyCompSmooth.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --fg: #f3f6fa;
+  --muted: #9aa7b4;
+  --accent: #6cc6ff;
+}
+
+html, body { margin: 0; height: 100%; overflow: hidden; }
+/* Background lives on <html> only. The shader canvas is appended to <body>
+   with a negative z-index, so an opaque <body> background would paint over it. */
+html { background: #15191f; }
+
+/* Presentation layer — sits on top of the shader canvas.
+   The deck itself ignores pointer events; only the text blocks capture clicks. */
+#deck {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  font-family: "Tektur", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  color: var(--fg);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8vh 10vw;
+  box-sizing: border-box;
+  /* Dark drop-shadow inherited by every text element, for contrast against the
+     animated shader: a tight near-opaque edge plus a soft spread. */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9), 0 2px 14px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  /* Slides waiting on the right enter from the right; once passed they
+     exit to the left. The current slide rests at translateX(0). */
+  transform: translateX(100%);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.slide.past { transform: translateX(-100%); }
+
+.slide.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Only the active slide's content captures pointer events. */
+.slide.active > * { pointer-events: auto; }
+
+.slide h1,
+.slide h2 {
+  font-family: "Lazenby Computer", "Tektur", sans-serif;
+  font-weight: normal; /* Lazenby ships a single weight */
+}
+
+.slide h1 {
+  font-size: clamp(2.5rem, 7vw, 5.5rem);
+  margin: 0 0 0.3em;
+  letter-spacing: 0.01em;
+}
+
+.slide h2 {
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
+  margin: 0 0 0.5em;
+  letter-spacing: 0.01em;
+}
+
+.slide p {
+  font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+  line-height: 1.5;
+  max-width: 24ch;
+  color: var(--fg);
+}
+
+.slide .subtitle {
+  color: var(--muted);
+  font-size: clamp(1rem, 2.4vw, 1.5rem);
+}
+
+.slide ul,
+.slide ol {
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  font-size: clamp(1.1rem, 2.4vw, 1.7rem);
+  line-height: 1.8;
+  max-width: 36ch;
+}
+
+.slide ul { list-style: none; }
+
+.slide ol {
+  list-style: decimal;
+  padding-left: 1.4em;
+}
+
+.slide ul li::before {
+  content: "›";
+  color: var(--accent);
+  margin-right: 0.6em;
+  font-weight: 700;
+}
+
+.slide a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.slide a:hover { text-decoration: underline; }
+
+/* Links shown as the slide's standalone reference (URLs from the markdown). */
+.slide .ref {
+  color: var(--muted);
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+}
+
+/* Pull quotes */
+.slide blockquote {
+  margin: 0 0 0.4em;
+  max-width: 30ch;
+  font-style: italic;
+  font-size: clamp(1.2rem, 2.8vw, 2rem);
+  line-height: 1.4;
+  border-left: 3px solid var(--accent);
+  padding-left: 0.8em;
+  text-align: left;
+}
+
+.slide .attrib {
+  color: var(--muted);
+  font-size: clamp(0.95rem, 2vw, 1.3rem);
+}
+
+.slide .note {
+  color: var(--muted);
+  font-style: italic;
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+}
+
+.slide img {
+  max-width: 100%;
+  max-height: 42vh;
+  border-radius: 8px;
+}
+
+.slide img.qr {
+  max-height: 20vh;
+  border-radius: 4px;
+  background: #fff;
+  padding: 0.4em;
+}
+
+/* Two-column layout for the title slide */
+.slide .cols {
+  display: flex;
+  gap: 5vw;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  margin: 1vh 0;
+}
+.slide .cols .col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6em;
+}
+
+/* Title slide: text content on the left, image stretched to full screen height
+   on the right. */
+.title-slide {
+  flex-direction: row;
+  align-items: stretch;
+  padding: 0;
+}
+.title-slide .title-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3em;
+  padding: 4vh 4vw;
+  box-sizing: border-box;
+}
+.title-slide h1 { font-size: clamp(2rem, 5.5vw, 4rem); margin: 0 0 0.1em; }
+.title-slide .subtitle { margin: 0 0 0.5em; }
+.title-slide p { margin: 0.2em 0; }
+.title-slide .qr { max-height: 18vh; }
+.title-slide .hero {
+  height: 100%;
+  width: auto;
+  max-height: none;
+  border-radius: 0;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Navigation controls */
+.nav-arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  pointer-events: auto;
+  background: rgba(20, 25, 31, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--fg);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  transition: background 0.2s, opacity 0.2s;
+  opacity: 0.35;
+}
+.nav-arrow:hover { background: rgba(108, 198, 255, 0.3); opacity: 1; }
+#prev { left: 1.5rem; }
+#next { right: 1.5rem; }
+
+/* Slide counter + progress dots */
+#progress {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  pointer-events: auto;
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+#progress .dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+#progress .dot.active {
+  background: var(--accent);
+  transform: scale(1.3);
+}
