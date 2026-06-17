@@ -45,19 +45,21 @@ https://foresight.org/
 https://xemantic.com
 
 ---
+## The "human" language
+
 > It is our job to create computing technology such that nobody has to program. And that the programming language is human, everybody in the world is now a programmer. This is the miracle of artificial intelligence.
 -- Jensen Huang, Nvidia's CEO
 
 ---
-What is "human"?
+## What constitute "human"?
 
 1. Any natural language present in the training data
-2. But which words can shape the next AI breakthroughs?
+2. But which words can optimize prompts towards the next breakthroughs in AI?
 
 ---
-## The new Code
+### The role of Philosophy and Cognitive Science
 
-Argument: philosophy and cognitive science are the "words" we are looking for.
+Philosophy and cognitive science are focused less on statistical properties of natural languages (ML), and more on meanings represented in codes.
 
 ---
 ## Philosophical domains
