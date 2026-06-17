@@ -1,15 +1,32 @@
 ---
 layout: reveal
 ---
-
 # Metacognitive AI
----
-Metacognitive AI
-Philosophy meets harness engineering
+
+<table>
+<tr>
+<td>
+
+## ... when philosophy meets harness engineering
+
+![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/foresight/)
 
 Kazik Pogoda
 kazik@xemantic.com
-<link to this presentation>
+
+![this presentation - QR code](https://xemantic.com/metacognitive-ai)
+
+</td>
+<td>
+
+![Rodin's thinker lifted up by an ufo](philosophy-meets-harness-engineering.jpeg)
+
+</td>
+</tr>
+</table>
+
+<https://xemantic.com/metacognitive-ai>
+
 ---
 
 ---
@@ -75,7 +92,8 @@ Self-directed reasoning
 "thinking about own thinking"
 
 ---
-Harness engineering
+
+## Harness engineering
 
 prompt -> context -> harness
 
@@ -97,20 +115,34 @@ https://github.com/xemantic/golem-xiv
 - What cannot be described in language?
 - Which value systems should machines use?
 - How would you model your own mind?
-- Did AI changed your mind on a fundamental topic?
+- Can a machine be "conscious"?
+- Has AI revolution changed your mind on a fundamental topic?
+
+---
 
 ### What cannot be described in language?
 
 Following Wittgenstein's dillema:
 
+- Are there epistemic limits of large langauge models?
+- How new model architectures are transcending the langauge?
 
+---
 
 ### Which value systems should machines use?
 
+While working on AI safety, we need to contextualize axiology. Metaethics:
+
+- Should we judge action based on intentions or consequences
+- Cam a machine be a moral agent?
+- Can a machine a moral patient?
+- Who is morally responsible for AI agent's actions?
+
+---
 ### How would you model your own mind?
 
-### Did AI changed your mind on a fundamental topic?
+As a self-conscious agent you have access to your own mind. How would you model a mental processes based on your own metacognition?
 
-A contrarian forum:
+### Has AI revolution changed your mind on a fundamental topic?
 
-- 
+Contrarian forum: tell us something you believe is true, but most people would disagree. Is it related to exponential progress of the AI development?
