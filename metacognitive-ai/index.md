@@ -30,8 +30,7 @@ kazik@xemantic.com
 ---
 ## About Foresight Institute
 
-<iframe src="https://foresight.org/">
-</iframe>
+https://foresight.org/
 
 ---
 ## About Xemantic
@@ -41,26 +40,27 @@ kazik@xemantic.com
 - harness engineering
 - humanistic computation
 
-*we code a lot, but focus on meanings much more than on words*
+<small>*we code a lot, but focus on meanings much more than on words*</small>
 
 https://xemantic.com
 
 ---
-"It is our job to create computing technology such that nobody has to program. And that the programming language is human, everybody in the world is now a programmer. This is the miracle of artificial intelligence."
+> It is our job to create computing technology such that nobody has to program. And that the programming language is human, everybody in the world is now a programmer. This is the miracle of artificial intelligence.
+-- Jensen Huang, Nvidia's CEO
 
 ---
 What is "human"?
 
 1. Any natural language present in the training data
-2. But which words can shape the next AI breakthrous?
-   .
+2. But which words can shape the next AI breakthroughs?
+
 ---
-The new Code
+## The new Code
 
 Argument: philosophy and cognitive science are the "words" we are looking for.
 
 ---
-Philosophical domains:
+## Philosophical domains
 
 - ontology — what exists, and in what way?
 - epistemology — what can we know, and how is it justified?
@@ -149,7 +149,10 @@ As a self-conscious agent you have access to your own mind. How would you model 
 ---
 ### Can a machine be "conscious"?
 
+Many of our researchers are focused on defining machine consciousness.
 
+- How would you define consciousness yourself?
+- How does it differ from cognition?
 
 ---
 ### Has AI revolution changed your mind on a fundamental topic?
