@@ -1,13 +1,13 @@
 ---
 layout: reveal
 ---
-# Metacognitive AI
+### Metacognitive AI
 
 <table>
 <tr>
 <td>
 
-## ... when philosophy meets harness engineering
+##### ... when philosophy meets harness engineering
 
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/foresight/)
 
@@ -128,7 +128,6 @@ Following Wittgenstein's dillema:
 - How new model architectures are transcending the langauge?
 
 ---
-
 ### Which value systems should machines use?
 
 While working on AI safety, we need to contextualize axiology. Metaethics:
@@ -143,6 +142,12 @@ While working on AI safety, we need to contextualize axiology. Metaethics:
 
 As a self-conscious agent you have access to your own mind. How would you model a mental processes based on your own metacognition?
 
+---
+### Can a machine be "conscious"?
+
+
+
+---
 ### Has AI revolution changed your mind on a fundamental topic?
 
 Contrarian forum: tell us something you believe is true, but most people would disagree. Is it related to exponential progress of the AI development?
