@@ -6,15 +6,15 @@ layout: reveal
 <table>
 <tr>
 <td>
-
-##### ... when philosophy meets harness engineering
+<h4>... when philosophy meets harness engineering</h4>
+<div>
 
 ![this presentation - QR code](https://quickchart.io/qr?text=https://xemantic.com/ai/workshops/foresight/)
 
+</div>
+
 Kazik Pogoda
 kazik@xemantic.com
-
-![this presentation - QR code](https://xemantic.com/metacognitive-ai)
 
 </td>
 <td>
@@ -28,19 +28,23 @@ kazik@xemantic.com
 <https://xemantic.com/metacognitive-ai>
 
 ---
+## About Foresight Institute
+
+<iframe src="https://foresight.org/">
+</iframe>
 
 ---
-About Foresight Institute
-
-Existential Hope
----
-About Xemantic
+## About Xemantic
 
 - applied philosophy
+- AI research
 - harness engineering
 - humanistic computation
 
-we code a lot, but focus on meanings much more than on words
+*we code a lot, but focus on meanings much more than on words*
+
+https://xemantic.com
+
 ---
 "It is our job to create computing technology such that nobody has to program. And that the programming language is human, everybody in the world is now a programmer. This is the miracle of artificial intelligence."
 
