@@ -50,4 +50,12 @@
   // Deep-link / refresh support: #3 opens the third slide.
   const start = parseInt(location.hash.replace('#', ''), 10);
   go(Number.isFinite(start) && start > 0 ? start - 1 : 0);
+
+  // Assemble email links from their parts so the plaintext address never
+  // appears in the page source (basic spam-scraper obfuscation).
+  document.querySelectorAll('a.email').forEach((a) => {
+    const address = a.dataset.user + '@' + a.dataset.domain;
+    a.href = 'mailto:' + address;
+    a.textContent = address;
+  });
 })();

@@ -9,9 +9,9 @@
 }
 
 :root {
-  --fg: #f3f6fa;
-  --muted: #9aa7b4;
-  --accent: #6cc6ff;
+  --fg: #ffffff;        /* all text is max white */
+  --muted: #ffffff;     /* formerly gray secondary text — now white too */
+  --accent: #a882ff;    /* bright Obsidian-like purple, used only for links & buttons */
 }
 
 html, body { margin: 0; height: 100%; overflow: hidden; }
@@ -67,27 +67,27 @@ html { background: #15191f; }
 }
 
 .slide h1 {
-  font-size: clamp(2.5rem, 7vw, 5.5rem);
+  font-size: clamp(3.2rem, 8.8vw, 7rem);
   margin: 0 0 0.3em;
   letter-spacing: 0.01em;
 }
 
 .slide h2 {
-  font-size: clamp(1.8rem, 5vw, 3.5rem);
-  margin: 0 0 0.5em;
+  font-size: clamp(2.3rem, 6.4vw, 4.4rem);
+  margin: 0 0 0.4em;
   letter-spacing: 0.01em;
 }
 
 .slide p {
-  font-size: clamp(1.1rem, 2.4vw, 1.6rem);
-  line-height: 1.5;
-  max-width: 24ch;
+  font-size: clamp(1.45rem, 3.1vw, 2.05rem);
+  line-height: 1.45;
+  max-width: 34ch;
   color: var(--fg);
 }
 
 .slide .subtitle {
   color: var(--muted);
-  font-size: clamp(1rem, 2.4vw, 1.5rem);
+  font-size: clamp(1.35rem, 3.1vw, 1.95rem);
 }
 
 .slide ul,
@@ -95,9 +95,9 @@ html { background: #15191f; }
   padding: 0;
   margin: 0;
   text-align: left;
-  font-size: clamp(1.1rem, 2.4vw, 1.7rem);
-  line-height: 1.8;
-  max-width: 36ch;
+  font-size: clamp(1.45rem, 3.1vw, 2.15rem);
+  line-height: 1.6;
+  max-width: 46ch;
 }
 
 .slide ul { list-style: none; }
@@ -115,23 +115,25 @@ html { background: #15191f; }
 }
 
 .slide a {
-  color: var(--accent);
-  text-decoration: none;
+  color: var(--fg);
+  text-decoration: underline;
 }
-.slide a:hover { text-decoration: underline; }
 
-/* Links shown as the slide's standalone reference (URLs from the markdown). */
+/* Links shown as the slide's standalone reference (URLs from the markdown).
+   Keep the whole URL on a single line so it never breaks mid-address. */
 .slide .ref {
   color: var(--muted);
-  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  font-size: clamp(1.15rem, 2.5vw, 1.55rem);
+  max-width: none;
+  white-space: nowrap;
 }
 
 /* Pull quotes */
 .slide blockquote {
   margin: 0 0 0.4em;
-  max-width: 30ch;
+  max-width: 40ch;
   font-style: italic;
-  font-size: clamp(1.2rem, 2.8vw, 2rem);
+  font-size: clamp(1.55rem, 3.5vw, 2.5rem);
   line-height: 1.4;
   border-left: 3px solid var(--accent);
   padding-left: 0.8em;
@@ -140,13 +142,13 @@ html { background: #15191f; }
 
 .slide .attrib {
   color: var(--muted);
-  font-size: clamp(0.95rem, 2vw, 1.3rem);
+  font-size: clamp(1.2rem, 2.5vw, 1.65rem);
 }
 
 .slide .note {
   color: var(--muted);
   font-style: italic;
-  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  font-size: clamp(1.15rem, 2.5vw, 1.55rem);
 }
 
 .slide img {
@@ -155,27 +157,44 @@ html { background: #15191f; }
   border-radius: 8px;
 }
 
+/* Xemantic wordmark used as a slide's heading. The drop-shadow filter mirrors
+   the text-shadow used on .slide (text-shadow has no effect on images). */
+.slide .brand-logo {
+  width: min(46vw, 32rem);
+  height: auto;
+  border-radius: 0;
+  margin: 0 0 1.6em;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.9))
+          drop-shadow(0 2px 14px rgba(0, 0, 0, 0.8));
+}
+
+/* An image set beside the slide's text. */
+.slide .figure-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4vw;
+  flex-wrap: nowrap;
+}
+/* Cap both dimensions (aspect preserved): portraits are bound by height,
+   landscape photos by width — so neither dominates the slide. */
+.slide .figure-row img {
+  max-height: 52vh;
+  max-width: 38vw;
+  width: auto;
+  height: auto;
+  flex: 0 1 auto;
+}
+/* Text column takes the remaining width and may shrink. */
+.slide .figure-row > :not(img) {
+  min-width: 0;
+}
+
 .slide img.qr {
   max-height: 20vh;
   border-radius: 4px;
   background: #fff;
   padding: 0.4em;
-}
-
-/* Two-column layout for the title slide */
-.slide .cols {
-  display: flex;
-  gap: 5vw;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
-  margin: 1vh 0;
-}
-.slide .cols .col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6em;
 }
 
 /* Title slide: text content on the left, image stretched to full screen height
@@ -192,14 +211,19 @@ html { background: #15191f; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.3em;
-  padding: 4vh 4vw;
+  gap: 1em;
+  padding: 6vh 5vw;
   box-sizing: border-box;
 }
-.title-slide h1 { font-size: clamp(2rem, 5.5vw, 4rem); margin: 0 0 0.1em; }
-.title-slide .subtitle { margin: 0 0 0.5em; }
-.title-slide p { margin: 0.2em 0; }
-.title-slide .qr { max-height: 18vh; }
+.title-slide h1 { font-size: clamp(2.6rem, 6.9vw, 5rem); margin: 0 0 0.2em; }
+.title-slide .subtitle { margin: 0 0 0.4em; }
+/* Let the text use the full width of the column so the subtitle and the URL
+   stay on a single line instead of wrapping. */
+.title-slide p { margin: 0; max-width: none; white-space: nowrap; }
+/* Keep the link tight under the QR code, but set the whole QR+link group apart
+   from the rest with extra space above the QR and below the link. */
+.title-slide .qr { max-height: 18vh; margin-top: 1.4em; }
+.title-slide .ref { margin-top: -0.2em; margin-bottom: 1.4em; }
 .title-slide .hero {
   height: 100%;
   width: auto;
@@ -217,8 +241,8 @@ html { background: #15191f; }
   z-index: 2;
   pointer-events: auto;
   background: rgba(20, 25, 31, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: var(--fg);
+  border: 1px solid var(--accent);
+  color: var(--accent);
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
@@ -231,7 +255,7 @@ html { background: #15191f; }
   transition: background 0.2s, opacity 0.2s;
   opacity: 0.35;
 }
-.nav-arrow:hover { background: rgba(108, 198, 255, 0.3); opacity: 1; }
+.nav-arrow:hover { background: rgba(168, 130, 255, 0.3); opacity: 1; }
 #prev { left: 1.5rem; }
 #next { right: 1.5rem; }
 
