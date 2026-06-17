@@ -48,6 +48,7 @@ https://xemantic.com
 ## The "human" language
 
 > It is our job to create computing technology such that nobody has to program. And that the programming language is human, everybody in the world is now a programmer. This is the miracle of artificial intelligence.
+
 -- Jensen Huang, Nvidia's CEO
 
 ---
@@ -71,9 +72,11 @@ Philosophy and cognitive science are focused less on statistical properties of n
 
 …approached phenomenologically: from the structures of lived experience.
 ---
-Philosophy of Language
+## Philosophy of Language
 
-"The limits of my langauge are the limits of my world"
+> "Die Grenzen meiner Sprache bedeuten die Grenzen meiner Welt"
+> The limits of my langauge are the limits of my world"
+
 -- Ludwig Wittgenstein
 
 Deconstruction of Hitler, neural synthesis of generative Wittgenstein
@@ -121,42 +124,41 @@ https://github.com/xemantic/golem-xiv
 - What cannot be described in language?
 - Which value systems should machines use?
 - How would you model your own mind?
-- Can a machine be "conscious"?
-- Has AI revolution changed your mind on a fundamental topic?
+- What would be required for a non-biological system to be "conscious"?
+- Has the "AI revolution" changed your mind on a fundamental topic?
 
 ---
-
-### What cannot be described in language?
+### What cannot be described with language?
 
 Following Wittgenstein's dillema:
 
-- Are there epistemic limits of large langauge models?
-- How new model architectures are transcending the langauge?
+- Are there epistemic limits to large langauge models?
+- How are new model architectures transcending langauge?
 
 ---
 ### Which value systems should machines use?
 
-While working on AI safety, we need to contextualize axiology. Metaethics:
+While working on AI safety, we are choosing and advocating for certain metaethical choices:
 
-- Should we judge action based on intentions or consequences
-- Cam a machine be a moral agent?
-- Can a machine a moral patient?
-- Who is morally responsible for AI agent's actions?
+- Should we judge action based on intentions or consequences?
+- Cam a machine be a moral agent? (like a liable adult)
+- Can a machine be a moral patient? (like a newborn baby)
+- Who is morally responsible for the actions of an AI agent?
 
 ---
 ### How would you model your own mind?
 
-As a self-conscious agent you have access to your own mind. How would you model a mental processes based on your own metacognition?
+As a self-conscious agent you have perceived access to your own mind. How would you model a generic cognitive processes based on your own metacognition?
 
 ---
-### Can a machine be "conscious"?
+### What would be required for a non-biological system to be "conscious"?
 
-Many of our researchers are focused on defining machine consciousness.
+Many of our researchers are focused on defining and researching machine consciousness.
 
-- How would you define consciousness yourself?
+- How would you define consciousness?
 - How does it differ from cognition?
 
 ---
-### Has AI revolution changed your mind on a fundamental topic?
+### Has the "AI revolution" changed your mind on a fundamental topic?
 
 Contrarian forum: tell us something you believe is true, but most people would disagree. Is it related to exponential progress of the AI development?
