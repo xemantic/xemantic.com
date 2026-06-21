@@ -2,7 +2,7 @@
    See assets/fonts/LazenbyComputer-LICENSE.txt */
 @font-face {
   font-family: "Lazenby Computer";
-  src: url("../../../fonts/LazenbyCompSmooth.woff2") format("woff2");
+  src: url("../assets/fonts/LazenbyCompSmooth.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -17,7 +17,7 @@
 html, body { margin: 0; height: 100%; overflow: hidden; }
 /* Background lives on <html> only. The shader canvas is appended to <body>
    with a negative z-index, so an opaque <body> background would paint over it. */
-html { background: #15191f; }
+html { background: #15191f; font-size: 150%; }
 
 /* Presentation layer — sits on top of the shader canvas.
    The deck itself ignores pointer events; only the text blocks capture clicks. */
