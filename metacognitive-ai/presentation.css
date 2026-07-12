@@ -116,9 +116,23 @@ html { background: #15191f; font-size: 150%; }
   font-weight: 700;
 }
 
+/* Links read as a highlight rather than an underline: a rounded, semi-transparent
+   accent box that deepens on hover. Negative side-margins keep the padded box from
+   nudging surrounding text, and the box tracks line-wraps as a continuous highlight. */
 .slide a {
   color: var(--fg);
-  text-decoration: underline;
+  text-decoration: none;
+  background: rgba(168, 130, 255, 0.18);
+  padding: 0.08em 0.3em;
+  margin: 0 -0.08em;
+  border-radius: 0.35em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  transition: background 0.4s ease;
+}
+.slide a:hover,
+.slide a:focus-visible {
+  background: rgba(168, 130, 255, 0.42);
 }
 
 /* Links shown as the slide's standalone reference (URLs from the markdown).
