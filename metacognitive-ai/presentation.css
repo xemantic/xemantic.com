@@ -26,7 +26,9 @@ html { background: #15191f; font-size: 150%; }
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  font-family: "Tektur", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: "Lora", Georgia, "Times New Roman", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
   color: var(--fg);
 }
 
@@ -62,7 +64,7 @@ html { background: #15191f; font-size: 150%; }
 
 .slide h1,
 .slide h2 {
-  font-family: "Lazenby Computer", "Tektur", sans-serif;
+  font-family: "Lazenby Computer", "Lora", sans-serif;
   font-weight: normal; /* Lazenby ships a single weight */
 }
 
@@ -282,4 +284,96 @@ html { background: #15191f; font-size: 150%; }
 #progress .dot.active {
   background: var(--accent);
   transform: scale(1.3);
+}
+
+/* Per-slide captured shader backdrop — only ever shown when printing. The <img>
+   still loads on screen (display:none images are fetched), so it is ready by the
+   time the user prints, with no flash on the live deck. */
+.print-bg { display: none; }
+
+/* Line breaks that only apply when printing (e.g. a long nowrap subtitle that
+   overflows the narrower print page). Hidden on screen, shown in the print
+   block below. A <br> forces a break even under white-space: nowrap. */
+.print-br { display: none; }
+
+/* Print / PDF export (Ctrl-P).
+   On screen the deck stacks every slide at inset:0 and reveals one at a time via
+   opacity/transform. For print we undo that: flow the slides into the normal
+   document, give each its own page, and drop the interactive chrome. */
+@media print {
+  /* Landscape pages with no printer margins so each slide fills the sheet. */
+  @page {
+    size: landscape;
+    margin: 0;
+  }
+
+  /* The screen rules pin html/body to 100% height and clip overflow — let the
+     document grow to as many pages as there are slides instead. The screen
+     bumps the root font to 150%; reset it to 100% so slides print at a
+     sensible size. */
+  html, body {
+    height: auto;
+    overflow: visible;
+    background: #15191f;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  html { font-size: 80%; }
+
+  /* Hide everything that only makes sense on screen: the animated shader canvas
+     (appended to <body> by shader-web-background) and the navigation controls. */
+  body > canvas,
+  .nav-arrow,
+  #progress { display: none !important; }
+
+  /* The deck no longer needs to be a fixed full-viewport overlay. */
+  #deck {
+    position: static;
+    pointer-events: auto;
+  }
+
+  /* Each slide becomes one printed page: fully visible, untransformed, and
+     followed by a page break. The dark fallback colour keeps white text legible
+     if the background image is dropped. */
+  .slide {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 100vh;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    background: #15191f;
+    break-after: page;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    /* Keep only the tight contrast shadow (inherited by all slide text); drop
+       the screen's wide-blur layer. The wide blur isn't needed over the static
+       print backdrop, and some PDF viewers (e.g. Apple Preview) rasterise a
+       large blur into a visible box behind text. */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+  }
+
+  /* Captured shader frame backing every page. A real <img> (injected by
+     presentation.js) is used instead of a CSS background-image because Chrome
+     loads and prints background images unreliably, whereas <img> elements load
+     eagerly and always print. It sits behind the slide's text via z-index. */
+  .slide .print-bg {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    object-fit: cover;
+    border-radius: 0;
+    z-index: -1;
+  }
+
+  /* No trailing blank page after the final slide. */
+  .slide:last-child { break-after: auto; }
+
+  /* Activate print-only line breaks. */
+  .print-br { display: inline; }
 }
