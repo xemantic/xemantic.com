@@ -47,20 +47,6 @@
     }
   });
 
-  // Print backdrop: the live WebGL shader is position:fixed and can't tile
-  // across printed pages, so drop a captured frame behind every slide as a real
-  // <img>. CSS background-images print unreliably in Chrome; <img> elements load
-  // eagerly (even while display:none) and always print. A darkened variant
-  // (background-print.jpg) is used so text stays legible on paper — the bright
-  // background.jpg is kept for on-screen/social reference.
-  slides.forEach((slide) => {
-    const bg = document.createElement('img');
-    bg.className = 'print-bg';
-    bg.src = 'background-print.jpg';
-    bg.alt = '';
-    slide.insertBefore(bg, slide.firstChild);
-  });
-
   // Deep-link / refresh support: #3 opens the third slide.
   const start = parseInt(location.hash.replace('#', ''), 10);
   go(Number.isFinite(start) && start > 0 ? start - 1 : 0);
