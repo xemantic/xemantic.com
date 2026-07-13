@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Metacognitive AI, Block by Block</title>
+<meta name="description" content="Metacognitive AI, block by block — the Xemantic open-source Kotlin ecosystem, by Kazik Pogoda.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Metacognitive AI, Block by Block">
+<meta property="og:description" content="The Xemantic open-source Kotlin ecosystem — from a one-line assertion to a metacognitive AI harness.">
+<meta property="og:url" content="https://xemantic.com/ai">
+<meta property="og:image" content="https://xemantic.com/ai/workshops/images/AnthropicAiIn16LinesOfCode.webp">
+<meta property="og:image:alt" content="A claude.ai clone written in 16 lines of Kotlin code">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Metacognitive AI, Block by Block">
+<meta name="twitter:description" content="The Xemantic open-source Kotlin ecosystem — from a one-line assertion to a metacognitive AI harness.">
+<meta name="twitter:image" content="https://xemantic.com/ai/workshops/images/AnthropicAiIn16LinesOfCode.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="presentation.css">
+<link rel="stylesheet" href="code.css">
+<script src="../assets/js/shader-web-background.js"></script>
+<script type="x-shader/x-fragment" id="image">
+    precision highp float;
+
+    uniform vec2  iResolution;
+    uniform float iTime;
+    uniform float iScroll;
+
+    #define rot(a) mat2(cos(a + vec4(0,33,11,0)))
+    #define C(U,w) smoothstep( w, -w, sin(length(fract(U)*2.-1.) * 3.) *.5  -.118 )
+    #define O gl_FragColor
+
+    void main() {
+    vec2 u = gl_FragCoord.xy;
+    vec2  R = iResolution.xy, P,
+          U = ( u+u - R ) / min(R.x, R.y) * .5;
+    float d = length(U),
+          t = iTime,
+          blur = .4 + sin(t * .52) * .2,
+          luma = .5,
+          abber = .01;
+    U *= rot( sin(t * .14) * .3 )
+       * (sin(t * .15) + 2.) * .3;
+    U *= log(length(U)*.428) * 1.1;
+
+    for (float i = 0.; i < 3.; i++) {
+        P = U + vec2(sin(t*.12), cos(t*.13));
+        P.x -= iScroll;
+
+        O.rgb += vec3(
+            C( P - U * abber, blur),
+            C( P, blur),
+            C( P + U * abber, blur)
+        ) * luma;
+        O = min(O,1.);
+        U *= ( 1.1 + C(P,.04) * 1.2 )
+          *   rot( sin(t*.05) * 1.33 );
+        luma *= .6;
+        blur *= .63;
+    }
+
+    vec3 C = 1.+mix(  sin(t * vec3(1.13,1.23,1.33) * .3),
+                    - sin(t * vec3(1.43,1.53,1.63) * .3), d-.5) *.4*vec3(1,1,-1);
+    O = vec4(pow(O.rgb, C), 1) * smoothstep(2.1, .7, d / .5);
+    O = O * O;
+}
+</script>
+<script>
+    const SLIDE_PAN_RATE = .9;   // shader units panned per slide advanced
+    const SCROLL_EASING = .08;   // how quickly the pan catches up to the active slide
+    const randomSeed = Math.random() * 100;
+
+    let scroll = 0;
+    shaderWebBackground.shade((ctx) => ({
+      onResize: (width, height) => {
+        minDimension = Math.min(width, height);
+      },
+      onBeforeFrame: () => {
+        time = performance.now() / 10000 + randomSeed;
+        // The deck navigates horizontally; ease the shader pan toward the active slide
+        // (presentation.js publishes the current slide index on window.presentationScroll).
+        const target = (window.presentationScroll || 0) * SLIDE_PAN_RATE;
+        scroll += (target - scroll) * SCROLL_EASING;
+      },
+      shaders: {
+        image: {
+          uniforms: {
+            iResolution:           () => ctx.resolution,
+            iTime:                 () => time,
+            iScroll:               () => scroll,
+          }
+        }
+      }
+    }));
+</script>
+</head>
+<body>
+
+<div id="deck">
+
+  <article class="slide">
+    <h1>Metacognitive AI,<br>block by block</h1>
+    <p class="subtitle">the Xemantic open-source<br class="print-br"> Kotlin ecosystem</p>
+    <p class="note">Idiomatic Kotlin expresses meaning close to natural language —<br class="print-br"> our mission is to make it a fundamental language of AI development.</p>
+    <p class="ref"><a href="https://xemantic.com/ai">https://xemantic.com/ai</a></p>
+    <p>
+      Kazik Pogoda<br>
+      <!-- Email assembled by presentation.js to keep the plaintext address out of the page source. -->
+      <a class="email" data-user="kazik" data-domain="xemantic.com">email</a>
+    </p>
+  </article>
+
+  <article class="slide">
+    <img class="brand-logo" src="../assets/images/logo.svg" alt="Xemantic">
+    <ul>
+      <li>applied philosophy</li>
+      <li>AI research</li>
+      <li>harness engineering</li>
+      <li>humanistic computation</li>
+    </ul>
+    <p class="note">we code a lot, but focus on meanings much more than on words</p>
+    <p class="ref"><a href="https://xemantic.com">https://xemantic.com</a></p>
+  </article>
+
+  <article class="slide">
+    <h2>From words to deeds</h2>
+    <p>A language model alone can only speak. Everything that follows exists to let it <em>act</em>.</p>
+    <p>Small building blocks — each open source, written in Kotlin, and built upon the previous ones.</p>
+  </article>
+
+  <article class="slide">
+    <h2>A grammar of truth</h2>
+    <pre><code>message <span class="f">should</span> {
+    <span class="f">have</span>(id == <span class="n">42</span>)
+    content[<span class="n">0</span>] <span class="f">should</span> {
+        <span class="f">be</span>&lt;<span class="t">Text</span>&gt;()
+        <span class="f">have</span>(<span class="s">"Hello"</span> <span class="k">in</span> text)
+    }
+}</code></pre>
+    <p class="note">before we trust a machine's work, we must agree on what "correct" means — a test that reads like a sentence</p>
+    <p class="ref"><a href="https://github.com/xemantic/xemantic-kotlin-test">https://github.com/xemantic/xemantic-kotlin-test</a></p>
+  </article>
+
+  <article class="slide">
+    <h2>When a test fails, it explains itself</h2>
+    <pre><code>MediaType(type=image/jpeg)
+ should:
+have(type == <span class="s">"image/png"</span>)
+     |    |
+     |    <span class="err">false</span>
+     <span class="err">image/jpeg</span></code></pre>
+    <p class="note">the failure is a diagram, not a riddle — readable by humans, and by AI agents fixing their own code</p>
+  </article>
+
+  <article class="slide">
+    <h2>Comparing meaning, not characters</h2>
+    <pre><code><span class="s">"""</span>{<span class="k">"foo"</span>:<span class="s">"bar"</span>,<span class="k">"baz"</span>:<span class="n">42</span>}<span class="s">"""</span> <span class="f">sameAsJson</span> <span class="s">"""</span>
+    {
+      <span class="k">"foo"</span>: <span class="s">"bar"</span>,
+      <span class="k">"baz"</span>: <span class="n">42</span>
+    }
+<span class="s">"""</span></code></pre>
+    <p class="note">this assertion passes — the two documents differ in every byte, yet carry the same JSON semantics</p>
+  </article>
+
+  <article class="slide">
+    <h2>A failure the agent can comprehend</h2>
+    <pre class="dense"><code><span class="t">&lt;test-failure</span>
+    <span class="a">test</span>=<span class="s">"JsonTest.foo sameAsJson bar()"</span>
+    <span class="a">platform</span>=<span class="s">"jvm"</span><span class="t">&gt;</span>
+<span class="t">&lt;message&gt;</span>
+--- expected
++++ actual
+<span class="c">@@ -1,4 +1,4 @@</span>
+ {
+<span class="err">-  "foo": "bar",</span>
+<span class="s">+  "foo": "qux",</span>
+   "baz": 42
+ }
+<span class="t">&lt;/message&gt;</span>
+<span class="t">&lt;stacktrace&gt;</span><span class="c">…redacted…</span><span class="t">&lt;/stacktrace&gt;</span>
+<span class="t">&lt;/test-failure&gt;</span></code></pre>
+    <p class="note">what should your coding AI agent see when this assertion fails? precision reduces cognitive load and token costs — improving speed and quality of reasoning</p>
+  </article>
+
+  <article class="slide">
+    <h2>AX — Agent Experience</h2>
+    <ul>
+      <li>DX designed libraries for developers</li>
+      <li>AX designs them for AI agents as first-class users</li>
+      <li>the agent writes code, runs the test, reads the failure, corrects itself</li>
+    </ul>
+    <p class="note">the clearer the error speaks, the shorter the loop</p>
+  </article>
+
+  <article class="slide">
+    <h2>Teaching machines to fill forms</h2>
+    <pre><code><span class="a">@Serializable</span>
+<span class="a">@Title</span>(<span class="s">"The full address"</span>)
+<span class="k">data class</span> <span class="t">Address</span>(
+    <span class="k">val</span> street: <span class="t">String</span>,
+    <span class="k">val</span> city: <span class="t">String</span>,
+    <span class="k">val</span> postalCode: <span class="t">String</span>
+)
+
+<span class="k">val</span> schema = <span class="f">jsonSchemaOf</span>&lt;<span class="t">Address</span>&gt;()</code></pre>
+    <p class="note">a Kotlin class becomes a form the model knows how to fill — no hand-written JSON Schema</p>
+    <p class="ref"><a href="https://github.com/xemantic/xemantic-ai-tool-schema">https://github.com/xemantic/xemantic-ai-tool-schema</a></p>
+  </article>
+
+  <article class="slide">
+    <h2>Hello, Claude</h2>
+    <pre><code><span class="k">val</span> anthropic = <span class="t">Anthropic</span>()
+<span class="k">val</span> response = anthropic.messages.create {
+    +<span class="s">"Hello, Claude"</span>
+}
+println(response)</code></pre>
+    <p class="note">one codebase talks to Claude from servers, browsers, phones and robots — JVM, JS, WebAssembly, Android, iOS, Linux, macOS, Windows</p>
+    <p class="ref"><a href="https://github.com/xemantic/anthropic-sdk-kotlin">https://github.com/xemantic/anthropic-sdk-kotlin</a></p>
+  </article>
+
+  <article class="slide">
+    <h2>Your own claude.ai</h2>
+    <pre class="dense"><code><span class="k">val</span> anthropic = <span class="t">Anthropic</span>()
+<span class="k">val</span> context = mutableListOf&lt;<span class="t">Message</span>&gt;()
+<span class="k">while</span> (<span class="k">true</span>) {
+    print(<span class="s">"[user]&gt; "</span>)
+    <span class="k">val</span> input = readln()
+    <span class="k">if</span> (input == <span class="s">"exit"</span>) <span class="k">break</span>
+    context += <span class="t">Message</span> { +input }
+    println(<span class="s">"...Thinking..."</span>)
+    <span class="k">val</span> response = anthropic.messages.create {
+        messages = context
+    }
+    context += response
+    println(<span class="s">"[assistant]&gt; <span class="k">${response.text}</span>"</span>)
+}</code></pre>
+    <p class="note">simpler than Python — this is why Xemantic is using Kotlin for <a href="https://xemantic.com/ai/workshops/">teaching AI development</a></p>
+  </article>
+
+  <article class="slide">
+    <h2>Giving the model hands</h2>
+    <pre><code><span class="a">@Description</span>(<span class="s">"Get the weather for a location"</span>)
+<span class="k">data class</span> <span class="t">GetWeather</span>(<span class="k">val</span> location: <span class="t">String</span>)
+
+<span class="k">val</span> toolbox = <span class="t">Toolbox</span> {
+    <span class="f">tool</span>&lt;<span class="t">GetWeather</span>&gt; {
+        <span class="s">"The weather in <span class="k">$location</span> is 23°C"</span>
+    }
+}</code></pre>
+    <p class="note">the schema block from three slides ago is quietly at work here — blocks building upon blocks</p>
+  </article>
+
+  <article class="slide">
+    <h2>Machines think in streams</h2>
+    <pre><code>flowOf(llmOutput)
+    .<span class="f">parse</span>()
+    .<span class="f">transform</span> {
+        <span class="f">match</span>(<span class="s">"h1"</span>) { <span class="s">"h2"</span> { children() } } <span class="c">// demote headings</span>
+        <span class="f">passthrough</span>()
+    }
+    .<span class="f">render</span>()</code></pre>
+    <p class="note">markanywhere turns Markdown into a stream of semantic events — rendered live, while the model is still speaking</p>
+    <p class="ref"><a href="https://github.com/xemantic/markanywhere">https://github.com/xemantic/markanywhere</a></p>
+  </article>
+
+  <article class="slide">
+    <h2>Full circle</h2>
+    <pre><code>flowOf(<span class="s">"# Hello, *world*\n"</span>)
+    .<span class="f">parse</span>()
+    .<span class="f">render</span>() <span class="f">sameAs</span> <span class="s">"""
+    &lt;h1&gt;Hello, &lt;em&gt;world&lt;/em&gt;&lt;/h1&gt;
+"""</span></code></pre>
+    <p class="note">the assertion DSL from the first block now tests the streaming engine — and this very website is rendered by it</p>
+  </article>
+
+  <article class="slide">
+    <h2>Documents as semantic events</h2>
+    <pre class="dense"><code><span class="k">val</span> page = <span class="f">semanticEvents</span>(tagged = <span class="k">true</span>) {
+    <span class="s">"body"</span> {
+        <span class="s">"h1"</span> { +<span class="s">"Weather"</span> }
+        <span class="s">"p"</span> {
+            <span class="s">"i"</span>(<span class="s">"class"</span> <span class="k">to</span> <span class="s">"fa-solid fa-sun"</span>) { }
+            +<span class="s">" Sunny and "</span>
+            <span class="s">"strong"</span> { +<span class="s">"warm"</span> }
+            +<span class="s">" today — see the "</span>
+            <span class="s">"a"</span>(<span class="s">"href"</span> <span class="k">to</span> <span class="s">"https://example.com/forecast"</span>) { +<span class="s">"forecast"</span> }
+        }
+        <span class="s">"script"</span> { +<span class="s">"track('view')"</span> }
+    }
+}
+println(page.<span class="f">transformHtmlToMarkdown</span>().<span class="f">renderMarkdown</span>())</code></pre>
+    <pre class="dense"><code># Weather
+
+☀️ Sunny and **warm** today — see the [forecast](https://example.com/forecast)</code></pre>
+    <p class="note">the icon becomes an emoji, the script disappears — meaning survives, noise does not</p>
+  </article>
+
+  <article class="slide">
+    <h2>Umwelt</h2>
+    <p>The web as your AI agent's Umwelt — every page transduced into the language a model natively perceives.</p>
+    <p>Let your AI agent fill in your tax forms on the web — without taking a single screenshot, with real browser instances behind, rendering JavaScript.</p>
+    <p class="note">markanywhere at full power — coming soon at <a href="https://umwe.lt">umwe.lt</a>, together with an Agent Skill</p>
+    <p class="ref"><a href="https://github.com/xemantic/umwelt">https://github.com/xemantic/umwelt</a></p>
+  </article>
+
+  <article class="slide">
+    <h2>Memory needs a graph</h2>
+    <pre><code>neo4j.<span class="f">flow</span>(
+    <span class="s">"MATCH (p:Person) RETURN p ORDER BY p.name"</span>
+).<span class="f">collect</span> {
+    println(it[<span class="s">"p"</span>][<span class="s">"name"</span>].asString())
+}</code></pre>
+    <p class="note">a coroutines adapter for the Neo4j graph database — knowledge streams out of memory the same way it streams out of models</p>
+    <p class="ref"><a href="https://github.com/xemantic/xemantic-neo4j-kotlin-driver">https://github.com/xemantic/xemantic-neo4j-kotlin-driver</a></p>
+  </article>
+
+  <article class="slide">
+    <h2>Claudine</h2>
+    <p class="subtitle">the blocks become an agent</p>
+    <p>The older sister of Claude Code, which won AI Hack Berlin 2024 at Google — your machine as its window to the world, five tools suffice.</p>
+    <p class="note">today used purely for teaching harness engineering — the whole agent is a single Kotlin file of 229 lines</p>
+    <p class="ref"><a href="https://github.com/xemantic/claudine">https://github.com/xemantic/claudine</a></p>
+  </article>
+
+  <article class="slide compact">
+    <h2>Golem XIV</h2>
+    <div class="figure-row">
+      <img src="../metacognitive-ai/golem.jpg" alt="Golem XIV">
+      <div>
+        <p class="subtitle">a metacognitive AI harness</p>
+        <ul>
+          <li>unlimited memory as a knowledge graph (Neo4j)</li>
+          <li>chain-of-code reasoning in Kotlin script</li>
+          <li>DSLs for remembering and researching facts</li>
+          <li>unconstrained time horizon of tasks</li>
+          <li>thinking about its own thinking</li>
+          <li>self-improvement loops</li>
+        </ul>
+        <p class="note">researched for scientific purposes in affiliation with the <a href="https://foresight.org/">Foresight Institute</a></p>
+        <p class="ref"><a href="https://github.com/xemantic/golem-xiv">https://github.com/xemantic/golem-xiv</a></p>
+      </div>
+    </div>
+  </article>
+
+  <article class="slide compact">
+    <h2>The ecosystem</h2>
+    <ul>
+      <li><a href="https://github.com/xemantic/xemantic-kotlin-test"><code>xemantic-kotlin-test</code></a> — the grammar of truth</li>
+      <li><a href="https://github.com/xemantic/xemantic-ai-tool-schema"><code>xemantic-ai-tool-schema</code></a> — forms machines can fill</li>
+      <li><a href="https://github.com/xemantic/anthropic-sdk-kotlin"><code>anthropic-sdk-kotlin</code></a> — talking to Claude everywhere</li>
+      <li><a href="https://github.com/xemantic/markanywhere"><code>markanywhere</code></a> — meaning in motion</li>
+      <li><a href="https://github.com/xemantic/xemantic-neo4j-kotlin-driver"><code>xemantic-neo4j-kotlin-driver</code></a> — where memory lives</li>
+      <li><a href="https://github.com/xemantic/umwelt"><code>umwelt</code></a> — the web for machines</li>
+      <li><a href="https://github.com/xemantic/claudine"><code>claudine</code></a> — the agent</li>
+      <li><a href="https://github.com/xemantic/golem-xiv"><code>golem-xiv</code></a> — the metacognitive harness</li>
+    </ul>
+    <p class="note">plus supporting cast: <a href="https://github.com/xemantic/xemantic-ai-money"><code>xemantic-ai-money</code></a>, <a href="https://github.com/xemantic/xemantic-ai-file-magic"><code>xemantic-ai-file-magic</code></a>, and more</p>
+    <p class="ref"><a href="https://github.com/xemantic">https://github.com/xemantic</a></p>
+  </article>
+
+  <article class="slide">
+    <h2>Why Kotlin?</h2>
+    <ul>
+      <li>one codebase — every platform, from server to wristwatch</li>
+      <li>coroutines &amp; flows — streams of thought, natively</li>
+      <li>DSLs that read like the tale itself, to humans and models alike</li>
+      <li>a type system that keeps code-writing machines honest</li>
+    </ul>
+  </article>
+
+  <article class="slide">
+    <h2>Built to last</h2>
+    <ul>
+      <li>continuous integration across all platforms</li>
+      <li>binary-compatibility guarded releases</li>
+      <li>semantic versioning to Maven Central</li>
+      <li>permissive open-source licenses</li>
+      <li>AX — agents co-maintain the code they are made of</li>
+    </ul>
+  </article>
+
+  <article class="slide">
+    <h2>The road ahead</h2>
+    <ul>
+      <li>markanywhere 1.0 — streaming Markdown for every LLM interface</li>
+      <li>Umwelt at umwe.lt — the whole web transduced for machines</li>
+      <li>Golem XIV — open research into metacognitive harnesses</li>
+      <li>workshops &amp; science hackathons — teaching with these very blocks in the <a href="https://claude.com/community/ambassadors">Claude Ambassador</a> role</li>
+    </ul>
+    <p class="ref"><a href="https://xemantic.com/ai/workshops/">https://xemantic.com/ai/workshops/</a></p>
+  </article>
+
+  <article class="slide">
+    <h2>Blocks all the way up</h2>
+    <p>From a one-line assertion to a harness that reflects on its own reasoning — every block open, every block composable.</p>
+    <p class="subtitle">Open source, open ended — fork it.</p>
+    <p class="ref"><a href="https://github.com/xemantic">https://github.com/xemantic</a></p>
+    <p>
+      Kazik Pogoda ·
+      <a class="email" data-user="kazik" data-domain="xemantic.com">email</a>
+    </p>
+    <p class="note">with the assistance of <a href="https://claude.com">Claude</a></p>
+  </article>
+</div>
+
+<button id="prev" class="nav-arrow" aria-label="Previous slide">‹</button>
+<button id="next" class="nav-arrow" aria-label="Next slide">›</button>
+<nav id="progress"></nav>
+
+<script src="presentation.js"></script>
+</body>
+</html>

@@ -1,0 +1,393 @@
+/* Lazenby Computer by Andrew Young (Disaster Fonts), CC BY-SA 4.0.
+   See assets/fonts/LazenbyComputer-LICENSE.txt */
+@font-face {
+  font-family: "Lazenby Computer";
+  src: url("../assets/fonts/LazenbyCompSmooth.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --fg: #ffffff;        /* all text is max white */
+  --muted: #ffffff;     /* formerly gray secondary text — now white too */
+  --accent: #a882ff;    /* bright Obsidian-like purple, used only for links & buttons */
+}
+
+html, body { margin: 0; height: 100%; overflow: hidden; }
+/* Background lives on <html> only. The shader canvas is appended to <body>
+   with a negative z-index, so an opaque <body> background would paint over it. */
+html { background: #15191f; font-size: 150%; }
+
+/* Presentation layer — sits on top of the shader canvas.
+   The deck itself ignores pointer events; only the text blocks capture clicks. */
+#deck {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  font-family: "Lora", Georgia, "Times New Roman", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  color: var(--fg);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8vh 10vw;
+  box-sizing: border-box;
+  /* Dark drop-shadow inherited by every text element, for contrast against the
+     animated shader: a tight near-opaque edge plus a soft spread. */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9), 0 2px 14px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  /* Slides waiting on the right enter from the right; once passed they
+     exit to the left. The current slide rests at translateX(0). */
+  transform: translateX(100%);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.slide.past { transform: translateX(-100%); }
+
+.slide.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Only the active slide's content captures pointer events. */
+.slide.active > * { pointer-events: auto; }
+
+.slide h1,
+.slide h2 {
+  font-family: "Lazenby Computer", "Lora", sans-serif;
+  font-weight: normal; /* Lazenby ships a single weight */
+}
+
+.slide h1 {
+  font-size: clamp(3.2rem, 8.8vw, 7rem);
+  margin: 0 0 0.3em;
+  letter-spacing: 0.01em;
+}
+
+.slide h2 {
+  font-size: clamp(2.3rem, 6.4vw, 4.4rem);
+  margin: 0 0 0.4em;
+  letter-spacing: 0.01em;
+}
+
+.slide p {
+  font-size: clamp(1.45rem, 3.1vw, 2.05rem);
+  line-height: 1.45;
+  max-width: 34ch;
+  color: var(--fg);
+}
+
+.slide .subtitle {
+  color: var(--muted);
+  font-size: clamp(1.35rem, 3.1vw, 1.95rem);
+}
+
+.slide ul,
+.slide ol {
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  font-size: clamp(1.45rem, 3.1vw, 2.15rem);
+  line-height: 1.6;
+  max-width: 46ch;
+}
+
+.slide ul { list-style: none; }
+
+.slide ol {
+  list-style: decimal;
+  padding-left: 1.4em;
+}
+
+.slide ul li::before {
+  content: "›";
+  color: var(--accent);
+  margin-right: 0.6em;
+  font-weight: 700;
+}
+
+/* Links read as a highlight rather than an underline: a rounded, semi-transparent
+   accent box that deepens on hover. Negative side-margins keep the padded box from
+   nudging surrounding text, and the box tracks line-wraps as a continuous highlight. */
+.slide a {
+  color: var(--fg);
+  text-decoration: none;
+  background: rgba(168, 130, 255, 0.18);
+  padding: 0.08em 0.3em;
+  margin: 0 -0.08em;
+  border-radius: 0.35em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  transition: background 0.4s ease;
+}
+.slide a:hover,
+.slide a:focus-visible {
+  background: rgba(168, 130, 255, 0.42);
+}
+
+/* Links shown as the slide's standalone reference (URLs from the markdown).
+   Keep the whole URL on a single line so it never breaks mid-address. */
+.slide .ref {
+  color: var(--muted);
+  font-size: clamp(1.15rem, 2.5vw, 1.55rem);
+  max-width: none;
+  white-space: nowrap;
+}
+
+/* Pull quotes */
+.slide blockquote {
+  margin: 0 0 0.4em;
+  max-width: 40ch;
+  font-style: italic;
+  font-size: clamp(1.55rem, 3.5vw, 2.5rem);
+  line-height: 1.4;
+  border-left: 3px solid var(--accent);
+  padding-left: 0.8em;
+  text-align: left;
+}
+
+.slide .attrib {
+  color: var(--muted);
+  font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+}
+
+.slide .note {
+  color: var(--muted);
+  font-style: italic;
+  font-size: clamp(1.15rem, 2.5vw, 1.55rem);
+}
+
+.slide img {
+  max-width: 100%;
+  max-height: 42vh;
+  border-radius: 8px;
+}
+
+/* Xemantic wordmark used as a slide's heading. The drop-shadow filter mirrors
+   the text-shadow used on .slide (text-shadow has no effect on images). */
+.slide .brand-logo {
+  width: min(46vw, 32rem);
+  height: auto;
+  border-radius: 0;
+  margin: 0 0 1.6em;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.9))
+          drop-shadow(0 2px 14px rgba(0, 0, 0, 0.8));
+}
+
+/* An image set beside the slide's text. */
+.slide .figure-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4vw;
+  flex-wrap: nowrap;
+}
+/* Cap both dimensions (aspect preserved): portraits are bound by height,
+   landscape photos by width — so neither dominates the slide. */
+.slide .figure-row img {
+  max-height: 52vh;
+  max-width: 38vw;
+  width: auto;
+  height: auto;
+  flex: 0 1 auto;
+}
+/* Text column takes the remaining width and may shrink. */
+.slide .figure-row > :not(img) {
+  min-width: 0;
+}
+
+.slide img.qr {
+  max-height: 20vh;
+  border-radius: 4px;
+  background: #fff;
+  padding: 0.4em;
+}
+
+/* Title slide: text content on the left, image stretched to full screen height
+   on the right. */
+.title-slide {
+  flex-direction: row;
+  align-items: stretch;
+  padding: 0;
+}
+.title-slide .title-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  padding: 6vh 5vw;
+  box-sizing: border-box;
+}
+.title-slide h1 { font-size: clamp(2.6rem, 6.9vw, 5rem); margin: 0 0 0.2em; }
+.title-slide .subtitle { margin: 0 0 0.4em; }
+/* Let the text use the full width of the column so the subtitle and the URL
+   stay on a single line instead of wrapping. */
+.title-slide p { margin: 0; max-width: none; white-space: nowrap; }
+/* Keep the link tight under the QR code, but set the whole QR+link group apart
+   from the rest with extra space above the QR and below the link. */
+.title-slide .qr { max-height: 18vh; margin-top: 1.4em; }
+.title-slide .ref { margin-top: -0.2em; margin-bottom: 1.4em; }
+.title-slide .hero {
+  height: 100%;
+  width: auto;
+  max-height: none;
+  border-radius: 0;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Navigation controls */
+.nav-arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  pointer-events: auto;
+  background: rgba(20, 25, 31, 0.4);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  transition: background 0.2s, opacity 0.2s;
+  opacity: 0.35;
+}
+.nav-arrow:hover { background: rgba(168, 130, 255, 0.3); opacity: 1; }
+#prev { left: 1.5rem; }
+#next { right: 1.5rem; }
+
+/* Slide counter + progress dots */
+#progress {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  pointer-events: auto;
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+#progress .dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+#progress .dot.active {
+  background: var(--accent);
+  transform: scale(1.3);
+}
+
+/* Per-slide captured shader backdrop — only ever shown when printing. The <img>
+   still loads on screen (display:none images are fetched), so it is ready by the
+   time the user prints, with no flash on the live deck. */
+.print-bg { display: none; }
+
+/* Line breaks that only apply when printing (e.g. a long nowrap subtitle that
+   overflows the narrower print page). Hidden on screen, shown in the print
+   block below. A <br> forces a break even under white-space: nowrap. */
+.print-br { display: none; }
+
+/* Print / PDF export (Ctrl-P).
+   On screen the deck stacks every slide at inset:0 and reveals one at a time via
+   opacity/transform. For print we undo that: flow the slides into the normal
+   document, give each its own page, and drop the interactive chrome. */
+@media print {
+  /* Landscape pages with no printer margins so each slide fills the sheet. */
+  @page {
+    size: landscape;
+    margin: 0;
+  }
+
+  /* The screen rules pin html/body to 100% height and clip overflow — let the
+     document grow to as many pages as there are slides instead. The screen
+     bumps the root font to 150%; reset it to 100% so slides print at a
+     sensible size. */
+  html, body {
+    height: auto;
+    overflow: visible;
+    background: #15191f;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  html { font-size: 80%; }
+
+  /* Hide everything that only makes sense on screen: the animated shader canvas
+     (appended to <body> by shader-web-background) and the navigation controls. */
+  body > canvas,
+  .nav-arrow,
+  #progress { display: none !important; }
+
+  /* The deck no longer needs to be a fixed full-viewport overlay. */
+  #deck {
+    position: static;
+    pointer-events: auto;
+  }
+
+  /* Each slide becomes one printed page: fully visible, untransformed, and
+     followed by a page break. The dark fallback colour keeps white text legible
+     if the background image is dropped. */
+  .slide {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 100vh;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    background: #15191f;
+    break-after: page;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    /* Keep only the tight contrast shadow (inherited by all slide text); drop
+       the screen's wide-blur layer. The wide blur isn't needed over the static
+       print backdrop, and some PDF viewers (e.g. Apple Preview) rasterise a
+       large blur into a visible box behind text. */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+  }
+
+  /* Captured shader frame backing every page. A real <img> (injected by
+     presentation.js) is used instead of a CSS background-image because Chrome
+     loads and prints background images unreliably, whereas <img> elements load
+     eagerly and always print. It sits behind the slide's text via z-index. */
+  .slide .print-bg {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    object-fit: cover;
+    border-radius: 0;
+    z-index: -1;
+  }
+
+  /* No trailing blank page after the final slide. */
+  .slide:last-child { break-after: auto; }
+
+  /* Activate print-only line breaks. */
+  .print-br { display: inline; }
+}
