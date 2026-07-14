@@ -17,7 +17,13 @@
 html, body { margin: 0; height: 100%; overflow: hidden; }
 /* Background lives on <html> only. The shader canvas is appended to <body>
    with a negative z-index, so an opaque <body> background would paint over it. */
-html { background: #15191f; font-size: 150%; }
+/* Root font-size drives every rem-based size in the deck. Nearly all slide text
+   uses clamp(min-rem, mid-vw, max-rem) and hits its max-rem bound near FullHD
+   width, so a fixed base would render the same absolute size on a 1080p screen
+   as on a 4K one — far too tall for the shorter viewport. Tie the base to
+   viewport height instead: it scales the whole deck down on short screens and
+   caps at 150% on tall / 4K ones so nothing overflows the centered slides. */
+html { background: #15191f; font-size: clamp(100%, 1.67vh, 150%); }
 
 /* Presentation layer — sits on top of the shader canvas.
    The deck itself ignores pointer events; only the text blocks capture clicks. */
