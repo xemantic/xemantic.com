@@ -47,6 +47,21 @@
     }
   });
 
+  // Touch navigation: a horizontal swipe advances the deck on mobile. The
+  // vertical-dominance check leaves pinch-zoom pans and accidental scrolls alone.
+  let touchX = null, touchY = null;
+  document.addEventListener('touchstart', (e) => {
+    touchX = e.changedTouches[0].clientX;
+    touchY = e.changedTouches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    const dy = e.changedTouches[0].clientY - touchY;
+    touchX = touchY = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) (dx < 0 ? next : prev)();
+  }, { passive: true });
+
   // Print backdrop: the live WebGL shader is position:fixed and can't tile
   // across printed pages, so drop a captured frame behind every slide as a real
   // <img>. CSS background-images print unreliably in Chrome; <img> elements load

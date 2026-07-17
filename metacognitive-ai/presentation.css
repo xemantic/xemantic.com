@@ -17,7 +17,14 @@
 html, body { margin: 0; height: 100%; overflow: hidden; }
 /* Background lives on <html> only. The shader canvas is appended to <body>
    with a negative z-index, so an opaque <body> background would paint over it. */
-html { background: #15191f; font-size: 150%; }
+/* Root font-size drives every rem-based size in the deck. Nearly all slide text
+   uses clamp(min-rem, mid-vw, max-rem) and hits its max-rem bound near FullHD
+   width, so a fixed base would render the same absolute size on a 1080p screen
+   as on a 4K one — far too tall for the shorter viewport. Tie the base to the
+   limiting viewport dimension instead — height on wide screens, width on
+   portrait/mobile ones. Capped at 150% so tall 4K screens don't overflow the
+   centered slides, floored at 70% so phone text never becomes unreadable. */
+html { background: #15191f; font-size: clamp(70%, min(1.67vh, 3.4vw), 150%); }
 
 /* Presentation layer — sits on top of the shader canvas.
    The deck itself ignores pointer events; only the text blocks capture clicks. */
@@ -298,6 +305,48 @@ html { background: #15191f; font-size: 150%; }
 #progress .dot.active {
   background: var(--accent);
   transform: scale(1.3);
+}
+
+/* Portrait / mobile screens: width, not height, is the scarce dimension.
+   Trim the wide side-paddings, stack image-beside-text rows vertically, and
+   let the lines forced onto a single row by white-space: nowrap wrap again. */
+@media (orientation: portrait) {
+  .slide { padding: 6vh 6vw; }
+
+  .slide .figure-row { flex-direction: column; gap: 2.5vh; }
+  .slide .figure-row img { max-width: 74vw; max-height: 32vh; }
+
+  /* Standalone reference URLs may exceed the narrow screen — better to break
+     mid-address than to clip. */
+  .slide .ref { white-space: normal; overflow-wrap: anywhere; }
+
+  /* Title slide: the side-by-side layout becomes a column — text block on
+     top, the hero image preserved below it, filling whatever height remains
+     down to the bottom edge. */
+  .title-slide {
+    flex-direction: column;
+    padding: 0; /* re-assert: the .slide padding above would override it */
+  }
+  .title-slide .title-content {
+    flex: 0 0 auto;
+    gap: 0.8em;
+    padding: 5vh 6vw 3vh;
+  }
+  .title-slide p { white-space: normal; }
+  .title-slide .qr { max-height: 12vh; margin-top: 1em; }
+  .title-slide .ref { margin-bottom: 0.6em; }
+  .title-slide .hero {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Keep the arrows off the slide text: park them in the bottom corners,
+     beside slimmed-down progress dots. */
+  .nav-arrow { top: auto; bottom: 1.1rem; transform: none; }
+  #progress { gap: 0.4rem; }
+  #progress .dot { width: 0.45rem; height: 0.45rem; }
 }
 
 /* Per-slide captured shader backdrop — only ever shown when printing. The <img>
