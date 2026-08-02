@@ -27,7 +27,9 @@
 
     uniform vec2  iResolution;
     uniform float iTime;
-    uniform float iScroll;
+    uniform vec2  iOffset0;
+    uniform vec2  iOffset1;
+    uniform vec2  iOffset2;
 
     #define rot(a) mat2(cos(a + vec4(0,33,11,0)))
     #define C(U,w) smoothstep( w, -w, sin(length(fract(U)*2.-1.) * 3.) *.5  -.118 )
@@ -42,13 +44,20 @@
           blur = .4 + sin(t * .52) * .2,
           luma = .5,
           abber = .01;
+    // each pan already arrives rotated into the frame of the layer it belongs to, so
+    // all of them shift in the same screen direction; it stays clear of the log lens,
+    // which keeps focused on the center, and of the per layer zoom below, which is
+    // what leaves every layer travelling at its own pace
+    vec2 D[3];
+    D[0] = iOffset0;
+    D[1] = iOffset1;
+    D[2] = iOffset2;
     U *= rot( sin(t * .14) * .3 )
        * (sin(t * .15) + 2.) * .3;
     U *= log(length(U)*.428) * 1.1;
 
-    for (float i = 0.; i < 3.; i++) {
-        P = U + vec2(sin(t*.12), cos(t*.13));
-        P.x -= iScroll;
+    for (int i = 0; i < 3; i++) {
+        P = U + D[i] + vec2(sin(t*.12), cos(t*.13));
 
         O.rgb += vec3(
             C( P - U * abber, blur),
@@ -73,7 +82,21 @@
     const SCROLL_EASING = .08;   // how quickly the pan catches up to the active slide
     const randomSeed = Math.random() * 100;
 
+    // Mirrors the rot() macro of the shader and its row vector multiplication, so that
+    // a step taken in screen space can be pushed into the frame a layer is drawn in.
+    // Keep in sync with the GLSL above.
+    const rot = (a) => [Math.cos(a), Math.cos(a + 33), Math.cos(a + 11), Math.cos(a)];
+    const transform = (v, m) => [v[0] * m[0] + v[1] * m[1], v[0] * m[2] + v[1] * m[3]];
+
     let scroll = 0;
+    // The pan is accumulated in the pattern space of every layer, instead of being
+    // transformed into it anew on each frame. A stored offset is a standing
+    // translation, so once the deck settles it stops changing, and a slide deep into
+    // the deck animates at the rate of the first one - a pan derived from the slide
+    // index would instead keep being swung around by the rotation of the scene, ever
+    // faster the further it reaches from the center it revolves around. Only fract(P)
+    // ever reaches the screen, so wrapping the offsets to a single period is free.
+    const offsets = [[0, 0], [0, 0], [0, 0]];
     shaderWebBackground.shade((ctx) => ({
       onResize: (width, height) => {
         minDimension = Math.min(width, height);
@@ -83,14 +106,27 @@
         // The deck navigates horizontally; ease the shader pan toward the active slide
         // (presentation.js publishes the current slide index on window.presentationScroll).
         const target = (window.presentationScroll || 0) * SLIDE_PAN_RATE;
+        const previous = scroll;
         scroll += (target - scroll) * SCROLL_EASING;
+
+        const view = rot(Math.sin(time * .14) * .3)
+          .map((c) => c * (Math.sin(time * .15) + 2.) * .3);
+        const layerRotation = rot(Math.sin(time * .05) * 1.33);
+        let step = transform([previous - scroll, 0], view);
+        for (const offset of offsets) {
+          offset[0] = (offset[0] + step[0]) % 1;
+          offset[1] = (offset[1] + step[1]) % 1;
+          step = transform(step, layerRotation);
+        }
       },
       shaders: {
         image: {
           uniforms: {
             iResolution:           () => ctx.resolution,
             iTime:                 () => time,
-            iScroll:               () => scroll,
+            iOffset0:              () => offsets[0],
+            iOffset1:              () => offsets[1],
+            iOffset2:              () => offsets[2],
           }
         }
       }
@@ -118,13 +154,13 @@
     <img class="hero" src="philosophy-meets-harness-engineering.jpeg" alt="Rodin's thinker lifted up by an ufo">
   </article>
 
-<!--  <article class="slide">-->
-<!--    <h2>About Foresight Institute</h2>-->
-<!--    <blockquote>-->
-<!--      Foresight Institute is a research organization founded in 1986 by Christine Peterson and Eric Drexler – one of the “founding fathers” of nanotechnology. We work to advance science and technology for the benefit of life – through grants, events, prizes, and fellowships.-->
-<!--    </blockquote>-->
-<!--    <p class="ref"><a href="https://foresight.org/">https://foresight.org/</a></p>-->
-<!--  </article>-->
+  <article class="slide">
+    <h2>About Foresight Institute</h2>
+    <blockquote>
+      Foresight Institute is a research organization founded in 1986 by Christine Peterson and Eric Drexler – one of the “founding fathers” of nanotechnology. We work to advance science and technology for the benefit of life – through grants, events, prizes, and fellowships.
+    </blockquote>
+    <p class="ref"><a href="https://foresight.org/">https://foresight.org/</a></p>
+  </article>
 
   <article class="slide">
     <img class="brand-logo" src="../assets/images/logo.svg" alt="Xemantic">

@@ -51,22 +51,32 @@ html { background: #15191f; font-size: clamp(100%, 1.67vh, 150%); }
   /* Dark drop-shadow inherited by every text element, for contrast against the
      animated shader: a tight near-opaque edge plus a soft spread. */
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9), 0 2px 14px rgba(0, 0, 0, 0.8);
-  opacity: 0;
   /* Slides waiting on the right enter from the right; once passed they
      exit to the left. The current slide rests at translateX(0). */
   transform: translateX(100%);
-  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 .slide.past { transform: translateX(-100%); }
 
-.slide.active {
-  opacity: 1;
-  transform: translateX(0);
+.slide.active { transform: translateX(0); }
+
+/* The fade rides the slide's children rather than the slide itself: an element
+   with opacity < 1 becomes a backdrop root, and a backdrop-filter nested in one
+   can only sample what is painted inside it. Fading the slide would therefore
+   flatten the glass code panels of code.css for the whole transition, since the
+   shader canvas sits outside the slide. Fading each child instead leaves the
+   panel's own opacity to carry it, which its backdrop-filter survives. */
+.slide > * {
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
-/* Only the active slide's content captures pointer events. */
-.slide.active > * { pointer-events: auto; }
+/* Only the active slide's content is visible and captures pointer events. */
+.slide.active > * {
+  opacity: 1;
+  pointer-events: auto;
+}
 
 .slide h1,
 .slide h2 {
