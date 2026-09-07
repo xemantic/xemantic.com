@@ -1,0 +1,116 @@
+/* Code presentation layer on top of presentation.css: JetBrains Mono
+   examples on a semi-transparent dark "looking glass" panel floating
+   over the animated shader background. */
+
+/* The deck title reads better at heading scale than at the engine's
+   full display size. */
+.slide h1 {
+  font-size: clamp(2.2rem, 5.5vw, 4rem);
+}
+
+.slide pre {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: clamp(0.95rem, 2vw, 1.35rem);
+  line-height: 1.55;
+  text-align: left;
+  color: #e8ecf3;
+  background: rgba(10, 13, 18, 0.55);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 1.1em 1.5em;
+  margin: 0.4em 0 0.8em;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  max-width: 88vw;
+  overflow-x: auto;
+  /* Overflow stays scrollable, but the scrollbar chrome would pierce the
+     glass panel — hide it. */
+  scrollbar-width: none;
+  /* The glass panel provides its own contrast — the slide-wide shadow
+     would just blur the glyph edges. */
+  text-shadow: none;
+}
+
+.slide pre::-webkit-scrollbar {
+  display: none;
+}
+
+/* Longer program listings — tighter type, so the whole block fits the
+   slide together with its heading and note. */
+.slide pre.dense {
+  /* vh-based so tall listings shrink with the window instead of clipping */
+  font-size: clamp(0.55rem, 1.9vh, 0.95rem);
+  line-height: 1.45;
+}
+
+.slide pre code {
+  font-family: inherit;
+  white-space: pre;
+}
+
+/* Inline code in prose and lists. */
+.slide p code,
+.slide li code {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.85em;
+  background: rgba(10, 13, 18, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.35em;
+  padding: 0.08em 0.35em;
+}
+
+/* Inside a link the accent highlight box already frames the name —
+   drop the code chip so the two boxes don't stack. */
+.slide a code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* Code slides read better with the example wider than the 34ch prose cap. */
+.slide pre + .note {
+  max-width: 52ch;
+}
+
+/* Minimal hand-marked syntax highlighting. */
+.slide pre .k { color: #c792ea; }                    /* keywords */
+.slide pre .s { color: #c3e88d; }                    /* strings */
+.slide pre .t { color: #82cfff; }                    /* types */
+.slide pre .a { color: #ffcb6b; }                    /* annotations */
+.slide pre .n { color: #f78c6c; }                    /* numbers */
+.slide pre .f { color: #a882ff; }                    /* DSL verbs */
+.slide pre .c { color: #7f8c9e; font-style: italic; }/* comments */
+.slide pre .err { color: #ff8a80; }                  /* failure values */
+
+/* Hanging indent: the engine renders the "›" marker inline, so wrapped
+   bullet lines start flush with it — reserve the marker column instead. */
+.slide ul li {
+  position: relative;
+  padding-left: 1.2em;
+}
+.slide ul li::before {
+  position: absolute;
+  left: 0;
+}
+
+/* Bullet-heavy slides (Golem XIV, the ecosystem map): a tighter list and a
+   narrower figure keep every bullet on a single line. */
+.slide.compact .figure-row img {
+  max-width: 30vw;
+}
+.slide.compact ul {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  line-height: 1.55;
+}
+
+@media print {
+  /* backdrop-filter does not print; a nearly opaque panel keeps the code
+     legible over the captured shader frame. */
+  .slide pre {
+    background: rgba(8, 10, 14, 0.85);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: none;
+  }
+}
