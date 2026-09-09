@@ -79,7 +79,6 @@
 </script>
 <script>
     const SLIDE_PAN_RATE = .9;   // shader units panned per slide advanced
-    const SCROLL_EASING = .08;   // how quickly the pan catches up to the active slide
     const randomSeed = Math.random() * 100;
 
     // Mirrors the rot() macro of the shader and its row vector multiplication, so that
@@ -103,11 +102,13 @@
       },
       onBeforeFrame: () => {
         time = performance.now() / 10000 + randomSeed;
-        // The deck navigates horizontally; ease the shader pan toward the active slide
-        // (presentation.js publishes the current slide index on window.presentationScroll).
-        const target = (window.presentationScroll || 0) * SLIDE_PAN_RATE;
+        // The deck navigates horizontally; the pan simply follows it. The easing
+        // lives in presentation.js, which publishes a fractional slide position on
+        // window.presentationScroll already carrying the deck's own transition
+        // curve - easing again here would give the background a second, faster
+        // schedule of its own, and it would settle while the slide still slides.
         const previous = scroll;
-        scroll += (target - scroll) * SCROLL_EASING;
+        scroll = (window.presentationScroll || 0) * SLIDE_PAN_RATE;
 
         const view = rot(Math.sin(time * .14) * .3)
           .map((c) => c * (Math.sin(time * .15) + 2.) * .3);

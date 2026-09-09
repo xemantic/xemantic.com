@@ -83,6 +83,93 @@
 .slide pre .c { color: #7f8c9e; font-style: italic; }/* comments */
 .slide pre .err { color: #ff8a80; }                  /* failure values */
 
+/* Knowledge-graph slide: inline SVG drawn in the same glass idiom as the
+   code panels. Sized by the shorter viewport dimension so the whole graph
+   stays on the slide beside its heading and note. */
+.slide svg.graph {
+  width: min(86vw, 118vh);
+  height: auto;
+  overflow: visible;
+  margin: 0 0 0.3em;
+  font-family: "Lora", Georgia, serif;
+}
+.slide svg.graph line {
+  stroke: rgba(168, 130, 255, 0.75);
+  stroke-width: 2;
+}
+.slide svg.graph .pred {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 15px;
+  fill: #c792ea;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  /* Dark halo lets the label sit on top of its own edge line. */
+  paint-order: stroke;
+  stroke: #15191f;
+  stroke-width: 7px;
+  stroke-linejoin: round;
+}
+.slide svg.graph .node rect {
+  fill: rgba(10, 13, 18, 0.6);
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 1.5;
+}
+.slide svg.graph .node .name {
+  font-size: 21px;
+  fill: #ffffff;
+  text-anchor: middle;
+}
+/* Node names that are code (an intent's script, a fulfillment's result). */
+.slide svg.graph .node .name.code {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 16px;
+}
+.slide svg.graph .node .type {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12.5px;
+  fill: #82cfff;
+  text-anchor: middle;
+}
+/* Node categories, each with its own tint and outline: actants, the
+   cogitation, its enunciations (drawn as containers), and the phenomena
+   they encapsulate. Memorized facts keep the plain glass. */
+.slide svg.graph .node.actant rect {
+  fill: color-mix(in srgb, #ffcb6b 12%, rgba(10, 13, 18, 0.6));
+  stroke: rgba(255, 203, 107, 0.6);
+}
+.slide svg.graph .node.actant .type { fill: #ffcb6b; }
+.slide svg.graph .node.cogitation rect {
+  fill: color-mix(in srgb, #c3e88d 12%, rgba(10, 13, 18, 0.6));
+  stroke: rgba(195, 232, 141, 0.6);
+}
+.slide svg.graph .node.cogitation .type { fill: #c3e88d; }
+.slide svg.graph .node.enunciation rect {
+  fill: rgba(195, 232, 141, 0.05);
+  stroke: rgba(195, 232, 141, 0.4);
+}
+.slide svg.graph .node.enunciation .type { fill: #c3e88d; }
+.slide svg.graph .node.phenomenon rect {
+  fill: color-mix(in srgb, #f78c6c 12%, rgba(10, 13, 18, 0.6));
+  stroke: rgba(247, 140, 108, 0.6);
+}
+.slide svg.graph .node.phenomenon .type { fill: #f78c6c; }
+/* An identity assertion (sameAs) rather than provenance: dashed. */
+.slide svg.graph .identity path {
+  fill: none;
+  stroke: rgba(168, 130, 255, 0.75);
+  stroke-width: 2;
+  stroke-dasharray: 7 6;
+}
+/* The graph is wider than prose, so its note may be too. */
+.slide svg.graph + .note { max-width: 60ch; }
+/* The pair from the previous slide, so the eye finds it first. */
+.slide svg.graph .hi line { stroke: #a882ff; stroke-width: 3; }
+.slide svg.graph .node.hi rect { stroke: #a882ff; stroke-width: 2; }
+
+@media print {
+  .slide svg.graph .node rect { fill: rgba(8, 10, 14, 0.85); }
+}
+
 /* Hanging indent: the engine renders the "›" marker inline, so wrapped
    bullet lines start flush with it — reserve the marker column instead. */
 .slide ul li {

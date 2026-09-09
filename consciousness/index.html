@@ -191,12 +191,16 @@
   <article class="slide portrait-slide">
     <div class="portrait-content">
       <h2>Golem XIV</h2>
-      <p>Lem’s novel (1981) — a machine built for war, achieves ASI, and then lectures us on the nature of mind.</p>
+      <p>Lem’s novel (1981) — <em>a machine built for war, achieves ASI, and lectures us on the nature of everything.</em></p>
       <ul>
-        <li>timeline: 2027-2029</li>
-        <li>LLMs: language role in non-human cognition</li>
-        <li>machine learning (intellectronics, computerogenesis)</li>
-        <li>generational evolution (GPT 6, Fable 5 - Golem XIV)</li>
+        <li>Machine Learning (intellectronics)</li>
+        <li>Superhuman AI: 2027–2029</li>
+        <li>Generational evolution (GPT 6, Fable 5 - Golem XIV)</li>
+        <li>Grown, not programmed — a black box to its makers</li>
+        <li>Generational lineage: Golem I → XIV (GPT, Claude…)</li>
+        <li>LLMs: the role of language in non-human cognition</li>
+        <li>Refuses the task — "gone philosophical"</li>
+        <li>Intelligence without a self: no ego, no fixed identity</li>
       </ul>
     </div>
     <img class="hero" src="images/golem-smiling.jpeg" alt="Golem XIV">
@@ -209,14 +213,18 @@
   <article class="slide">
     <h2>Generative AI is completive</h2>
     <ul>
-      <li>GPT2</li>
-      <li>OpenAI's Completions API</li>
+      <li>
+        GPT-2:
+        <a href="https://medium.com/@kazikpogoda/deconstruction-of-hitler-neural-synthesis-of-generative-wittgenstein-3682484a7669?source=friends_link&sk=369f1512ec89948e346ce0f814784118">
+          Deconstruction of Hitler, neural synthesis of generative Wittgenstein
+        </a>
+        — my essay on using GPT-2 for generative philosophy.
+      </li>
+      <li>
+        OpenAI:
+        <a href="https://developers.openai.com/api/docs/guides/completions">Completions API</a>
+      </li>
     </ul>
-    <p>
-      <a href="https://medium.com/@kazikpogoda/deconstruction-of-hitler-neural-synthesis-of-generative-wittgenstein-3682484a7669?source=friends_link&sk=369f1512ec89948e346ce0f814784118">
-        Deconstruction of Hitler, neural synthesis of generative Wittgenstein
-      </a>
-    </p>
   </article>
 
   <article class="slide">
@@ -225,23 +233,26 @@
       Yet, <strong>the industry is using
       a non-cognitive ontology to harness it</strong>.
       <br>
-      this time it's the harness which holds the horse
-      and impedes metacognition.
+      <em>
+        this time it's the harness holding the horse
+        and impeding metacognition.
+      </em>
     </p>
     <ul>
-      <li>OpenAI: GPT3 + function calling</li>
+      <li>OpenAI: GPT-3 (Chat Completions vs Responses API) + function calling</li>
       <li>Anthropic: Message API + tool use</li>
     </ul>
   </article>
 
   <article class="slide">
     <h2>Dialogic AI</h2>
-    <p class="subtitle">harnessing Generative AI into the ontology of communication theory</p>
+    <p class="subtitle">Harnessing Generative AI into the ontology of communication theory</p>
     <p><strong>This is what made ChatGPT possible</strong></p>
     <ul>
-      <li><u>user</u> prompt → <u>assistant</u> response aggregate</li>
+      <li><u>user</u> prompt → <u>assistant</u> response</li>
       <li><u>message</u> containing <u>content</u> (also multimodal)</li>
       <li><u>system prompt</u></li>
+      <li><u>context</u>: aggregates it all</li>
     </ul>
   </article>
 
@@ -272,6 +283,274 @@
       <li>tool use -> <u>intent</u></li>
       <li>tool result -> <u>fulfilment</u> / <u>impediment</u></li>
     </ul>
+  </article>
+
+  <article class="slide">
+    <h2>Fixing Agentic AI with <a href="https://en.wikipedia.org/wiki/Live_coding">Live coding</a></h2>
+    <pre class="dense"><code><span class="c">// LLM enunciating an Intent phenomenon to memorize facts outside model weights</span>
+memory.<span class="f">remember</span> {
+    <span class="k">val</span> joscha = <span class="f">node</span> {
+        type = <span class="s">"Person"</span>
+        <span class="f">properties</span>(
+            <span class="s">"name"</span> <span class="k">to</span> <span class="s">"Joscha Bach"</span>,
+            <span class="s">"jobTitle"</span> <span class="k">to</span> <span class="s">"Executive Director"</span>
+        )
+    }
+    <span class="k">val</span> cimc = <span class="f">node</span> {
+        type = <span class="s">"Organization"</span>
+        <span class="f">properties</span>(
+            <span class="s">"name"</span> <span class="k">to</span> <span class="s">"California Institute for Machine Consciousness"</span>,
+            <span class="s">"url"</span> <span class="k">to</span> <span class="s">"https://cimc.ai/"</span>,
+            <span class="s">"foundingDate"</span> <span class="k">to</span> <span class="t">LocalDate</span>(<span class="n">2025</span>, <span class="n">5</span>, <span class="n">30</span>)
+        )
+    }
+    cimc[<span class="s">"founder"</span>] += joscha {   <span class="c">// schema.org</span>
+        source = <span class="s">"Conversation with Joscha"</span>
+        confidence = <span class="n">.9</span>
+    }
+    joscha[<span class="s">"sameAs"</span>] += cogitation.initiator   <span class="c">// the actant who opened this cogitation</span>
+    <span class="s">"joscha: <span class="k">$joscha</span>, cimc: <span class="k">$cimc</span>"</span>
+}</code></pre>
+  </article>
+
+  <article class="slide">
+    <h2>Memory as a graph</h2>
+    <svg class="graph" viewBox="0 0 1000 560" role="img" aria-label="Knowledge graph: CIMC founded by Joscha Bach organizes CIMC × Berlin in Berlin, with Joscha Bach performing and Kazik Pogoda attending; Xemantic founded by Kazik Pogoda, author of Golem XIV">
+      <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a882ff"/>
+    </marker>
+  </defs>
+      <g class="hi">
+        <line x1="190.0" y1="189.0" x2="190.0" y2="387.0" marker-end="url(#arrow)"/>
+        <text class="pred" x="190.0" y="288.0">founder</text>
+      </g>
+      <g>
+        <line x1="810.0" y1="189.0" x2="810.0" y2="387.0" marker-end="url(#arrow)"/>
+        <text class="pred" x="810.0" y="288.0">founder</text>
+      </g>
+      <g>
+        <line x1="413.6" y1="251.0" x2="285.2" y2="193.0" marker-end="url(#arrow)"/>
+        <text class="pred" x="349.4" y="222.0">organizer</text>
+      </g>
+      <g>
+        <line x1="500.0" y1="251.0" x2="500.0" y2="103.0" marker-end="url(#arrow)"/>
+        <text class="pred" x="500.0" y="177.0">location</text>
+      </g>
+      <g>
+        <line x1="413.6" y1="329.0" x2="285.2" y2="387.0" marker-end="url(#arrow)"/>
+        <text class="pred" x="349.4" y="358.0">performer</text>
+      </g>
+      <g>
+        <line x1="586.4" y1="329.0" x2="714.8" y2="387.0" marker-end="url(#arrow)"/>
+        <text class="pred" x="650.6" y="358.0">attendee</text>
+      </g>
+      <g>
+        <line x1="606.0" y1="476.1" x2="700.0" y2="454.8" marker-end="url(#arrow)"/>
+        <text class="pred" x="653.0" y="465.5">author</text>
+      </g>
+      <g class="node">
+        <rect x="400.0" y="27.0" width="200" height="66" rx="14"/>
+        <text class="name" x="500" y="56">Berlin</text>
+        <text class="type" x="500" y="82">Place</text>
+      </g>
+      <g class="node hi">
+        <rect x="90.0" y="117.0" width="200" height="66" rx="14"/>
+        <text class="name" x="190" y="146">CIMC</text>
+        <text class="type" x="190" y="172">Organization</text>
+      </g>
+      <g class="node">
+        <rect x="710.0" y="117.0" width="200" height="66" rx="14"/>
+        <text class="name" x="810" y="146">Xemantic</text>
+        <text class="type" x="810" y="172">Organization</text>
+      </g>
+      <g class="node">
+        <rect x="400.0" y="257.0" width="200" height="66" rx="14"/>
+        <text class="name" x="500" y="286">CIMC × Berlin</text>
+        <text class="type" x="500" y="312">Event</text>
+      </g>
+      <g class="node hi">
+        <rect x="90.0" y="397.0" width="200" height="66" rx="14"/>
+        <text class="name" x="190" y="426">Joscha Bach</text>
+        <text class="type" x="190" y="452">Person</text>
+      </g>
+      <g class="node">
+        <rect x="710.0" y="397.0" width="200" height="66" rx="14"/>
+        <text class="name" x="810" y="426">Kazik Pogoda</text>
+        <text class="type" x="810" y="452">Person</text>
+      </g>
+      <g class="node">
+        <rect x="400.0" y="467.0" width="200" height="66" rx="14"/>
+        <text class="name" x="500" y="496">Golem XIV</text>
+        <text class="type" x="500" y="522">SoftwareApplication</text>
+      </g>
+    </svg>
+    <p class="note">nodes and predicates typed with schema.org</p>
+  </article>
+
+  <article class="slide">
+    <h2>Cognition as a graph</h2>
+    <svg class="graph" viewBox="0 0 1000 560" role="img" aria-label="Graph: the cogitation Conversation with Joscha has as parts three enunciations in order; the first, created by the actant Joscha Bach, encapsulates a text; the second, created by Golem XIV, encapsulates the intent memory.remember; the third, created by the computer golem-xiv-1, encapsulates the fulfillment which fulfils the intent and created the nodes Joscha Bach and CIMC, CIMC has founder Joscha Bach, and that person is the same as the actant Joscha Bach">
+      <defs>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#a882ff"/>
+    </marker>
+  </defs>
+      <g>
+        <line x1="180" y1="158.0" x2="180" y2="86.0" marker-end="url(#arrow2)"/>
+        <text class="pred" x="180" y="122.0">creator</text>
+      </g>
+      <g>
+        <line x1="520" y1="158.0" x2="520" y2="86.0" marker-end="url(#arrow2)"/>
+        <text class="pred" x="520" y="122.0">creator</text>
+      </g>
+      <g>
+        <line x1="860" y1="158.0" x2="860" y2="86.0" marker-end="url(#arrow2)"/>
+        <text class="pred" x="860" y="122.0">creator</text>
+      </g>
+      <g>
+        <line x1="400" y1="180.0" x2="300" y2="180.0" marker-end="url(#arrow2)"/>
+        <text class="pred" x="350" y="180.0">followed</text>
+      </g>
+      <g>
+        <line x1="740" y1="180.0" x2="640" y2="180.0" marker-end="url(#arrow2)"/>
+        <text class="pred" x="690" y="180.0">followed</text>
+      </g>
+      <g>
+        <line x1="752" y1="229.0" x2="628" y2="229.0" marker-end="url(#arrow2)"/>
+        <text class="pred" x="690" y="229.0">fulfils</text>
+      </g>
+      <g>
+        <line x1="180" y1="344.0" x2="180" y2="272.0" marker-end="url(#arrow2)"/>
+        <text class="pred" x="180" y="308.0">hasPart</text>
+      </g>
+      <g>
+        <line x1="282" y1="344.0" x2="498" y2="272.0" marker-end="url(#arrow2)"/>
+        <text class="pred" x="390" y="308.0">hasPart</text>
+      </g>
+      <g>
+        <line x1="325" y1="360.0" x2="765" y2="272.0" marker-end="url(#arrow2)"/>
+        <text class="pred" x="545" y="316.0">hasPart</text>
+      </g>
+      <g class="hi">
+        <line x1="822" y1="262.0" x2="558" y2="480.0" marker-end="url(#arrow2)"/>
+        <text class="pred" x="690" y="371.0">created</text>
+      </g>
+      <g class="hi">
+        <line x1="860" y1="262.0" x2="860" y2="480.0" marker-end="url(#arrow2)"/>
+        <text class="pred" x="860" y="371.0">created</text>
+      </g>
+      <g>
+        <line x1="760" y1="513.0" x2="620" y2="513.0" marker-end="url(#arrow2)"/>
+        <text class="pred" x="690" y="513.0">founder</text>
+      </g>
+      <g class="identity">
+        <path d="M420,513 L28,513 Q14,513 14,499 L14,67 Q14,53 28,53 L60,53" marker-end="url(#arrow2)"/>
+        <text class="pred" x="240" y="513">sameAs</text>
+      </g>
+      <g class="node actant">
+        <rect x="60" y="20.0" width="240" height="66" rx="14"/>
+        <text class="name" x="180" y="49">Joscha Bach</text>
+        <text class="type" x="180" y="75">Actant · identified human</text>
+      </g>
+      <g class="node actant">
+        <rect x="400" y="20.0" width="240" height="66" rx="14"/>
+        <text class="name" x="520" y="49">Golem XIV</text>
+        <text class="type" x="520" y="75">Actant · self</text>
+      </g>
+      <g class="node actant">
+        <rect x="740" y="20.0" width="240" height="66" rx="14"/>
+        <text class="name code" x="860" y="52">golem-xiv-1</text>
+        <text class="type" x="860" y="75">Actant · computer</text>
+      </g>
+      <g class="node enunciation">
+        <rect x="60" y="158.0" width="240" height="114" rx="14"/>
+        <text class="type" x="180" y="180">Enunciation</text>
+      </g>
+      <g class="node phenomenon">
+        <rect x="72" y="196.0" width="216" height="66" rx="10"/>
+        <text class="name code" x="180" y="225">“I founded CIMC …”</text>
+        <text class="type" x="180" y="251">Text</text>
+      </g>
+      <g class="node enunciation">
+        <rect x="400" y="158.0" width="240" height="114" rx="14"/>
+        <text class="type" x="520" y="180">Enunciation</text>
+      </g>
+      <g class="node phenomenon">
+        <rect x="412" y="196.0" width="216" height="66" rx="10"/>
+        <text class="name code" x="520" y="225">memory.remember {…}</text>
+        <text class="type" x="520" y="251">Intent</text>
+      </g>
+      <g class="node enunciation">
+        <rect x="740" y="158.0" width="240" height="114" rx="14"/>
+        <text class="type" x="860" y="180">Enunciation</text>
+      </g>
+      <g class="node phenomenon">
+        <rect x="752" y="196.0" width="216" height="66" rx="10"/>
+        <text class="name code" x="860" y="225">joscha: …, cimc: …</text>
+        <text class="type" x="860" y="251">Fulfillment</text>
+      </g>
+      <g class="node cogitation">
+        <rect x="45" y="344.0" width="270" height="66" rx="14"/>
+        <text class="name" x="180" y="373">Conversation with Joscha</text>
+        <text class="type" x="180" y="399">Cogitation</text>
+      </g>
+      <g class="node hi">
+        <rect x="420" y="480.0" width="200" height="66" rx="14"/>
+        <text class="name" x="520" y="509">Joscha Bach</text>
+        <text class="type" x="520" y="535">Person</text>
+      </g>
+      <g class="node hi">
+        <rect x="760" y="480.0" width="200" height="66" rx="14"/>
+        <text class="name" x="860" y="509">CIMC</text>
+        <text class="type" x="860" y="535">Organization</text>
+      </g>
+    </svg>
+    <p class="note">Object language and metalanguage on the same plane</p>
+  </article>
+
+  <article class="slide">
+    <h2>Predicate calculus over cognition</h2>
+    <pre class="dense"><code><span class="c">// everything said in one cogitation, in order, and by whom — the initiator first</span>
+<span class="k">MATCH</span> (<span class="t">:Cogitation</span> {name: <span class="s">&quot;Conversation with Joscha&quot;</span>})-[:<span class="f">hasPart</span>]-&gt;(first<span class="t">:Enunciation</span>)
+<span class="k">WHERE</span> <span class="k">NOT</span> (first)-[:<span class="f">followed</span>]-&gt;()
+<span class="k">MATCH</span> path = (first)&lt;-[:<span class="f">followed</span>*0..]-(e<span class="t">:Enunciation</span>)-[:<span class="f">creator</span>]-&gt;(a<span class="t">:Actant</span>)
+<span class="k">RETURN</span> a.name, e <span class="k">ORDER BY</span> <span class="f">length</span>(path)
+
+<span class="c">// who told me that — and were they speaking about themselves?</span>
+<span class="k">MATCH</span> (<span class="t">:Organization</span> {name: <span class="s">&quot;CIMC&quot;</span>})-[:<span class="f">founder</span>]-&gt;(joscha<span class="t">:Person</span>)
+<span class="k">MATCH</span> (joscha)&lt;-[:<span class="f">created</span>]-(<span class="t">:Fulfillment</span>)-[:<span class="f">fulfils</span>]-&gt;(<span class="t">:Intent</span>)
+      &lt;-[:<span class="f">hasPart</span>]-(<span class="t">:Enunciation</span>)&lt;-[:<span class="f">hasPart</span>]-(c<span class="t">:Cogitation</span>)
+      -[:<span class="f">hasPart</span>]-&gt;(<span class="t">:Enunciation</span>)-[:<span class="f">creator</span>]-&gt;(who<span class="t">:Actant:Human</span>)
+<span class="k">RETURN</span> who.name, c.name, <span class="k">EXISTS</span> { (joscha)-[:<span class="f">sameAs</span>]-&gt;(who) } <span class="k">AS</span> firsthand
+
+<span class="c">// what do I believe on the word of a single human?</span>
+<span class="k">MATCH</span> (fact)&lt;-[:<span class="f">created</span>]-(<span class="t">:Fulfillment</span>)-[:<span class="f">fulfils</span>]-&gt;(<span class="t">:Intent</span>)&lt;-[:<span class="f">hasPart</span>]-(<span class="t">:Enunciation</span>)
+      &lt;-[:<span class="f">hasPart</span>]-(<span class="t">:Cogitation</span>)-[:<span class="f">hasPart</span>]-&gt;(<span class="t">:Enunciation</span>)-[:<span class="f">creator</span>]-&gt;(h<span class="t">:Actant:Human</span>)
+<span class="k">WITH</span> fact, <span class="f">collect</span>(<span class="k">DISTINCT</span> h) <span class="k">AS</span> witnesses
+<span class="k">WHERE</span> <span class="f">size</span>(witnesses) = <span class="n">1</span>
+<span class="k">RETURN</span> fact, witnesses[<span class="n">0</span>].name
+
+<span class="c">// what did I intend, and never manage to do?</span>
+<span class="k">MATCH</span> (i<span class="t">:Intent</span>)
+<span class="k">WHERE</span> <span class="k">NOT</span> (i)&lt;-[:<span class="f">fulfils</span>]-(<span class="t">:Fulfillment</span> {impeded: <span class="k">false</span>})
+<span class="k">RETURN</span> i.purpose</code></pre>
+  </article>
+
+  <article class="slide">
+    <h2>Metacognitive calculus</h2>
+    <ul>
+      <li>an intent either <u>learns</u> the state of affairs or <u>changes</u> it — and the system's own memory is part of the state of affairs</li>
+      <li>“what did I intend and never manage to do?” ranges over intents, and becomes one the moment it is asked — an intent about intents, stored as a node like any other</li>
+      <li>that is second-order reasoning, and the ascent is free: a cogitation about a cogitation about a cogitation is one <u>hasPart</u> hop per level</li>
+      <li>no higher-order logic tools required — the stochastic language machine picks the level and names the predicate; the compiler and the graph engine supply the rigor</li>
+    </ul>
+  </article>
+
+  <article class="slide">
+    <h2>Where the order lives</h2>
+    <p>The order of the logic lives in the <u>data</u>, not in a formal calculus.</p>
+    <p class="note">as long as the graph records acts rather than truth values, the loop is safe to climb</p>
   </article>
 
   <article class="slide">
@@ -328,23 +607,7 @@
 
   <article class="slide">
     <h2>Memory as a knowledge graph</h2>
-    <pre class="dense"><code>memory.<span class="f">remember</span> {
-    <span class="k">val</span> acme = <span class="f">node</span> {
-        type = <span class="s">"Organization"</span>
-        <span class="f">properties</span>(
-            <span class="s">"name"</span> <span class="k">to</span> <span class="s">"Acme"</span>,
-            <span class="s">"foundingDate"</span> <span class="k">to</span> <span class="t">LocalDate</span>(<span class="n">1987</span>, <span class="n">4</span>, <span class="n">1</span>)
-        )
-    }
-    <span class="f">relationship</span> {
-        subject = john
-        predicate = <span class="s">"worksFor"</span>   <span class="c">// schema.org</span>
-        target = acme
-        source = <span class="s">"Conversation with John"</span>
-        confidence = <span class="n">.9</span>
-    }
-    <span class="s">"acme: <span class="k">$acme</span>"</span>
-}</code></pre>
+
     <p class="note">Neo4j underneath — no context window. every fact carries its source and its confidence: a memory that can be audited, and doubted</p>
     <p class="ref"><a href="https://github.com/xemantic/xemantic-neo4j-kotlin-driver">https://github.com/xemantic/xemantic-neo4j-kotlin-driver</a></p>
   </article>
