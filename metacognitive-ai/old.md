@@ -104,10 +104,10 @@ Self-directed reasoning
 
 ## Harness engineering
 
-prompt -> context -> harness
+prompt → context → harness → loop
 
 ---
-Agent loop
+## Agent loop
 while not fulfilled
 - reason on actant's intents
 - formulate own intents

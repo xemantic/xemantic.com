@@ -291,6 +291,16 @@ html { background: #15191f; font-size: clamp(70%, min(1.67vh, 3.4vw), 150%); }
 }
 .portrait-slide h2 { margin: 0 0 0.2em; }
 .portrait-slide p { margin: 0; }
+/* A bulleted list beside a full-height portrait only gets the column the image
+   leaves over, so at the deck-wide list size most items wrap and a dozen lines
+   overflow the slide. Let the list span the whole column and step it down to
+   the paragraph size with tighter leading, so eight items still fit at 16:9. */
+.portrait-slide ul {
+  max-width: 100%;
+  font-size: clamp(1.3rem, 2.6vw, 1.8rem);
+  line-height: 1.45;
+}
+.portrait-slide ul li { margin-bottom: 0.15em; }
 
 /* Side-titled slides: the heading turns into a vertical spine along the left
    edge, reading bottom to top so it ends at the top-left corner where the
