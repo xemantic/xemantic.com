@@ -4,3 +4,6 @@ _site/
 .jekyll-metadata
 .idea/
 /build/
+.DS_Store
+.gradle/
+.claude/

@@ -1,0 +1,84 @@
+/*
+ * xemantic.com styles complementing BeerCSS.
+ */
+
+/*
+ * The GitHub icon in the top app bar. The source SVG is the black
+ * Invertocat; in dark mode we invert it to white so it stays legible
+ * against the dark header, mirroring the rest of the theme.
+ */
+.github-icon {
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+}
+
+body.dark .github-icon {
+  filter: invert(1);
+}
+
+/*
+ * Jumping to an anchor (e.g. from the table of contents) should not
+ * hide the section heading under the fixed page header.
+ */
+[id] {
+  scroll-margin-block-start: 4.5rem;
+}
+
+/*
+ * The table of contents (aside > nav#toc) rendered like in
+ * https://platform.claude.com/docs/ - on viewports wide enough to fit
+ * it next to the content, it occupies the `right` area of the BeerCSS
+ * body grid, sticking below the fixed header while the page scrolls.
+ * On narrower viewports it is not displayed at all.
+ */
+aside:has(> nav#toc) {
+  display: none;
+}
+
+@media (min-width: 80rem) {
+
+  aside:has(> nav#toc) {
+    display: block;
+    grid-area: right;
+    align-self: start;
+    position: sticky;
+    top: 4rem;
+    inline-size: 16rem;
+    max-block-size: calc(100dvh - 4rem);
+    overflow-y: auto;
+    padding: 1rem;
+    margin: 0;
+  }
+
+  nav#toc {
+    display: block;
+    white-space: normal;
+  }
+
+  nav#toc ul {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav#toc ul ul {
+    padding-inline-start: 1rem;
+  }
+
+  nav#toc li {
+    display: block;
+    margin-block: .5rem;
+  }
+
+  nav#toc a {
+    color: var(--on-surface-variant);
+    font-size: .8125rem;
+    line-height: 1.25rem;
+  }
+
+  nav#toc a:hover {
+    color: var(--primary);
+  }
+
+}
