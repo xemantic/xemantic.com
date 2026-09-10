@@ -86,8 +86,30 @@
   document.getElementById('next').addEventListener('click', next);
   document.getElementById('prev').addEventListener('click', prev);
 
+  // True fullscreen through the Fullscreen API: unlike the window-level full
+  // screen of the OS, it drops the browser's tab strip, toolbar and bookmarks.
+  // Escape exits it, as does pressing F again.
+  const fullscreenButton = document.getElementById('fullscreen');
+  const toggleFullscreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      document.documentElement.requestFullscreen({ navigationUI: 'hide' }).catch(() => {});
+    }
+  };
+  fullscreenButton.addEventListener('click', toggleFullscreen);
+  document.addEventListener('fullscreenchange', () => {
+    const on = !!document.fullscreenElement;
+    fullscreenButton.setAttribute('aria-label', on ? 'Exit fullscreen' : 'Enter fullscreen');
+    fullscreenButton.title = on ? 'Exit fullscreen (F)' : 'Fullscreen (F)';
+  });
+
   document.addEventListener('keydown', (e) => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
     switch (e.key) {
+      case 'f':
+      case 'F':
+        e.preventDefault(); toggleFullscreen(); break;
       case 'ArrowRight':
       case 'PageDown':
       case ' ':
@@ -130,6 +152,31 @@
     bg.alt = '';
     slide.insertBefore(bg, slide.firstChild);
   });
+
+  // Side titles: the vertical heading runs the full height of the slide's
+  // content box, whatever its wording. Type is measured at a reference size
+  // and scaled to the available height, so the spine and the body beside it
+  // share one extent. Re-run when the viewport or the webfont changes; skipped
+  // in portrait, where the stylesheet lays the heading out horizontally again.
+  const fitSideTitles = () => {
+    document.querySelectorAll('.side-title > h2').forEach((h2) => {
+      if (getComputedStyle(h2).writingMode !== 'vertical-rl') {
+        h2.style.fontSize = '';
+        return;
+      }
+      const slide = h2.parentElement;
+      const style = getComputedStyle(slide);
+      const available = slide.clientHeight
+        - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+      h2.style.fontSize = '100px';
+      // Rotated a half-turn, the text run is the box height.
+      const run = h2.getBoundingClientRect().height;
+      if (run > 0) h2.style.fontSize = (100 * available / run) + 'px';
+    });
+  };
+  fitSideTitles();
+  window.addEventListener('resize', fitSideTitles);
+  if (document.fonts) document.fonts.ready.then(fitSideTitles);
 
   // Deep-link / refresh support: #3 opens the third slide.
   const start = parseInt(location.hash.replace('#', ''), 10);

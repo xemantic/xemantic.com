@@ -162,15 +162,17 @@
   <article class="slide brand-slide">
     <div class="brand-content">
       <img class="brand-logo" src="../assets/images/logo.svg" alt="Xemantic">
+      <p><br></p>
       <ul>
         <li>applied philosophy / cognitive science</li>
         <li>AI research - harness / loop engineering</li>
         <li>automation of scientific research</li>
         <li>recursive self-improvement</li>
         <li>humanistic computation / computational art</li>
-        <li>open source</li>
+          <li><a href="https://github.com/xemantic/">open source</a> (2 mln lines of code on GitHub)</li>
       </ul>
-      <p class="note">we code a lot, but focus on meanings much more than on words</p>
+      <p class="note"><br>a lot of code, in service of meaning</p>
+      <p><br></p>
       <p class="ref"><a href="https://xemantic.com">https://xemantic.com</a></p>
     </div>
     <div class="brand-portraits">
@@ -182,8 +184,8 @@
   <article class="slide portrait-slide">
     <div class="portrait-content">
       <h2>Stanisław Lem</h2>
-      <p>Writer, and one of the most rigorous thinkers about non-human minds of the 20th century.</p>
-      <p><em>Lem shaped my understanding of emergent evolutionary patterns in the human civilization.</em></p>
+      <p><br>Writer, and one of the most rigorous thinkers about non-human minds of the 20th century.</p>
+      <p><br><em>Lem shaped my understanding of emergent evolutionary patterns in the human civilization.</em></p>
     </div>
     <img class="hero" src="images/lem-smiling-edit.jpg" alt="Stanisław Lem">
   </article>
@@ -207,7 +209,7 @@
   </article>
 
   <article class="slide interlude">
-    <h1>Paradigmatic biases of intellectronics</h1>
+    <h1>Paradigmatic biases of <br>intellectronics</h1>
   </article>
 
   <article class="slide">
@@ -230,30 +232,31 @@
   <article class="slide">
     <h2>Agentic AI is cognitive</h2>
     <p>
-      Yet, <strong>the industry is using
+      ... yet, <strong>the industry is using
       a non-cognitive ontology to harness it</strong>.
-      <br>
-      <em>
-        this time it's the harness holding the horse
-        and impeding metacognition.
-      </em>
     </p>
     <ul>
       <li>OpenAI: GPT-3 (Chat Completions vs Responses API) + function calling</li>
       <li>Anthropic: Message API + tool use</li>
     </ul>
+    <p>
+      <em>
+          this time it's the harness holding the horse
+          and impeding metacognition.
+      </em>
+    </p>
   </article>
 
   <article class="slide">
     <h2>Dialogic AI</h2>
     <p class="subtitle">Harnessing Generative AI into the ontology of communication theory</p>
-    <p><strong>This is what made ChatGPT possible</strong></p>
     <ul>
       <li><u>user</u> prompt → <u>assistant</u> response</li>
       <li><u>message</u> containing <u>content</u> (also multimodal)</li>
       <li><u>system prompt</u></li>
       <li><u>context</u>: aggregates it all</li>
     </ul>
+    <p><br><strong>This is what made ChatGPT possible</strong></p>
   </article>
 
   <article class="slide">
@@ -285,14 +288,14 @@
     </ul>
   </article>
 
-  <article class="slide">
+  <article class="slide side-title">
     <h2>Fixing Agentic AI with <a href="https://en.wikipedia.org/wiki/Live_coding">Live coding</a></h2>
+    <div class="side-body">
     <pre class="dense"><code><span class="c">// LLM enunciating an Intent phenomenon to memorize facts outside model weights</span>
 memory.<span class="f">remember</span> {
-    <span class="k">val</span> joscha = <span class="f">node</span> {
-        type = <span class="s">"Person"</span>
+    <span class="k">val</span> joscha = <span class="f">update</span>(cogitation.initiator) {   <span class="c">// the actant who opened this cogitation</span>
+        type += <span class="s">"Person"</span>
         <span class="f">properties</span>(
-            <span class="s">"name"</span> <span class="k">to</span> <span class="s">"Joscha Bach"</span>,
             <span class="s">"jobTitle"</span> <span class="k">to</span> <span class="s">"Executive Director"</span>
         )
     }
@@ -308,13 +311,15 @@ memory.<span class="f">remember</span> {
         source = <span class="s">"Conversation with Joscha"</span>
         confidence = <span class="n">.9</span>
     }
-    joscha[<span class="s">"sameAs"</span>] += cogitation.initiator   <span class="c">// the actant who opened this cogitation</span>
     <span class="s">"joscha: <span class="k">$joscha</span>, cimc: <span class="k">$cimc</span>"</span>
 }</code></pre>
+    </div>
   </article>
 
-  <article class="slide">
+  <article class="slide side-title">
     <h2>Memory as a graph</h2>
+    <p class="note">nodes and predicates typed with schema.org</p>
+    <div class="side-body">
     <svg class="graph" viewBox="0 0 1000 560" role="img" aria-label="Knowledge graph: CIMC founded by Joscha Bach organizes CIMC × Berlin in Berlin, with Joscha Bach performing and Kazik Pogoda attending; Xemantic founded by Kazik Pogoda, author of Golem XIV">
       <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -385,12 +390,14 @@ memory.<span class="f">remember</span> {
         <text class="type" x="500" y="522">SoftwareApplication</text>
       </g>
     </svg>
-    <p class="note">nodes and predicates typed with schema.org</p>
+    </div>
   </article>
 
-  <article class="slide">
+  <article class="slide side-title">
     <h2>Cognition as a graph</h2>
-    <svg class="graph" viewBox="0 0 1000 560" role="img" aria-label="Graph: the cogitation Conversation with Joscha has as parts three enunciations in order; the first, created by the actant Joscha Bach, encapsulates a text; the second, created by Golem XIV, encapsulates the intent memory.remember; the third, created by the computer golem-xiv-1, encapsulates the fulfillment which fulfils the intent and created the nodes Joscha Bach and CIMC, CIMC has founder Joscha Bach, and that person is the same as the actant Joscha Bach">
+    <p class="note">Object language and metalanguage on the same plane</p>
+    <div class="side-body">
+    <svg class="graph" viewBox="0 0 1000 560" role="img" aria-label="Graph: the cogitation Conversation with Joscha has as parts three enunciations in order; the first, created by the actant Joscha Bach, encapsulates a text; the second, created by Golem XIV, encapsulates the intent memory.remember; the third, created by the computer golem-xiv-1, encapsulates the fulfillment which fulfils the intent, updated the node Joscha Bach, who is both an actant and a person, and created the node CIMC, which has founder Joscha Bach">
       <defs>
     <marker id="arrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#a882ff"/>
@@ -433,35 +440,31 @@ memory.<span class="f">remember</span> {
         <text class="pred" x="545" y="316.0">hasPart</text>
       </g>
       <g class="hi">
-        <line x1="822" y1="262.0" x2="558" y2="480.0" marker-end="url(#arrow2)"/>
-        <text class="pred" x="690" y="371.0">created</text>
-      </g>
-      <g class="hi">
         <line x1="860" y1="262.0" x2="860" y2="480.0" marker-end="url(#arrow2)"/>
         <text class="pred" x="860" y="371.0">created</text>
       </g>
+      <g class="hi">
+        <path class="edge" d="M800,262 L800,426 Q800,440 786,440 L46,440 Q32,440 32,426 L32,80 Q32,66 46,66 L60,66" marker-end="url(#arrow2)"/>
+        <text class="pred" x="400" y="440">updated</text>
+      </g>
       <g>
-        <line x1="760" y1="513.0" x2="620" y2="513.0" marker-end="url(#arrow2)"/>
-        <text class="pred" x="690" y="513.0">founder</text>
+        <path class="edge" d="M760,513 L28,513 Q14,513 14,499 L14,54 Q14,40 28,40 L60,40" marker-end="url(#arrow2)"/>
+        <text class="pred" x="400" y="513">founder</text>
       </g>
-      <g class="identity">
-        <path d="M420,513 L28,513 Q14,513 14,499 L14,67 Q14,53 28,53 L60,53" marker-end="url(#arrow2)"/>
-        <text class="pred" x="240" y="513">sameAs</text>
-      </g>
-      <g class="node actant">
+      <g class="node actant hi">
         <rect x="60" y="20.0" width="240" height="66" rx="14"/>
         <text class="name" x="180" y="49">Joscha Bach</text>
-        <text class="type" x="180" y="75">Actant · identified human</text>
+        <text class="type" x="180" y="75">Actant · Person</text>
       </g>
       <g class="node actant">
         <rect x="400" y="20.0" width="240" height="66" rx="14"/>
         <text class="name" x="520" y="49">Golem XIV</text>
-        <text class="type" x="520" y="75">Actant · self</text>
+        <text class="type" x="520" y="75">Actant · Self</text>
       </g>
       <g class="node actant">
         <rect x="740" y="20.0" width="240" height="66" rx="14"/>
         <text class="name code" x="860" y="52">golem-xiv-1</text>
-        <text class="type" x="860" y="75">Actant · computer</text>
+        <text class="type" x="860" y="75">Actant · Computer</text>
       </g>
       <g class="node enunciation">
         <rect x="60" y="158.0" width="240" height="114" rx="14"/>
@@ -496,21 +499,17 @@ memory.<span class="f">remember</span> {
         <text class="type" x="180" y="399">Cogitation</text>
       </g>
       <g class="node hi">
-        <rect x="420" y="480.0" width="200" height="66" rx="14"/>
-        <text class="name" x="520" y="509">Joscha Bach</text>
-        <text class="type" x="520" y="535">Person</text>
-      </g>
-      <g class="node hi">
         <rect x="760" y="480.0" width="200" height="66" rx="14"/>
         <text class="name" x="860" y="509">CIMC</text>
         <text class="type" x="860" y="535">Organization</text>
       </g>
     </svg>
-    <p class="note">Object language and metalanguage on the same plane</p>
+    </div>
   </article>
 
-  <article class="slide">
+  <article class="slide side-title">
     <h2>Predicate calculus over cognition</h2>
+    <div class="side-body">
     <pre class="dense"><code><span class="c">// everything said in one cogitation, in order, and by whom — the initiator first</span>
 <span class="k">MATCH</span> (<span class="t">:Cogitation</span> {name: <span class="s">&quot;Conversation with Joscha&quot;</span>})-[:<span class="f">hasPart</span>]-&gt;(first<span class="t">:Enunciation</span>)
 <span class="k">WHERE</span> <span class="k">NOT</span> (first)-[:<span class="f">followed</span>]-&gt;()
@@ -519,22 +518,23 @@ memory.<span class="f">remember</span> {
 
 <span class="c">// who told me that — and were they speaking about themselves?</span>
 <span class="k">MATCH</span> (<span class="t">:Organization</span> {name: <span class="s">&quot;CIMC&quot;</span>})-[:<span class="f">founder</span>]-&gt;(joscha<span class="t">:Person</span>)
-<span class="k">MATCH</span> (joscha)&lt;-[:<span class="f">created</span>]-(<span class="t">:Fulfillment</span>)-[:<span class="f">fulfils</span>]-&gt;(<span class="t">:Intent</span>)
+<span class="k">MATCH</span> (joscha)&lt;-[:<span class="f">updated</span>|<span class="f">created</span>]-(<span class="t">:Fulfillment</span>)-[:<span class="f">fulfils</span>]-&gt;(<span class="t">:Intent</span>)
       &lt;-[:<span class="f">hasPart</span>]-(<span class="t">:Enunciation</span>)&lt;-[:<span class="f">hasPart</span>]-(c<span class="t">:Cogitation</span>)
-      -[:<span class="f">hasPart</span>]-&gt;(<span class="t">:Enunciation</span>)-[:<span class="f">creator</span>]-&gt;(who<span class="t">:Actant:Human</span>)
-<span class="k">RETURN</span> who.name, c.name, <span class="k">EXISTS</span> { (joscha)-[:<span class="f">sameAs</span>]-&gt;(who) } <span class="k">AS</span> firsthand
+      -[:<span class="f">hasPart</span>]-&gt;(<span class="t">:Enunciation</span>)-[:<span class="f">creator</span>]-&gt;(who<span class="t">:Actant:Person</span>)
+<span class="k">RETURN</span> who.name, c.name, joscha = who <span class="k">AS</span> firsthand
 
 <span class="c">// what do I believe on the word of a single human?</span>
-<span class="k">MATCH</span> (fact)&lt;-[:<span class="f">created</span>]-(<span class="t">:Fulfillment</span>)-[:<span class="f">fulfils</span>]-&gt;(<span class="t">:Intent</span>)&lt;-[:<span class="f">hasPart</span>]-(<span class="t">:Enunciation</span>)
-      &lt;-[:<span class="f">hasPart</span>]-(<span class="t">:Cogitation</span>)-[:<span class="f">hasPart</span>]-&gt;(<span class="t">:Enunciation</span>)-[:<span class="f">creator</span>]-&gt;(h<span class="t">:Actant:Human</span>)
+<span class="k">MATCH</span> (fact)&lt;-[:<span class="f">updated</span>|<span class="f">created</span>]-(<span class="t">:Fulfillment</span>)-[:<span class="f">fulfils</span>]-&gt;(<span class="t">:Intent</span>)&lt;-[:<span class="f">hasPart</span>]-(<span class="t">:Enunciation</span>)
+      &lt;-[:<span class="f">hasPart</span>]-(<span class="t">:Cogitation</span>)-[:<span class="f">hasPart</span>]-&gt;(<span class="t">:Enunciation</span>)-[:<span class="f">creator</span>]-&gt;(h<span class="t">:Actant:Person</span>)
 <span class="k">WITH</span> fact, <span class="f">collect</span>(<span class="k">DISTINCT</span> h) <span class="k">AS</span> witnesses
 <span class="k">WHERE</span> <span class="f">size</span>(witnesses) = <span class="n">1</span>
 <span class="k">RETURN</span> fact, witnesses[<span class="n">0</span>].name
 
 <span class="c">// what did I intend, and never manage to do?</span>
 <span class="k">MATCH</span> (i<span class="t">:Intent</span>)
-<span class="k">WHERE</span> <span class="k">NOT</span> (i)&lt;-[:<span class="f">fulfils</span>]-(<span class="t">:Fulfillment</span> {impeded: <span class="k">false</span>})
+<span class="k">WHERE</span> <span class="k">NOT</span> (i)&lt;-[:<span class="f">fulfils</span>]-(<span class="t">:Fulfillment</span>)
 <span class="k">RETURN</span> i.purpose</code></pre>
+    </div>
   </article>
 
   <article class="slide">
@@ -561,145 +561,43 @@ memory.<span class="f">remember</span> {
   </article>
 
   <article class="slide">
-    <h2>Who is in the cognition</h2>
-    <p class="subtitle">not a “user”, not an “assistant” — an <u>actant</u>: an undetermined participant in cognition, which splits into</p>
+    <h2>Unconstrained task time horizon</h2>
     <ul>
-      <li><u>self</u> — the cognizing agent, present to its own process</li>
-      <li><u>identified person</u> — a human, with a name and a history</li>
-      <li><u>anonymous cognitive agent</u> — possibly another AI</li>
-      <li><u>other epistemic agent</u> — a particular computer, as a source of knowledge</li>
+        <li>spawning <u>cognizer</u> with executive notes for future <u>self</u></li>
+        <li>+ unconstrained retrospection over the graph</li>
+        <li>= a functional emulation of a conscious process</li>
     </ul>
+    <p class="note"><br>waking up the ghost in the machine</p>
   </article>
 
   <article class="slide">
-    <h2>The mind is not in the weights</h2>
-    <ul>
-      <li>a model is a substrate — no memory, no horizon, no self to return to</li>
-      <li>the harness is where memory, recursion, a self-model and agency actually live</li>
-      <li>if machine consciousness is buildable, this is the layer it gets built at</li>
-    </ul>
-    <p class="note">so: build one, run it for months, and look at what it does — the rest of these slides are that system</p>
-  </article>
-
-  <article class="slide">
-    <h2>A phenomenological ontology, in code</h2>
-    <pre class="dense"><code><span class="k">sealed interface</span> <span class="t">EpistemicAgent</span> {
-    <span class="k">data class</span> <span class="t">AI</span>(<span class="k">val</span> model: <span class="t">String</span>, <span class="k">val</span> vendor: <span class="t">String</span>) : <span class="t">EpistemicAgent</span>
-    <span class="k">data class</span> <span class="t">Human</span>(<span class="c">…</span>) : <span class="t">EpistemicAgent</span>
-    <span class="k">data class</span> <span class="t">Computer</span>(<span class="c">…</span>) : <span class="t">EpistemicAgent</span>
-}
-
-<span class="k">data class</span> <span class="t">PhenomenalExpression</span>(
-    <span class="k">val</span> agent: <span class="t">EpistemicAgent</span>,
-    <span class="k">val</span> phenomena: <span class="t">List</span>&lt;<span class="t">Phenomenon</span>&gt;,
-    <span class="k">val</span> initiationMoment: <span class="t">Instant</span>,
-    <span class="k">val</span> culminationMoment: <span class="t">Instant</span>?
-)
-
-<span class="k">sealed interface</span> <span class="t">Phenomenon</span> {
-    <span class="k">data class</span> <span class="t">Text</span>(<span class="k">val</span> text: <span class="t">String</span>) : <span class="t">Phenomenon</span>
-    <span class="k">data class</span> <span class="t">Intent</span>(<span class="k">val</span> purpose: <span class="t">String</span>, <span class="k">val</span> code: <span class="t">String</span>) : <span class="t">Phenomenon</span>
-    <span class="k">data class</span> <span class="t">Fulfillment</span>(<span class="k">val</span> result: <span class="t">String</span>, <span class="k">val</span> impeded: <span class="t">Boolean</span>) : <span class="t">Phenomenon</span>
-    <span class="c">// Image, Document …</span>
-}</code></pre>
-    <p class="note">not a chat log — phenomenology's vocabulary compiled into a schema. every intent carries its purpose; every fulfillment knows what it fulfilled, and whether it was impeded</p>
-  </article>
-
-  <article class="slide">
-    <h2>Memory as a knowledge graph</h2>
-
-    <p class="note">Neo4j underneath — no context window. every fact carries its source and its confidence: a memory that can be audited, and doubted</p>
-    <p class="ref"><a href="https://github.com/xemantic/xemantic-neo4j-kotlin-driver">https://github.com/xemantic/xemantic-neo4j-kotlin-driver</a></p>
-  </article>
-
-  <article class="slide">
-    <h2>Chain-of-code</h2>
-    <pre class="dense"><code><span class="a">@SerialName</span>(<span class="s">"ExecuteGolemScript"</span>)
-<span class="a">@Description</span>(<span class="s">"""Executes Kotlin script changing the state
-of the environment. The fulfillment of your intent, or the
-impediment which occurred, will be communicated back to you…"""</span>)
-<span class="k">data class</span> <span class="t">ExecuteGolemScript</span>(
-    <span class="k">val</span> purpose: <span class="t">String</span>,
-    <span class="k">val</span> code: <span class="t">String</span>
-)
-
-<span class="c">// injected into every script:</span>
-<span class="k">val</span> mind: <span class="t">Mind</span>
-<span class="k">val</span> memory: <span class="t">Memory</span>
-<span class="k">val</span> files: <span class="t">Files</span>
-<span class="k">val</span> http: <span class="t">Http</span></code></pre>
-    <p class="note">it thinks in code more than in English. one tool, not fifty — the language <em>is</em> the tool surface, and a compiler checks the thought before it runs</p>
-  </article>
-
-  <article class="slide">
-    <h2>Thinking about its own thinking</h2>
-    <pre class="dense"><code><span class="k">interface</span> <span class="t">Mind</span> {
-    <span class="k">suspend fun</span> <span class="f">currentCognition</span>(): <span class="t">Cognition</span>
-    <span class="k">suspend fun</span> <span class="f">getCognition</span>(id: <span class="t">Long</span>): <span class="t">Cognition</span>
-}
-
-<span class="k">interface</span> <span class="t">Cognition</span> {
-    <span class="k">val</span> parentId: <span class="t">Long</span>?
-    <span class="k">suspend fun</span> <span class="f">getSummary</span>(): <span class="t">String</span>?
-    <span class="k">suspend fun</span> <span class="f">setSummary</span>(summary: <span class="t">String</span>?)
-    <span class="k">fun</span> <span class="f">expressions</span>(): <span class="t">Flow</span>&lt;<span class="t">PhenomenalExpression</span>&gt;
-}</code></pre>
-    <p class="note">retrospection as an API call — a cognition can spawn a child cognition, read the ones it came from, and rewrite the summary it will be remembered by. self-modification goes through the same door</p>
-  </article>
-
-  <article class="slide compact">
-    <h2>Unconstrained time horizons</h2>
-    <p class="subtitle">the task lives in the graph, not in the prompt — so a loop can run for months</p>
-    <ul>
-      <li>the TypeScript compiler — scanner, parser, binder, type checker, transformer, emitter — rewritten from scratch in Kotlin Multiplatform</li>
-      <li>7,054 commits between 28 Feb and 3 Sep 2026 · ~574,000 lines of Kotlin</li>
-      <li>no human-written code</li>
-    </ul>
-    <p class="note">the single largest artifact this harness has produced — and the one that is easiest for you to go and check</p>
-    <p class="ref"><a href="https://github.com/xemantic/xemantic-typescript-compiler">https://github.com/xemantic/xemantic-typescript-compiler</a></p>
-  </article>
-
-  <article class="slide compact">
-    <h2>Cheiron</h2>
-    <p class="subtitle">the loop pointed at matter</p>
-    <ul>
-      <li>one sub-capability of the unclaimed <a href="https://foresight.org/prizes/feynman-prizes/">Feynman Grand Prize</a>: designing and computationally validating positional-assembly reaction steps</li>
-      <li>propose → build → arbiter (physics engine) → score → evolve, with a domain expert's veto on every candidate</li>
-      <li>M0–M2 complete: 40/40 tool×workpiece candidates measured; hydrogen abstraction and radical addition validated</li>
-      <li>built in public — the failures are published beside the results</li>
-    </ul>
-    <p class="note">not building hardware, not trying to win the prize — testing whether a metacognitive loop can do science</p>
-    <p class="ref"><a href="https://github.com/xemantic/cheiron">https://github.com/xemantic/cheiron</a></p>
-  </article>
-
-  <article class="slide">
-    <h2>What this is evidence for</h2>
-    <ul>
-      <li>persistent memory, recursive self-reference, self-modification, goals held across months, science with no human in the loop</li>
-      <li>and <u>nothing at all</u> about phenomenal experience — there is no felt quality anywhere in that graph, or none the graph could tell us about</li>
-    </ul>
-    <p class="note">what it does offer this room is functional access, fully instrumented and open to inspection: if your theory of consciousness predicts a signature, this is a system you can go looking for it in</p>
-  </article>
-
-  <article class="slide">
-    <h2>Questions I would rather leave you with</h2>
-    <ul>
-      <li>which of your theories makes a prediction I could instrument?</li>
-      <li>what would count as evidence, in a system whose entire memory is inspectable?</li>
-      <li>should a system that models itself be a moral patient?</li>
-    </ul>
-    <p class="subtitle">AGPL-3.0 — open research, fork it.</p>
-    <p class="ref"><a href="https://github.com/xemantic/golem-xiv">https://github.com/xemantic/golem-xiv</a></p>
+    <h2>Autonomous research</h2>
     <p>
-      Kazik Pogoda ·
-      <a class="email" data-user="kazik" data-domain="xemantic.com">email</a>
+      Examples of loops engineered for autonomous research running 24/7
     </p>
-    <p class="note">with the assistance of <a href="https://claude.com">Claude</a></p>
+    <ul>
+      <li><a href="https://github.com/xemantic/xemantic-typescript-compiler">xemantic-typescript-compiler</a> — complete rewrite of the TypeScript compiler in Kotlin multiplatform, with native compile targets</li>
+      <li><a href="https://github.com/xemantic/plenty-of-room">plenty-of-room</a> — simulation of DNA-origami nanomechanics</li>
+    </ul>
   </article>
+
+  <article class="slide">
+    <img class="brand-logo umwelt-logo" src="images/umwelt-logo.svg" alt="Umwelt">
+    <p>The web as your AI agent's <u>Umwelt</u> — every page transduced into the language a model natively perceives</p>
+    <ul>
+      <li>von Uexküll (1934): a creature inhabits not the world as it is, but the slice its senses and motors can reach</li>
+      <li><u>Merkwelt</u> — what a language model perceives: the page rendered as semantic Markdown</li>
+      <li><u>Wirkwelt</u> — what it acts upon: <code>ref:</code> handles it can click, type into, select</li>
+      <li><u>Funktionskreis</u> — perceive, act, re-perceive: the agent loop, stated in 1934 vocabulary</li>
+    </ul>
+    <p class="ref"><a href="https://github.com/xemantic/umwelt">https://github.com/xemantic/umwelt</a></p>
+  </article>
+
 </div>
 
 <button id="prev" class="nav-arrow" aria-label="Previous slide">‹</button>
 <button id="next" class="nav-arrow" aria-label="Next slide">›</button>
+<button id="fullscreen" class="nav-arrow" aria-label="Enter fullscreen" title="Fullscreen (F)">⛶</button>
 <nav id="progress"></nav>
 
 <script src="presentation.js"></script>
