@@ -292,12 +292,62 @@ html { background: #15191f; font-size: clamp(70%, min(1.67vh, 3.4vw), 150%); }
 .portrait-slide h2 { margin: 0 0 0.2em; }
 .portrait-slide p { margin: 0; }
 
+/* Side-titled slides: the heading turns into a vertical spine along the left
+   edge, reading bottom to top so it ends at the top-left corner where the
+   content begins, and the body beside it (a long listing, the knowledge graph)
+   can take the full slide height. Mark the article .side-title and wrap
+   everything but the h2 in .side-body. */
+.side-title {
+  flex-direction: row;
+  align-items: center;
+  gap: 2.5vw;
+  padding: 4vh 5vw;
+}
+.side-title h2 {
+  flex: 0 0 auto;
+  /* vertical-rl reads top to bottom; the half-turn makes it read upward.
+     (sideways-lr would do both in one line, but Safari lacks it.) */
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  margin: 0;
+  /* Fallback only: presentation.js scales the title to run the full height
+     of the slide's content box. */
+  font-size: clamp(1.3rem, 3.4vh, 2.6rem);
+  line-height: 1.1;
+  white-space: nowrap;
+  /* The half-turn would point the inherited downward shadow upward. */
+  text-shadow: 0 -1px 2px rgba(0, 0, 0, 0.9), 0 -2px 14px rgba(0, 0, 0, 0.8);
+}
+/* An optional note placed right after the h2 runs beside it in the spine,
+   the same way up, starting from the bottom where the title starts. */
+.side-title > .note {
+  flex: 0 0 auto;
+  align-self: flex-end;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  margin: 0 0 0 -1vw;
+  line-height: 1.2;
+  font-style: normal; /* italics read poorly turned on their side */
+  white-space: nowrap;
+  text-shadow: 0 -1px 2px rgba(0, 0, 0, 0.9), 0 -2px 14px rgba(0, 0, 0, 0.8);
+}
+.side-title .side-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Brand slide: the "what we do" column beside a stack of team portraits.
-   Unlike the hero slides, the images stay inset rather than bleeding to the
-   edges, so the slide keeps its normal padding. */
+   Same shape as the hero slides: the slide drops its padding so the portrait
+   column bleeds to the top and bottom edges, and the content column carries
+   its own padding instead. */
 .brand-slide {
   flex-direction: row;
-  gap: 4vw;
+  align-items: stretch;
+  padding: 0;
 }
 .brand-slide .brand-content {
   flex: 1 1 auto;
@@ -307,21 +357,26 @@ html { background: #15191f; font-size: clamp(70%, min(1.67vh, 3.4vw), 150%); }
   align-items: center;
   justify-content: center;
   gap: 0.8em;
+  padding: 6vh 5vw;
+  box-sizing: border-box;
 }
 .brand-slide .brand-content .brand-logo { margin: 0 0 0.8em; }
 .brand-slide .brand-content p { margin: 0; }
-/* Both portraits are square sources, so a single width bound keeps them equal
-   and the pair is sized to fit two of them, plus the gap, in the slide height. */
+/* Both portraits are square sources stacked to span the full slide height:
+   each takes exactly half of it, and its width follows from the aspect ratio,
+   so the column is as wide as half the viewport is tall. */
 .brand-slide .brand-portraits {
   flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 2vh;
+  height: 100%;
 }
 .brand-slide .brand-portraits img {
-  width: min(22vw, 32vh);
-  height: auto;
+  height: 50%;
+  width: auto;
   max-height: none;
+  border-radius: 0;
+  object-fit: cover;
 }
 
 /* Section interlude: a single title carrying a whole part of the deck. */
@@ -355,6 +410,15 @@ html { background: #15191f; font-size: clamp(70%, min(1.67vh, 3.4vw), 150%); }
 .nav-arrow:hover { background: rgba(168, 130, 255, 0.3); opacity: 1; }
 #prev { left: 1.5rem; }
 #next { right: 1.5rem; }
+#fullscreen {
+  top: auto;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  transform: none;
+  width: 2.4rem;
+  height: 2.4rem;
+  font-size: 1.1rem;
+}
 
 /* Slide counter + progress dots */
 #progress {
@@ -391,14 +455,59 @@ html { background: #15191f; font-size: clamp(70%, min(1.67vh, 3.4vw), 150%); }
   .slide .figure-row img { max-width: 74vw; max-height: 32vh; }
 
   /* The brand slide stacks too: text block on top, the two portraits side by
-     side beneath it, where width rather than height is what constrains them. */
-  .brand-slide { flex-direction: column; gap: 3vh; }
-  .brand-slide .brand-portraits { flex-direction: row; gap: 3vw; }
-  .brand-slide .brand-portraits img { width: min(38vw, 26vh); }
+     side beneath it, each half the screen width and filling whatever height
+     remains down to the bottom edge. */
+  .brand-slide {
+    flex-direction: column;
+    padding: 0; /* re-assert: the .slide padding above would override it */
+  }
+  .brand-slide .brand-content {
+    flex: 0 0 auto;
+    padding: 5vh 6vw 3vh;
+  }
+  .brand-slide .brand-portraits {
+    flex: 1 1 auto;
+    min-height: 0;
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+  }
+  .brand-slide .brand-portraits img {
+    flex: 1 1 0;
+    min-width: 0;
+    width: 50%;
+    height: 100%;
+  }
 
   /* Standalone reference URLs may exceed the narrow screen — better to break
      mid-address than to clip. */
   .slide .ref { white-space: normal; overflow-wrap: anywhere; }
+
+  /* Side-titled slides: no spare width for a spine — the heading goes back
+     on top, horizontal, and the body stacks beneath it. */
+  .side-title {
+    flex-direction: column;
+    gap: 0;
+    padding: 6vh 6vw;
+  }
+  .side-title h2 {
+    writing-mode: horizontal-tb;
+    transform: none;
+    white-space: normal;
+    text-shadow: inherit;
+    font-size: clamp(2.3rem, 6.4vw, 4.4rem);
+    margin: 0 0 0.4em;
+  }
+  .side-title > .note {
+    align-self: auto;
+    writing-mode: horizontal-tb;
+    transform: none;
+    margin: 0 0 0.6em;
+    font-style: italic;
+    white-space: normal;
+    text-shadow: inherit;
+  }
+  .side-title .side-body { width: 100%; }
 
   /* Portrait slides stack the same way as the title slide: text block on top,
      the portrait below it taking whatever height remains. */
@@ -437,6 +546,7 @@ html { background: #15191f; font-size: clamp(70%, min(1.67vh, 3.4vw), 150%); }
   /* Keep the arrows off the slide text: park them in the bottom corners,
      beside slimmed-down progress dots. */
   .nav-arrow { top: auto; bottom: 1.1rem; transform: none; }
+  #fullscreen { display: none; }
   #progress { gap: 0.4rem; }
   #progress .dot { width: 0.45rem; height: 0.45rem; }
 }

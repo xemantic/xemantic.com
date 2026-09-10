@@ -44,6 +44,15 @@
   line-height: 1.45;
 }
 
+/* Beside a side title the listing may take the whole slide height, so it
+   scales by height alone, and the body column rather than the 88vw cap
+   bounds its width. 2.4vh keeps a 24-line listing inside the 92vh body. */
+.side-title pre.dense {
+  font-size: clamp(0.6rem, 2.4vh, 1.5rem);
+  max-width: 100%;
+  margin: 0;
+}
+
 .slide pre code {
   font-family: inherit;
   white-space: pre;
@@ -153,17 +162,22 @@
   stroke: rgba(247, 140, 108, 0.6);
 }
 .slide svg.graph .node.phenomenon .type { fill: #f78c6c; }
-/* An identity assertion (sameAs) rather than provenance: dashed. */
-.slide svg.graph .identity path {
+/* Edges routed around other nodes are paths; styled like the lines. */
+.slide svg.graph path.edge {
   fill: none;
   stroke: rgba(168, 130, 255, 0.75);
   stroke-width: 2;
-  stroke-dasharray: 7 6;
+}
+/* Beside a side title the graph is bound by the body column's width and,
+   through its 1000:560 aspect, by the slide height with room for the note. */
+.side-title svg.graph {
+  width: min(100%, 145vh);
 }
 /* The graph is wider than prose, so its note may be too. */
 .slide svg.graph + .note { max-width: 60ch; }
 /* The pair from the previous slide, so the eye finds it first. */
-.slide svg.graph .hi line { stroke: #a882ff; stroke-width: 3; }
+.slide svg.graph .hi line,
+.slide svg.graph .hi path.edge { stroke: #a882ff; stroke-width: 3; }
 .slide svg.graph .node.hi rect { stroke: #a882ff; stroke-width: 2; }
 
 @media print {
