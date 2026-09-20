@@ -1,9 +1,48 @@
+.gradle
+build/
+
+### Jekyll (legacy, pre Kotlin renderer) ###
 _site/
 .sass-cache/
 .jekyll-cache/
 .jekyll-metadata
-.idea/
-/build/
-.DS_Store
-.gradle/
+
+### IntelliJ IDEA ###
+/.idea/
+!/.idea/codeStyles/
+!/.idea/dictionaries/
+*.iws
+*.iml
+*.ipr
+out/
+
+### Kotlin ###
+.kotlin
+
+### Claude Code ###
 .claude/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+/*.hprof

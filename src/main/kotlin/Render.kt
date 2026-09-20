@@ -50,6 +50,7 @@ internal val excludedRootEntries = setOf(
     "build",
     "build-logic",
     "gradle",
+    "gradle.properties",
     "gradlew",
     "gradlew.bat",
     "settings.gradle.kts",
@@ -63,6 +64,8 @@ internal val excludedRootEntries = setOf(
  * Hidden files are excluded as well.
  */
 internal val excludedFileNames = setOf(
+    "CLAUDE.md",
+    "DEVELOPMENT.md",
     "README.md",
     "TODO.md"
 )

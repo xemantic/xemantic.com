@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
-    alias(libs.plugins.versions)
     alias(libs.plugins.version.catalog.update)
     application
 }

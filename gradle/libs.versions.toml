@@ -1,16 +1,15 @@
 [versions]
 kotlinTarget = "2.4"
 javaTarget = "17"
-kotlin = "2.4.0"
+kotlin = "2.4.20"
 # libraries
 kotlinxCoroutines = "1.11.0"
 kotlinxIo = "0.9.1"
-ktor = "3.5.1"
-markanywhere = "0.3.3"
+ktor = "3.6.0"
+markanywhere = "0.3.4"
 xemanticKotlinCore = "0.9.0"
 # plugins
-versionsPlugin = "0.54.0"
-versionCatalogUpdatePlugin = "1.1.0"
+versionCatalogUpdatePlugin = "1.1.1"
 
 [libraries]
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
@@ -25,5 +24,4 @@ xemantic-kotlin-core = { module = "com.xemantic.kotlin:xemantic-kotlin-core", ve
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-versions = { id = "com.github.ben-manes.versions", version.ref = "versionsPlugin" }
 version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "versionCatalogUpdatePlugin" }
