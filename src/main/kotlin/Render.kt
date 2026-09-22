@@ -1,5 +1,6 @@
 package com.xemantic.website
 
+import com.xemantic.markanywhere.html.ensureFrontmatterTitle
 import com.xemantic.markanywhere.html.wrapInHtmlDocument
 import com.xemantic.markanywhere.html.wrapInSections
 import com.xemantic.markanywhere.parse.parse
@@ -22,15 +23,18 @@ import kotlinx.io.writeString
 
 /**
  * Converts this flow of Markdown into a flow of HTML, moving the
- * YAML front matter into a `<head>` element. The document is prefixed
- * with the HTML5 doctype, otherwise browsers would fall back to the
- * quirks mode, where the BeerCSS body grid clamps `main` to the
- * viewport height, clipping the page content.
+ * YAML front matter into a `<head>` element. A page without a `title`
+ * in its front matter (or without any front matter) gets one derived
+ * from its first `h1`, so every rendered page carries a `<title>`.
+ * The document is prefixed with the HTML5 doctype, otherwise browsers
+ * would fall back to the quirks mode, where the BeerCSS body grid
+ * clamps `main` to the viewport height, clipping the page content.
  */
 fun Flow<String>.renderMarkdownToHtml(): Flow<String> = parse()
+    .ensureFrontmatterTitle()
     .wrapInSections(tocDepth = 6)
-    .repackageContentAndTocNav()
     .wrapInHtmlDocument()
+    .wrapBodyContentInMain()
     .applyPageLayout()
     .asHtml()
     .onStart { emit("<!DOCTYPE html>\n") }

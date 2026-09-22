@@ -105,49 +105,38 @@ fun Flow<SemanticEvent>.applyPageLayout() = transform {
 }
 
 /**
- * Wraps the direct content of `body` in a `main` element, except a trailing
+ * Wraps the direct content of `body` in a `main` element, up to the trailing
  * `nav` with `id="toc"` (emitted at the very end of the stream by
- * `wrapInSections`), which stays a sibling of `main`. On a page without
- * a table of contents `main` simply closes together with `body`.
+ * `wrapInSections`), which gets an `aside` of its own, a sibling of `main`.
+ * On a page without a table of contents `main` simply closes together with
+ * `body`.
+ *
+ * Applied *after* `wrapInHtmlDocument`, never before: that operator moves the
+ * front matter into the `head` only when the `frontmatter` mark opens the
+ * stream, so nothing may emit a mark ahead of it.
  */
 fun Flow<SemanticEvent>.wrapBodyContentInMain(): Flow<SemanticEvent> = semanticEvents {
-    var mainOpen = false
+    var wrapper: String? = null
     collect { event ->
         when {
             event is SemanticEvent.Mark && event.name == "body" -> {
                 emit(event)
                 mark("main")
-                mainOpen = true
+                wrapper = "main"
             }
-            mainOpen && event is SemanticEvent.Mark
+            wrapper != null && event is SemanticEvent.Mark
                 && event.name == "nav" && event["id"] == "toc" -> {
-                unmark("main")
-                mainOpen = false
+                unmark(wrapper!!)
+                mark("aside")
+                wrapper = "aside"
                 emit(event)
             }
             event is SemanticEvent.Unmark && event.name == "body" -> {
-                if (mainOpen) {
-                    unmark("main")
-                    mainOpen = false
-                }
+                wrapper?.let { unmark(it) }
+                wrapper = null
                 emit(event)
             }
             else -> emit(event)
         }
     }
-}
-
-
-fun Flow<SemanticEvent>.repackageContentAndTocNav() = semanticEvents {
-    mark("main")
-    var lastName = "main"
-    collect { event ->
-        if (event is SemanticEvent.Mark && event.name == "nav" && event["id"] == "toc") {
-            lastName = "aside"
-            unmark("main")
-            mark("aside")
-        }
-        emit(event)
-    }
-    unmark(lastName)
 }

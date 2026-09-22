@@ -38,6 +38,14 @@ not only to the repository's own documentation.
   (`invocation of 'Task.project' at execution time`) and discards the cache entry,
   but the catalog is still updated correctly —
   the plugin is simply not configuration-cache compatible, so the warning is expected.
+- `wrapInHtmlDocument` only moves the YAML front matter into `<head>` when the `frontmatter` mark
+  is the *first* event of the stream —
+  any operator emitting a mark before it (a `main` wrapper, for instance)
+  turns the front matter into ordinary body content,
+  rendered as a literal `<frontmatter>` element.
+  `ensureFrontmatterTitle` is just as position-sensitive:
+  it derives the `<title>` only from an `h1` directly following the front matter,
+  so it has to run straight after `parse()`, before anything wraps the heading.
 - `./gradlew run` renders into `build/website`,
   while the legacy Jekyll output still sits in the untracked `_site` directory —
   do not confuse the two when verifying a change.

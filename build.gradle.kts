@@ -16,6 +16,8 @@ kotlin {
         languageVersion = kotlinTarget
         jvmTarget = JvmTarget.fromTarget(javaTarget)
         freeCompilerArgs.add("-Xjdk-release=$javaTarget")
+        extraWarnings = true
+        progressiveMode = true
     }
 }
 
