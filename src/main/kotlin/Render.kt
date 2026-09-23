@@ -1,3 +1,19 @@
+/*
+ * Copyright 2026 Kazimierz Pogoda / Xemantic
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.xemantic.website
 
 import com.xemantic.markanywhere.html.ensureFrontmatterTitle
@@ -41,9 +57,12 @@ fun Flow<String>.renderMarkdownToHtml(): Flow<String> = parse()
 
 /**
  * Root entries of the repository which are not a part of the website:
- * the build machinery and the Jekyll leftovers.
+ * the build machinery, the licensing files and the Jekyll leftovers.
  */
 internal val excludedRootEntries = setOf(
+    "LICENSE",
+    "LICENSES",
+    "REUSE.toml",
     "_config.yml",
     "_includes",
     "_layouts",
@@ -84,19 +103,21 @@ internal val excludedFileNames = setOf(
  * target directory receives a `.nojekyll` marker and an `llms.txt`
  * index of all the Markdown sources.
  *
- * @param args the source directory (website root) and the target directory.
+ * @param args the source directory (website root), the target directory,
+ *   and optionally the directories of generated files, like the BeerCSS
+ *   stylesheet, published as if they were a part of the source directory.
  */
 fun main(args: Array<String>) {
     val sourceDir = Path(args[0])
     val targetDir = Path(args[1])
+    val generatedDirs = args.drop(2).map { Path(it) }
     val domain = sourceDir.readDomain()
     val baseUrl = "https://$domain"
     val markdownPaths = mutableListOf<String>()
     var pageCount = 0
     var assetCount = 0
     runBlocking(Dispatchers.Default) {
-        sourceDir.collectSiteFiles().forEach { relativePath ->
-            val sourceFile = Path(sourceDir, relativePath)
+        collectSiteFiles(sourceDir, generatedDirs).forEach { (relativePath, sourceFile) ->
             if (relativePath.endsWith(".md")) {
                 pageCount++
                 val htmlPath = relativePath.removeSuffix(".md") + ".html"
@@ -223,6 +244,26 @@ private fun writeTextFile(file: Path, content: String) {
  * directory, skipping hidden files everywhere, and the repository
  * infrastructure at the root level.
  */
+/**
+ * The files to publish, keyed by their path relative to the website root:
+ * those of the [sourceDir] and of every one of the [generatedDirs].
+ * A path provided twice fails the build, as it usually means a stale copy
+ * of a generated file left in the source.
+ */
+private fun collectSiteFiles(
+    sourceDir: Path,
+    generatedDirs: List<Path>
+): Map<String, Path> = buildMap {
+    (listOf(sourceDir) + generatedDirs).forEach { dir ->
+        dir.collectSiteFiles().forEach { relativePath ->
+            val previous = put(relativePath, Path(dir, relativePath))
+            check(previous == null) {
+                "$relativePath is provided by both $previous and ${Path(dir, relativePath)}"
+            }
+        }
+    }
+}
+
 private fun Path.collectSiteFiles(
     relativeDir: String = "",
     paths: MutableList<String> = mutableListOf()

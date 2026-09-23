@@ -8,9 +8,10 @@ _site/
 .jekyll-metadata
 
 ### IntelliJ IDEA ###
-/.idea/
+/.idea/*
 !/.idea/codeStyles/
 !/.idea/dictionaries/
+!/.idea/copyright/
 *.iws
 *.iml
 *.ipr

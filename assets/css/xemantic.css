@@ -17,6 +17,52 @@ body.dark .github-icon {
 }
 
 /*
+ * Icons in links and buttons get bolder on hover and keyboard focus, like
+ * on fonts.google.com: the grade axis (GRAD) thickens the strokes without
+ * changing the glyph width, so nothing around the icon moves. Every state
+ * lists both axes in the same order, otherwise the browser would switch
+ * between them abruptly instead of animating. The filled states repeat
+ * BeerCSS's own selectors to add the grade to them.
+ */
+i {
+  font-variation-settings: "GRAD" 0, "FILL" 0;
+  transition: font-variation-settings var(--speed2) cubic-bezier(.2, 0, 0, 1);
+}
+
+i.fill,
+a.active > i,
+button.active > i {
+  font-variation-settings: "GRAD" 0, "FILL" 1;
+}
+
+:is(a, button):is(:hover, :focus-visible) > i {
+  font-variation-settings: "GRAD" 200, "FILL" 0;
+}
+
+:is(a, button):is(:hover, :focus-visible) > i.fill,
+:is(a, button).active:is(:hover, :focus-visible) > i {
+  font-variation-settings: "GRAD" 200, "FILL" 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  i {
+    transition: none;
+  }
+}
+
+/*
+ * Markdown lists keep the browser defaults: bullets, numbering and the
+ * indentation. BeerCSS 4 restored them with exactly this rule, BeerCSS 5
+ * dropped it, so its universal reset zeroes the list padding and the
+ * bullets, drawn outside the list box, get clipped by `main`. The lists
+ * of the navigation (`nav > ul`, e.g. the table of contents) are BeerCSS's
+ * own and stay out of it.
+ */
+:not(nav) > :is(ul, ol) {
+  all: revert;
+}
+
+/*
  * Jumping to an anchor (e.g. from the table of contents) should not
  * hide the section heading under the fixed page header.
  */
@@ -55,8 +101,15 @@ aside:has(> nav#toc) {
     white-space: normal;
   }
 
+  /*
+   * BeerCSS 5 lays out `nav > ul` as an absolutely positioned bar of
+   * inline-flex items, therefore the position, the inset and the item
+   * sizes are reset here explicitly.
+   */
   nav#toc ul {
     display: block;
+    position: static;
+    inset: auto;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -68,6 +121,8 @@ aside:has(> nav#toc) {
 
   nav#toc li {
     display: block;
+    block-size: auto;
+    inline-size: auto;
     margin-block: .5rem;
   }
 

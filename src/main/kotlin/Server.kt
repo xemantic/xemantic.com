@@ -1,3 +1,19 @@
+/*
+ * Copyright 2026 Kazimierz Pogoda / Xemantic
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.xemantic.website
 
 import io.ktor.http.ContentType
@@ -44,19 +60,21 @@ import kotlinx.io.readByteArray
  *   note the `404/` directory is the *404* show, an ordinary page, not the
  *   error page.
  *
+ * The port is taken from the `PORT` env variable, defaulting to `8080`.
+ *
  * @param args optional website source directory (defaults to the current
- *   directory) and optional port (defaults to the `PORT` env variable or
- *   `8080`).
+ *   directory), followed by the optional directories of generated files,
+ *   like the BeerCSS stylesheet, served as if they were a part of the source
+ *   directory.
  */
 fun main(args: Array<String>) {
     val root = Path(args.getOrElse(0) { "." })
-    val port = args.getOrNull(1)?.toInt()
-        ?: System.getenv("PORT")?.toInt()
-        ?: 8080
+    val generatedDirs = args.drop(1).map { Path(it) }
+    val port = System.getenv("PORT")?.toInt() ?: 8080
     val baseUrl = "http://localhost:$port"
     println("Serving $root live at $baseUrl")
     embeddedServer(CIO, port = port) {
-        website(root, baseUrl)
+        website(root, baseUrl, generatedDirs)
     }.start(wait = true)
 }
 
@@ -66,12 +84,17 @@ fun main(args: Array<String>) {
  * the build would publish for that URL, then responds accordingly — a
  * rendered Markdown page, a verbatim file, a redirect, or a `404`. Served
  * Markdown gets a provenance front matter under [baseUrl], mirroring the
- * build (which uses the production host instead).
+ * build (which uses the production host instead). Files missing in [root]
+ * are looked up in the [generatedDirs].
  */
-fun Application.website(root: Path, baseUrl: String) {
+fun Application.website(
+    root: Path,
+    baseUrl: String,
+    generatedDirs: List<Path> = emptyList()
+) {
     routing {
         get("{path...}") {
-            when (val resolution = root.resolve(call.request.path())) {
+            when (val resolution = root.resolve(call.request.path(), generatedDirs)) {
                 is Resolution.Serve -> call.respondFile(resolution.file, baseUrl)
                 is Resolution.Render -> call.respondRendered(resolution.markdown)
                 is Resolution.Redirect -> call.respondRedirect(resolution.location, permanent = false)
@@ -95,7 +118,10 @@ private sealed interface Resolution {
  * file the build would have published for the same URL: a Markdown source
  * to render, a file to serve verbatim, a redirect, or nothing.
  */
-private fun Path.resolve(requestPath: String): Resolution {
+private fun Path.resolve(
+    requestPath: String,
+    generatedDirs: List<Path>
+): Resolution {
     val relative = requestPath.trim('/')
     if (!relative.isServableSitePath()) return Resolution.NotFound
     if (requestPath.endsWith("/")) {
@@ -103,7 +129,8 @@ private fun Path.resolve(requestPath: String): Resolution {
         indexChild(relative, "index.html")?.let { return Resolution.Serve(it) }
         return Resolution.NotFound
     }
-    child(relative)?.let { return Resolution.Serve(it) }
+    (listOf(this) + generatedDirs).firstNotNullOfOrNull { it.child(relative) }
+        ?.let { return Resolution.Serve(it) }
     // `foo.md` with no direct source falls back to `foo/index.md`, the flat
     // alias the build emits so a page URL plus `.md` yields its source
     if (relative.endsWith(".md")) {
