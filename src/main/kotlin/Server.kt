@@ -28,6 +28,7 @@ import io.ktor.server.request.path
 import io.ktor.server.response.respondBytes
 import io.ktor.server.response.respondBytesWriter
 import io.ktor.server.response.respondRedirect
+import io.ktor.server.response.respondText
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
 import io.ktor.utils.io.writeString
@@ -53,6 +54,7 @@ import kotlinx.io.readByteArray
  *   direct source falls back to `/foo/index.md`, matching the flat alias
  *   the build emits),
  * - every other file (assets, legacy `.html`, …) is served verbatim,
+ * - `/llms.txt`, which the build generates, is generated on each request,
  * - the repository infrastructure and hidden files are hidden, exactly as
  *   the build excludes them,
  * - a missing path responds `404`, with the site's custom root `404` page
@@ -96,9 +98,13 @@ fun Application.website(
         get("{path...}") {
             when (val resolution = root.resolve(call.request.path(), generatedDirs)) {
                 is Resolution.Serve -> call.respondFile(resolution.file, baseUrl)
-                is Resolution.Render -> call.respondRendered(resolution.markdown)
+                is Resolution.Render -> call.respondRendered(resolution.markdown, resolution.page(root, baseUrl, generatedDirs))
                 is Resolution.Redirect -> call.respondRedirect(resolution.location, permanent = false)
-                Resolution.NotFound -> call.respondNotFound(root, baseUrl)
+                Resolution.LlmsTxt -> call.respondText(
+                    llmsTxt(baseUrl, root, generatedDirs),
+                    ContentType.Text.Plain.withCharset(Charsets.UTF_8)
+                )
+                Resolution.NotFound -> call.respondNotFound(root, baseUrl, generatedDirs)
             }
         }
     }
@@ -107,9 +113,17 @@ fun Application.website(
 private sealed interface Resolution {
     /** A file served verbatim (asset, `.md` source, or legacy `.html`). */
     data class Serve(val file: Path) : Resolution
-    /** A Markdown source rendered to HTML on the fly. */
-    data class Render(val markdown: Path) : Resolution
+    /**
+     * A Markdown source rendered to HTML on the fly, [path] being
+     * relative to the root.
+     */
+    data class Render(val markdown: Path, val path: String) : Resolution {
+        fun page(root: Path, baseUrl: String, generatedDirs: List<Path>) =
+            Page(path, baseUrl, listOf(root) + generatedDirs)
+    }
     data class Redirect(val location: String) : Resolution
+    /** The `llms.txt` index, generated as the build generates it. */
+    data object LlmsTxt : Resolution
     data object NotFound : Resolution
 }
 
@@ -125,19 +139,22 @@ private fun Path.resolve(
     val relative = requestPath.trim('/')
     if (!relative.isServableSitePath()) return Resolution.NotFound
     if (requestPath.endsWith("/")) {
-        indexChild(relative, "index.md")?.let { return Resolution.Render(it) }
+        indexChild(relative, "index.md")?.let {
+            return Resolution.Render(it, relative.indexPath("index.md"))
+        }
         indexChild(relative, "index.html")?.let { return Resolution.Serve(it) }
         return Resolution.NotFound
     }
     (listOf(this) + generatedDirs).firstNotNullOfOrNull { it.child(relative) }
         ?.let { return Resolution.Serve(it) }
+    if (relative == "llms.txt") return Resolution.LlmsTxt
     // `foo.md` with no direct source falls back to `foo/index.md`, the flat
     // alias the build emits so a page URL plus `.md` yields its source
     if (relative.endsWith(".md")) {
         child("${relative.removeSuffix(".md")}/index.md")
             ?.let { return Resolution.Serve(it) }
     }
-    child("$relative.md")?.let { return Resolution.Render(it) }
+    child("$relative.md")?.let { return Resolution.Render(it, "$relative.md") }
     child("$relative.html")?.let { return Resolution.Serve(it) }
     // a bare path pointing at a directory with an index redirects to the
     // trailing-slash form, exactly like GitHub Pages
@@ -154,7 +171,7 @@ private fun Path.resolve(
  * ordinary page, not the error page.
  */
 private fun Path.resolveNotFound(): Resolution =
-    child("404.md")?.let { Resolution.Render(it) }
+    child("404.md")?.let { Resolution.Render(it, "404.md") }
         ?: child("404.html")?.let { Resolution.Serve(it) }
         ?: Resolution.NotFound
 
@@ -173,7 +190,10 @@ private fun Path.child(relative: String): Path? {
  * the root, where [relative] is empty.
  */
 private fun Path.indexChild(relative: String, index: String): Path? =
-    child(if (relative.isEmpty()) index else "$relative/$index")
+    child(relative.indexPath(index))
+
+private fun String.indexPath(index: String): String =
+    if (isEmpty()) index else "$this/$index"
 
 /**
  * Whether this relative request path may be served: the build excludes
@@ -216,10 +236,14 @@ private suspend fun ApplicationCall.respondFile(
  * or static `404.html` — or an empty body when the site defines none. See
  * [Path.resolveNotFound].
  */
-private suspend fun ApplicationCall.respondNotFound(root: Path, baseUrl: String) {
+private suspend fun ApplicationCall.respondNotFound(
+    root: Path,
+    baseUrl: String,
+    generatedDirs: List<Path>
+) {
     val status = HttpStatusCode.NotFound
     when (val body = root.resolveNotFound()) {
-        is Resolution.Render -> respondRendered(body.markdown, status)
+        is Resolution.Render -> respondRendered(body.markdown, body.page(root, baseUrl, generatedDirs), status)
         is Resolution.Serve -> respondFile(body.file, baseUrl, status)
         else -> respondBytes(
             bytes = ByteArray(0),
@@ -230,8 +254,8 @@ private suspend fun ApplicationCall.respondNotFound(root: Path, baseUrl: String)
 }
 
 /**
- * Streams [markdown] to the response as it renders, chunk by chunk, rather
- * than buffering the whole document first. markanywhere renders
+ * Streams [markdown], the source of the [page], to the response as it
+ * renders, chunk by chunk, rather than buffering the whole document first. markanywhere renders
  * incrementally, so the first HTML reaches the browser while the tail of
  * the page is still being parsed. Reuses the exact pipeline the build uses,
  * so the streamed bytes match the built file. Writes to the multiplatform
@@ -240,12 +264,13 @@ private suspend fun ApplicationCall.respondNotFound(root: Path, baseUrl: String)
  */
 private suspend fun ApplicationCall.respondRendered(
     markdown: Path,
+    page: Page,
     status: HttpStatusCode? = null
 ) {
     respondBytesWriter(htmlContentType, status) {
         markdown.readLines()
             .flowOn(Dispatchers.IO)
-            .renderMarkdownToHtml()
+            .renderMarkdownToHtml(page)
             .flowOn(Dispatchers.Default)
             .onEach { writeString(it) }
             .collect()

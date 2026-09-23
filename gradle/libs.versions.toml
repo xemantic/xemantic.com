@@ -6,6 +6,7 @@ kotlin = "2.4.20"
 kotlinxCoroutines = "1.11.0"
 kotlinxIo = "0.9.1"
 ktor = "3.6.0"
+logback = "1.6.3"
 markanywhere = "0.4.0"
 xemanticKotlinCore = "0.9.0"
 # web, downloaded by the generateBeerCss task
@@ -18,10 +19,12 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-io-core = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinxIo" }
 ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
 ktor-server-cio = { module = "io.ktor:ktor-server-cio", version.ref = "ktor" }
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 markanywhere-parse = { module = "com.xemantic.markanywhere:markanywhere-parse", version.ref = "markanywhere" }
 markanywhere-render = { module = "com.xemantic.markanywhere:markanywhere-render", version.ref = "markanywhere" }
 markanywhere-transform = { module = "com.xemantic.markanywhere:markanywhere-transform", version.ref = "markanywhere" }
 markanywhere-html = { module = "com.xemantic.markanywhere:markanywhere-html", version.ref = "markanywhere" }
+markanywhere-yaml = { module = "com.xemantic.markanywhere:markanywhere-yaml", version.ref = "markanywhere" }
 xemantic-kotlin-core = { module = "com.xemantic.kotlin:xemantic-kotlin-core", version.ref = "xemanticKotlinCore" }
 
 [plugins]

@@ -12,6 +12,18 @@ Render the whole site into `build/website`:
 ./gradlew run
 ```
 
+The absolute URLs in the pages (canonical, Open Graph, `llms.txt`)
+are built from the `CNAME` domain.
+A preview deployed under another origin, for example one per pull request,
+overrides it:
+
+```shell
+./gradlew run -PsiteUrl=https://preview.example.org
+```
+
+The value has to be an origin, not a path below one,
+because the pages link to their assets with root-relative paths.
+
 Serve it live from the source, rendering Markdown on each request:
 
 ```shell

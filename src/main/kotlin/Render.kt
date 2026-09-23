@@ -16,18 +16,25 @@
 
 package com.xemantic.website
 
+import com.xemantic.markanywhere.SemanticEvent
 import com.xemantic.markanywhere.html.ensureFrontmatterTitle
 import com.xemantic.markanywhere.html.wrapInHtmlDocument
 import com.xemantic.markanywhere.html.wrapInSections
 import com.xemantic.markanywhere.parse.parse
 import com.xemantic.markanywhere.render.asHtml
+import com.xemantic.markanywhere.yaml.parseYaml
+import com.xemantic.markanywhere.yaml.renderYaml
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.io.buffered
@@ -42,14 +49,17 @@ import kotlinx.io.writeString
  * YAML front matter into a `<head>` element. A page without a `title`
  * in its front matter (or without any front matter) gets one derived
  * from its first `h1`, so every rendered page carries a `<title>`.
+ * The `head` is completed with the metadata of the [page], see
+ * [addPageMetadata].
  * The document is prefixed with the HTML5 doctype, otherwise browsers
  * would fall back to the quirks mode, where the BeerCSS body grid
  * clamps `main` to the viewport height, clipping the page content.
  */
-fun Flow<String>.renderMarkdownToHtml(): Flow<String> = parse()
+fun Flow<String>.renderMarkdownToHtml(page: Page): Flow<String> = parse()
     .ensureFrontmatterTitle()
     .wrapInSections(tocDepth = 6)
     .wrapInHtmlDocument()
+    .addPageMetadata(page)
     .wrapBodyContentInMain()
     .applyPageLayout()
     .asHtml()
@@ -104,15 +114,18 @@ internal val excludedFileNames = setOf(
  * index of all the Markdown sources.
  *
  * @param args the source directory (website root), the target directory,
- *   and optionally the directories of generated files, like the BeerCSS
- *   stylesheet, published as if they were a part of the source directory.
+ *   the URL the site will be published under (an origin, like
+ *   `https://xemantic.com`, as the pages link to their assets by
+ *   root-relative paths), and optionally the directories of generated files,
+ *   like the BeerCSS stylesheet, published as if they were a part of the
+ *   source directory.
  */
 fun main(args: Array<String>) {
     val sourceDir = Path(args[0])
     val targetDir = Path(args[1])
-    val generatedDirs = args.drop(2).map { Path(it) }
-    val domain = sourceDir.readDomain()
-    val baseUrl = "https://$domain"
+    val siteUrl = args[2].removeSuffix("/")
+    val generatedDirs = args.drop(3).map { Path(it) }
+    val siteRoots = listOf(sourceDir) + generatedDirs
     val markdownPaths = mutableListOf<String>()
     var pageCount = 0
     var assetCount = 0
@@ -121,9 +134,10 @@ fun main(args: Array<String>) {
             if (relativePath.endsWith(".md")) {
                 pageCount++
                 val htmlPath = relativePath.removeSuffix(".md") + ".html"
-                val pageUrl = baseUrl + relativePath.markdownPagePath()
+                val pageUrl = siteUrl + relativePath.markdownPagePath()
+                val page = Page(relativePath, siteUrl, siteRoots)
                 launch {
-                    renderPage(sourceFile, Path(targetDir, htmlPath))
+                    renderPage(sourceFile, Path(targetDir, htmlPath), page)
                     println("Rendered $htmlPath")
                 }
                 launch(Dispatchers.IO) {
@@ -135,7 +149,7 @@ fun main(args: Array<String>) {
                         copyMarkdown(sourceFile, Path(targetDir, alias), pageUrl)
                     }
                 }
-                markdownPaths += alias ?: relativePath
+                markdownPaths += relativePath
             } else {
                 assetCount++
                 launch(Dispatchers.IO) {
@@ -145,7 +159,7 @@ fun main(args: Array<String>) {
         }
     }
     writeTextFile(Path(targetDir, ".nojekyll"), "")
-    writeTextFile(Path(targetDir, "llms.txt"), llmsTxt(domain, markdownPaths))
+    writeTextFile(Path(targetDir, "llms.txt"), llmsTxt(siteUrl, markdownPaths))
     println("Rendered $pageCount pages and copied $assetCount assets to $targetDir")
 }
 
@@ -155,25 +169,35 @@ fun main(args: Array<String>) {
  * Non-index files already match this convention, and the root
  * `index.md` has no flat form, therefore `null`.
  */
-private fun String.toFlatMarkdownAlias(): String? =
+internal fun String.toFlatMarkdownAlias(): String? =
     if (endsWith("/index.md")) removeSuffix("/index.md") + ".md"
     else null
 
 /**
- * Reads the website domain from the `CNAME` file.
+ * The `llms.txt` index of the site published under [siteUrl], listing the
+ * Markdown sources found in [sourceDir] and the [generatedDirs]. Serving
+ * and building share this function.
  */
-private fun Path.readDomain(): String =
-    SystemFileSystem.source(Path(this, "CNAME")).buffered().use { source ->
-        source.readLine()!!.trim()
-    }
+internal fun llmsTxt(
+    siteUrl: String,
+    sourceDir: Path,
+    generatedDirs: List<Path>
+): String = llmsTxt(
+    siteUrl,
+    collectSiteFiles(sourceDir, generatedDirs).keys.filter { it.endsWith(".md") }
+)
 
+/**
+ * The `llms.txt` index of the Markdown documents at [markdownPaths],
+ * relative to the site root, each linked by its flat alias when it has one.
+ */
 private fun llmsTxt(
-    domain: String,
-    markdownPaths: List<String>
+    siteUrl: String,
+    markdownPaths: Collection<String>
 ): String = buildString {
-    append("# $domain\n\n## Pages\n\n")
-    markdownPaths.sorted().forEach { path ->
-        append("- [${path.markdownPagePath()}](https://$domain/$path)\n")
+    append("# ${siteUrl.substringAfter("://")}\n\n## Pages\n\n")
+    markdownPaths.map { it.toFlatMarkdownAlias() ?: it }.sorted().forEach { path ->
+        append("- [${path.markdownPagePath()}]($siteUrl/$path)\n")
     }
 }
 
@@ -194,43 +218,102 @@ internal fun String.markdownPagePath(): String {
 }
 
 /**
- * Whether this Markdown document already opens with a YAML front matter,
- * i.e. its first line is the `---` delimiter.
+ * The site-root-relative URL path of the rendered HTML page of the Markdown
+ * document at this relative path, as GitHub Pages serves it: an `index.md`
+ * is served at its directory, with the trailing slash (the form without it
+ * redirects), and every other file drops its `.md` suffix.
  */
-internal fun String.hasFrontMatter(): Boolean =
-    lineSequence().firstOrNull()?.trimEnd() == "---"
+internal fun String.htmlPagePath(): String {
+    val path = removeSuffix(".md")
+    return when {
+        path == "index" -> "/"
+        path.endsWith("/index") -> "/" + path.removeSuffix("index")
+        else -> "/$path"
+    }
+}
 
 /**
  * Decorates a Markdown document for publishing: its front matter is given a
- * `url` entry naming the [pageUrl] the document originates from — inserted
+ * `url` entry naming the [pageUrl] the document originates from, and a
+ * `lang` entry of the [DEFAULT_LANG] unless it already states one — inserted
  * into an existing front matter, or added as a fresh one when the document
  * has none — and the site [MARKDOWN_COPYRIGHT_FOOTER] is appended. Serving
  * and building share this function, so the only intended difference between
  * the preview and the published file is the [pageUrl] host.
+ *
+ * Only the front matter is processed as YAML events, the Markdown body is
+ * kept verbatim: rendering the parsed body back would reformat it.
+ * A front matter without a closing `---` is malformed and left untouched.
  */
-internal fun decorateMarkdown(content: String, pageUrl: String): String {
-    val document =
-        if (content.hasFrontMatter()) content.withFrontMatterUrl(pageUrl)
-        else "---\nurl: $pageUrl\n---\n\n$content"
-    return document + MARKDOWN_COPYRIGHT_FOOTER
+internal suspend fun decorateMarkdown(content: String, pageUrl: String): String {
+    val lines = content.split("\n")
+    val hasFrontMatter = lines.first().trimEnd() == "---"
+    val close = if (hasFrontMatter) {
+        lines.drop(1).indexOfFirst { it.trimEnd() == "---" } + 1
+    } else 0
+    if (hasFrontMatter && close == 0) return content + MARKDOWN_COPYRIGHT_FOOTER
+    val yaml = if (hasFrontMatter) {
+        flowOf(lines.subList(1, close).joinToString("\n")).parseYaml()
+    } else {
+        emptyFlow()
+    }
+    val frontMatter = yaml.withProvenance(pageUrl).renderYaml()
+    val body =
+        if (hasFrontMatter) lines.subList(close + 1, lines.size).joinToString("\n")
+        else "\n$content"
+    return "---\n$frontMatter---\n$body$MARKDOWN_COPYRIGHT_FOOTER"
 }
 
 /**
- * Sets the `url` entry of this document's existing YAML front matter to
- * [pageUrl] as its first entry, dropping any previous `url`. A front matter
- * without a closing `---` is malformed and left untouched.
+ * Sets the top-level `url` entry of these YAML events to [pageUrl] as the
+ * first entry, dropping any previous `url`, and adds a `lang` entry of the
+ * [DEFAULT_LANG] after it when no top-level `lang` is present.
  */
-private fun String.withFrontMatterUrl(pageUrl: String): String {
-    val lines = split("\n")
-    val closeOffset = lines.drop(1).indexOfFirst { it.trimEnd() == "---" }
-    if (closeOffset == -1) return this
-    val close = closeOffset + 1
-    val entries = lines.subList(1, close).toMutableList()
-    entries.removeAll { it.substringBefore(":").trim() == "url" }
-    entries.add(0, "url: $pageUrl")
-    return (listOf("---") + entries + "---" + lines.subList(close + 1, lines.size))
-        .joinToString("\n")
+private suspend fun Flow<SemanticEvent>.withProvenance(
+    pageUrl: String
+): Flow<SemanticEvent> {
+    val nodes = toList().topLevelNodes()
+    val lang =
+        if (nodes.any { it.isEntry("lang") }) emptyList()
+        else yamlEntry("lang", DEFAULT_LANG)
+    val rest = nodes.filterNot { it.isEntry("url") }.flatten()
+    return (yamlEntry("url", pageUrl) + lang + rest).asFlow()
 }
+
+/**
+ * Groups these events into top-level nodes: each is either a whole
+ * marked subtree, like an `entry` with its value, or a lone text event.
+ */
+private fun List<SemanticEvent>.topLevelNodes(): List<List<SemanticEvent>> {
+    val nodes = mutableListOf<List<SemanticEvent>>()
+    var node = mutableListOf<SemanticEvent>()
+    var depth = 0
+    forEach { event ->
+        node += event
+        when (event) {
+            is SemanticEvent.Mark -> depth++
+            is SemanticEvent.Unmark -> depth--
+            is SemanticEvent.Text -> {}
+        }
+        if (depth == 0) {
+            nodes += node
+            node = mutableListOf()
+        }
+    }
+    if (node.isNotEmpty()) nodes += node
+    return nodes
+}
+
+private fun List<SemanticEvent>.isEntry(key: String): Boolean =
+    (firstOrNull() as? SemanticEvent.Mark)?.let {
+        it.name == "entry" && it["key"] == key
+    } ?: false
+
+private fun yamlEntry(key: String, value: String): List<SemanticEvent> = listOf(
+    SemanticEvent.Mark("entry", attributes = mapOf("key" to key)),
+    SemanticEvent.Text(value),
+    SemanticEvent.Unmark("entry")
+)
 
 private fun writeTextFile(file: Path, content: String) {
     file.parent?.let { SystemFileSystem.createDirectories(it) }
@@ -286,13 +369,13 @@ private fun Path.collectSiteFiles(
     return paths
 }
 
-private suspend fun renderPage(markdownFile: Path, htmlFile: Path) {
+private suspend fun renderPage(markdownFile: Path, htmlFile: Path, page: Page) {
     htmlFile.parent?.let { SystemFileSystem.createDirectories(it) }
     SystemFileSystem.sink(htmlFile).buffered().use { sink ->
         markdownFile
             .readLines()
             .flowOn(Dispatchers.IO)
-            .renderMarkdownToHtml()
+            .renderMarkdownToHtml(page)
             .flowOn(Dispatchers.Default)
             .onEach { sink.writeString(it) }
             .flowOn(Dispatchers.IO)
@@ -315,7 +398,7 @@ private fun copyFile(sourceFile: Path, targetFile: Path) {
  * server decorates a served `.md` the same way, so the published file and the
  * preview differ only in the [pageUrl] host.
  */
-private fun copyMarkdown(sourceFile: Path, targetFile: Path, pageUrl: String) {
+private suspend fun copyMarkdown(sourceFile: Path, targetFile: Path, pageUrl: String) {
     targetFile.parent?.let { SystemFileSystem.createDirectories(it) }
     val content = SystemFileSystem.source(sourceFile).buffered().use { it.readString() }
     SystemFileSystem.sink(targetFile).buffered().use { sink ->

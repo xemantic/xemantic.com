@@ -48,7 +48,9 @@ dependencies {
     implementation(libs.markanywhere.render)
     implementation(libs.markanywhere.transform)
     implementation(libs.markanywhere.html)
+    implementation(libs.markanywhere.yaml)
     implementation(libs.xemantic.kotlin.core)
+    runtimeOnly(libs.logback.classic)
 }
 
 application {
@@ -58,12 +60,31 @@ application {
 /** The generated files published next to the website source. */
 val generatedWebsiteDir = layout.buildDirectory.dir("generated/website")
 
+/**
+ * The origin the website is published under, used for the absolute URLs
+ * of the pages, like the canonical and the Open Graph ones. Defaults to
+ * the `CNAME` domain, a preview deployment overrides it with
+ * `-PsiteUrl=https://…` (or the `ORG_GRADLE_PROJECT_siteUrl` env variable).
+ */
+val siteUrl = providers.gradleProperty("siteUrl").orElse(
+    providers.fileContents(layout.projectDirectory.file("CNAME")).asText.map {
+        "https://${it.trim()}"
+    }
+)
+
+val websiteDir = layout.buildDirectory.dir("website")
+
 tasks.run.configure {
     description = "Renders the whole website into the build folder."
     dependsOn("generateBeerCss")
+    // a clean slate, so a deleted or renamed page does not linger
+    // in the output, nor in the checks run on it
+    val outputDir = websiteDir.get().asFile
+    doFirst { outputDir.deleteRecursively() }
     args(
         layout.projectDirectory.asFile.absolutePath,
-        layout.buildDirectory.dir("website").get().asFile.absolutePath,
+        outputDir.absolutePath,
+        siteUrl.get(),
         generatedWebsiteDir.get().asFile.absolutePath
     )
 }
@@ -238,7 +259,7 @@ val checkMaterialSymbols = tasks.register<CheckMaterialSymbols>("checkMaterialSy
     description = "Checks that every Material Symbols icon on the rendered pages is vendored."
     group = "verification"
     icons = materialSymbols
-    website = layout.buildDirectory.dir("website")
+    website = websiteDir
 }
 
 tasks.run.configure {
