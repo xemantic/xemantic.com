@@ -18,6 +18,21 @@ Serve it live from the source, rendering Markdown on each request:
 ./gradlew serve
 ```
 
+## Update BeerCSS and Material Symbols
+
+BeerCSS and the Material Symbols icon font are published from the site's own origin,
+so the site makes no third-party request for them.
+The BeerCSS version is `beerCss` in [libs.versions.toml](gradle/libs.versions.toml),
+its modules and the icons in use are listed at the end of [build.gradle.kts](build.gradle.kts).
+The `generateBeerCss` task builds `assets/css/beercss.css` and `assets/fonts/material-symbols-outlined.woff2`
+into `build/generated/website`, from where `run` publishes them and `serve` serves them.
+It reruns, downloading the files again, only when the version, the modules or the icons change.
+
+To use a new icon, add its name, as listed on [Material Symbols](https://fonts.google.com/icons),
+to `materialSymbols` first.
+Every `./gradlew run` is followed by `checkMaterialSymbols`,
+which fails the build when a rendered page uses an icon missing from the font.
+
 ## Update gradlew wrapper
 
 ```shell

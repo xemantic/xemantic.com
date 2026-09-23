@@ -49,6 +49,19 @@ not only to the repository's own documentation.
 - `./gradlew run` renders into `build/website`,
   while the legacy Jekyll output still sits in the untracked `_site` directory —
   do not confuse the two when verifying a change.
+- BeerCSS is not loaded from a CDN, nor through its JavaScript loader:
+  `generateBeerCss` concatenates the chosen modules into `build/generated/website/assets/css/beercss.css`,
+  together with a Material Symbols font subset holding only the listed icons —
+  never commit a copy into `assets`, the build fails when a source and a generated file share a path.
+  The inline script at the start of `body` replaces `beer.loader.js`,
+  whose only effect here was setting the `dark`/`light` `body` class.
+  Any new BeerCSS class used in content requires adding its module —
+  the current list was verified by diffing computed styles of every rendered page against the full bundle.
+- `REUSE.toml` licenses everything as CC BY 4.0 unless a later annotation says otherwise (the last matching one wins) —
+  third-party material added to the site (images, quoted works, vendored libraries) needs its own annotation,
+  verified with `uvx reuse lint`.
+- Google Fonts serves the `icon_names` subset as woff2 only to a browser User-Agent,
+  otherwise it answers with a TrueType font.
 
 ## Anti-patterns to avoid
 

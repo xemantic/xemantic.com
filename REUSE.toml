@@ -1,0 +1,176 @@
+# Licensing of the repository, following https://reuse.software
+# When several annotations match a file, the last one wins,
+# so the general rules come first and the exceptions after them.
+version = 1
+
+# The content of the website: texts of the pages and presentations.
+[[annotations]]
+path = "**"
+SPDX-FileCopyrightText = "Kazimierz Pogoda / Xemantic"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+# The code: the renderer, the build, and the styles and scripts of the pages.
+[[annotations]]
+path = [
+    "src/**",
+    "**/*.kts",
+    "gradle.properties",
+    "gradle/**",
+    "gradlew",
+    "gradlew.bat",
+    ".github/**",
+    ".idea/**",
+    ".gitignore",
+    "CNAME",
+    "Gemfile",
+    "Gemfile.lock",
+    "_config.yml",
+    "_includes/**",
+    "_layouts/**",
+    "_plugins/**",
+    "**/*.js",
+    "**/*.css"
+]
+SPDX-FileCopyrightText = "Kazimierz Pogoda / Xemantic"
+SPDX-License-Identifier = "Apache-2.0"
+
+# Images and documents: photos of people, works of other artists,
+# and the Xemantic logo, which is a trademark.
+[[annotations]]
+path = [
+    "**/*.jpg",
+    "**/*.JPG",
+    "**/*.jpeg",
+    "**/*.png",
+    "**/*.webp",
+    "**/*.gif",
+    "**/*.svg",
+    "**/*.ico",
+    "**/*.pdf"
+]
+SPDX-FileCopyrightText = "Kazimierz Pogoda / Xemantic and the respective authors"
+SPDX-License-Identifier = "LicenseRef-AllRightsReserved"
+
+# Archived websites of other authors, hosted on xemantic.com.
+[[annotations]]
+path = [
+    "marchewa/**",
+    "pacyfka/**",
+    "stachura/**",
+    "tatry-w-poezji/**"
+]
+SPDX-FileCopyrightText = "The respective authors"
+SPDX-License-Identifier = "LicenseRef-AllRightsReserved"
+
+# The legacy website, built on a third-party theme.
+[[annotations]]
+path = "old/**"
+SPDX-FileCopyrightText = "Kazimierz Pogoda / Xemantic and the respective authors"
+SPDX-License-Identifier = "LicenseRef-AllRightsReserved"
+
+[[annotations]]
+path = "gradle/wrapper/gradle-wrapper.jar"
+SPDX-FileCopyrightText = "Gradle, Inc."
+SPDX-License-Identifier = "Apache-2.0"
+
+[[annotations]]
+path = "assets/fonts/Lazenby*"
+SPDX-FileCopyrightText = "2014 Andrew Young, Disaster Fonts"
+SPDX-License-Identifier = "CC-BY-SA-4.0"
+
+[[annotations]]
+path = "assets/images/github/**"
+SPDX-FileCopyrightText = "GitHub, Inc."
+SPDX-License-Identifier = "LicenseRef-AllRightsReserved"
+
+# https://github.com/xemantic/shader-web-background
+[[annotations]]
+path = "assets/js/shader-web-background.js"
+SPDX-FileCopyrightText = "2020 Kazimierz Pogoda"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+# Pages stating "All Rights Reserved" in their own copyright notice,
+# the latter two embedding shader-web-background inline.
+[[annotations]]
+path = "404/index.html"
+SPDX-FileCopyrightText = "2022 Kazimierz Pogoda / Xemantic"
+SPDX-License-Identifier = "LicenseRef-AllRightsReserved"
+
+[[annotations]]
+path = [
+    "test/wesimply.at/test1.html",
+    "workshops/2024/agentic-ai-for-artists-2024-10-26/index.html"
+]
+SPDX-FileCopyrightText = "2024 Kazimierz Pogoda / Xemantic"
+SPDX-License-Identifier = "LicenseRef-AllRightsReserved AND GPL-3.0-or-later"
+
+[[annotations]]
+path = "ideas/industria/**"
+SPDX-FileCopyrightText = "2020 Kazimierz Pogoda, Dominique Schwenner, Patrycja Szumacher"
+SPDX-License-Identifier = "LicenseRef-AllRightsReserved"
+
+# Third-party libraries of the legacy website.
+[[annotations]]
+path = ["old/css/bootstrap*.css", "old/js/libs/bootstrap*.js"]
+SPDX-FileCopyrightText = "2011-2015 Twitter, Inc."
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = "old/css/font-awesome*.css"
+SPDX-FileCopyrightText = "Dave Gandy"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = "old/fonts/**"
+SPDX-FileCopyrightText = "Dave Gandy"
+SPDX-License-Identifier = "OFL-1.1"
+
+[[annotations]]
+path = ["old/css/flexslider.css", "old/js/jquery.flexslider*.js"]
+SPDX-FileCopyrightText = "2012 WooThemes"
+SPDX-License-Identifier = "GPL-2.0-only"
+
+[[annotations]]
+path = "old/js/jquery.backstretch*.js"
+SPDX-FileCopyrightText = "2012 Scott Robbin"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = "old/js/jquery.fitvids.js"
+SPDX-FileCopyrightText = "2013 Chris Coyier, Dave Rupert"
+SPDX-License-Identifier = "WTFPL"
+
+[[annotations]]
+path = "old/js/jquery.masonry*.js"
+SPDX-FileCopyrightText = "2012 David DeSandro"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = "old/js/jquery.scrollto.js"
+SPDX-FileCopyrightText = "2012 Yannick Albert"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = "old/js/libs/jquery-*.js"
+SPDX-FileCopyrightText = "jQuery Foundation, Inc."
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = "old/js/libs/modernizr.min.js"
+SPDX-FileCopyrightText = "Faruk Ateş, Paul Irish, Alex Sexton"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = "old/js/respond*.js"
+SPDX-FileCopyrightText = "2012 Scott Jehl, Paul Irish, Nicholas Zakas"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = "old/js/waypoints*.js"
+SPDX-FileCopyrightText = "2011-2013 Caleb Troughton"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = "old/xemantic.css"
+SPDX-FileCopyrightText = "Kazimierz Pogoda / Xemantic"
+SPDX-License-Identifier = "Apache-2.0"
