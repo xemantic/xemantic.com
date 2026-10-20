@@ -74,7 +74,6 @@ fun main(args: Array<String>) {
     val generatedDirs = args.drop(1).map { Path(it) }
     val port = System.getenv("PORT")?.toInt() ?: 8080
     val baseUrl = "http://localhost:$port"
-    println("Serving $root live at $baseUrl")
     embeddedServer(CIO, port = port) {
         website(root, baseUrl, generatedDirs)
     }.start(wait = true)
