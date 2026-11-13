@@ -59,7 +59,7 @@ not only to the repository's own documentation.
   the current list was verified by diffing computed styles of every rendered page against the full bundle.
 - `REUSE.toml` licenses everything as CC BY 4.0 unless a later annotation says otherwise (the last matching one wins) —
   third-party material added to the site (images, quoted works, vendored libraries) needs its own annotation,
-  verified with `uvx reuse lint`.
+  verified with `uvx --from 'reuse[charset-normalizer]' reuse lint` (plain `uvx reuse lint` fails without an encoding-detection module).
 - Google Fonts serves the `icon_names` subset as woff2 only to a browser User-Agent,
   otherwise it answers with a TrueType font.
 
