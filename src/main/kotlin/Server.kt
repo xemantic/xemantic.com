@@ -96,14 +96,14 @@ fun Application.website(
     routing {
         get("{path...}") {
             when (val resolution = root.resolve(call.request.path(), generatedDirs)) {
-                is Resolution.Serve -> call.respondFile(resolution.file, baseUrl)
-                is Resolution.Render -> call.respondRendered(resolution.markdown, resolution.page(root, baseUrl, generatedDirs))
-                is Resolution.Redirect -> call.respondRedirect(resolution.location, permanent = false)
-                Resolution.LlmsTxt -> call.respondText(
+                is Serve -> call.respondFile(resolution.file, baseUrl)
+                is Render -> call.respondRendered(resolution.markdown, resolution.page(root, baseUrl, generatedDirs))
+                is Redirect -> call.respondRedirect(resolution.location, permanent = false)
+                LlmsTxt -> call.respondText(
                     llmsTxt(baseUrl, root, generatedDirs),
                     ContentType.Text.Plain.withCharset(Charsets.UTF_8)
                 )
-                Resolution.NotFound -> call.respondNotFound(root, baseUrl, generatedDirs)
+                NotFound -> call.respondNotFound(root, baseUrl, generatedDirs)
             }
         }
     }
@@ -136,17 +136,17 @@ private fun Path.resolve(
     generatedDirs: List<Path>
 ): Resolution {
     val relative = requestPath.trim('/')
-    if (!relative.isServableSitePath()) return Resolution.NotFound
+    if (!relative.isServableSitePath()) return NotFound
     if (requestPath.endsWith("/")) {
         indexChild(relative, "index.md")?.let {
             return Resolution.Render(it, relative.indexPath("index.md"))
         }
         indexChild(relative, "index.html")?.let { return Resolution.Serve(it) }
-        return Resolution.NotFound
+        return NotFound
     }
     (listOf(this) + generatedDirs).firstNotNullOfOrNull { it.child(relative) }
         ?.let { return Resolution.Serve(it) }
-    if (relative == "llms.txt") return Resolution.LlmsTxt
+    if (relative == "llms.txt") return LlmsTxt
     // `foo.md` with no direct source falls back to `foo/index.md`, the flat
     // alias the build emits so a page URL plus `.md` yields its source
     if (relative.endsWith(".md")) {
@@ -159,7 +159,7 @@ private fun Path.resolve(
     // trailing-slash form, exactly like GitHub Pages
     if (child("$relative/index.md") != null || child("$relative/index.html") != null)
         return Resolution.Redirect("/$relative/")
-    return Resolution.NotFound
+    return NotFound
 }
 
 /**
@@ -172,7 +172,7 @@ private fun Path.resolve(
 private fun Path.resolveNotFound(): Resolution =
     child("404.md")?.let { Resolution.Render(it, "404.md") }
         ?: child("404.html")?.let { Resolution.Serve(it) }
-        ?: Resolution.NotFound
+        ?: NotFound
 
 /**
  * The child at [relative] under this root, or `null` when it is not a
@@ -242,8 +242,8 @@ private suspend fun ApplicationCall.respondNotFound(
 ) {
     val status = HttpStatusCode.NotFound
     when (val body = root.resolveNotFound()) {
-        is Resolution.Render -> respondRendered(body.markdown, body.page(root, baseUrl, generatedDirs), status)
-        is Resolution.Serve -> respondFile(body.file, baseUrl, status)
+        is Render -> respondRendered(body.markdown, body.page(root, baseUrl, generatedDirs), status)
+        is Serve -> respondFile(body.file, baseUrl, status)
         else -> respondBytes(
             bytes = ByteArray(0),
             contentType = ContentType.Text.Plain.withCharset(Charsets.UTF_8),
