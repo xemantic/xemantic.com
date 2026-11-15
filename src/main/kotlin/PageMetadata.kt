@@ -53,7 +53,13 @@ class Page(
     val url: String = siteUrl + path.htmlPagePath()
 
     /** The absolute URL of the published Markdown source of this page. */
-    val markdownUrl: String = "$siteUrl/${path.toFlatMarkdownAlias() ?: path}"
+    val markdownUrl: String = siteUrl + markdownPath()
+
+    /**
+     * The site-root-relative path of the published Markdown source of this
+     * page, like `/ai.md`, resolving against whatever host serves the page.
+     */
+    fun markdownPath(): String = "/${path.toFlatMarkdownAlias() ?: path}"
 
     /**
      * Resolves a URL given in the front matter: an absolute URL is kept,
@@ -73,7 +79,10 @@ class Page(
      */
     fun siteFile(url: String): Path? {
         if (!url.startsWith("$siteUrl/")) return null
-        val relative = url.removePrefix("$siteUrl/").substringBefore('?').substringBefore('#')
+        val relative = url
+            .removePrefix("$siteUrl/")
+            .substringBefore('?')
+            .substringBefore('#')
         return siteRoots
             .map { Path(it, relative) }
             .firstOrNull { SystemFileSystem.metadataOrNull(it)?.isRegularFile == true }
@@ -98,7 +107,9 @@ class Page(
  *   downloaded the image, and with the `twitter:card` asking X for the
  *   large image preview.
  */
-fun Flow<SemanticEvent>.addPageMetadata(page: Page): Flow<SemanticEvent> = semanticEvents {
+fun Flow<SemanticEvent>.addPageMetadata(
+    page: Page
+): Flow<SemanticEvent> = semanticEvents {
     var inHead = false
     var inTitle = false
     val title = StringBuilder()
@@ -107,30 +118,30 @@ fun Flow<SemanticEvent>.addPageMetadata(page: Page): Flow<SemanticEvent> = seman
     var skippedMeta = false
     collect { event ->
         when {
-            event is SemanticEvent.Mark && event.name == "html" && event["lang"] == null ->
+            event is Mark && event.name == "html" && event["lang"] == null ->
                 emit(event.copy(attributes = event.attributes + ("lang" to DEFAULT_LANG)))
             !inHead -> {
-                if (event is SemanticEvent.Mark && event.name == "head") inHead = true
+                if (event is Mark && event.name == "head") inHead = true
                 emit(event)
             }
-            event is SemanticEvent.Mark && event.name == "meta" && event["name"] == "image" -> {
+            event is Mark && event.name == "meta" && event["name"] == "image" -> {
                 image = event["content"]
                 skippedMeta = true
             }
-            event is SemanticEvent.Unmark && event.name == "meta" && skippedMeta -> {
+            event is Unmark && event.name == "meta" && skippedMeta -> {
                 skippedMeta = false
             }
-            event is SemanticEvent.Unmark && event.name == "head" -> {
+            event is Unmark && event.name == "head" -> {
                 emitPageMetadata(page, title.toString(), description, image)
                 emit(event)
                 inHead = false
             }
             else -> {
                 when (event) {
-                    is SemanticEvent.Mark if event.name == "title" -> inTitle = true
-                    is SemanticEvent.Unmark if event.name == "title" -> inTitle = false
-                    is SemanticEvent.Text if inTitle -> title.append(event.text)
-                    is SemanticEvent.Mark if event.name == "meta"
+                    is Mark if event.name == "title" -> inTitle = true
+                    is Unmark if event.name == "title" -> inTitle = false
+                    is Text if inTitle -> title.append(event.text)
+                    is Mark if event.name == "meta"
                             && event["name"] == "description" -> description = event["content"]
                     else -> {}
                 }
@@ -152,21 +163,23 @@ private suspend fun SemanticEventScope.emitPageMetadata(
         "type" to "text/markdown",
         "href" to page.markdownUrl
     ) {}
-    fun property(name: String, content: String) = mapOf("property" to name, "content" to content)
-    "meta"(property("og:type", "website")) {}
-    "meta"(property("og:site_name", SITE_NAME)) {}
-    "meta"(property("og:title", title.trim())) {}
-    description?.let { "meta"(property("og:description", it)) {} }
-    "meta"(property("og:url", page.url)) {}
+    ogProperty("og:type", "website")
+    ogProperty("og:site_name", SITE_NAME)
+    ogProperty("og:title", title.trim())
+    description?.let { ogProperty("og:description", it) }
+    ogProperty("og:url", page.url)
     image?.let { page.resolveUrl(it) }?.let { imageUrl ->
-        "meta"(property("og:image", imageUrl)) {}
+        ogProperty("og:image", imageUrl)
         page.siteFile(imageUrl)?.readImageSize()?.let { (width, height) ->
-            "meta"(property("og:image:width", width.toString())) {}
-            "meta"(property("og:image:height", height.toString())) {}
+            ogProperty("og:image:width", width.toString())
+            ogProperty("og:image:height", height.toString())
         }
         "meta"("name" to "twitter:card", "content" to "summary_large_image") {}
     }
 }
+
+private suspend fun SemanticEventScope.ogProperty(name: String, content: String) =
+    "meta"("property" to name, "content" to content) {}
 
 /**
  * Reads the width and height of this PNG, JPEG, GIF or WebP image from
