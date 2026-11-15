@@ -3,6 +3,209 @@
  */
 
 /*
+ * Lazenby Computer by Andrew Young (Disaster Fonts), CC BY-SA 4.0,
+ * see assets/fonts/LazenbyComputer-LICENSE.txt. It ships a single
+ * weight, the one BeerCSS already uses for headings.
+ */
+@font-face {
+  font-family: "Lazenby Computer";
+  src: url("/assets/fonts/LazenbyCompSmooth.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+ * Arsenal by The Arsenal Project Authors, OFL 1.1, see
+ * assets/fonts/Arsenal-OFL.txt. A static font, in the regular and bold
+ * weights with their italics, each in the latin and latin-ext subsets
+ * served by Google Fonts, the latter covering Polish and German,
+ * downloaded only when a page uses it.
+ */
+@font-face {
+  font-family: "Arsenal";
+  src: url("/assets/fonts/Arsenal-Regular-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Arsenal";
+  src: url("/assets/fonts/Arsenal-Regular-latin-ext.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Arsenal";
+  src: url("/assets/fonts/Arsenal-Bold-latin.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Arsenal";
+  src: url("/assets/fonts/Arsenal-Bold-latin-ext.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Arsenal";
+  src: url("/assets/fonts/Arsenal-Italic-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Arsenal";
+  src: url("/assets/fonts/Arsenal-Italic-latin-ext.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Arsenal";
+  src: url("/assets/fonts/Arsenal-BoldItalic-latin.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Arsenal";
+  src: url("/assets/fonts/Arsenal-BoldItalic-latin-ext.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/*
+ * The section headings of the content are set in Arsenal bold, BeerCSS
+ * gives the headings the regular weight.
+ */
+main h2 {
+  font-weight: 700;
+}
+
+/*
+ * Fluid typography: BeerCSS sizes everything in rem and sets the root
+ * font size from `--size`, so making `--size` fluid scales the text,
+ * the headings, the icons, the spacing and the `.responsive` container
+ * (75rem) proportionally. It grows linearly from 22.5px on a 400px
+ * viewport to 33px on a 1920px one, and is clamped outside that range.
+ * The rem term keeps it following the browser's font size setting and
+ * zoom, which a pure vw value would ignore. Media queries are not
+ * affected: their rem is always the browser default, not this one.
+ */
+:root {
+  --size: clamp(1rem, 1.2336rem + 0.6908vw, 1.2625rem);
+}
+
+/*
+ * The whole site, the content as well as its chrome (the app bar, the
+ * navigation, the buttons and the footer), is set in Arsenal, by
+ * replacing BeerCSS's `--font`, only the page title `h1` is set in
+ * Lazenby Computer.
+ */
+:root {
+  --font: "Arsenal", sans-serif;
+}
+
+h1 {
+  font-family: "Lazenby Computer", var(--font);
+}
+
+/*
+ * Lazenby's capitals are wide: at BeerCSS's 3.5625rem a word like
+ * "PROFESSIONAL" does not fit a phone screen, so the size shrinks with
+ * the viewport below ~660px, and a word still too long breaks.
+ * The page title is centered, with room to breathe above and below,
+ * growing with the viewport as well.
+ */
+h1 {
+  font-size: clamp(2.25rem, 1.5rem + 5vw, 3.5625rem);
+  overflow-wrap: break-word;
+  text-align: center;
+  margin-block: clamp(2rem, 1rem + 4vw, 5rem) clamp(1.5rem, 0.5rem + 3vw, 3.5rem);
+}
+
+/*
+ * The page title glows slightly, with a text shadow of the primary
+ * color, and glitches, as if the color channels of a display were out
+ * of register: red and blue copies of the text, shadows as well, are
+ * offset in opposite directions, while the text itself stays in place.
+ * They keep jittering by a pixel all the time (`--jitter-*`), and from
+ * time to time they jump further for a moment (`--burst`). The two
+ * animations, of different periods, add up in the offsets, which is
+ * why they animate custom properties instead of the shadow itself.
+ * Nothing moves when reduced motion is preferred.
+ */
+main h1 {
+  --title-glow: 0 0 .35em color-mix(in srgb, var(--primary) 45%, transparent);
+  --jitter-x: 0px;
+  --jitter-y: 0px;
+  --burst: 0em;
+  text-shadow:
+    calc(var(--jitter-x) + var(--burst)) var(--jitter-y) #f00c,
+    calc(-1 * (var(--jitter-x) + var(--burst))) calc(-1 * var(--jitter-y)) #00fc,
+    var(--title-glow);
+  animation:
+    title-jitter 1.3s step-end infinite,
+    title-burst 9s step-end infinite;
+}
+
+@keyframes title-jitter {
+  0%, 100% { --jitter-x: 1px; --jitter-y: 0px; }
+  9% { --jitter-x: -1px; --jitter-y: 0px; }
+  17% { --jitter-x: 0px; --jitter-y: 1px; }
+  28% { --jitter-x: 1px; --jitter-y: 0px; }
+  33% { --jitter-x: -1px; --jitter-y: -1px; }
+  46% { --jitter-x: 1px; --jitter-y: 0px; }
+  52% { --jitter-x: 0px; --jitter-y: 0px; }
+  63% { --jitter-x: -1px; --jitter-y: 0px; }
+  71% { --jitter-x: 1px; --jitter-y: 1px; }
+  80% { --jitter-x: -1px; --jitter-y: 0px; }
+  91% { --jitter-x: 0px; --jitter-y: -1px; }
+}
+
+@keyframes title-burst {
+  0%, 100% { --burst: 0em; }
+  60% { --burst: -.06em; }
+  61% { --burst: .03em; }
+  62% { --burst: 0em; }
+  90% { --burst: -.1em; }
+  91% { --burst: .05em; }
+  92% { --burst: -.02em; }
+  93% { --burst: 0em; }
+  95% { --burst: .07em; }
+  96% { --burst: 0em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  main h1 {
+    text-shadow: var(--title-glow);
+    animation: none;
+  }
+
+}
+
+/*
  * The GitHub icon in the top app bar. The source SVG is the black
  * Invertocat; in dark mode we invert it to white so it stays legible
  * against the dark header, mirroring the rest of the theme.
@@ -14,6 +217,23 @@
 
 body.dark .github-icon {
   filter: invert(1);
+}
+
+/*
+ * The xemantic logo of the home page (assets/images/logo.svg), used as a
+ * mask over the current text color, so that a single file serves both
+ * color schemes. The aspect ratio is the one of the SVG viewBox.
+ */
+.xemantic-logo {
+  display: inline-block;
+  aspect-ratio: 100.00371 / 18.35874;
+  block-size: 1.25rem;
+  background-color: currentColor;
+  mask: url("/assets/images/logo.svg") center / contain no-repeat;
+}
+
+.header-logo {
+  block-size: 1.5rem;
 }
 
 /*
@@ -71,69 +291,456 @@ button.active > i {
 }
 
 /*
- * The table of contents (aside > nav#toc) rendered like in
- * https://platform.claude.com/docs/ - on viewports wide enough to fit
- * it next to the content, it occupies the `right` area of the BeerCSS
- * body grid, sticking below the fixed header while the page scrolls.
- * On narrower viewports it is not displayed at all.
+ * The table of contents drawer (dialog#toc-drawer > nav#toc), a BeerCSS
+ * `dialog.left` below the fixed top app bar, toggled by the button in
+ * the very top left corner of the latter, shown only on pages having
+ * a table of contents. The page actions stay at its top, only the
+ * table of contents below them scrolls. On viewports wide
+ * enough to fit it next to the content, toc-drawer.js opens it by
+ * default, without the backdrop, and the content makes room for it
+ * as long as it is open, flat and square, with the links rendered like in
+ * https://platform.claude.com/docs/ - muted and small. On narrower
+ * viewports it slides over the content, above a backdrop leaving the
+ * top app bar, and its toggle, uncovered, and below BeerCSS's large
+ * breakpoint neither the drawer nor its toggle is shown: the navigation
+ * drawer holds a copy of the table of contents (nav.toc) there.
  */
-aside:has(> nav#toc) {
+:root {
+  --toc-drawer-inline-size: 16rem;
+}
+
+body:not(:has(> #toc-drawer)) .toc-toggle {
   display: none;
+}
+
+/*
+ * The toggle is in the corner of the viewport, not of the content of
+ * the top app bar, which starts after it, unless the margin of the
+ * centered content is wide enough to hold the toggle.
+ */
+body > header > .toc-toggle {
+  position: absolute;
+  inset-block-start: .75rem;
+  inset-inline-start: .5rem;
+  margin: 0;
+}
+
+@media (min-width: 993px) {
+
+  body:has(> #toc-drawer) > header > section {
+    padding-inline-start: max(.5rem, 3.5rem - max(0px, 100vw - 75rem) / 2);
+  }
+
+}
+
+#toc-drawer {
+  box-sizing: border-box;
+  inset-block-start: 4rem;
+  block-size: calc(100dvh - 4rem);
+  /* BeerCSS's 20rem minimum of a dialog would exceed the room made for it */
+  min-inline-size: 0;
+  inline-size: min(var(--toc-drawer-inline-size), 85vw);
+  padding: 1rem;
+  /* only the table of contents scrolls, below the page actions */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#toc-drawer > nav#toc {
+  flex: 1;
+  min-block-size: 0;
+  overflow-y: auto;
+}
+
+#toc-drawer::backdrop {
+  inset-block-start: 4rem;
 }
 
 @media (min-width: 80rem) {
 
-  aside:has(> nav#toc) {
-    display: block;
-    grid-area: right;
-    align-self: start;
-    position: sticky;
-    top: 4rem;
-    inline-size: 16rem;
-    max-block-size: calc(100dvh - 4rem);
-    overflow-y: auto;
-    padding: 1rem;
-    margin: 0;
+  #toc-drawer {
+    box-shadow: none;
+    border-radius: 0;
   }
 
-  nav#toc {
-    display: block;
-    white-space: normal;
+  #toc-drawer[popover=manual]::backdrop {
+    visibility: hidden;
   }
 
   /*
-   * BeerCSS 5 lays out `nav > ul` as an absolutely positioned bar of
-   * inline-flex items, therefore the position, the inset and the item
-   * sizes are reset here explicitly.
+   * `main` keeps its maximal width for the content alone, the room
+   * for the drawer is added to it, so it shifts by half of it.
    */
-  nav#toc ul {
-    display: block;
+  body:has(> #toc-drawer:popover-open) > :is(main, footer) {
+    box-sizing: content-box;
+    padding-inline-start: var(--toc-drawer-inline-size);
+  }
+
+}
+
+/*
+ * The content of the top app bar makes the same room, staying aligned
+ * with `main`, but only on viewports where the whole navigation, which
+ * does not wrap, still fits next to the drawer. On narrower ones it
+ * keeps spanning the viewport, above the drawer, starting where `main`
+ * does anyway.
+ */
+@media (min-width: 90rem) {
+
+  body:has(> #toc-drawer:popover-open) > header > section {
+    box-sizing: content-box;
+    padding-inline-start: var(--toc-drawer-inline-size);
+  }
+
+}
+
+/*
+ * BeerCSS 5 lays out `nav > ul` as an absolutely positioned bar of
+ * inline-flex items, therefore the position, the inset and the item
+ * sizes are reset here explicitly.
+ */
+nav:is(#toc, .toc) {
+  display: block;
+  white-space: normal;
+}
+
+/* in the navigation drawer, aligned with the labels of the menu */
+nav.toc {
+  padding: .5rem;
+}
+
+nav:is(#toc, .toc) ul {
+  display: block;
+  position: static;
+  inset: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav:is(#toc, .toc) ul ul {
+  padding-inline-start: 1rem;
+}
+
+nav:is(#toc, .toc) li {
+  display: block;
+  block-size: auto;
+  inline-size: auto;
+  margin-block: .5rem;
+}
+
+nav:is(#toc, .toc) a {
+  color: var(--on-surface-variant);
+  font-size: .8125rem;
+  line-height: 1.25rem;
+}
+
+/* the first level links to the `h2` section headings, bold like them */
+nav:is(#toc, .toc) > ul > li > a {
+  font-weight: 700;
+}
+
+/*
+ * A track along the table of contents, with an indicator bar next to
+ * the link of the section being read, placed by toc-drawer.js through
+ * the `--toc-indicator-*` properties, sliding from one link to another.
+ */
+nav:is(#toc, .toc) > ul {
+  position: relative;
+  /* BeerCSS's `auto` would clip the indicator drawn over the border */
+  overflow: visible;
+  border-inline-start: 2px solid var(--outline-variant);
+  padding-inline-start: .75rem;
+}
+
+nav:is(#toc, .toc) > ul::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: -2px;
+  inset-block-start: 0;
+  inline-size: 2px;
+  block-size: var(--toc-indicator-size, 0);
+  transform: translateY(var(--toc-indicator-offset, 0));
+  background: var(--primary);
+  transition: transform .2s ease-out, block-size .2s ease-out;
+}
+
+nav:is(#toc, .toc) a[aria-current] {
+  color: var(--primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  nav:is(#toc, .toc) > ul::before {
+    transition: none;
+  }
+
+}
+
+nav:is(#toc, .toc) a:hover {
+  color: var(--primary);
+}
+
+/*
+ * The top app bar spans the viewport, while its content, held by a
+ * `section.responsive`, is exactly as wide as the content of `main`:
+ * the padding of BeerCSS's `header` (1rem) moves to the section,
+ * where it equals the one of `main` (0.5rem). The section also makes
+ * the same room for the open table of contents drawer, see above.
+ */
+body > header {
+  padding-inline: 0;
+}
+
+body > header > section {
+  padding-inline: 0.5rem;
+}
+
+/*
+ * Between BeerCSS's large breakpoint, where the navigation moves from
+ * its drawer to the top app bar, and this width, the navigation, which
+ * does not wrap, fits only when set tighter.
+ */
+@media (min-width: 993px) and (max-width: 1200px) {
+
+  body > header nav {
+    gap: .5rem;
+  }
+
+  body > header nav > a.button {
+    padding-inline: .75rem;
+  }
+
+}
+
+/*
+ * The color scheme switch of the top app bar shows the icon of the
+ * scheme it switches to.
+ */
+body.dark .color-scheme-toggle > .to-dark,
+body:not(.dark) .color-scheme-toggle > .to-light {
+  display: none;
+}
+
+/*
+ * A translucent surface, used by the top app bar and the site footer
+ * instead of BeerCSS's opaque surface containers: tinted slightly with
+ * the primary color, it lets the background shader show through, blurred.
+ * The latter selectors outweigh BeerCSS's `background-color: inherit`
+ * of a `.fixed` header and the surface of a `dialog.left`, used by the
+ * table of contents drawer.
+ */
+.tinted-glass,
+:is(header, footer).fixed.tinted-glass,
+dialog.left.tinted-glass {
+  background-color: color-mix(in srgb, var(--primary) 8%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+/*
+ * The site footer, modeled after https://www.anthropic.com/ - a band of
+ * its own color, the logo and the small print on the left, and the site
+ * map in columns of muted links, as many as fit. The columns stack below
+ * the logo up to BeerCSS's large breakpoint (993px).
+ */
+body > footer {
+  grid-column: 1 / -1;
+  margin-block-start: 4rem;
+  padding-block: 3rem 2rem;
+}
+
+.site-footer {
+  display: grid;
+  grid-template-areas: "logo" "groups" "legal";
+  gap: 2.5rem 2rem;
+  inline-size: 100%;
+}
+
+@media (min-width: 993px) {
+
+  .site-footer {
+    grid-template-columns: minmax(12rem, 1fr) 3fr;
+    grid-template-areas: "logo groups" "legal groups";
+  }
+
+  .site-footer-legal {
+    align-self: end;
+  }
+
+}
+
+.site-footer-logo {
+  grid-area: logo;
+  justify-self: start;
+  align-self: start;
+  block-size: 1.5rem;
+}
+
+nav.site-footer-groups {
+  grid-area: groups;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  align-items: start;
+  gap: 2rem;
+  white-space: normal;
+}
+
+.site-footer-groups h2 {
+  font-size: .875rem;
+  font-weight: 500;
+  color: var(--on-surface);
+}
+
+.site-footer-groups ul {
+  all: unset;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.site-footer-groups a,
+.site-footer-legal {
+  font-size: .8125rem;
+  line-height: 1.25rem;
+  color: var(--on-surface-variant);
+}
+
+.site-footer-groups a:is(:hover, :focus-visible),
+.site-footer-legal a:not(.circle):is(:hover, :focus-visible) {
+  color: var(--primary);
+}
+
+.site-footer-legal {
+  grid-area: legal;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: .5rem;
+}
+
+.site-footer-legal a:not(.circle) {
+  text-decoration: underline;
+}
+
+/*
+ * The page actions, like on https://platform.claude.com/docs/ - a BeerCSS
+ * split button in the top right corner of `main`, on the row of the
+ * centered `h1`, which it follows in the markup. On small screens the
+ * `h1` takes the whole width, so the actions follow it visually as well.
+ * BeerCSS has no disabled menu item, hence the last rule.
+ */
+.page-actions {
+  position: absolute;
+  inset-block-start: .5rem;
+  inset-inline-end: .5rem;
+  z-index: 2;
+}
+
+@media (max-width: 600px) {
+
+  .page-actions {
     position: static;
-    inset: auto;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+    justify-content: center;
+    margin-block-end: 1.5rem;
   }
 
-  nav#toc ul ul {
-    padding-inline-start: 1rem;
+}
+
+/*
+ * Where the table of contents drawer is available, the page actions are
+ * those at its top, and those following the `h1` are hidden.
+ */
+@media (min-width: 993px) {
+
+  body:has(> #toc-drawer) main .page-actions {
+    display: none;
   }
 
-  nav#toc li {
-    display: block;
-    block-size: auto;
-    inline-size: auto;
-    margin-block: .5rem;
-  }
+}
 
-  nav#toc a {
-    color: var(--on-surface-variant);
-    font-size: .8125rem;
-    line-height: 1.25rem;
-  }
+/*
+ * In the drawer the menu is placed below the whole split button, not
+ * only below the chevron, so that it opens within the drawer.
+ */
+#toc-drawer .page-actions {
+  position: relative;
+  inset: auto;
+  flex: none;
+  justify-content: start;
+  margin-block-end: 1rem;
+}
 
-  nav#toc a:hover {
-    color: var(--primary);
+#toc-drawer .page-actions > div {
+  position: static;
+}
+
+/* the menu is as wide as the drawer allows, so a long item wraps */
+#toc-drawer .page-actions menu > li {
+  white-space: normal;
+}
+
+.page-actions menu > li.disabled {
+  opacity: .5;
+  cursor: default;
+  pointer-events: none;
+}
+
+/*
+ * Headings in Markdown written inside a BeerCSS card (`article`) are
+ * the card titles, set at Material 3's headline small instead of the
+ * size of a page section heading.
+ */
+article h3 {
+  font-size: 1.5rem;
+}
+
+/*
+ * The sections of the page content are molten glass panels, like the
+ * registration box of https://luma.com/ - the background shader shows
+ * through, blurred and saturated, behind a faint rim catching the light.
+ * The backdrop is rendered by `::before`; the `z-index` of the section
+ * confines it below its content without making it a backdrop root,
+ * which would leave nothing to blur. Only the top level sections
+ * become panels, those nested in BeerCSS cards stay part of the card.
+ */
+main > section {
+  position: relative;
+  z-index: 0;
+  border-radius: 1.5rem;
+  border: 1px solid color-mix(in srgb, var(--on-surface) 12%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 10%, transparent),
+    0 1px 4px rgb(0 0 0 / .05),
+    0 2px 10px rgb(0 0 0 / .02);
+  padding: 1rem 1.5rem 1.5rem;
+  margin-block: 1.5rem;
+}
+
+main > section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background-color: color-mix(in srgb, var(--surface) 45%, transparent);
+  -webkit-backdrop-filter: blur(4px) saturate(1.25);
+  backdrop-filter: blur(4px) saturate(1.25);
+}
+
+main > section > :first-child {
+  margin-block-start: 0;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+
+  main > section::before {
+    background-color: var(--surface-container);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    filter: none;
   }
 
 }

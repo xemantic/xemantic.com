@@ -17,7 +17,7 @@
 package com.xemantic.website
 
 import com.xemantic.markanywhere.SemanticEvent
-import com.xemantic.markanywhere.flow.semanticEvents
+import com.xemantic.markanywhere.transform.MatcherScope
 import com.xemantic.markanywhere.transform.transform
 import kotlinx.coroutines.flow.Flow
 
@@ -28,15 +28,160 @@ import kotlinx.coroutines.flow.Flow
 private const val BEER_CSS = "/assets/css/beercss.css"
 
 /**
- * Sets BeerCSS's `dark` or `light` class on `body` from the color scheme
- * preference, the only thing `beer.loader.js` would do on this site.
- * Being the first child of `body`, it runs before the first paint,
- * so a dark mode page never flashes light.
+ * The script of the color scheme switch of the top app bar.
  */
-private const val COLOR_SCHEME_SCRIPT =
-    "document.body.classList.add(matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')"
+private const val COLOR_SCHEME_JS = "/assets/js/color-scheme.js"
 
 private const val XEMANTIC_CSS = "/assets/css/xemantic.css"
+
+/**
+ * The script copying the page source to the clipboard, see [pageActions].
+ */
+private const val PAGE_ACTIONS_JS = "/assets/js/page-actions.js"
+
+/**
+ * The WebGL library rendering the background shader, which it reads only
+ * from a `script` element of the page, see [GENERATIVE_ART_DECO_SHADER].
+ */
+private const val SHADER_WEB_BACKGROUND_JS = "/assets/js/shader-web-background.js"
+
+/**
+ * The script feeding the uniforms of the background shader, following
+ * the page scrolling. It has to run after the shader `script`.
+ */
+private const val GENERATIVE_ART_DECO_JS = "/assets/js/generative-art-deco.js"
+
+/**
+ * The script opening the [TOC_DRAWER] by default on wide viewports.
+ * It has to run right after the drawer, see the script itself.
+ */
+private const val TOC_DRAWER_JS = "/assets/js/toc-drawer.js"
+
+/**
+ * The fonts every page needs, declared in [XEMANTIC_CSS]: the one of the
+ * title (every page starts with an `h1`), and the latin subsets of the
+ * content's regular style and of the bold style of the section headings
+ * (`h2`).
+ * They are preloaded instead of being discovered only once the stylesheet
+ * is parsed.
+ */
+private val PRELOADED_FONTS = listOf(
+    "/assets/fonts/LazenbyCompSmooth.woff2",
+    "/assets/fonts/Arsenal-Regular-latin.woff2",
+    "/assets/fonts/Arsenal-Bold-latin.woff2"
+)
+
+/**
+ * An item of the site navigation, see [MENU].
+ */
+private class MenuItem(val label: String, val href: String, val icon: String)
+
+/**
+ * The site navigation, shown in the top app bar on large screens
+ * (BeerCSS's `l` helper) and in the [MENU_DRAWER] otherwise.
+ */
+private val MENU = listOf(
+    MenuItem("Products", "/products/", "inventory_2"),
+    MenuItem("Services", "/services/", "handshake"),
+    MenuItem("Research", "/research/", "science"),
+    MenuItem("Art", "/art/", "palette"),
+    MenuItem("Humans", "/humans/", "diversity_3"),
+    MenuItem("News", "/news/", "newspaper")
+)
+
+/**
+ * The `id` of the navigation drawer: a BeerCSS `dialog.left` opened by the
+ * menu button through the Popover API, which also closes it on Escape
+ * and on a click outside, so no script is needed. On the screens where
+ * the menu button is shown, the drawer is also the place of the table
+ * of contents, a copy of the `nav#toc` without the `id`, following the [MENU].
+ */
+private const val MENU_DRAWER = "menu"
+
+/**
+ * The `id` of the table of contents drawer: a BeerCSS `dialog.left`,
+ * below the top app bar, holding the [pageActions] and, scrolling below
+ * them, the `nav#toc` of the page, on large
+ * screens only (BeerCSS's `l` helper), as on the smaller ones the table
+ * of contents is in the [MENU_DRAWER]. Like the latter it is a popover,
+ * toggled by the button in the very top left corner of the top app bar,
+ * right above it. [TOC_DRAWER_JS] opens it by default on viewports wide enough to
+ * fit it next to the content.
+ */
+private const val TOC_DRAWER = "toc-drawer"
+
+/**
+ * The page actions, like on https://platform.claude.com/docs/ - a small
+ * BeerCSS split button (https://github.com/beercss/beercss/blob/main/docs/BUTTON.md#split-buttons)
+ * copying the page source, published at [markdownPath], to the
+ * clipboard. Its chevron is the button of a BeerCSS menu
+ * (https://github.com/beercss/beercss/blob/main/docs/MENU.md), sharing a
+ * `div` with the `menu` as in its examples, so that the menu opens
+ * through `:focus-within` of the chevron alone. The menu items are links,
+ * the copying one falling back to the source when scripts do not run. The menu holds the other actions: copying,
+ * opening the Markdown source, and chatting about the page with
+ * Golem XIV, disabled until it is available, with the BeerCSS [menuClass]
+ * choosing its direction and width, so that it stays within the page. The copying is done by
+ * [PAGE_ACTIONS_JS], reading the source from the `data-markdown` attribute.
+ */
+private suspend fun MatcherScope.pageActions(
+    markdownPath: String,
+    menuClass: String
+) {
+    "nav"(
+        "class" to "page-actions group split",
+        "role" to "group",
+        "aria-label" to "Page actions",
+        "data-markdown" to markdownPath
+    ) {
+        "button"("class" to "small left-round page-copy border", "data-copy-page" to "") {
+            "i" { +"content_copy" }
+            "span" { +"Copy page" }
+        }
+        "div" {
+            "button"(
+                "class" to "small right-round square border",
+                "aria-label" to "More page actions",
+                "aria-haspopup" to "menu"
+            ) {
+                "i" { +"expand_more" }
+            }
+            "menu"("class" to menuClass) {
+                "li" {
+                    "a"("href" to markdownPath, "data-copy-page" to "") {
+                        "i" { +"content_copy" }
+                        "span" { +"Copy page as Markdown" }
+                    }
+                }
+                "li" {
+                    "a"("href" to markdownPath, "target" to "_blank") {
+                        "i" { +"north_east" }
+                        "span" { +"Open Markdown" }
+                    }
+                }
+                "li"("class" to "disabled", "aria-disabled" to "true") {
+                    "i" { +"smart_toy" }
+                    "span" { +"Chat with Golem XIV" }
+                    "span"("class" to "small-text") { +"(soon)" }
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Links the xemantic logo to the home page. The logo, the same as on the
+ * home page, is drawn by [XEMANTIC_CSS] as a mask filled with the text
+ * color, so it follows the color scheme; the link has no text content,
+ * hence the `aria-label`.
+ */
+private suspend fun MatcherScope.logoLink(cssClass: String) {
+    "a"(
+        "href" to "/",
+        "class" to "xemantic-logo $cssClass",
+        "aria-label" to "xemantic home page"
+    ) {}
+}
 
 private const val GITHUB_URL = "https://github.com/xemantic"
 
@@ -72,16 +217,64 @@ internal const val MARKDOWN_COPYRIGHT_FOOTER =
         "[$CONTENT_LICENSE]($CONTENT_LICENSE_URL) unless stated otherwise\n"
 
 /**
+ * A mark captured from the input stream together with its content, the
+ * nested marks and the text, to be [replay]ed at another place of the output.
+ */
+private class CapturedMark(val mark: SemanticEvent.Mark) {
+    val content = mutableListOf<Any>() // CapturedMark or String
+}
+
+/**
+ * Emits the [captured] mark and its content as they came in,
+ * keeping the [SemanticEvent.Mark.isTagged] flag.
+ */
+private suspend fun MatcherScope.replay(captured: CapturedMark) {
+    val block: suspend MatcherScope.() -> Unit = {
+        captured.content.forEach {
+            if (it is CapturedMark) replay(it) else +(it as String)
+        }
+    }
+    val mark = captured.mark
+    if (mark.isTagged) tag(mark.name, mark.attributes, block)
+    else mark.name(mark.attributes, block)
+}
+
+/**
  * Applies the xemantic.com page layout: the `head` is completed with
  * `charset`/`viewport` metas, the [BEER_CSS] and the xemantic.com
- * stylesheets, the `body` content is prefixed with the
- * [COLOR_SCHEME_SCRIPT] and a top app bar (`header` with `nav`), the `main` element (synthesized
- * by [wrapBodyContentInMain]) becomes BeerCSS's `main.responsive`
- * container, the table of contents `nav` is wrapped in an `aside`, and
- * the `body` is closed with a `footer` carrying the [COPYRIGHT] notice
- * and a link to the Impressum.
+ * stylesheets, the [PRELOADED_FONTS] preloads, and the background
+ * [shader], inlined together with the scripts rendering it, the `body` content is prefixed with the
+ * [colorSchemeScript] and a top app bar (`header.fixed` with a `section.responsive` holding the `nav`),
+ * its content as wide as the one of `main` and carrying the [MENU], the `body` content is wrapped
+ * in BeerCSS's `main.responsive` container, followed by the [MENU_DRAWER]
+ * holding the same [MENU] for smaller screens, the first `h1` is followed by
+ * the [pageActions] of the [page], which on large screens are those of the
+ * [TOC_DRAWER] instead, if there is one, the table of contents (the `nav#toc`
+ * appended by `wrapInSections` at the very end of the content) is moved
+ * out of `main`, following it in the [TOC_DRAWER], toggled by the button
+ * in the corner of the top app bar, whose navigation ends with the color scheme switch, and copied to the [MENU_DRAWER], and
+ * the `body` is closed with a `footer` holding the logo, the site map
+ * of the [footer] groups, read by [readSiteFooter], and the [COPYRIGHT]
+ * notice.
+ *
+ * @param colorSchemeScript the script setting BeerCSS's `dark` or `light`
+ *   class on `body` from the choice made with the color scheme switch,
+ *   remembered by [COLOR_SCHEME_JS], or else from the color scheme
+ *   preference, the only thing `beer.loader.js` would do on this site.
+ *   It is inlined as the first child of `body`, so that it runs before
+ *   the first paint, and a dark mode page never flashes light.
  */
-fun Flow<SemanticEvent>.applyPageLayout() = transform {
+fun Flow<SemanticEvent>.applyPageLayout(
+    page: Page,
+    footer: List<FooterGroup>,
+    shader: String,
+    colorSchemeScript: String
+) = transform {
+
+    // the nav#toc of wrapInSections, captured instead of emitted in place,
+    // and replayed by the body after main
+    var toc: CapturedMark? = null
+    val captured = mutableListOf<CapturedMark>()
 
     match("head") {
         "head" {
@@ -93,90 +286,218 @@ fun Flow<SemanticEvent>.applyPageLayout() = transform {
             children()
             "link"("href" to BEER_CSS, "rel" to "stylesheet") {}
             "link"("href" to XEMANTIC_CSS, "rel" to "stylesheet") {}
+            "script"("src" to PAGE_ACTIONS_JS, "defer" to "") {}
+            "script"("src" to COLOR_SCHEME_JS, "defer" to "") {}
+            "script"("src" to SHADER_WEB_BACKGROUND_JS) {}
+            "script"("type" to "x-shader/x-fragment", "id" to "image") { +shader }
+            "script"("src" to GENERATIVE_ART_DECO_JS) {}
+            PRELOADED_FONTS.forEach { font ->
+                "link"(
+                    "href" to font,
+                    "rel" to "preload",
+                    "as" to "font",
+                    "type" to "font/woff2",
+                    "crossorigin" to "anonymous"
+                ) {}
+            }
         }
     }
 
     match("body") {
         "body" {
-            "script" { +COLOR_SCHEME_SCRIPT }
-            "header"("class" to "fixed") {
-                "nav" {
-                    "a"("href" to "/", "class" to "circle transparent") {
-                        "i" { +"home" }
-                    }
-                    "h5"("class" to "max") { +"xemantic" }
-                    "a"(
-                        "href" to GITHUB_URL,
-                        "class" to "circle transparent",
-                        "aria-label" to "Xemantic on GitHub"
-                    ) {
-                        "img"(
-                            "class" to "github-icon",
-                            "src" to GITHUB_ICON,
-                            "alt" to "GitHub"
-                        ) {}
+            "script" { +colorSchemeScript }
+            // the bar spans the viewport, while its content is as wide as the one
+            // of main: BeerCSS limits the width of a .responsive main, header,
+            // footer or section only, not of a nav; xemantic.css aligns the paddings
+            "header"("class" to "fixed tinted-glass") {
+                "section"("class" to "responsive") {
+                    "nav" {
+                        "button"(
+                            "class" to "circle transparent s m",
+                            "popovertarget" to MENU_DRAWER,
+                            "aria-label" to "Menu"
+                        ) {
+                            "i" { +"menu" }
+                        }
+                        logoLink("header-logo")
+                        "div"("class" to "max") {}
+                        MENU.forEach { item ->
+                            "a"("href" to item.href, "class" to "button transparent l") {
+                                +item.label
+                            }
+                        }
+                        "a"(
+                            "href" to GITHUB_URL,
+                            "class" to "circle transparent",
+                            "aria-label" to "Xemantic on GitHub"
+                        ) {
+                            "img"(
+                                "class" to "github-icon",
+                                "src" to GITHUB_ICON,
+                                "alt" to "GitHub"
+                            ) {}
+                        }
+                        // xemantic.css shows the icon of the scheme to switch to
+                        "button"(
+                            "class" to "circle transparent color-scheme-toggle",
+                            "data-toggle-color-scheme" to "",
+                            "aria-label" to "Switch between dark and light mode"
+                        ) {
+                            "i"("class" to "to-light") { +"light_mode" }
+                            "i"("class" to "to-dark") { +"dark_mode" }
+                        }
                     }
                 }
+                // in the very top left corner, out of the section, which it
+                // follows, as BeerCSS adds a margin to a section following a sibling, on large screens only (BeerCSS's `l` helper), and hidden
+                // by xemantic.css on a page without a table of contents
+                "button"(
+                    "class" to "circle transparent toc-toggle l",
+                    "popovertarget" to TOC_DRAWER,
+                    "aria-label" to "Table of contents"
+                ) {
+                    "i" { +"toc" }
+                }
             }
-            children()
-            "footer" {
-                "nav" {
-                    "span"("class" to "max") {
-                        +"$COPYRIGHT · Content licensed under "
-                        "a"("href" to CONTENT_LICENSE_URL, "rel" to "license") {
-                            +CONTENT_LICENSE
+            "main"("class" to "responsive") {
+                children()
+            }
+            // the drawers follow main, as both hold the table of contents,
+            // captured only once the content has streamed
+            defer {
+                "dialog"(
+                    "id" to MENU_DRAWER,
+                    "class" to "left",
+                    "popover" to "",
+                    "aria-label" to "Site navigation"
+                ) {
+                    "header" {
+                        "nav" {
+                            "button"(
+                                "class" to "circle transparent",
+                                "popovertarget" to MENU_DRAWER,
+                                "popovertargetaction" to "hide",
+                                "aria-label" to "Close menu"
+                            ) {
+                                "i" { +"menu_open" }
+                            }
+                            logoLink("drawer-logo")
                         }
-                        +" unless stated otherwise"
                     }
-                    "a"("href" to "/impressum/") { +"Legal Notice (Impressum)" }
+                    "ul"("class" to "list") {
+                        MENU.forEach { item ->
+                            "li"("class" to "wave round") {
+                                "a"("href" to item.href) {
+                                    "i" { +item.icon }
+                                    "span" { +item.label }
+                                }
+                            }
+                        }
+                    }
+                    // on the screens of this drawer it is the only place of
+                    // the table of contents, see the TOC_DRAWER
+                    toc?.let { toc ->
+                        "hr" {}
+                        "nav"("class" to "toc", "aria-label" to "Table of contents") {
+                            toc.content.forEach {
+                                if (it is CapturedMark) replay(it) else +(it as String)
+                            }
+                        }
+                    }
+                }
+                toc?.let { toc ->
+                    // on large screens only (BeerCSS's `l` helper), like its toggle
+                    "dialog"(
+                        "id" to TOC_DRAWER,
+                        "class" to "left tinted-glass l",
+                        "popover" to "",
+                        "aria-label" to "Table of contents"
+                    ) {
+                        // staying at the top of the drawer, as only the table of
+                        // contents scrolls; the menu is as wide as the drawer
+                        pageActions(page.markdownPath(), menuClass = "right")
+                        replay(toc)
+                    }
+                    "script"("src" to TOC_DRAWER_JS) {}
+                }
+            }
+            "footer"("class" to "tinted-glass") {
+                "section"("class" to "responsive site-footer") {
+                    logoLink("site-footer-logo")
+                    "nav"("class" to "site-footer-groups", "aria-label" to "Site map") {
+                        footer.forEach { group ->
+                            "div" {
+                                "h2" { +group.title }
+                                "ul" {
+                                    group.links.forEach { link ->
+                                        "li" { "a"("href" to link.href) { +link.label } }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    "div"("class" to "site-footer-legal") {
+                        "p" {
+                            +"$COPYRIGHT · Content licensed under "
+                            "a"("href" to CONTENT_LICENSE_URL, "rel" to "license") {
+                                +CONTENT_LICENSE
+                            }
+                            +" unless stated otherwise"
+                        }
+                        "a"(
+                            "href" to GITHUB_URL,
+                            "class" to "circle transparent",
+                            "aria-label" to "Xemantic on GitHub"
+                        ) {
+                            "img"(
+                                "class" to "github-icon",
+                                "src" to GITHUB_ICON,
+                                "alt" to "GitHub"
+                            ) {}
+                        }
+                    }
                 }
             }
         }
     }
 
-    match("main") {
-        "main"("class" to "responsive") {
+    match({ name == "nav" && this["id"] == "toc" }) { mark ->
+        val nav = CapturedMark(mark)
+        toc = nav
+        captured += nav
+        children(mode = "capture")
+        afterClose { captured.removeLast() }
+    }
+
+    match("*", mode = "capture") { mark ->
+        val child = CapturedMark(mark)
+        captured.last().content += child
+        captured += child
+        children(mode = "capture")
+        afterClose { captured.removeLast() }
+    }
+
+    matchText(mode = "capture") {
+        captured.last().content += it
+    }
+
+    // after the heading, not before it: BeerCSS spaces a heading following
+    // a sibling with its own margin, which would override the h1 margin;
+    // the table of contents, if any, comes only at the end of the stream,
+    // so these actions are always added, and hidden by xemantic.css
+    // wherever the TOC_DRAWER, holding its own, is available
+    var pageActionsAdded = false
+    match("h1") { mark ->
+        mark.name(mark.attributes) {
             children()
+        }
+        if (!pageActionsAdded) {
+            pageActionsAdded = true
+            // the menu, as wide as its items, opens leftwards, into the page
+            pageActions(page.markdownPath(), menuClass = "left no-wrap")
         }
     }
 
     passthrough()
 
-}
-
-/**
- * Wraps the direct content of `body` in a `main` element, up to the trailing
- * `nav` with `id="toc"` (emitted at the very end of the stream by
- * `wrapInSections`), which gets an `aside` of its own, a sibling of `main`.
- * On a page without a table of contents `main` simply closes together with
- * `body`.
- *
- * Applied *after* `wrapInHtmlDocument`, never before: that operator moves the
- * front matter into the `head` only when the `frontmatter` mark opens the
- * stream, so nothing may emit a mark ahead of it.
- */
-fun Flow<SemanticEvent>.wrapBodyContentInMain(): Flow<SemanticEvent> = semanticEvents {
-    var wrapper: String? = null
-    collect { event ->
-        when {
-            event is SemanticEvent.Mark && event.name == "body" -> {
-                emit(event)
-                mark("main")
-                wrapper = "main"
-            }
-            wrapper != null && event is SemanticEvent.Mark
-                && event.name == "nav" && event["id"] == "toc" -> {
-                unmark(wrapper!!)
-                mark("aside")
-                wrapper = "aside"
-                emit(event)
-            }
-            event is SemanticEvent.Unmark && event.name == "body" -> {
-                wrapper?.let { unmark(it) }
-                wrapper = null
-                emit(event)
-            }
-            else -> emit(event)
-        }
-    }
 }
