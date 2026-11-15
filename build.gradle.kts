@@ -19,7 +19,10 @@ kotlin {
         apiVersion = kotlinTarget
         languageVersion = kotlinTarget
         jvmTarget = JvmTarget.fromTarget(javaTarget)
-        freeCompilerArgs.add("-Xjdk-release=$javaTarget")
+        freeCompilerArgs.addAll(
+            "-Xjdk-release=$javaTarget",
+            "-Xcontext-sensitive-resolution"
+        )
         extraWarnings = true
         progressiveMode = true
     }
@@ -76,7 +79,7 @@ val websiteDir = layout.buildDirectory.dir("website")
 
 tasks.run.configure {
     description = "Renders the whole website into the build folder."
-    dependsOn("generateBeerCss")
+    dependsOn("generateBeerCss", "generateArsenal")
     // a clean slate, so a deleted or renamed page does not linger
     // in the output, nor in the checks run on it
     val outputDir = websiteDir.get().asFile
@@ -94,7 +97,7 @@ tasks.register<JavaExec>("serve") {
     group = ApplicationPlugin.APPLICATION_GROUP
     classpath = sourceSets["main"].runtimeClasspath
     mainClass = "com.xemantic.website.ServerKt"
-    dependsOn("generateBeerCss")
+    dependsOn("generateBeerCss", "generateArsenal")
     args(
         layout.projectDirectory.asFile.absolutePath,
         generatedWebsiteDir.get().asFile.absolutePath
@@ -123,12 +126,20 @@ val beerCssModules = listOf(
     "settings/theme",
     "helpers/form",
     "helpers/responsive",
+    "helpers/wave",
     "elements/bar",
+    "elements/button",
+    "elements/card",
+    "elements/dialog",
     "elements/divider",
+    "elements/grid",
     "elements/icon",
     "elements/layout",
+    "elements/list",
     "elements/mainLayout",
+    "elements/menu",
     "elements/navigation",
+    "elements/overlay",
     "elements/table",
     "elements/typography"
 )
@@ -140,8 +151,55 @@ val beerCssModules = listOf(
  * when a rendered page uses an icon missing here.
  */
 val materialSymbols = listOf(
-    "home"
+    "architecture",
+    "arrow_forward",
+    "balance",
+    "check",
+    "code",
+    "content_copy",
+    "dark_mode",
+    "diversity_3",
+    "engineering",
+    "expand_more",
+    "favorite",
+    "handshake",
+    "inventory_2",
+    "light_mode",
+    "mail",
+    "menu",
+    "menu_open",
+    "newspaper",
+    "north_east",
+    "palette",
+    "person",
+    "psychology",
+    "school",
+    "science",
+    "smart_toy",
+    "toc",
+    "trending_up"
 )
+
+/** A task downloading the files it generates from the web. */
+abstract class DownloadTask : DefaultTask() {
+
+    protected fun get(url: String): ByteArray {
+        // not a field, as the configuration cache cannot store a client
+        val http = HttpClient.newBuilder()
+            .followRedirects(HttpClient.Redirect.NORMAL)
+            .build()
+        val request = HttpRequest.newBuilder(URI(url))
+            // Google Fonts serves woff2 only to a browser it recognizes
+            .header("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36")
+            .build()
+        val response = http.send(request, HttpResponse.BodyHandlers.ofByteArray())
+        check(response.statusCode() == 200) {
+            "GET $url responded with ${response.statusCode()}"
+        }
+        return response.body()
+    }
+
+}
 
 /**
  * Downloads the [modules] of BeerCSS [version] and concatenates them into
@@ -149,7 +207,7 @@ val materialSymbols = listOf(
  * Material Symbols Outlined font, which is downloaded into [font].
  */
 @CacheableTask
-abstract class GenerateBeerCss : DefaultTask() {
+abstract class GenerateBeerCss : DownloadTask() {
 
     @get:Input
     abstract val version: Property<String>
@@ -168,20 +226,6 @@ abstract class GenerateBeerCss : DefaultTask() {
 
     @TaskAction
     fun update() {
-        val http = HttpClient.newBuilder()
-            .followRedirects(HttpClient.Redirect.NORMAL)
-            .build()
-        fun get(url: String): ByteArray {
-            val request = HttpRequest.newBuilder(URI(url))
-                // Google Fonts serves woff2 only to a browser it recognizes
-                .header("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36")
-                .build()
-            val response = http.send(request, HttpResponse.BodyHandlers.ofByteArray())
-            check(response.statusCode() == 200) {
-                "GET $url responded with ${response.statusCode()}"
-            }
-            return response.body()
-        }
         val cdn = "https://cdn.jsdelivr.net/npm/beercss@${version.get()}/dist/cdn"
         val iconNames = icons.get().sorted().joinToString(",")
         val fontCss = get(
@@ -220,6 +264,101 @@ tasks.register<GenerateBeerCss>("generateBeerCss") {
     icons = materialSymbols
     css = generatedWebsiteDir.map { it.file("assets/css/beercss.css") }
     font = generatedWebsiteDir.map { it.file("assets/fonts/material-symbols-outlined.woff2") }
+}
+
+/**
+ * Downloads the static [family] font from Google Fonts, in the [styles]
+ * (`ital,wght` tuples, like `1,700` for bold italic) and the [subsets],
+ * into [dir] as `Family-Style-subset.woff2` files, the names the
+ * `@font-face` rules of `xemantic.css` refer to, together with the
+ * `Family-OFL.txt` license.
+ */
+@CacheableTask
+abstract class GenerateGoogleFont : DownloadTask() {
+
+    @get:Input
+    abstract val family: Property<String>
+
+    @get:Input
+    abstract val styles: ListProperty<String>
+
+    @get:Input
+    abstract val subsets: ListProperty<String>
+
+    @get:Internal
+    abstract val dir: DirectoryProperty
+
+    private val fileFamily get() = family.get().replace(" ", "")
+
+    private val license get() = dir.get().file("$fileFamily-OFL.txt")
+
+    private fun fontFile(style: String, subset: String): RegularFile {
+        val (italic, weight) = style.split(",")
+        val weightName = when (weight) {
+            "100" -> "Thin"
+            "200" -> "ExtraLight"
+            "300" -> "Light"
+            "400" -> "Regular"
+            "500" -> "Medium"
+            "600" -> "SemiBold"
+            "700" -> "Bold"
+            "800" -> "ExtraBold"
+            "900" -> "Black"
+            else -> error("Unknown font weight: $weight")
+        }
+        val styleName = when {
+            italic == "0" -> weightName
+            weightName == "Regular" -> "Italic"
+            else -> "${weightName}Italic"
+        }
+        return dir.get().file("$fileFamily-$styleName-$subset.woff2")
+    }
+
+    @get:OutputFiles
+    val files: List<RegularFile>
+        get() = styles.get().flatMap { style ->
+            subsets.get().map { subset -> fontFile(style, subset) }
+        } + license
+
+    @TaskAction
+    fun generate() {
+        val familyParam = family.get().replace(" ", "+")
+        val fontCss = get(
+            "https://fonts.googleapis.com/css2?family=$familyParam:ital,wght@${styles.get().sorted().joinToString(";")}"
+        ).decodeToString()
+        // every @font-face rule is preceded by a comment naming its subset
+        val fontFaces = Regex("""/\* ([a-z-]+) \*/\s*@font-face \{([^}]*)}""")
+            .findAll(fontCss)
+            .associate { match ->
+                val (subset, rule) = match.destructured
+                fun property(name: String) = Regex("""$name: ([^;]+);""").find(rule)!!.groupValues[1]
+                val italic = if (property("font-style") == "italic") "1" else "0"
+                "$italic,${property("font-weight")}" to subset to
+                    Regex("""url\((https://[^)]+)\) format\('woff2'\)""").find(rule)!!.groupValues[1]
+            }
+        styles.get().forEach { style ->
+            subsets.get().forEach { subset ->
+                val url = fontFaces[style to subset]
+                    ?: error("No $style $subset woff2 font in the Google Fonts response:\n$fontCss")
+                fontFile(style, subset).asFile.apply { parentFile.mkdirs() }.writeBytes(get(url))
+            }
+        }
+        license.asFile.writeBytes(
+            get("https://raw.githubusercontent.com/google/fonts/main/ofl/${fileFamily.lowercase()}/OFL.txt")
+        )
+    }
+
+}
+
+tasks.register<GenerateGoogleFont>("generateArsenal") {
+    description = "Generates the Arsenal font files used by the website."
+    group = "website"
+    family = "Arsenal"
+    // regular, bold, italic and bold italic
+    styles = listOf("0,400", "0,700", "1,400", "1,700")
+    // the latter covering Polish and German
+    subsets = listOf("latin", "latin-ext")
+    dir = generatedWebsiteDir.map { it.dir("assets/fonts") }
 }
 
 /**
