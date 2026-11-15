@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<!--
+  A playground of the generative art deco background: it renders
+  generative-art-deco.frag through the very driver of the site,
+  assets/js/generative-art-deco.js, with a slider for every parameter
+  the driver turns into the uniforms of the shader. The page scrolls,
+  so that the parallax pan can be tried as well, and the refraction
+  under the pointer.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generative Art Deco Playground</title>
+  <style>
+    :root {
+      --panel: rgb(16 16 20 / .82);
+      --text: #e6e6ea;
+      --muted: #9a9aa6;
+      --accent: #d0bcff;
+      --line: rgb(255 255 255 / .12);
+      color-scheme: dark;
+    }
+    body {
+      margin: 0;
+      min-height: 400vh;
+      background: #000;
+      color: var(--text);
+      font: 13px/1.4 system-ui, sans-serif;
+    }
+    .hint {
+      position: fixed;
+      left: 16px;
+      bottom: 16px;
+      color: var(--muted);
+    }
+    #panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 340px;
+      max-width: 100%;
+      height: 100vh;
+      box-sizing: border-box;
+      overflow-y: auto;
+      padding: 12px 16px;
+      background: var(--panel);
+      backdrop-filter: blur(8px);
+      border-left: 1px solid var(--line);
+    }
+    #panel.hidden > :not(header) { display: none; }
+    #panel.hidden { height: auto; }
+    header {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    header h1 {
+      flex: 1;
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    button {
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgb(255 255 255 / .06);
+      color: var(--text);
+      font: inherit;
+      cursor: pointer;
+    }
+    button:hover { border-color: var(--accent); }
+    details {
+      border-top: 1px solid var(--line);
+      padding: 6px 0;
+    }
+    summary {
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 72px;
+      gap: 2px 8px;
+      align-items: center;
+      margin-top: 6px;
+    }
+    .row label {
+      grid-column: 1 / -1;
+      color: var(--muted);
+    }
+    .row input[type=range] {
+      width: 100%;
+      margin: 0;
+      accent-color: var(--accent);
+    }
+    .row input[type=number] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 2px 4px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      font-variant-numeric: tabular-nums;
+    }
+    #uniforms {
+      margin: 6px 0 0;
+      font: 11px/1.5 ui-monospace, monospace;
+      color: var(--muted);
+      white-space: pre;
+      overflow-x: auto;
+    }
+    @media (max-width: 600px) {
+      #panel {
+        top: auto;
+        bottom: 0;
+        width: 100%;
+        height: 50vh;
+        border-left: 0;
+        border-top: 1px solid var(--line);
+      }
+    }
+  </style>
+</head>
+<body>
+<p class="hint">Scroll to try the parallax pan, move the pointer to bend the light.</p>
+<aside id="panel">
+  <header>
+    <h1>Generative art deco</h1>
+    <button id="pause" type="button">Pause</button>
+    <button id="reset" type="button">Reset</button>
+    <button id="copy" type="button">Copy JSON</button>
+    <button id="toggle" type="button" aria-label="Hide the controls">–</button>
+  </header>
+  <div id="controls"></div>
+  <details open>
+    <summary>Uniforms</summary>
+    <div id="uniforms"></div>
+  </details>
+</aside>
+<script src="../js/shader-web-background.js"></script>
+<script>
+  // shader-web-background reads shaders only from the document, and sizes
+  // its canvas on the load event - called any later, shade() would leave the
+  // canvas 0 by 0 pixels - so the shader is put into the document, and the
+  // driver run, while the page is still being parsed, like on every page of the site
+  const request = new XMLHttpRequest();
+  request.open("GET", "generative-art-deco.frag", false);
+  request.send();
+  const shader = document.createElement("script");
+  shader.type = "x-shader/x-fragment";
+  shader.id = "image";
+  shader.text = request.responseText;
+  document.currentScript.after(shader);
+</script>
+<script src="../js/generative-art-deco.js"></script>
+<script>
+(() => {
+
+  const {parameters} = window.generativeArtDeco;
+  const defaults = structuredClone(parameters);
+
+  // [min, max] of a slider, by the full path of the parameter first,
+  // then by its name, the typed value is never clamped though
+  const PI = Math.PI;
+  const RANGES = {
+    "timeScale": [0, .001],
+    "waveFrequency": [.5, 12],
+    "shapeSize": [0, 1],
+    "cameraAngle.center": [-PI, PI],
+    "cameraZoom.center": [.05, 3],
+    "lensScale": [.05, 2],
+    "lensStrength": [-4, 4],
+    "chromaticAberration": [0, .1],
+    "pointerRadius": [0, 2],
+    "pointerRefraction": [-4, 6],
+    "pointerDispersion": [0, .2],
+    "pointerStiffness": [0, 200],
+    "pointerFade": [0, 10],
+    "blur.center": [0, 1],
+    "blur.amplitude": [0, .5],
+    "blurFalloff": [0, 1.5],
+    "initialLuma": [0, 1.5],
+    "lumaFalloff": [0, 1.5],
+    "layerZoom": [.2, 3],
+    "layerMagnification": [-2, 4],
+    "layerEdge": [0, .5],
+    "layerTurn.center": [-PI, PI],
+    "grading.intensity": [0, 1],
+    "grading.rate": [0, 2],
+    "grading.polarity": [-1, 1],
+    "grading.innerDetune": [0, 3],
+    "grading.outerDetune": [0, 3],
+    "gradingRadius": [-1, 2],
+    "vignetteInner": [0, 2],
+    "vignetteOuter": [0, 2],
+    "center": [-2, 2],
+    "amplitude": [0, PI],
+    "rate": [0, 1],
+    "phase": [-PI, PI],
+  };
+  const rangeOf = (path, name) =>
+    RANGES[path] ?? RANGES[path.replace(/\.\d+$/, "")] ?? RANGES[name] ?? [-2, 2];
+
+  // "cameraAngle" -> "camera angle"
+  const words = (key) => String(key).replace(/[A-Z]/g, (c) => " " + c.toLowerCase());
+  const format = (v) => +v.toPrecision(4);
+
+  const setters = []; // refreshing every input from the parameters, after a reset
+
+  const addSlider = (container, owner, key, path, label) => {
+    const [min, max] = rangeOf(path, key);
+    const row = document.createElement("div");
+    row.className = "row";
+    const id = "p-" + path.replaceAll(".", "-");
+    row.innerHTML = `<label for="${id}">${label}</label>`;
+    const range = Object.assign(document.createElement("input"), {
+      type: "range", id, min, max, step: (max - min) / 1000
+    });
+    const number = Object.assign(document.createElement("input"), {
+      type: "number", step: "any", ariaLabel: label
+    });
+    const show = () => {
+      range.value = owner[key];
+      number.value = format(owner[key]);
+    };
+    range.addEventListener("input", () => {
+      owner[key] = +range.value;
+      number.value = format(owner[key]);
+    });
+    number.addEventListener("input", () => {
+      if (number.value === "" || isNaN(+number.value)) return;
+      owner[key] = +number.value;
+      range.value = owner[key];
+    });
+    show();
+    setters.push(show);
+    row.append(range, number);
+    container.append(row);
+  };
+
+  // numbers get a slider, objects and arrays, like oscillators, get one per field
+  const addControls = (container, owner, key, path, label) => {
+    const value = owner[key];
+    if (typeof value === "number") {
+      addSlider(container, owner, key, path, label);
+    } else {
+      for (const k of Object.keys(value)) {
+        const name = Array.isArray(value) ? (value.length === 3 ? "rgb" : "xy")[k] : words(k);
+        addControls(container, value, k, `${path}.${k}`, `${label} ${name}`.trim());
+      }
+    }
+  };
+
+  const controls = document.getElementById("controls");
+  // a plain number gets its slider right away, a structure a section of its own
+  for (const key of Object.keys(parameters)) {
+    if (typeof parameters[key] === "number") {
+      addControls(controls, parameters, key, key, words(key));
+    } else {
+      const details = document.createElement("details");
+      details.innerHTML = `<summary>${words(key)}</summary>`;
+      addControls(details, parameters, key, key, "");
+      controls.append(details);
+    }
+  }
+
+  // copies the values of the source into the parameters, in place,
+  // as the driver holds on to the very objects
+  const assign = (target, source) => {
+    for (const k of Object.keys(source)) {
+      if (typeof source[k] === "number") target[k] = source[k];
+      else assign(target[k], source[k]);
+    }
+  };
+
+  const pause = document.getElementById("pause");
+  let pausedTimeScale = null;
+  pause.onclick = () => {
+    if (pausedTimeScale === null) {
+      pausedTimeScale = parameters.timeScale;
+      parameters.timeScale = 0;
+      pause.textContent = "Play";
+    } else {
+      parameters.timeScale = pausedTimeScale || defaults.timeScale;
+      pausedTimeScale = null;
+      pause.textContent = "Pause";
+    }
+    setters.forEach((show) => show());
+  };
+  document.getElementById("reset").onclick = () => {
+    assign(parameters, defaults);
+    pausedTimeScale = null;
+    pause.textContent = "Pause";
+    setters.forEach((show) => show());
+  };
+  const copy = document.getElementById("copy");
+  copy.onclick = async () => {
+    await navigator.clipboard.writeText(JSON.stringify(parameters, null, 2));
+    copy.textContent = "Copied";
+    setTimeout(() => copy.textContent = "Copy JSON", 1200);
+  };
+  const panel = document.getElementById("panel");
+  const toggle = document.getElementById("toggle");
+  toggle.onclick = () => {
+    const hidden = panel.classList.toggle("hidden");
+    toggle.textContent = hidden ? "+" : "–";
+    toggle.ariaLabel = hidden ? "Show the controls" : "Hide the controls";
+  };
+
+  // the values actually supplied to the shader, a few times per second
+  const readout = document.getElementById("uniforms");
+  const show = (v) => typeof v === "number" ? format(v)
+    : v ? "[" + Array.from(v, format).join(", ") + "]" : v;
+  setInterval(() => {
+    const uniforms = window.generativeArtDeco.uniforms;
+    if (!uniforms) return;
+    readout.textContent = Object.entries(uniforms)
+      .map(([name, supply]) => `${name.padEnd(21)} ${show(supply())}`)
+      .join("\n");
+  }, 200);
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+/*
+ * Drives the generative art deco background, the shader of
+ * assets/shaders/generative-art-deco.frag, which PageLayout.kt inlines into
+ * every page as the `image` script, as shader-web-background can only read
+ * shaders included in the HTML. It has to run after that script.
+ * The pan follows the scrolling of the page, the same way the background of
+ * the consciousness presentation follows its slides, and the pointer changes
+ * the refraction of the glass under it.
+ *
+ * Every coefficient of the shader is set here, and everything changing with time
+ * is computed here once per frame, to be supplied to the shader as a uniform.
+ * The parameters are read anew on every frame, and exposed as
+ * window.generativeArtDeco, so that assets/shaders/generative-art-deco.html
+ * can tune them live.
+ */
+(() => {
+
+  const PARALLAX_SCROLLING_RATE = .0003; // shader units panned per device pixel scrolled
+
+  // An oscillator describes a value swinging around its center:
+  // center + amplitude * sin(time * rate + phase).
+  const oscillate = ({center, amplitude, rate, phase}, t) =>
+    center + amplitude * Math.sin(t * rate + phase);
+
+  const parameters = {
+    timeScale: .0001,              // time units per millisecond
+
+    // the cell
+    waveFrequency: 3,              // how many rings the wave of the cell makes
+    shapeSize: .618,               // where the wave is cut into a shape, the golden ratio
+
+    // the camera sways back and forth, and slowly breathes in and out
+    cameraAngle: {center: 0, amplitude: .3, rate: .14, phase: 0},
+    cameraZoom: {center: .6, amplitude: .3, rate: .15, phase: 0},
+
+    // the lens, see the shader
+    lensScale: .428,
+    lensStrength: 1.1,
+
+    // the journey through the infinite plane, a slow ellipse detuned into a Lissajous curve
+    drift: [
+      {center: 0, amplitude: 1, rate: .12, phase: 0},
+      {center: 0, amplitude: 1, rate: .13, phase: Math.PI / 2},
+    ],
+
+    chromaticAberration: .01,
+
+    // the pointer thickens the glass under it, see the shader
+    pointerRadius: .4,             // how far its influence reaches, in screen space
+    pointerRefraction: 1.5,        // the magnification it adds to the layers below
+    pointerDispersion: .04,        // the chromatic aberration it adds
+    pointerStiffness: 30,          // of the spring it is trailed on, the higher the tighter
+    pointerFade: 2,                // how quickly it fades in and out, per second
+
+    // depth of field: the blur of the top layer pulses, the focus hunting for a subject
+    blur: {center: .4, amplitude: .2, rate: .52, phase: 0},
+    blurFalloff: .63,              // how much of its blur every deeper layer keeps
+    // aerial perspective
+    initialLuma: .5,               // the brightness of the top layer
+    lumaFalloff: .6,               // how much of it every deeper layer keeps
+
+    // descending into the next layer
+    layerZoom: 1.1,                // outside of the shape of the layer above
+    layerMagnification: 1.2,       // added where seen through the shape
+    layerEdge: .04,                // the softness of the edge between the two
+    layerTurn: {center: 0, amplitude: 1.33, rate: .05, phase: 0},
+
+    // Color grading: every channel gets its own gamma, drifting with time,
+    // with the inner and the outer grading detuned in frequency.
+    grading: {
+      intensity: .4,
+      rate: .3,
+      polarity: [1, 1, -1],        // blue swings against red and green
+      innerDetune: [1.13, 1.23, 1.33],
+      outerDetune: [1.43, 1.53, 1.63],
+    },
+    gradingRadius: .5,
+
+    // the vignette
+    vignetteInner: .35,
+    vignetteOuter: 1.05,
+  };
+
+  const gamma = (detune, sign, t) => detune.map((d, i) =>
+    1 + sign * Math.sin(t * parameters.grading.rate * d)
+      * parameters.grading.intensity * parameters.grading.polarity[i]
+  );
+
+  // Mirrors rotate() of the shader, so that a step taken in screen space can be
+  // pushed into the frame a layer is drawn in. Keep in sync with the GLSL.
+  const rotate = ([x, y], a) => {
+    const c = Math.cos(a);
+    const s = Math.sin(a);
+    return [c * x - s * y, s * x + c * y];
+  };
+
+  // accumulated, so that a change of the time scale does not make it jump
+  let time = Math.random() * 100;
+  let lastNow = performance.now();
+  let scroll = 0;
+  let cameraAngle, cameraZoom, drift, blur, layerTurn, innerGamma, outerGamma;
+  // The pan is accumulated in the pattern space of every layer, instead of being
+  // transformed into it anew on each frame. A stored offset is a standing
+  // translation, so once the page stops scrolling it stops changing, and the bottom
+  // of a long page animates at the rate of its top - a pan derived from the scroll
+  // position would instead keep being swung around by the rotation of the scene, ever
+  // faster the further it reaches from the center it revolves around. Only fract(p)
+  // ever reaches the screen, so wrapping the offsets to a single period is free.
+  const offsets = [[0, 0], [0, 0], [0, 0]];
+
+  // The pointer, in the screen space of the shader: centered, the shorter side
+  // spanning 1, y pointing up. Its influence fades out while it is outside of
+  // the window, and stays out on touch screens, which have no pointer hovering
+  // over the scene, and when the reader asks for reduced motion.
+  const pointer = [0, 0];
+  const pointerTrail = [0, 0];
+  const pointerVelocity = [0, 0];
+  let pointerInside = false;
+  let presence = 0;
+  const tracking = matchMedia(
+    "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)"
+  );
+  addEventListener("pointermove", (event) => {
+    if (!tracking.matches) return;
+    const size = Math.min(innerWidth, innerHeight);
+    pointer[0] = (event.clientX - innerWidth / 2) / size;
+    pointer[1] = (innerHeight / 2 - event.clientY) / size;
+    pointerInside = true;
+  });
+  const leave = () => pointerInside = false;
+  addEventListener("pointerout", (event) => { if (!event.relatedTarget) leave(); });
+  addEventListener("blur", leave);
+  tracking.addEventListener("change", leave);
+  let uniforms;
+  shaderWebBackground.shade((ctx) => ({
+    onBeforeFrame: () => {
+      const now = performance.now();
+      const elapsed = now - lastNow;
+      time += elapsed * parameters.timeScale;
+      lastNow = now;
+      const p = parameters;
+
+      // Real time, unaffected by the time scale. The step is capped, so that
+      // a frame arriving late, e.g. in a tab coming back from the background,
+      // cannot throw the integration off balance.
+      const dt = Math.min(elapsed / 1000, 1 / 30);
+      presence += ((pointerInside ? 1 : 0) - presence) * (1 - Math.exp(-p.pointerFade * dt));
+      if (presence < .01) {
+        // faded out, it reappears right where the pointer comes back
+        pointerTrail.splice(0, 2, ...pointer);
+        pointerVelocity.fill(0);
+      }
+      // Critically damped: the trail catches up with the pointer as fast
+      // as it can without overshooting.
+      const damping = 2 * Math.sqrt(p.pointerStiffness);
+      for (let i = 0; i < 2; i++) {
+        pointerVelocity[i] += (p.pointerStiffness * (pointer[i] - pointerTrail[i]) - damping * pointerVelocity[i]) * dt;
+        pointerTrail[i] += pointerVelocity[i] * dt;
+      }
+      cameraAngle = oscillate(p.cameraAngle, time);
+      cameraZoom = oscillate(p.cameraZoom, time);
+      drift = p.drift.map((axis) => oscillate(axis, time));
+      blur = oscillate(p.blur, time);
+      layerTurn = oscillate(p.layerTurn, time);
+      innerGamma = gamma(p.grading.innerDetune, 1, time);
+      outerGamma = gamma(p.grading.outerDetune, -1, time);
+
+      const previous = scroll;
+      scroll = window.scrollY * ctx.cssPixelRatio * PARALLAX_SCROLLING_RATE;
+      let step = rotate([0, (scroll - previous) * cameraZoom], cameraAngle);
+      for (const offset of offsets) {
+        offset[0] = (offset[0] + step[0]) % 1;
+        offset[1] = (offset[1] + step[1]) % 1;
+        step = rotate(step, layerTurn);
+      }
+    },
+    shaders: {
+      image: {
+        uniforms: uniforms = {
+          iResolution:          () => ctx.resolution,
+          iWaveFrequency:       () => parameters.waveFrequency,
+          iShapeSize:           () => parameters.shapeSize,
+          iCameraAngle:         () => cameraAngle,
+          iCameraZoom:          () => cameraZoom,
+          iLensScale:           () => parameters.lensScale,
+          iLensStrength:        () => parameters.lensStrength,
+          iDrift:               () => drift,
+          iOffset0:             () => offsets[0],
+          iOffset1:             () => offsets[1],
+          iOffset2:             () => offsets[2],
+          iChromaticAberration: () => parameters.chromaticAberration,
+          iPointer:             () => pointerTrail,
+          iPointerRadius:       () => parameters.pointerRadius,
+          iPointerRefraction:   () => parameters.pointerRefraction * presence,
+          iPointerDispersion:   () => parameters.pointerDispersion * presence,
+          iBlur:                () => blur,
+          iBlurFalloff:         () => parameters.blurFalloff,
+          iInitialLuma:         () => parameters.initialLuma,
+          iLumaFalloff:         () => parameters.lumaFalloff,
+          iLayerZoom:           () => parameters.layerZoom,
+          iLayerMagnification:  () => parameters.layerMagnification,
+          iLayerEdge:           () => parameters.layerEdge,
+          iLayerTurn:           () => layerTurn,
+          iInnerGamma:          () => innerGamma,
+          iOuterGamma:          () => outerGamma,
+          iGradingRadius:       () => parameters.gradingRadius,
+          iVignetteInner:       () => parameters.vignetteInner,
+          iVignetteOuter:       () => parameters.vignetteOuter,
+        }
+      }
+    }
+  }));
+
+  window.generativeArtDeco = {
+    parameters,
+    // the uniform suppliers, once shader-web-background has asked for them
+    get uniforms() { return uniforms; },
+  };
+
+})();

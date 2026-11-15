@@ -28,6 +28,13 @@ see [DEVELOPMENT.md](DEVELOPMENT.md#markdown-soft-wrapping-in-the-ide) for how t
 This convention applies to the Markdown sources of the website itself as well,
 not only to the repository's own documentation.
 
+### Kotlin
+
+- Context-sensitive resolution (`-Xcontext-sensitive-resolution`) is enabled:
+  drop the type qualifier wherever the expected type is known —
+  `is Serve ->` instead of `is Resolution.Serve ->` in a `when`, `return NotFound` instead of `return Resolution.NotFound` —
+  but keep it on constructor calls (`Resolution.Serve(file)`), which the feature does not cover.
+
 ## Known gotchas
 
 - Every non-hidden file at the repository root is part of the website,
@@ -60,6 +67,9 @@ not only to the repository's own documentation.
 - `REUSE.toml` licenses everything as CC BY 4.0 unless a later annotation says otherwise (the last matching one wins) —
   third-party material added to the site (images, quoted works, vendored libraries) needs its own annotation,
   verified with `uvx --from 'reuse[charset-normalizer]' reuse lint` (plain `uvx reuse lint` fails without an encoding-detection module).
+- BeerCSS adds a `1rem` top margin to a block element (`section`, `nav`, `p`, headings, …) following any sibling,
+  with a selector too specific (0,4,1) to override casually —
+  an absolutely positioned helper element therefore goes *after* such a block in the markup, not before it.
 - Google Fonts serves the `icon_names` subset as woff2 only to a browser User-Agent,
   otherwise it answers with a TrueType font.
 

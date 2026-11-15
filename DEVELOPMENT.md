@@ -45,8 +45,8 @@ to `materialSymbols` first.
 Every `./gradlew run` is followed by `checkMaterialSymbols`,
 which fails the build when a rendered page uses an icon missing from the font.
 
-The Poppins font is not committed either:
-`generatePoppins` downloads its styles and subsets, as listed in [build.gradle.kts](build.gradle.kts),
+The Arsenal font is not committed either:
+`generateArsenal` downloads its styles and subsets, as listed in [build.gradle.kts](build.gradle.kts),
 from Google Fonts into `build/generated/website/assets/fonts`, together with its license,
 under the file names the `@font-face` rules of [xemantic.css](assets/css/xemantic.css) refer to.
 
