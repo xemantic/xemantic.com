@@ -17,6 +17,8 @@
 package com.xemantic.website
 
 import com.xemantic.markanywhere.SemanticEvent
+import com.xemantic.markanywhere.flow.SemanticEventScope
+import com.xemantic.markanywhere.flow.semanticEvents
 import com.xemantic.markanywhere.html.ensureFrontmatterTitle
 import com.xemantic.markanywhere.html.wrapInHtmlDocument
 import com.xemantic.markanywhere.html.wrapInSections
@@ -26,8 +28,8 @@ import com.xemantic.markanywhere.yaml.parseYaml
 import com.xemantic.markanywhere.yaml.renderYaml
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -50,26 +52,50 @@ import kotlinx.io.writeString
  * in its front matter (or without any front matter) gets one derived
  * from its first `h1`, so every rendered page carries a `<title>`.
  * The `head` is completed with the metadata of the [page], see
- * [addPageMetadata].
+ * [addPageMetadata], and the page layout gets the site map of the
+ * footer, the background shader and the color scheme script, all read
+ * from the source directory for every page, so that the live server reflects their changes right away.
  * The document is prefixed with the HTML5 doctype, otherwise browsers
  * would fall back to the quirks mode, where the BeerCSS body grid
  * clamps `main` to the viewport height, clipping the page content.
  */
-fun Flow<String>.renderMarkdownToHtml(page: Page): Flow<String> = parse()
-    .ensureFrontmatterTitle()
-    .wrapInSections(tocDepth = 6)
-    .wrapInHtmlDocument()
-    .addPageMetadata(page)
-    .wrapBodyContentInMain()
-    .applyPageLayout()
-    .asHtml()
-    .onStart { emit("<!DOCTYPE html>\n") }
+fun Flow<String>.renderMarkdownToHtml(page: Page): Flow<String> = flow {
+    val footer = page.siteRoots.first().readSiteFooter()
+    val shader = page.siteRoots.first().readSiteFile(BACKGROUND_SHADER_FILE)
+    val colorSchemeScript = page.siteRoots.first().readSiteFile(COLOR_SCHEME_SCRIPT_FILE)
+    emitAll(
+        parse()
+            .ensureFrontmatterTitle()
+            .wrapInSections(tocDepth = 6)
+            .wrapInHtmlDocument()
+            .addPageMetadata(page)
+            .applyPageLayout(page, footer, shader, colorSchemeScript)
+            .asHtml()
+    )
+}.onStart { emit("<!DOCTYPE html>\n") }
+
+/**
+ * The fragment shader of the page background, inlined into every page,
+ * as shader-web-background reads shaders only from the HTML document.
+ */
+internal const val BACKGROUND_SHADER_FILE = "assets/shaders/generative-art-deco.frag"
+
+/**
+ * The script applying the color scheme before the first paint, inlined
+ * at the start of every `body`, see [applyPageLayout].
+ */
+internal const val COLOR_SCHEME_SCRIPT_FILE = "assets/js/color-scheme-init.js"
+
+private fun Path.readSiteFile(file: String): String =
+    SystemFileSystem.source(Path(this, file)).buffered().use { it.readString() }.trimEnd()
 
 /**
  * Root entries of the repository which are not a part of the website:
- * the build machinery, the licensing files and the Jekyll leftovers.
+ * the build machinery, the licensing files, the Jekyll leftovers, and
+ * the [SITE_FOOTER_FILE], which is rendered into every page instead.
  */
 internal val excludedRootEntries = setOf(
+    SITE_FOOTER_FILE,
     "LICENSE",
     "LICENSES",
     "REUSE.toml",
@@ -269,15 +295,13 @@ internal suspend fun decorateMarkdown(content: String, pageUrl: String): String 
  * first entry, dropping any previous `url`, and adds a `lang` entry of the
  * [DEFAULT_LANG] after it when no top-level `lang` is present.
  */
-private suspend fun Flow<SemanticEvent>.withProvenance(
+private fun Flow<SemanticEvent>.withProvenance(
     pageUrl: String
-): Flow<SemanticEvent> {
+): Flow<SemanticEvent> = semanticEvents {
     val nodes = toList().topLevelNodes()
-    val lang =
-        if (nodes.any { it.isEntry("lang") }) emptyList()
-        else yamlEntry("lang", DEFAULT_LANG)
-    val rest = nodes.filterNot { it.isEntry("url") }.flatten()
-    return (yamlEntry("url", pageUrl) + lang + rest).asFlow()
+    yamlEntry("url", pageUrl)
+    if (nodes.none { it.isEntry("lang") }) yamlEntry("lang", DEFAULT_LANG)
+    nodes.filterNot { it.isEntry("url") }.forEach { emit(it) }
 }
 
 /**
@@ -291,9 +315,9 @@ private fun List<SemanticEvent>.topLevelNodes(): List<List<SemanticEvent>> {
     forEach { event ->
         node += event
         when (event) {
-            is SemanticEvent.Mark -> depth++
-            is SemanticEvent.Unmark -> depth--
-            is SemanticEvent.Text -> {}
+            is Mark -> depth++
+            is Unmark -> depth--
+            is Text -> {}
         }
         if (depth == 0) {
             nodes += node
@@ -309,11 +333,8 @@ private fun List<SemanticEvent>.isEntry(key: String): Boolean =
         it.name == "entry" && it["key"] == key
     } ?: false
 
-private fun yamlEntry(key: String, value: String): List<SemanticEvent> = listOf(
-    SemanticEvent.Mark("entry", attributes = mapOf("key" to key)),
-    SemanticEvent.Text(value),
-    SemanticEvent.Unmark("entry")
-)
+private suspend fun SemanticEventScope.yamlEntry(key: String, value: String) =
+    "entry"("key" to key) { +value }
 
 private fun writeTextFile(file: Path, content: String) {
     file.parent?.let { SystemFileSystem.createDirectories(it) }
