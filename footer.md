@@ -11,7 +11,7 @@ and the file itself is not published.
 - [Golem XIV](https://github.com/xemantic/golem-xiv)
 - [Honest Annie](https://github.com/xemantic/honest-annie)
 - [Umwelt](https://github.com/xemantic/umwelt)
-- [Noumen](https://github.com/xemantic/honest-annie)
+- [Noumen](https://github.com/xemantic/noumen)
 - [markanywhere](https://github.com/xemantic/markanywhere)
 
 ## Services

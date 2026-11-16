@@ -112,7 +112,7 @@ private val YOUTUBE_VIDEO_ID = Regex(
     """^https://(?:www\.youtube\.com/watch\?(?:.*&)?v=|youtu\.be/)([\w-]+)"""
 )
 
-private fun SemanticEvent.Mark.hasClass(cssClass: String) =
+internal fun SemanticEvent.Mark.hasClass(cssClass: String) =
     this["class"]?.split(' ')?.contains(cssClass) == true
 
 /**

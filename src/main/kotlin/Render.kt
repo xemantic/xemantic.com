@@ -303,7 +303,9 @@ internal suspend fun decorateMarkdown(content: String, path: String, siteUrl: St
 /**
  * Sets the top-level `url` entry of these YAML events to [pageUrl] as the
  * first entry, dropping any previous `url`, and adds a `lang` entry of the
- * [DEFAULT_LANG] after it when no top-level `lang` is present.
+ * [DEFAULT_LANG] after it when no top-level `lang` is present. The `author`
+ * key, meaningful only to the build, becomes the name of the person in
+ * [PEOPLE], so that a reader of the published document learns who wrote it.
  */
 private fun Flow<SemanticEvent>.withProvenance(
     pageUrl: String
@@ -311,7 +313,12 @@ private fun Flow<SemanticEvent>.withProvenance(
     val nodes = toList().topLevelNodes()
     yamlEntry("url", pageUrl)
     if (nodes.none { it.isEntry("lang") }) yamlEntry("lang", DEFAULT_LANG)
-    nodes.filterNot { it.isEntry("url") }.forEach { emit(it) }
+    nodes.filterNot { it.isEntry("url") }.forEach { node ->
+        val author = if (node.isEntry("author")) {
+            PEOPLE[node.filterIsInstance<SemanticEvent.Text>().joinToString("") { it.text }.trim()]
+        } else null
+        if (author != null) yamlEntry("author", author.name) else emit(node)
+    }
 }
 
 /**

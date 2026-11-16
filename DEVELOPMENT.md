@@ -30,6 +30,37 @@ Serve it live from the source, rendering Markdown on each request:
 ./gradlew serve
 ```
 
+## Front matter
+
+Every page becomes a schema.org entity,
+published as JSON-LD for search engines,
+and the front matter decides which one:
+
+```yaml
+---
+type: Article                # optional, see below
+title: Consciousness         # optional, the h1 otherwise
+description: One or two sentences summarizing the page.
+author: kazik                # a key of PEOPLE in StructuredData.kt
+datePublished: 2026-11-20
+dateModified: 2026-12-03     # optional
+about: https://www.wikidata.org/wiki/Q…   # optional, the concept explained
+image: images/cover.webp     # optional, also the link preview image
+---
+```
+
+- A page in `blog/` is a `BlogPosting`.
+- The profile page of a person in `PEOPLE` is a `ProfilePage`,
+  its social media links becoming the person's `sameAs` profiles.
+- Any other page is a `WebPage`,
+  unless it declares `type: Article`,
+  which a concept explained in its own right should do, wherever it sits.
+
+An `Article` or `BlogPosting` requires `author`, `datePublished` and `description`,
+and the build fails when one is missing or invalid.
+The published Markdown carries the same front matter,
+with the `author` key replaced by the person's name.
+
 ## Update BeerCSS and Material Symbols
 
 BeerCSS and the Material Symbols icon font are published from the site's own origin,

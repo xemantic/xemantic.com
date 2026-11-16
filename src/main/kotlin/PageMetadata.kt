@@ -31,7 +31,7 @@ import java.net.URI
  */
 internal const val DEFAULT_LANG = "en"
 
-private const val SITE_NAME = "Xemantic"
+internal const val SITE_NAME = "Xemantic"
 
 /**
  * A Markdown page being rendered.
@@ -105,7 +105,17 @@ class Page(
  *   absolute URL (see [Page.resolveUrl]), together with its dimensions,
  *   letting the preview show on the first share, before a crawler has
  *   downloaded the image, and with the `twitter:card` asking X for the
- *   large image preview.
+ *   large image preview,
+ * - the [STRUCTURED_DATA_KEYS] entries, validated as a [PageInfo], which
+ *   `wrapInHtmlDocument` would leave as meaningless `<meta>` elements too,
+ *   become the `author` meta and, for an article, the Open Graph article
+ *   properties,
+ * - the end of `body` gets the [structuredData] of the page as JSON-LD,
+ *   the profile page of a person contributing the photograph and the
+ *   social media links of its content widgets, see `ContentWidgets.kt`.
+ *
+ * It has to run before [applyContentWidgets], which would turn the widgets
+ * into their rendered markup.
  */
 fun Flow<SemanticEvent>.addPageMetadata(
     page: Page
@@ -116,23 +126,74 @@ fun Flow<SemanticEvent>.addPageMetadata(
     var description: String? = null
     var image: String? = null
     var skippedMeta = false
+    var lang = DEFAULT_LANG
+    val entries = mutableMapOf<String, String>()
+    var info: PageInfo? = null
+    // the nesting depth within the widgets of a profile page, 0 outside of them
+    var profileDepth = 0
+    var socialLinksDepth = 0
+    var personImage: String? = null
+    val sameAs = mutableListOf<String>()
     collect { event ->
         when {
-            event is Mark && event.name == "html" && event["lang"] == null ->
-                emit(event.copy(attributes = event.attributes + ("lang" to DEFAULT_LANG)))
-            !inHead -> {
-                if (event is Mark && event.name == "head") inHead = true
+            event is Mark && event.name == "html" -> {
+                lang = event["lang"] ?: DEFAULT_LANG
+                emit(if (event["lang"] == null) event.copy(attributes = event.attributes + ("lang" to DEFAULT_LANG)) else event)
+            }
+            event is Unmark && event.name == "body" -> {
+                "script"("type" to "application/ld+json") {
+                    +structuredData(
+                        page = page,
+                        info = checkNotNull(info),
+                        title = title.toString().trim(),
+                        description = description,
+                        imageUrl = image?.let { page.resolveUrl(it) },
+                        lang = lang,
+                        personImageUrl = personImage?.let { page.resolveUrl(it) },
+                        sameAs = sameAs
+                    )
+                }
                 emit(event)
             }
-            event is Mark && event.name == "meta" && event["name"] == "image" -> {
-                image = event["content"]
+            !inHead -> {
+                if (event is Mark && event.name == "head") inHead = true
+                if (info?.profileOf != null) {
+                    when (event) {
+                        is Mark -> when {
+                            profileDepth > 0 -> profileDepth++
+                            event.name == "section" && event.hasClass("profile") -> profileDepth = 1
+                        }
+                        is Unmark -> if (profileDepth > 0) profileDepth--
+                        else -> {}
+                    }
+                    when (event) {
+                        is Mark -> when {
+                            socialLinksDepth > 0 -> {
+                                socialLinksDepth++
+                                if (event.name == "a") event["href"]?.let { sameAs += it }
+                            }
+                            event.name == "div" && event.hasClass("social-media-links") -> socialLinksDepth = 1
+                            profileDepth > 0 && event.name == "img" && personImage == null -> personImage = event["src"]
+                        }
+                        is Unmark -> if (socialLinksDepth > 0) socialLinksDepth--
+                        else -> {}
+                    }
+                }
+                emit(event)
+            }
+            event is Mark && event.name == "meta" && (event["name"] == "image" || event["name"] in STRUCTURED_DATA_KEYS) -> {
+                if (event["name"] == "image") image = event["content"]
+                else event["content"]?.let { entries[event["name"]!!] = it }
                 skippedMeta = true
             }
             event is Unmark && event.name == "meta" && skippedMeta -> {
                 skippedMeta = false
             }
             event is Unmark && event.name == "head" -> {
-                emitPageMetadata(page, title.toString(), description, image)
+                description?.let { entries["description"] = it }
+                val pageInfo = PageInfo(page, entries)
+                info = pageInfo
+                emitPageMetadata(page, pageInfo, title.toString(), description, image)
                 emit(event)
                 inHead = false
             }
@@ -153,6 +214,7 @@ fun Flow<SemanticEvent>.addPageMetadata(
 
 private suspend fun SemanticEventScope.emitPageMetadata(
     page: Page,
+    info: PageInfo,
     title: String,
     description: String?,
     image: String?
@@ -163,7 +225,15 @@ private suspend fun SemanticEventScope.emitPageMetadata(
         "type" to "text/markdown",
         "href" to page.markdownUrl
     ) {}
-    ogProperty("og:type", "website")
+    info.author?.let { "meta"("name" to "author", "content" to it.name) {} }
+    if (info.type.authored) {
+        ogProperty("og:type", "article")
+        info.datePublished?.let { ogProperty("article:published_time", it) }
+        info.dateModified?.let { ogProperty("article:modified_time", it) }
+        info.author?.let { ogProperty("article:author", it.url(page.siteUrl)) }
+    } else {
+        ogProperty("og:type", if (info.type == PageType.ProfilePage) "profile" else "website")
+    }
     ogProperty("og:site_name", SITE_NAME)
     ogProperty("og:title", title.trim())
     description?.let { ogProperty("og:description", it) }
