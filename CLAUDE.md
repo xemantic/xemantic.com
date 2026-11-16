@@ -70,6 +70,9 @@ not only to the repository's own documentation.
 - BeerCSS adds a `1rem` top margin to a block element (`section`, `nav`, `p`, headings, …) following any sibling,
   with a selector too specific (0,4,1) to override casually —
   an absolutely positioned helper element therefore goes *after* such a block in the markup, not before it.
+- The Arsenal `@font-face` rules each repeat the same `size-adjust` value,
+  which cannot be shared through a custom property —
+  `var()` is invalid in `@font-face` descriptors, and the browser silently drops such a declaration.
 - Google Fonts serves the `icon_names` subset as woff2 only to a browser User-Agent,
   otherwise it answers with a TrueType font.
 

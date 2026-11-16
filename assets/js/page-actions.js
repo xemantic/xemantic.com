@@ -1,8 +1,9 @@
 /*
  * Copies the Markdown source of the page to the clipboard, for the page
- * actions rendered by PageLayout.kt: every element marked with
+ * actions rendered by PageLayout.kt, those following the `h1` as well as
+ * those of the navigation drawer: every element marked with
  * `data-copy-page` copies the source published at the `data-markdown`
- * path of the enclosing `.page-actions`, and the "Copy page" button
+ * path of the enclosing page actions, and their "Copy page" button
  * confirms it for a moment, like on https://platform.claude.com/docs/.
  */
 (() => {
@@ -43,7 +44,7 @@
   }
 
   async function copyPage(trigger) {
-    const actions = trigger.closest(".page-actions");
+    const actions = trigger.closest("[data-markdown]");
     const button = actions.querySelector(".page-copy");
     // closes the menu, which stays open only while it has the focus
     trigger.blur();
