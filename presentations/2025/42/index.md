@@ -39,7 +39,11 @@ Xemantic resides at [Prachtsaal](https://prachtsaal.berlin)
 ---
 ### Xemantic's shows
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Hb-P2f0cyMI?si=uDb8Uo-zzsxmzXtT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<figure class="youtube-video">
+
+[404](https://www.youtube.com/watch?v=Hb-P2f0cyMI)
+
+</figure>
 
 https://www.instagram.com/xemantic.berlin
 

@@ -2,7 +2,7 @@
 description: Learn how to build your own powerful AI agents
 image: /ai/workshops/images/agentic-ai-and-creative-coding-2025-social-media-landscape.jpg
 ---
-# Xemantic AI Workshops
+# AI Workshops
 
 ![An example code of a claude.ai clone written in 16 lines of Kotlin code](images/AnthropicAiIn16LinesOfCode.webp)
 

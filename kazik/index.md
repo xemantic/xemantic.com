@@ -1,18 +1,36 @@
 # Kazik Pogoda
 
-<iframe style="width: 100%; aspect-ratio: 16 / 9; border: 0;" src="https://www.youtube.com/embed/rRjG86TAyq4" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<section class="profile">
 
 ![Kazik Pogoda live coding during Algorave at Prachtsaal](../assets/images/people/kazik/Kazik_Pogoda-Algorave_at_Prachtsaal.jpg)
 
-I am an independent AI researcher, open source enthusiast, open society advocate,
-computational artist and live coder.
-A programmer and software architect by trade, and a philosopher by education,
+I am an independent AI researcher, open source advocate, community facilitator, computational artist and live coder. A programmer and software architect by trade, and a philosopher by education,
 I have a longstanding interest in cognitive science and ethics.
 
-I founded [Xemantic](../) (an applied philosophy collective)
-and [Prachtsaal](https://prachtsaal.berlin) (an art community),
-and I am currently affiliated with the [Foresight Institute](https://foresight.org/),
-working at its Berlin AI Node.
+In my work I focus on harness and loop engineering using metacognitive ontologies and neurosymbolic AI, to scale machine cognition towards recursive self-improvement.
+
+Next to [Xemantic](../) I also founded [Prachtsaal](https://prachtsaal.berlin) art community,
+and I am currently affiliated with the [Foresight Institute](https://foresight.org/), working at its Berlin AI Node.
+I am also a Claude Ambassador for Science,
+appointed by Anthropic.
+
+<nav class="social-media-links">
+
+- [X](https://x.com/kazikpogoda)
+- [LinkedIn](https://www.linkedin.com/in/kpogoda/)
+- [Instagram](https://www.instagram.com/xemantic.berlin)
+- [GitHub](https://github.com/morisil/)
+- [YouTube](https://www.youtube.com/KazikPogoda)
+
+</nav>
+
+</section>
+
+<figure class="youtube-video">
+
+[Golem XIV - Autonomous metacognitive AI system - Kazik Pogoda](https://www.youtube.com/watch?v=rRjG86TAyq4)
+
+</figure>
 
 ## Resources
 
@@ -35,9 +53,7 @@ working at its Berlin AI Node.
 
 ## Elsewhere
 
-* [LinkedIn](https://www.linkedin.com/in/kpogoda/)
-* [GitHub](https://github.com/xemantic/)
-* [YouTube](https://www.youtube.com/@KazikPogoda)
+* [Xemantic on GitHub](https://github.com/xemantic/)
 * [Vimeo](https://vimeo.com/kazikpogoda)
 
 See also the other [humans](../humans/) behind Xemantic.
