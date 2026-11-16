@@ -137,6 +137,19 @@ private const val MENU_DRAWER = "menu"
 private const val TOC_DRAWER = "toc-drawer"
 
 /**
+ * The class of the one translucent surface of the site, see xemantic.css:
+ * the top app bar, the footer, the [TOC_DRAWER] and the top level
+ * sections of the page content.
+ */
+private const val TINTED_GLASS = "tinted-glass"
+
+/**
+ * The transformation mode of the direct children of `main`,
+ * telling the top level sections from the nested ones.
+ */
+private const val MAIN_CONTENT = "main-content"
+
+/**
  * The page actions, like on https://platform.claude.com/docs/ - a small
  * BeerCSS split button (https://github.com/beercss/beercss/blob/main/docs/BUTTON.md#split-buttons)
  * copying the page source, published at [markdownPath], to the
@@ -414,7 +427,7 @@ fun Flow<SemanticEvent>.applyPageLayout(
             // the bar spans the viewport, while its content is as wide as the one
             // of main: BeerCSS limits the width of a .responsive main, header,
             // footer or section only, not of a nav; xemantic.css aligns the paddings
-            "header"("class" to "fixed tinted-glass") {
+            "header"("class" to "fixed $TINTED_GLASS") {
                 "section"("class" to "responsive") {
                     "nav" {
                         "button"(
@@ -467,7 +480,7 @@ fun Flow<SemanticEvent>.applyPageLayout(
                 }
             }
             "main"("class" to "responsive") {
-                children()
+                children(mode = MAIN_CONTENT)
             }
             // the drawers follow main, as both hold the table of contents,
             // captured only once the content has streamed
@@ -526,7 +539,7 @@ fun Flow<SemanticEvent>.applyPageLayout(
                     // on large screens only (BeerCSS's `l` helper), like its toggle
                     "dialog"(
                         "id" to TOC_DRAWER,
-                        "class" to "left tinted-glass l",
+                        "class" to "left $TINTED_GLASS l",
                         "popover" to "",
                         "aria-label" to "Table of contents"
                     ) {
@@ -538,7 +551,7 @@ fun Flow<SemanticEvent>.applyPageLayout(
                     "script"("src" to TOC_DRAWER_JS) {}
                 }
             }
-            "footer"("class" to "tinted-glass") {
+            "footer"("class" to TINTED_GLASS) {
                 "section"("class" to "responsive site-footer") {
                     logoLink("site-footer-logo")
                     "nav"("class" to "site-footer-groups", "aria-label" to "Site map") {
@@ -606,6 +619,14 @@ fun Flow<SemanticEvent>.applyPageLayout(
     // so these actions are always added, and hidden by xemantic.css
     // wherever the TOC_DRAWER, holding its own, is available
     var pageActionsAdded = false
+    // only the top level sections become glass panels
+    match("section", mode = MAIN_CONTENT) { mark ->
+        val classes = listOfNotNull(mark["class"], TINTED_GLASS).joinToString(" ")
+        "section"(mark.attributes + ("class" to classes)) {
+            children()
+        }
+    }
+
     match("h1") { mark ->
         mark.name(mark.attributes) {
             children()

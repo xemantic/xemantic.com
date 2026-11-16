@@ -133,6 +133,7 @@
     <h1>Generative art deco</h1>
     <button id="pause" type="button">Pause</button>
     <button id="reset" type="button">Reset</button>
+    <button id="scheme" type="button">Light</button>
     <button id="copy" type="button">Copy JSON</button>
     <button id="toggle" type="button" aria-label="Hide the controls">–</button>
   </header>
@@ -183,8 +184,10 @@
     "grading.innerDetune": [0, 3],
     "grading.outerDetune": [0, 3],
     "gradingRadius": [-1, 2],
-    "vignetteInner": [0, 2],
-    "vignetteOuter": [0, 2],
+    "sky": [0, 1],
+    "skyLuma": [0, 1.5],
+    "skyRim": [0, 1],
+    "skyFade": [0, 10],
     "center": [-2, 2],
     "amplitude": [0, PI],
     "rate": [0, 1],
@@ -284,6 +287,12 @@
     pausedTimeScale = null;
     pause.textContent = "Pause";
     setters.forEach((show) => show());
+  };
+  // the driver lights the sky for the `light` class of the body, as on the site
+  const scheme = document.getElementById("scheme");
+  scheme.onclick = () => {
+    const light = document.body.classList.toggle("light");
+    scheme.textContent = light ? "Dark" : "Light";
   };
   const copy = document.getElementById("copy");
   copy.onclick = async () => {

@@ -61,9 +61,10 @@ uniform vec3  iInnerGamma;
 uniform vec3  iOuterGamma;
 uniform float iGradingRadius;       // where the grading starts departing from the inner one towards the outer one
 
-// the vignette
-uniform float iVignetteInner;       // the radius where the darkening starts
-uniform float iVignetteOuter;       // the radius where it goes black
+// the sky behind the deepest layer, where the light ends its way through the glass:
+// black in the dark color scheme
+uniform vec3  iSky;
+uniform float iSkyRim;              // how much of the sky the rim of a shape bends away
 
 const int LAYERS = 3;
 
@@ -126,7 +127,18 @@ void main() {
     // aerial perspective: the deeper the layer, the darker it gets
     float luma = iInitialLuma;
 
+    // Color grading: every channel gets its own gamma, drifting with time.
+    // Two gradings, detuned in frequency, are blended by the distance from
+    // the center, so the tint of the middle of the screen wanders apart
+    // from the one of its edges.
+    float radius = length(screen);
+    vec3 gamma = mix(iInnerGamma, iOuterGamma, radius - iGradingRadius);
+
+    // The light gathered on the way through the glass: every shape refracts
+    // the view into the layer below, and adds its own light to what is seen there.
     vec3 color = vec3(0.);
+    // how much of the sky makes it through the glass, see the rim below
+    vec3 through = vec3(1.);
     for (int i = 0; i < LAYERS; i++) {
         vec2 p = space + offsets[i] + iDrift;
 
@@ -135,12 +147,20 @@ void main() {
         // off, towards and away from the center, with the fringes widening
         // towards the edges of the screen.
         vec2 aberration = space * dispersion;
-        color += vec3(
+        vec3 shape = vec3(
             pattern(p - aberration, blur),
             pattern(p, blur),
             pattern(p + aberration, blur)
-        ) * luma;
+        );
+        color += shape * luma;
         color = min(color, 1.);
+
+        // The rim: the edge of a shape, where the glass curves the most, bends
+        // the light of the sky away from the eye, so every shape is outlined
+        // with a shadow, as wide as its blur. Each channel loses the sky at
+        // its own place, which leaves the rim tinted with the color opposite
+        // to the fringe of light next to it.
+        through *= 1. - iSkyRim * 4. * shape * (1. - shape);
 
         // Descending into the next layer, seen through this one: where this layer
         // shows its shape, the next one is magnified much more than elsewhere
@@ -154,17 +174,19 @@ void main() {
         blur *= iBlurFalloff;
     }
 
-    // Color grading: every channel gets its own gamma, drifting with time.
-    // Two gradings, detuned in frequency, are blended by the distance from
-    // the center, so the tint of the middle of the screen wanders apart
-    // from the one of its edges.
-    float radius = length(screen);
-    vec3 gamma = mix(iInnerGamma, iOuterGamma, radius - iGradingRadius);
+    // Behind the deepest layer the sky is reached, the last light to be added,
+    // and the one everything refracted on the way is added to. It joins the
+    // sum before the grading, with the grading undone on it in advance, so that
+    // where no shape adds any light the sky comes out in its own color,
+    // while a shape has only what the sky leaves of every channel to fill:
+    // against a bright sky it saturates quickly, which hardens its soft edge,
+    // and the fringes of the chromatic aberration, each adding to a single
+    // channel, stand out of the sky in their own colors.
+    // Only as much of the sky arrives as the rims of the shapes let through.
+    // Against the darkness of a black sky it is the light of the layers alone.
+    color = min(color + pow(iSky, .5 / gamma) * through, 1.);
 
-    // the vignette, darkening the corners
-    float vignette = smoothstep(iVignetteOuter, iVignetteInner, radius);
-
-    vec3 graded = pow(color, gamma) * vignette;
+    vec3 graded = pow(color, gamma);
     // squared for deeper blacks, keeping the background calm under the text
     gl_FragColor = vec4(graded * graded, 1.);
 }

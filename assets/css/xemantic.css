@@ -159,12 +159,17 @@ h1 {
 /*
  * The page title glows slightly, with a text shadow of the primary
  * color, and glitches, as if the color channels of a display were out
- * of register: red and blue copies of the text, shadows as well, are
- * offset in opposite directions, while the text itself stays in place.
+ * of register: red, green and blue copies of the text, translucent
+ * shadows, are offset from it, the red and the blue one in opposite
+ * directions, the green one across them, at half the distance of
+ * a burst, while the text itself stays in place.
  * They keep jittering by a pixel all the time (`--jitter-*`), and from
  * time to time they jump further for a moment (`--burst`). The two
  * animations, of different periods, add up in the offsets, which is
  * why they animate custom properties instead of the shadow itself.
+ * The opacity of the copies (`--glitch-opacity`) is set for each color
+ * scheme: they stand out of the light background much more than of the
+ * dark one, where they have to be nearly opaque to be noticed.
  * Nothing moves when reduced motion is preferred.
  */
 main h1 {
@@ -172,13 +177,19 @@ main h1 {
   --jitter-x: 0px;
   --jitter-y: 0px;
   --burst: 0em;
+  --glitch-opacity: .3;
   text-shadow:
-    calc(var(--jitter-x) + var(--burst)) var(--jitter-y) #f00c,
-    calc(-1 * (var(--jitter-x) + var(--burst))) calc(-1 * var(--jitter-y)) #00fc,
+    calc(var(--jitter-x) + var(--burst)) var(--jitter-y) rgb(255 0 0 / var(--glitch-opacity)),
+    var(--jitter-y) calc(var(--jitter-x) + var(--burst) / 2) rgb(0 255 0 / var(--glitch-opacity)),
+    calc(-1 * (var(--jitter-x) + var(--burst))) calc(-1 * var(--jitter-y)) rgb(0 0 255 / var(--glitch-opacity)),
     var(--title-glow);
   animation:
     title-jitter 1.3s step-end infinite,
     title-burst 9s step-end infinite;
+}
+
+body.dark main h1 {
+  --glitch-opacity: .85;
 }
 
 @keyframes title-jitter {
@@ -638,6 +649,11 @@ body > header > section {
   padding-inline: 0.5rem;
 }
 
+/* the items of the navigation, bold instead of BeerCSS's medium (500) */
+body > header nav > a.button {
+  font-weight: 700;
+}
+
 /*
  * Between BeerCSS's large breakpoint, where the navigation moves from
  * its drawer to the top app bar, and this width, the navigation, which
@@ -665,19 +681,43 @@ body:not(.dark) .color-scheme-toggle > .to-light {
 }
 
 /*
- * A translucent surface, used by the top app bar and the site footer
- * instead of BeerCSS's opaque surface containers: tinted slightly with
- * the primary color, it lets the background shader show through, blurred.
+ * The one translucent surface of the site, used by the top app bar,
+ * the site footer, the table of contents drawer and the panels of the
+ * page content, instead of BeerCSS's opaque surface containers: it
+ * blurs the background shader showing through, and veils it with the
+ * surface color of the scheme, tinted with the primary color. In the
+ * dark scheme it therefore darkens the shader, as a deep shade of the
+ * primary color, while in the light scheme, where the shader paints
+ * a sky, it lightens it, as a pale one - the primary color alone,
+ * a light tone in the dark scheme, would brighten the backdrop there.
  * The latter selectors outweigh BeerCSS's `background-color: inherit`
- * of a `.fixed` header and the surface of a `dialog.left`, used by the
- * table of contents drawer.
+ * of a `.fixed` header and the surface of a `dialog.left`.
+ * A browser without `color-mix()` drops the declaration: the bar, the
+ * footer and the drawer keep BeerCSS's opaque surfaces, the panels,
+ * which have none, only blur the shader.
  */
 .tinted-glass,
 :is(header, footer).fixed.tinted-glass,
 dialog.left.tinted-glass {
-  background-color: color-mix(in srgb, var(--primary) 8%, transparent);
+  background-color: color-mix(
+    in srgb,
+    color-mix(in oklab, var(--primary) 12%, var(--surface)) 68%,
+    transparent
+  );
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+
+  .tinted-glass,
+  :is(header, footer).fixed.tinted-glass,
+  dialog.left.tinted-glass {
+    background-color: var(--surface-container);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
 }
 
 /*
@@ -896,17 +936,13 @@ article h3 {
 }
 
 /*
- * The sections of the page content are molten glass panels, like the
- * registration box of https://luma.com/ - the background shader shows
- * through, blurred and saturated, behind a faint rim catching the light.
- * The backdrop is rendered by `::before`; the `z-index` of the section
- * confines it below its content without making it a backdrop root,
- * which would leave nothing to blur. Only the top level sections
+ * The sections of the page content are glass panels, like the
+ * registration box of https://luma.com/ - the surface is the
+ * `tinted-glass`, which PageLayout.kt adds to them, here it gets
+ * a faint rim catching the light. Only the top level sections
  * become panels, those nested in BeerCSS cards stay part of the card.
  */
 main > section {
-  position: relative;
-  z-index: 0;
   border-radius: 1.5rem;
   border: 1px solid color-mix(in srgb, var(--on-surface) 12%, transparent);
   box-shadow:
@@ -915,17 +951,6 @@ main > section {
     0 2px 10px rgb(0 0 0 / .02);
   padding: 1rem 1.5rem 1.5rem;
   margin-block: 1.5rem;
-}
-
-main > section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  background-color: color-mix(in srgb, var(--surface) 45%, transparent);
-  -webkit-backdrop-filter: blur(4px) saturate(1.25);
-  backdrop-filter: blur(4px) saturate(1.25);
 }
 
 main > section > :first-child {
@@ -972,17 +997,6 @@ main > section :is(p, li) a:not(.button, .chip, .circle):focus-visible {
 
   main > section :is(p, li) a {
     transition: none;
-  }
-
-}
-
-@media (prefers-reduced-transparency: reduce) {
-
-  main > section::before {
-    background-color: var(--surface-container);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-    filter: none;
   }
 
 }

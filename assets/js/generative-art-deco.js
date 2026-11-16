@@ -52,7 +52,7 @@
     // the pointer thickens the glass under it, see the shader
     pointerRadius: .4,             // how far its influence reaches, in screen space
     pointerRefraction: 1.5,        // the magnification it adds to the layers below
-    pointerDispersion: .04,        // the chromatic aberration it adds
+    pointerDispersion: .005,       // the chromatic aberration it adds
     pointerStiffness: 30,          // of the spring it is trailed on, the higher the tighter
     pointerFade: 2,                // how quickly it fades in and out, per second
 
@@ -71,6 +71,8 @@
 
     // Color grading: every channel gets its own gamma, drifting with time,
     // with the inner and the outer grading detuned in frequency.
+    // It cycles the colors of the dark color scheme only: against a lit sky
+    // it is barely visible, so it fades out together with the darkness.
     grading: {
       intensity: .4,
       rate: .3,
@@ -80,15 +82,36 @@
     },
     gradingRadius: .5,
 
-    // the vignette
-    vignetteInner: .35,
-    vignetteOuter: 1.05,
+    // The sky behind the deepest layer, see the shader: black in the dark
+    // color scheme, of the light tone of the primary color of the theme
+    // in the light one - `--inverse-primary` there, the primary color of
+    // the dark scheme, as the primary color itself makes too dark a sky.
+    // This color stands in where no theme defines it, as in the playground.
+    sky: [.45, .68, .95],
+    // A lit sky leaves the light of the layers little room before it burns out,
+    // so against it they shine with only this much of their brightness.
+    skyLuma: .3,
+    skyRim: .25,                   // how much of the sky the rim of a shape bends away, see the shader
+    skyFade: 3,                    // how quickly it follows a change of the scheme, per second
   };
 
   const gamma = (detune, sign, t) => detune.map((d, i) =>
     1 + sign * Math.sin(t * parameters.grading.rate * d)
-      * parameters.grading.intensity * parameters.grading.polarity[i]
+      * parameters.grading.intensity * (1 - daylight) * parameters.grading.polarity[i]
   );
+
+  // The light tone of the primary color of the theme, as the channels of the sky,
+  // or undefined if there is none. Painted on a canvas, to be read back as numbers,
+  // whichever CSS notation the theme defines it in.
+  const probe = document.createElement("canvas").getContext("2d", {willReadFrequently: true});
+  probe.canvas.width = probe.canvas.height = 1;
+  const skyColor = () => {
+    const color = getComputedStyle(document.body).getPropertyValue("--inverse-primary").trim();
+    if (!color || !CSS.supports("color", color)) return undefined;
+    probe.fillStyle = color;
+    probe.fillRect(0, 0, 1, 1);
+    return [...probe.getImageData(0, 0, 1, 1).data.slice(0, 3)].map((channel) => channel / 255);
+  };
 
   // Mirrors rotate() of the shader, so that a step taken in screen space can be
   // pushed into the frame a layer is drawn in. Keep in sync with the GLSL.
@@ -103,6 +126,12 @@
   let lastNow = performance.now();
   let scroll = 0;
   let cameraAngle, cameraZoom, drift, blur, layerTurn, innerGamma, outerGamma;
+  // how much of the sky is lit, from 0 in the dark color scheme to 1 in the
+  // light one, unknown until the first frame, which does not fade
+  let daylight;
+  let day;
+  // the sky of the light color scheme, read from the theme whenever the day breaks
+  let themeSky;
   // The pan is accumulated in the pattern space of every layer, instead of being
   // transformed into it anew on each frame. A stored offset is a standing
   // translation, so once the page stops scrolling it stops changing, and the bottom
@@ -200,6 +229,13 @@
         pointerVelocity[i] += (p.pointerStiffness * (pointer[i] - pointerTrail[i]) - damping * pointerVelocity[i]) * dt;
         pointerTrail[i] += pointerVelocity[i] * dt;
       }
+      // BeerCSS's class of the body, swapped by assets/js/color-scheme.js
+      const wasDay = day;
+      day = document.body.classList.contains("light") ? 1 : 0;
+      if (day && !wasDay) themeSky = skyColor();
+      daylight = daylight === undefined
+        ? day
+        : daylight + (day - daylight) * (1 - Math.exp(-p.skyFade * dt));
       cameraAngle = oscillate(p.cameraAngle, time);
       cameraZoom = oscillate(p.cameraZoom, time);
       drift = p.drift.map((axis) => oscillate(axis, time));
@@ -238,7 +274,7 @@
           iPointerDispersion:   () => parameters.pointerDispersion * presence,
           iBlur:                () => blur,
           iBlurFalloff:         () => parameters.blurFalloff,
-          iInitialLuma:         () => parameters.initialLuma,
+          iInitialLuma:         () => parameters.initialLuma * (1 + (parameters.skyLuma - 1) * daylight),
           iLumaFalloff:         () => parameters.lumaFalloff,
           iLayerZoom:           () => parameters.layerZoom,
           iLayerMagnification:  () => parameters.layerMagnification,
@@ -247,8 +283,8 @@
           iInnerGamma:          () => innerGamma,
           iOuterGamma:          () => outerGamma,
           iGradingRadius:       () => parameters.gradingRadius,
-          iVignetteInner:       () => parameters.vignetteInner,
-          iVignetteOuter:       () => parameters.vignetteOuter,
+          iSkyRim:              () => parameters.skyRim,
+          iSky:                 () => (themeSky ?? parameters.sky).map((channel) => channel * daylight),
         }
       }
     }
