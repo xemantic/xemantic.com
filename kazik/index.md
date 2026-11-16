@@ -2,7 +2,7 @@
 
 <section class="profile">
 
-![Kazik Pogoda live coding during Algorave at Prachtsaal](../assets/images/people/kazik/Kazik_Pogoda-Algorave_at_Prachtsaal.jpg)
+![Kazik Pogoda live coding during Algorave at Prachtsaal](../assets/images/people/kazik/Kazik_Pogoda-Algorave_at_Prachtsaal.webp)
 
 I am an independent AI researcher, open source advocate, community facilitator, computational artist and live coder. A programmer and software architect by trade, and a philosopher by education,
 I have a longstanding interest in cognitive science and ethics.

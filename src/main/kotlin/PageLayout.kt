@@ -32,7 +32,24 @@ internal const val BEER_CSS = "/assets/css/beercss.css"
  */
 private const val COLOR_SCHEME_JS = "/assets/js/color-scheme.js"
 
+/**
+ * The script setting BeerCSS's `dark` or `light` class on `body` from the choice
+ * made with the color scheme switch, remembered by [COLOR_SCHEME_JS], or else
+ * from the color scheme preference, the only thing `beer.loader.js` would do
+ * on this site. It is loaded, neither deferred nor async, as the first child
+ * of `body`, so that it blocks the first paint until it has run,
+ * and a dark mode page never flashes light.
+ */
+private const val COLOR_SCHEME_INIT_JS = "/assets/js/color-scheme-init.js"
+
 internal const val XEMANTIC_CSS = "/assets/css/xemantic.css"
+
+private const val FAVICON_ICO = "/favicon.ico"
+
+private const val FAVICON_SVG = "/logo/xemantic-favicon.svg"
+
+/** The icon of the site added to the home screen of iOS, 180 by 180 pixels. */
+private const val APPLE_TOUCH_ICON = "/icons/apple-touch-icon.png"
 
 /**
  * The script copying the page source to the clipboard, see [pageActions].
@@ -41,15 +58,23 @@ private const val PAGE_ACTIONS_JS = "/assets/js/page-actions.js"
 
 /**
  * The WebGL library rendering the background shader, which it reads only
- * from a `script` element of the page, see [GENERATIVE_ART_DECO_SHADER].
+ * from a `script` element of the page, put there by [GENERATIVE_ART_DECO_JS].
  */
 private const val SHADER_WEB_BACKGROUND_JS = "/assets/js/shader-web-background.js"
 
 /**
- * The script feeding the uniforms of the background shader, following
- * the page scrolling. It has to run after the shader `script`.
+ * The script fetching the [GENERATIVE_ART_DECO_SHADER], putting it into the page
+ * as a `script` element, and feeding its uniforms, following the page scrolling.
+ * It has to run after [SHADER_WEB_BACKGROUND_JS].
  */
 private const val GENERATIVE_ART_DECO_JS = "/assets/js/generative-art-deco.js"
+
+/**
+ * The fragment shader of the page background, fetched by [GENERATIVE_ART_DECO_JS]
+ * instead of being inlined, which keeps it out of the source of every page.
+ * It is preloaded, so that the fetch starts while the `head` is still being parsed.
+ */
+private const val GENERATIVE_ART_DECO_SHADER = "/assets/shaders/generative-art-deco.frag"
 
 /**
  * The script opening the [TOC_DRAWER] by default on wide viewports.
@@ -219,11 +244,45 @@ private suspend fun MatcherScope.logoLink(cssClass: String) {
 }
 
 /**
- * Xemantic elsewhere, linked as [brandIcon]s in the footer.
+ * The newsletter, hosted by Buttondown, the subscribing form of which,
+ * in the footer, is the target of the `#newsletter` links of the content.
  */
-private class SocialLink(val name: String, val href: String)
+private const val NEWSLETTER_SUBSCRIBE_URL =
+    "https://buttondown.com/api/emails/embed-subscribe/xemantic"
 
-private val SOCIAL_LINKS = listOf(
+/**
+ * The form subscribing to the newsletter, see [NEWSLETTER_SUBSCRIBE_URL].
+ * Buttondown answers with a page of its own, asking to confirm the
+ * subscription, opened in a new tab, so that the reader stays on the site.
+ */
+private suspend fun MatcherScope.newsletterForm() {
+    "div"("id" to "newsletter", "class" to "site-footer-newsletter") {
+        "h2" { +"Newsletter" }
+        "form"(
+            "action" to NEWSLETTER_SUBSCRIBE_URL,
+            "method" to "post",
+            "target" to "_blank"
+        ) {
+            "input"(
+                "type" to "email",
+                "name" to "email",
+                "required" to "",
+                "autocomplete" to "email",
+                "placeholder" to "your email",
+                "aria-label" to "Your email address"
+            ) {}
+            "button"("class" to "small") { +"Subscribe" }
+        }
+    }
+}
+
+/**
+ * Xemantic elsewhere, linked as [brandIcon]s in the footer,
+ * and the `sameAs` profiles of the organization in its structured data.
+ */
+internal class SocialLink(val name: String, val href: String)
+
+internal val SOCIAL_LINKS = listOf(
     SocialLink("GitHub", "https://github.com/xemantic"),
     SocialLink("LinkedIn", "https://www.linkedin.com/company/xemantic-berlin/"),
     SocialLink("Instagram", "https://www.instagram.com/xemantic.berlin"),
@@ -287,9 +346,9 @@ private suspend fun MatcherScope.replay(captured: CapturedMark) {
 /**
  * Applies the xemantic.com page layout: the `head` is completed with
  * `charset`/`viewport` metas, the [BEER_CSS] and the xemantic.com
- * stylesheets, the [PRELOADED_FONTS] preloads, and the background
- * [shader], inlined together with the scripts rendering it, the `body` content is prefixed with the
- * [colorSchemeScript] and a top app bar (`header.fixed` with a `section.responsive` holding the `nav`),
+ * stylesheets, the [PRELOADED_FONTS] preloads, and the scripts rendering
+ * the background shader, preloaded as well, the `body` content is prefixed with the
+ * [COLOR_SCHEME_INIT_JS] and a top app bar (`header.fixed` with a `section.responsive` holding the `nav`),
  * its content as wide as the one of `main` and carrying the [MENU], the `body` content is wrapped
  * in BeerCSS's `main.responsive` container, followed by the [MENU_DRAWER]
  * holding the same [MENU] for smaller screens, the first `h1` is followed by
@@ -301,19 +360,10 @@ private suspend fun MatcherScope.replay(captured: CapturedMark) {
  * the `body` is closed with a `footer` holding the logo, the site map
  * of the [footer] groups, read by [readSiteFooter], and the [COPYRIGHT]
  * notice.
- *
- * @param colorSchemeScript the script setting BeerCSS's `dark` or `light`
- *   class on `body` from the choice made with the color scheme switch,
- *   remembered by [COLOR_SCHEME_JS], or else from the color scheme
- *   preference, the only thing `beer.loader.js` would do on this site.
- *   It is inlined as the first child of `body`, so that it runs before
- *   the first paint, and a dark mode page never flashes light.
  */
 fun Flow<SemanticEvent>.applyPageLayout(
     page: Page,
-    footer: List<FooterGroup>,
-    shader: String,
-    colorSchemeScript: String
+    footer: List<FooterGroup>
 ) = transform {
 
     // the nav#toc of wrapInSections, captured instead of emitted in place,
@@ -329,13 +379,23 @@ fun Flow<SemanticEvent>.applyPageLayout(
                 "content" to "width=device-width, initial-scale=1"
             ) {}
             children()
+            // the favicon.ico at the site root is found by convention, but only
+            // a link lets the browser prefer the vector one
+            "link"("rel" to "icon", "href" to FAVICON_ICO, "sizes" to "48x48") {}
+            "link"("rel" to "icon", "href" to FAVICON_SVG, "type" to "image/svg+xml") {}
+            "link"("rel" to "apple-touch-icon", "href" to APPLE_TOUCH_ICON) {}
             "link"("href" to BEER_CSS, "rel" to "stylesheet") {}
             "link"("href" to XEMANTIC_CSS, "rel" to "stylesheet") {}
             "script"("src" to PAGE_ACTIONS_JS, "defer" to "") {}
             "script"("src" to COLOR_SCHEME_JS, "defer" to "") {}
-            "script"("src" to SHADER_WEB_BACKGROUND_JS) {}
-            "script"("type" to "x-shader/x-fragment", "id" to "image") { +shader }
-            "script"("src" to GENERATIVE_ART_DECO_JS) {}
+            "script"("src" to SHADER_WEB_BACKGROUND_JS, "defer" to "") {}
+            "script"("src" to GENERATIVE_ART_DECO_JS, "defer" to "") {}
+            "link"(
+                "href" to GENERATIVE_ART_DECO_SHADER,
+                "rel" to "preload",
+                "as" to "fetch",
+                "crossorigin" to "anonymous"
+            ) {}
             PRELOADED_FONTS.forEach { font ->
                 "link"(
                     "href" to font,
@@ -350,7 +410,7 @@ fun Flow<SemanticEvent>.applyPageLayout(
 
     match("body") {
         "body" {
-            "script" { +colorSchemeScript }
+            "script"("src" to COLOR_SCHEME_INIT_JS) {}
             // the bar spans the viewport, while its content is as wide as the one
             // of main: BeerCSS limits the width of a .responsive main, header,
             // footer or section only, not of a nav; xemantic.css aligns the paddings
@@ -493,6 +553,7 @@ fun Flow<SemanticEvent>.applyPageLayout(
                             }
                         }
                     }
+                    newsletterForm()
                     "div"("class" to "site-footer-legal") {
                         "p" {
                             +"$COPYRIGHT · Content licensed under "

@@ -60,7 +60,7 @@ not only to the repository's own documentation.
   `generateBeerCss` concatenates the chosen modules into `build/generated/website/assets/css/beercss.css`,
   together with a Material Symbols font subset holding only the listed icons —
   never commit a copy into `assets`, the build fails when a source and a generated file share a path.
-  The inline script at the start of `body` replaces `beer.loader.js`,
+  The blocking `color-scheme-init.js` script at the start of `body` replaces `beer.loader.js`,
   whose only effect here was setting the `dark`/`light` `body` class.
   Any new BeerCSS class used in content requires adding its module —
   the current list was verified by diffing computed styles of every rendered page against the full bundle.
@@ -73,6 +73,8 @@ not only to the repository's own documentation.
 - The Arsenal `@font-face` rules each repeat the same `size-adjust` value,
   which cannot be shared through a custom property —
   `var()` is invalid in `@font-face` descriptors, and the browser silently drops such a declaration.
+- markanywhere does not parse an image nested in a link, `[![alt](image.webp)](https://…)` renders as literal text —
+  write such a linked image as raw HTML, `<a href="…"><img src="…" alt="…"></a>`.
 - Google Fonts serves the `icon_names` subset as woff2 only to a browser User-Agent,
   otherwise it answers with a TrueType font.
 

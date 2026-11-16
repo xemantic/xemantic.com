@@ -1,8 +1,9 @@
 /*
  * Drives the generative art deco background, the shader of
- * assets/shaders/generative-art-deco.frag, which PageLayout.kt inlines into
- * every page as the `image` script, as shader-web-background can only read
- * shaders included in the HTML. It has to run after that script.
+ * assets/shaders/generative-art-deco.frag. shader-web-background can only read
+ * shaders included in the HTML, so the shader is fetched, and put into the
+ * document as the `image` script, before the shading starts - keeping
+ * the source of every page free of it.
  * The pan follows the scrolling of the page, the same way the background of
  * the consciousness presentation follows its slides, and the pointer changes
  * the refraction of the glass under it.
@@ -14,6 +15,9 @@
  * can tune them live.
  */
 (() => {
+
+  // resolved against this script, so that the playground in assets/shaders works too
+  const SHADER_URL = new URL("../shaders/generative-art-deco.frag", document.currentScript.src);
 
   const PARALLAX_SCROLLING_RATE = .0003; // shader units panned per device pixel scrolled
 
@@ -132,7 +136,46 @@
   addEventListener("blur", leave);
   tracking.addEventListener("change", leave);
   let uniforms;
-  shaderWebBackground.shade((ctx) => ({
+
+  // shader-web-background reads the shader synchronously, as soon as shade() is
+  // called, from a script of the document.
+  const insertShader = (source) => {
+    const script = document.createElement("script");
+    script.type = "x-shader/x-fragment";
+    script.id = "image";
+    script.text = source;
+    document.head.append(script);
+  };
+
+  // Left to itself, shader-web-background sizes its canvas on the load event, and
+  // only then adds it to the document, so called after the load, which the fetch
+  // of the shader can easily outlast, shade() would leave the canvas 0 by 0 pixels.
+  // A canvas already in the document is sized right, whenever shade() is called.
+  const createCanvas = () => {
+    const canvas = document.createElement("canvas");
+    canvas.id = "shader-web-background";
+    Object.assign(canvas.style, {
+      width: "100vw",
+      height: "100vh",
+      position: "fixed",
+      top: "0",
+      left: "0",
+      zIndex: "-9999",
+    });
+    document.body.append(canvas);
+    return canvas;
+  };
+
+  const domReady = new Promise((resolve) => {
+    if (document.readyState === "loading") {
+      addEventListener("DOMContentLoaded", resolve, {once: true});
+    } else {
+      resolve();
+    }
+  });
+
+  const shade = () => shaderWebBackground.shade((ctx) => ({
+    canvas: createCanvas(),
     onBeforeFrame: () => {
       const now = performance.now();
       const elapsed = now - lastNow;
@@ -210,6 +253,18 @@
       }
     }
   }));
+
+  fetch(SHADER_URL)
+    .then((response) => {
+      if (!response.ok) throw new Error(`${response.status} ${response.statusText}: ${SHADER_URL}`);
+      return response.text();
+    })
+    .then(async (source) => {
+      await domReady;
+      insertShader(source);
+      shade();
+    })
+    .catch((error) => console.warn("generative art deco background unavailable", error));
 
   window.generativeArtDeco = {
     parameters,

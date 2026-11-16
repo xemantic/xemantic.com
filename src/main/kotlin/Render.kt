@@ -52,17 +52,14 @@ import kotlinx.io.writeString
  * in its front matter (or without any front matter) gets one derived
  * from its first `h1`, so every rendered page carries a `<title>`.
  * The `head` is completed with the metadata of the [page], see
- * [addPageMetadata], the [applyContentWidgets] are rendered, and the page layout gets the site map of the
- * footer, the background shader and the color scheme script, all read
- * from the source directory for every page, so that the live server reflects their changes right away.
+ * [addPageMetadata], the images are completed, see [completeImages], the [applyContentWidgets] are rendered, and the page layout gets the site map of the
+ * footer, read from the source directory for every page, so that the live server reflects its changes right away.
  * The document is prefixed with the HTML5 doctype, otherwise browsers
  * would fall back to the quirks mode, where the BeerCSS body grid
  * clamps `main` to the viewport height, clipping the page content.
  */
 fun Flow<String>.renderMarkdownToHtml(page: Page): Flow<String> = flow {
     val footer = page.siteRoots.first().readSiteFooter()
-    val shader = page.siteRoots.first().readSiteFile(BACKGROUND_SHADER_FILE)
-    val colorSchemeScript = page.siteRoots.first().readSiteFile(COLOR_SCHEME_SCRIPT_FILE)
     emitAll(
         parse()
             .ensureFrontmatterTitle()
@@ -70,26 +67,12 @@ fun Flow<String>.renderMarkdownToHtml(page: Page): Flow<String> = flow {
             .wrapInSections(tocDepth = 6)
             .wrapInHtmlDocument()
             .addPageMetadata(page)
+            .completeImages(page)
             .applyContentWidgets()
-            .applyPageLayout(page, footer, shader, colorSchemeScript)
+            .applyPageLayout(page, footer)
             .asHtml()
     )
 }.onStart { emit("<!DOCTYPE html>\n") }
-
-/**
- * The fragment shader of the page background, inlined into every page,
- * as shader-web-background reads shaders only from the HTML document.
- */
-internal const val BACKGROUND_SHADER_FILE = "assets/shaders/generative-art-deco.frag"
-
-/**
- * The script applying the color scheme before the first paint, inlined
- * at the start of every `body`, see [applyPageLayout].
- */
-internal const val COLOR_SCHEME_SCRIPT_FILE = "assets/js/color-scheme-init.js"
-
-private fun Path.readSiteFile(file: String): String =
-    SystemFileSystem.source(Path(this, file)).buffered().use { it.readString() }.trimEnd()
 
 /**
  * Root entries of the repository which are not a part of the website:
@@ -128,7 +111,8 @@ internal val excludedFileNames = setOf(
     "CLAUDE.md",
     "DEVELOPMENT.md",
     "README.md",
-    "TODO.md"
+    "TODO.md",
+    "TODO-old.md"
 )
 
 /**

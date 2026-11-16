@@ -143,20 +143,7 @@
   </details>
 </aside>
 <script src="../js/shader-web-background.js"></script>
-<script>
-  // shader-web-background reads shaders only from the document, and sizes
-  // its canvas on the load event - called any later, shade() would leave the
-  // canvas 0 by 0 pixels - so the shader is put into the document, and the
-  // driver run, while the page is still being parsed, like on every page of the site
-  const request = new XMLHttpRequest();
-  request.open("GET", "generative-art-deco.frag", false);
-  request.send();
-  const shader = document.createElement("script");
-  shader.type = "x-shader/x-fragment";
-  shader.id = "image";
-  shader.text = request.responseText;
-  document.currentScript.after(shader);
-</script>
+<!-- fetches generative-art-deco.frag itself, like on every page of the site -->
 <script src="../js/generative-art-deco.js"></script>
 <script>
 (() => {

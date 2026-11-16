@@ -6,7 +6,7 @@
 
 <article class="border s12 m6 l4">
 
-<img class="responsive" src="../assets/images/people/kazik/Kazik_Pogoda-Algorave_at_Prachtsaal.jpg" alt="Kazik Pogoda performing at an Algorave in Prachtsaal">
+<img class="responsive" src="../assets/images/people/kazik/Kazik_Pogoda-Algorave_at_Prachtsaal.webp" alt="Kazik Pogoda performing at an Algorave in Prachtsaal">
 
 ### Kazik Pogoda
 

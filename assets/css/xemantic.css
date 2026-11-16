@@ -260,6 +260,46 @@ figure.youtube-video > iframe {
 }
 
 /*
+ * A Google map, rendered from a `figure.google-map` of the Markdown source,
+ * first as a panel asking for the consent to load it from Google, of the
+ * size of the map replacing it, see assets/js/google-map.js.
+ */
+figure.google-map {
+  margin: 1rem 0 0;
+}
+
+figure.google-map > :is(iframe, .google-map-consent) {
+  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
+figure.google-map > iframe {
+  display: block;
+}
+
+.google-map-consent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  text-align: center;
+  border-radius: 1rem;
+  background: var(--surface-container);
+}
+
+/*
+ * The content images carry the width and height of their files, see
+ * Images.kt, which only reserve their space: scaled down to the width
+ * of the text, they keep their proportions.
+ */
+main img {
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+/*
  * The introduction of a person, a `section.profile` of the Markdown
  * source, therefore a glass panel like the other top level sections,
  * rendered as the bio (`div.profile-bio`) followed by the photograph
@@ -654,7 +694,7 @@ body > footer {
 
 .site-footer {
   display: grid;
-  grid-template-areas: "logo" "groups" "legal";
+  grid-template-areas: "logo" "groups" "newsletter" "legal";
   gap: 2.5rem 2rem;
   inline-size: 100%;
 }
@@ -663,7 +703,7 @@ body > footer {
 
   .site-footer {
     grid-template-columns: minmax(12rem, 1fr) 3fr;
-    grid-template-areas: "logo groups" "legal groups";
+    grid-template-areas: "logo groups" "newsletter groups" "legal groups";
   }
 
   .site-footer-legal {
@@ -724,6 +764,48 @@ nav.site-footer-groups {
 
 .site-footer-legal a:not(.circle) {
   text-decoration: underline;
+}
+
+/* the newsletter subscription, a div rather than a section, for the same reason as below */
+.site-footer-newsletter {
+  grid-area: newsletter;
+  align-self: end;
+}
+
+.site-footer-newsletter h2 {
+  font-size: .875rem;
+  font-weight: 500;
+  color: var(--on-surface);
+}
+
+.site-footer-newsletter form {
+  display: flex;
+  gap: .5rem;
+  margin-block-start: .5rem;
+  max-inline-size: 22rem;
+}
+
+.site-footer-newsletter input {
+  flex: 1 1 0;
+  min-inline-size: 0;
+  block-size: 2.5rem;
+  padding: 0 1rem;
+  border: .0625rem solid var(--outline);
+  border-radius: 1.25rem;
+  background: transparent;
+  color: var(--on-surface);
+  font: inherit;
+  font-size: .875rem;
+}
+
+.site-footer-newsletter input:focus-visible {
+  outline: .125rem solid var(--primary);
+  outline-offset: -.0625rem;
+}
+
+.site-footer-newsletter button {
+  margin: 0;
+  block-size: 2.5rem;
 }
 
 /* a div rather than a nav, which BeerCSS would push down by a 1rem margin */

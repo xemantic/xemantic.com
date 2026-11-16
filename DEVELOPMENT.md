@@ -54,7 +54,8 @@ image: images/cover.webp     # optional, also the link preview image
   its social media links becoming the person's `sameAs` profiles.
 - Any other page is a `WebPage`,
   unless it declares `type: Article`,
-  which a concept explained in its own right should do, wherever it sits.
+  which a concept explained in its own right should do, wherever it sits,
+  or `type: Course`, offered by the organization, like the workshops.
 
 An `Article` or `BlogPosting` requires `author`, `datePublished` and `description`,
 and the build fails when one is missing or invalid.

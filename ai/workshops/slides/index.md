@@ -80,7 +80,7 @@ We publish our research as open source software.
 ### Xemantic @ AI hack Berlin
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
-    <img src="../../../ai/workshops/images/Hero-Robot-Berlin-Hackathon-Website.png" alt="AI hack Berlin hackathon promo" style="width: 38%;">
+    <img src="../../../ai/workshops/images/Hero-Robot-Berlin-Hackathon-Website.webp" alt="AI hack Berlin hackathon promo" style="width: 38%;">
 </div>
 
 ---

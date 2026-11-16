@@ -51,11 +51,8 @@ internal val PEOPLE = listOf(
 /** The founder of the organization, see [PEOPLE]. */
 private const val FOUNDER = "kazik"
 
-/** The profiles of the organization itself, as listed on its contact page. */
-private val ORGANIZATION_SAME_AS = listOf(
-    "https://github.com/xemantic",
-    "https://bsky.app/profile/xemantic.com"
-)
+/** The profiles of the organization itself, the same as linked in the footer of every page. */
+private val ORGANIZATION_SAME_AS = SOCIAL_LINKS.map { it.href }
 
 private const val ORGANIZATION_LOGO = "/assets/images/logo.svg"
 
@@ -74,7 +71,9 @@ internal enum class PageType(
     WebPage,
     Article(authored = true),
     BlogPosting(authored = true),
-    ProfilePage
+    ProfilePage,
+    /** A page offering a course, like a workshop, provided by the organization. */
+    Course
 }
 
 /**
@@ -106,7 +105,7 @@ internal class PageInfo(private val page: Page, entries: Map<String, String>) {
         }
         when {
             declared == null || declared == implied -> implied
-            implied == PageType.WebPage && declared == PageType.Article -> declared
+            implied == PageType.WebPage && declared in listOf(PageType.Article, PageType.Course) -> declared
             else -> fail(
                 "the type $declared does not apply here, a page is a ${PageType.BlogPosting} " +
                     "exactly when it is in $BLOG_DIR, and a ${PageType.ProfilePage} exactly when " +
@@ -213,6 +212,7 @@ internal fun structuredData(
         info.datePublished?.let { put("datePublished", it) }
         info.dateModified?.let { put("dateModified", it) }
         info.about?.let { put("about", mapOf("@id" to it)) }
+        if (info.type == PageType.Course) put("provider", mapOf("@id" to organizationId))
         info.profileOf?.let { person ->
             put("mainEntity", buildMap {
                 putAll(personRef(person))

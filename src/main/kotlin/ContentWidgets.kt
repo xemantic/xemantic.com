@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.io.buffered
 import kotlinx.io.files.SystemFileSystem
 import kotlinx.io.readString
+import java.net.URLEncoder
 
 /**
  * The class of a `div` holding a Markdown list of links to social media
@@ -57,6 +58,30 @@ private const val SOCIAL_MEDIA_LINKS = "social-media-links"
  * ```
  */
 private const val YOUTUBE_VIDEO = "youtube-video"
+
+/**
+ * The class of a `figure` holding a Markdown link to a Google Maps embed URL
+ * (the `src` of the `iframe` Google Maps offers to embed), the link text naming
+ * the place:
+ *
+ * ```markdown
+ * <figure class="google-map">
+ *
+ * [Prachtsaal Studio, Jonasstraße 22, 12053 Berlin](https://www.google.com/maps/embed?pb=…)
+ *
+ * </figure>
+ * ```
+ *
+ * The map is not embedded right away, as Google would set its cookies on
+ * every visit: the figure holds a button loading it on demand, see
+ * [GOOGLE_MAP_JS], and a link opening the place in Google Maps instead.
+ */
+private const val GOOGLE_MAP = "google-map"
+
+/** The script replacing the consent panel of a [GOOGLE_MAP] with the map, once asked to. */
+private const val GOOGLE_MAP_JS = "/assets/js/google-map.js"
+
+private const val GOOGLE_MAP_EMBED_URL = "https://www.google.com/maps/embed?"
 
 /**
  * The class of a `section` introducing a person: a paragraph holding
@@ -119,7 +144,7 @@ internal fun SemanticEvent.Mark.hasClass(cssClass: String) =
  * Renders the Markdown widgets of the content, plain Markdown wrapped in an
  * HTML element of a semantic class, so that the source stays readable as
  * Markdown, while the rendered page gets the markup it needs, see
- * [SOCIAL_MEDIA_LINKS], [YOUTUBE_VIDEO] and [PROFILE]. Of the wrapped Markdown only
+ * [SOCIAL_MEDIA_LINKS], [YOUTUBE_VIDEO], [GOOGLE_MAP] and [PROFILE]. Of the wrapped Markdown only
  * the links are kept, any surrounding list or paragraph is dropped,
  * except for the [PROFILE], which keeps its bio as it is.
  */
@@ -219,8 +244,46 @@ fun Flow<SemanticEvent>.applyContentWidgets(): Flow<SemanticEvent> = transform {
         }
     }
 
+    match({ name == "figure" && hasClass(GOOGLE_MAP) }) { mark ->
+        "figure"(mark.attributes) {
+            children(mode = GOOGLE_MAP)
+        }
+        // deferred, so that it runs only once the page is parsed, whichever map it serves
+        "script"("src" to GOOGLE_MAP_JS, "defer" to "") {}
+    }
+
+    match("a", mode = GOOGLE_MAP) { mark ->
+        val href = checkNotNull(mark["href"]) { "A Google map link without href" }
+        check(href.startsWith(GOOGLE_MAP_EMBED_URL)) {
+            "Not a Google Maps embed URL: $href, expected one starting with $GOOGLE_MAP_EMBED_URL"
+        }
+        label = StringBuilder()
+        children(mode = "label")
+        defer {
+            val place = label.toString().trim()
+            val search = "https://www.google.com/maps/search/?api=1&query=" +
+                URLEncoder.encode(place, Charsets.UTF_8)
+            "div"("class" to "google-map-consent") {
+                "p" { +"The map is served by Google, which may set cookies once it is shown." }
+                "nav"("class" to "wrap center-align") {
+                    "button"(
+                        "class" to "border",
+                        "data-google-map" to href,
+                        "data-title" to "Map of $place"
+                    ) {
+                        "span" { +"Show the map" }
+                    }
+                    "a"("href" to search, "class" to "button transparent") {
+                        "span" { +"Open in Google Maps" }
+                        "i" { +"north_east" }
+                    }
+                }
+            }
+        }
+    }
+
     // the list or paragraph around the links, dropped
-    listOf(SOCIAL_MEDIA_LINKS, YOUTUBE_VIDEO).forEach { mode ->
+    listOf(SOCIAL_MEDIA_LINKS, YOUTUBE_VIDEO, GOOGLE_MAP).forEach { mode ->
         match("*", mode = mode) { children(mode = mode) }
         matchText(mode = mode) {}
     }
@@ -236,7 +299,7 @@ fun Flow<SemanticEvent>.applyContentWidgets(): Flow<SemanticEvent> = transform {
  * The classes the content widgets recognize in the Markdown source,
  * see [applyContentWidgets].
  */
-private val CONTENT_WIDGET_CLASSES = setOf(SOCIAL_MEDIA_LINKS, YOUTUBE_VIDEO, PROFILE)
+private val CONTENT_WIDGET_CLASSES = setOf(SOCIAL_MEDIA_LINKS, YOUTUBE_VIDEO, GOOGLE_MAP, PROFILE)
 
 /** The stylesheets every page links, see [applyPageLayout]. */
 private val PAGE_STYLESHEETS = listOf(BEER_CSS, XEMANTIC_CSS)
