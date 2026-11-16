@@ -83,6 +83,24 @@ path = "assets/images/github/**"
 SPDX-FileCopyrightText = "GitHub, Inc."
 SPDX-License-Identifier = "LicenseRef-AllRightsReserved"
 
+# Paths from Simple Icons 16.35.0 (https://simpleicons.org), CC0 1.0,
+# the logos themselves remaining trademarks of their owners.
+[[annotations]]
+path = [
+    "assets/images/brands/x.svg",
+    "assets/images/brands/instagram.svg",
+    "assets/images/brands/youtube.svg",
+    "assets/images/brands/bluesky.svg"
+]
+SPDX-FileCopyrightText = "Simple Icons contributors"
+SPDX-License-Identifier = "CC0-1.0"
+
+# The LinkedIn "in" bug from https://brand.linkedin.com, cropped and scaled down.
+[[annotations]]
+path = "assets/images/brands/linkedin.png"
+SPDX-FileCopyrightText = "LinkedIn Corporation"
+SPDX-License-Identifier = "LicenseRef-AllRightsReserved"
+
 # https://github.com/xemantic/shader-web-background
 [[annotations]]
 path = "assets/js/shader-web-background.js"
