@@ -93,8 +93,9 @@ private val MENU = listOf(
  * The `id` of the navigation drawer: a BeerCSS `dialog.left` opened by the
  * menu button through the Popover API, which also closes it on Escape
  * and on a click outside, so no script is needed. On the screens where
- * the menu button is shown, the drawer is also the place of the table
- * of contents, a copy of the `nav#toc` without the `id`, following the [MENU].
+ * the menu button is shown, the drawer is also the place of the link
+ * to GitHub, of the [drawerPageActions] and of the table of contents, a copy of the
+ * `nav#toc` without the `id`, following the [MENU].
  */
 private const val MENU_DRAWER = "menu"
 
@@ -170,6 +171,40 @@ private suspend fun MatcherScope.pageActions(
 }
 
 /**
+ * The page actions of the [MENU_DRAWER], replacing the [pageActions] on
+ * the screens where the drawer is the navigation: two buttons, side by
+ * side, copying the page source, published at [markdownPath], to the
+ * clipboard, and opening it. The copying is done by [PAGE_ACTIONS_JS],
+ * like for the [pageActions], with the same fallback when scripts do
+ * not run: the copy button is then a link to the source as well.
+ * Golem XIV joins them once it is available.
+ */
+private suspend fun MatcherScope.drawerPageActions(markdownPath: String) {
+    "nav"(
+        "class" to "drawer-page-actions wrap",
+        "aria-label" to "Page actions",
+        "data-markdown" to markdownPath
+    ) {
+        "a"(
+            "href" to markdownPath,
+            "class" to "button small border page-copy",
+            "data-copy-page" to ""
+        ) {
+            "i" { +"content_copy" }
+            "span" { +"Copy page" }
+        }
+        "a"(
+            "href" to markdownPath,
+            "class" to "button small border",
+            "target" to "_blank"
+        ) {
+            "i" { +"north_east" }
+            "span" { +"Markdown" }
+        }
+    }
+}
+
+/**
  * Links the xemantic logo to the home page. The logo, the same as on the
  * home page, is drawn by [XEMANTIC_CSS] as a mask filled with the text
  * color, so it follows the color scheme; the link has no text content,
@@ -183,10 +218,20 @@ private suspend fun MatcherScope.logoLink(cssClass: String) {
     ) {}
 }
 
-private const val GITHUB_URL = "https://github.com/xemantic"
+/**
+ * Xemantic elsewhere, linked as [brandIcon]s in the footer.
+ */
+private class SocialLink(val name: String, val href: String)
 
-private const val GITHUB_ICON =
-    "/assets/images/github/GitHub_Invertocat_Black.svg"
+private val SOCIAL_LINKS = listOf(
+    SocialLink("GitHub", "https://github.com/xemantic"),
+    SocialLink("LinkedIn", "https://www.linkedin.com/company/xemantic-berlin/"),
+    SocialLink("Instagram", "https://www.instagram.com/xemantic.berlin"),
+    SocialLink("YouTube", "https://www.youtube.com/KazikPogoda"),
+    SocialLink("Bluesky", "https://bsky.app/profile/xemantic.com")
+)
+
+private val GITHUB_URL = SOCIAL_LINKS.first { it.name == "GitHub" }.href
 
 /**
  * The site-wide copyright line. Kept brand-level on purpose: the precise
@@ -319,6 +364,10 @@ fun Flow<SemanticEvent>.applyPageLayout(
                         ) {
                             "i" { +"menu" }
                         }
+                        // centered between two spacers where the menu button is
+                        // shown (BeerCSS's `s` and `m` helpers), as the only other
+                        // element of the bar, the color scheme switch, is as wide
+                        "div"("class" to "max s m") {}
                         logoLink("header-logo")
                         "div"("class" to "max") {}
                         MENU.forEach { item ->
@@ -326,16 +375,14 @@ fun Flow<SemanticEvent>.applyPageLayout(
                                 +item.label
                             }
                         }
+                        // on large screens only (BeerCSS's `l` helper), on the
+                        // smaller ones it is in the MENU_DRAWER
                         "a"(
                             "href" to GITHUB_URL,
-                            "class" to "circle transparent",
+                            "class" to "circle transparent l",
                             "aria-label" to "Xemantic on GitHub"
                         ) {
-                            "img"(
-                                "class" to "github-icon",
-                                "src" to GITHUB_ICON,
-                                "alt" to "GitHub"
-                            ) {}
+                            "span"("class" to "brand-icon github") {}
                         }
                         // xemantic.css shows the icon of the scheme to switch to
                         "button"(
@@ -393,9 +440,19 @@ fun Flow<SemanticEvent>.applyPageLayout(
                                 }
                             }
                         }
+                        // in the top app bar on large screens only
+                        "li"("class" to "wave round") {
+                            "a"("href" to GITHUB_URL) {
+                                "span"("class" to "brand-icon github") {}
+                                "span" { +"GitHub" }
+                            }
+                        }
                     }
                     // on the screens of this drawer it is the only place of
-                    // the table of contents, see the TOC_DRAWER
+                    // the page actions, xemantic.css hides those following the h1
+                    "hr" {}
+                    drawerPageActions(page.markdownPath())
+                    // and of the table of contents, see the TOC_DRAWER
                     toc?.let { toc ->
                         "hr" {}
                         "nav"("class" to "toc", "aria-label" to "Table of contents") {
@@ -444,16 +501,17 @@ fun Flow<SemanticEvent>.applyPageLayout(
                             }
                             +" unless stated otherwise"
                         }
-                        "a"(
-                            "href" to GITHUB_URL,
-                            "class" to "circle transparent",
-                            "aria-label" to "Xemantic on GitHub"
-                        ) {
-                            "img"(
-                                "class" to "github-icon",
-                                "src" to GITHUB_ICON,
-                                "alt" to "GitHub"
-                            ) {}
+                        "div"("class" to "site-footer-social") {
+                            SOCIAL_LINKS.forEach { link ->
+                                "a"(
+                                    "href" to link.href,
+                                    "class" to "circle transparent",
+                                    "aria-label" to "Xemantic on ${link.name}",
+                                    "title" to link.name
+                                ) {
+                                    "span"("class" to "brand-icon ${brandIcon(link.href)}") {}
+                                }
+                            }
                         }
                     }
                 }
