@@ -108,6 +108,16 @@ private const val PROFILE = "profile"
 private const val PROFILE_PHOTO = "profile-photo"
 
 /**
+ * Prism, highlighting the fenced code blocks in the browser, generated
+ * together with the grammars of the languages the site uses by
+ * `./gradlew generatePrism`, see `build.gradle.kts`. It is loaded `async`,
+ * and only by a page holding a code block: once it has run, at whatever
+ * moment, it highlights every `code` of a `language-…` class on its own,
+ * while the code stays readable, just not colored, until then.
+ */
+private const val PRISM_JS = "/assets/js/prism.js"
+
+/**
  * The brand icons available in `xemantic.css`, as `brand-icon` modifier
  * classes, keyed by the host of the profile URL they stand for.
  */
@@ -146,7 +156,8 @@ internal fun SemanticEvent.Mark.hasClass(cssClass: String) =
  * Markdown, while the rendered page gets the markup it needs, see
  * [SOCIAL_MEDIA_LINKS], [YOUTUBE_VIDEO], [GOOGLE_MAP] and [PROFILE]. Of the wrapped Markdown only
  * the links are kept, any surrounding list or paragraph is dropped,
- * except for the [PROFILE], which keeps its bio as it is.
+ * except for the [PROFILE], which keeps its bio as it is. A fenced code block
+ * is followed by [PRISM_JS], highlighting it.
  */
 fun Flow<SemanticEvent>.applyContentWidgets(): Flow<SemanticEvent> = transform {
 
@@ -279,6 +290,19 @@ fun Flow<SemanticEvent>.applyContentWidgets(): Flow<SemanticEvent> = transform {
                     }
                 }
             }
+        }
+    }
+
+    // only the first code block of a page brings the script
+    var prismAdded = false
+
+    match("pre") { mark ->
+        mark.name(mark.attributes) {
+            children()
+        }
+        if (!prismAdded) {
+            prismAdded = true
+            "script"("src" to PRISM_JS, "async" to "") {}
         }
     }
 

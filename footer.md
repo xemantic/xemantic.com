@@ -6,7 +6,12 @@ Anything else in this file is ignored,
 and the file itself is not published.
 -->
 
-## Products
+## [Research](/research/)
+
+- [Metacognitive AI](/metacognitive-ai/)
+- [Xemantic AI Stack](/ai/)
+
+## [Products](/products/)
 
 - [Golem XIV](https://github.com/xemantic/golem-xiv)
 - [Honest Annie](https://github.com/xemantic/honest-annie)
@@ -14,25 +19,19 @@ and the file itself is not published.
 - [Noumen](https://github.com/xemantic/noumen)
 - [markanywhere](https://github.com/xemantic/markanywhere)
 
-## Services
+## [Services](/services/)
 
 - [AI Workshops](/ai/workshops/)
 
-## Research
+## [Art](/art/)
 
-- [Metacognitive AI](/metacognitive-ai/)
-- [Metacognitive AI, Block by Block](/ai/)
-
-## Art
-
+- [Prachtsaal](https://prachtsaal.berlin/)
 - [404](/404/)
 - [Industria](/ideas/industria/)
-- [Prachtsaal](https://prachtsaal.berlin/)
 
 ## Xemantic
 
 - [News](/news/)
-- [Services](/services/)
 - [Contact](/contact/)
 - [Archive](/archive/)
 - [Legal Notice (Impressum)](/impressum/)

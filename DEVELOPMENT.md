@@ -82,6 +82,21 @@ The Arsenal font is not committed either:
 from Google Fonts into `build/generated/website/assets/fonts`, together with its license,
 under the file names the `@font-face` rules of [xemantic.css](assets/css/xemantic.css) refer to.
 
+## Present source code
+
+A fenced code block is highlighted in the browser by [Prism](https://prismjs.com/),
+loaded `async`, and only by a page holding a code block,
+so the code is readable right away, and gets its colors once the script has run.
+Prism is not committed, like BeerCSS:
+`generatePrism` concatenates its core and the grammars listed in `prismComponents` of [build.gradle.kts](build.gradle.kts)
+into `build/generated/website/assets/js/prism.js`,
+its version being `prism` in [libs.versions.toml](gradle/libs.versions.toml).
+To use a new language, add its grammar to `prismComponents` first, after the grammars it extends.
+Every `./gradlew run` is followed by `checkCodeLanguages`,
+which fails the build when a rendered page holds a code block in a language without a grammar.
+The colors of the tokens, following the color scheme, are in [xemantic.css](assets/css/xemantic.css),
+and the code is set in Ubuntu Mono, downloaded by `generateUbuntuMono`.
+
 ## Update gradlew wrapper
 
 ```shell

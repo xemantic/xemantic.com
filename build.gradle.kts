@@ -37,7 +37,7 @@ versionCatalogUpdate {
     sortByKey = false
     keep {
         // plain version constants with no version.ref
-        versions = setOf("kotlinTarget", "javaTarget", "beerCss")
+        versions = setOf("kotlinTarget", "javaTarget", "beerCss", "prism")
         keepUnusedVersions = false
     }
 }
@@ -79,7 +79,7 @@ val websiteDir = layout.buildDirectory.dir("website")
 
 tasks.run.configure {
     description = "Renders the whole website into the build folder."
-    dependsOn("generateBeerCss", "generateArsenal")
+    dependsOn("generateBeerCss", "generateArsenal", "generateUbuntuMono", "generatePrism")
     // a clean slate, so a deleted or renamed page does not linger
     // in the output, nor in the checks run on it
     val outputDir = websiteDir.get().asFile
@@ -97,7 +97,7 @@ tasks.register<JavaExec>("serve") {
     group = ApplicationPlugin.APPLICATION_GROUP
     classpath = sourceSets["main"].runtimeClasspath
     mainClass = "com.xemantic.website.ServerKt"
-    dependsOn("generateBeerCss", "generateArsenal")
+    dependsOn("generateBeerCss", "generateArsenal", "generateUbuntuMono", "generatePrism")
     args(
         layout.projectDirectory.asFile.absolutePath,
         generatedWebsiteDir.get().asFile.absolutePath
@@ -271,7 +271,9 @@ tasks.register<GenerateBeerCss>("generateBeerCss") {
  * (`ital,wght` tuples, like `1,700` for bold italic) and the [subsets],
  * into [dir] as `Family-Style-subset.woff2` files, the names the
  * `@font-face` rules of `xemantic.css` refer to, together with the
- * `Family-OFL.txt` license.
+ * `Family-LICENSE.txt` license, [license] being the directory of the
+ * family in the Google Fonts repository: `OFL` by default, `UFL` for
+ * the Ubuntu fonts.
  */
 @CacheableTask
 abstract class GenerateGoogleFont : DownloadTask() {
@@ -285,12 +287,19 @@ abstract class GenerateGoogleFont : DownloadTask() {
     @get:Input
     abstract val subsets: ListProperty<String>
 
+    @get:Input
+    abstract val license: Property<String>
+
     @get:Internal
     abstract val dir: DirectoryProperty
 
+    init {
+        license.convention("OFL")
+    }
+
     private val fileFamily get() = family.get().replace(" ", "")
 
-    private val license get() = dir.get().file("$fileFamily-OFL.txt")
+    private val licenseFile get() = dir.get().file("$fileFamily-${license.get()}.txt")
 
     private fun fontFile(style: String, subset: String): RegularFile {
         val (italic, weight) = style.split(",")
@@ -318,7 +327,7 @@ abstract class GenerateGoogleFont : DownloadTask() {
     val files: List<RegularFile>
         get() = styles.get().flatMap { style ->
             subsets.get().map { subset -> fontFile(style, subset) }
-        } + license
+        } + licenseFile
 
     @TaskAction
     fun generate() {
@@ -343,8 +352,11 @@ abstract class GenerateGoogleFont : DownloadTask() {
                 fontFile(style, subset).asFile.apply { parentFile.mkdirs() }.writeBytes(get(url))
             }
         }
-        license.asFile.writeBytes(
-            get("https://raw.githubusercontent.com/google/fonts/main/ofl/${fileFamily.lowercase()}/OFL.txt")
+        licenseFile.asFile.writeBytes(
+            get(
+                "https://raw.githubusercontent.com/google/fonts/main/" +
+                    "${license.get().lowercase()}/${fileFamily.lowercase()}/${license.get()}.txt"
+            )
         )
     }
 
@@ -359,6 +371,116 @@ tasks.register<GenerateGoogleFont>("generateArsenal") {
     // the latter covering Polish and German
     subsets = listOf("latin", "latin-ext")
     dir = generatedWebsiteDir.map { it.dir("assets/fonts") }
+}
+
+tasks.register<GenerateGoogleFont>("generateUbuntuMono") {
+    description = "Generates the Ubuntu Mono font file used by the code of the website."
+    group = "website"
+    family = "Ubuntu Mono"
+    // the Ubuntu Font Licence, not the OFL of most Google Fonts
+    license = "UFL"
+    // regular only, in the subset covering source code
+    styles = listOf("0,400")
+    subsets = listOf("latin")
+    dir = generatedWebsiteDir.map { it.dir("assets/fonts") }
+}
+
+/**
+ * The Prism components concatenated, after its core, into `assets/js/prism.js`:
+ * the grammars of the languages of the fenced code blocks of the site,
+ * named as in https://prismjs.com/#supported-languages. A grammar extending
+ * another one, like `typescript` extending `javascript`, itself extending
+ * `clike`, has to follow it.
+ * `checkCodeLanguages`, run after every `./gradlew run`, fails the build
+ * when a rendered page holds a code block in a language missing here.
+ */
+val prismComponents = listOf(
+    "clike",
+    "javascript",
+    "kotlin",
+    "mermaid",
+    "python",
+    "typescript"
+)
+
+/**
+ * Downloads the core of Prism [version] and its [components], and
+ * concatenates them into [js], a single script highlighting, once loaded,
+ * every code block of the page.
+ */
+@CacheableTask
+abstract class GeneratePrism : DownloadTask() {
+
+    @get:Input
+    abstract val version: Property<String>
+
+    @get:Input
+    abstract val components: ListProperty<String>
+
+    @get:OutputFile
+    abstract val js: RegularFileProperty
+
+    @TaskAction
+    fun generate() {
+        val cdn = "https://cdn.jsdelivr.net/npm/prismjs@${version.get()}/components"
+        js.get().asFile.writeText(buildString {
+            append("/*\n")
+            append(" * Generated by `./gradlew generatePrism`, do not edit.\n")
+            append(" * Prism ${version.get()} (MIT License, https://github.com/PrismJS/prism),\n")
+            append(" * components: ${components.get().joinToString()}.\n")
+            append(" */\n")
+            (listOf("core") + components.get()).forEach { component ->
+                append(get("$cdn/prism-$component.min.js").decodeToString().trim())
+                append("\n")
+            }
+        })
+    }
+
+}
+
+tasks.register<GeneratePrism>("generatePrism") {
+    description = "Generates Prism with the grammars of the languages used by the code blocks of the website."
+    group = "website"
+    version = libs.versions.prism
+    components = prismComponents
+    js = generatedWebsiteDir.map { it.file("assets/js/prism.js") }
+}
+
+/**
+ * Fails when a page rendered with BeerCSS holds a code block in a language
+ * which is not among the [components], so that Prism would leave it plain.
+ */
+abstract class CheckCodeLanguages : DefaultTask() {
+
+    @get:Input
+    abstract val components: ListProperty<String>
+
+    @get:InputDirectory
+    abstract val website: DirectoryProperty
+
+    @TaskAction
+    fun check() {
+        val languagePattern = Regex("""<code class="language-([^"\s]+)""")
+        val used = website.get().asFile.walkTopDown()
+            .filter { it.extension == "html" }
+            .map { it.readText() }
+            .filter { "/assets/css/beercss.css" in it }
+            .flatMap { html -> languagePattern.findAll(html).map { it.groupValues[1] } }
+            .toSet()
+        val missing = used - components.get().toSet()
+        check(missing.isEmpty()) {
+            "Languages of code blocks without a Prism grammar: ${missing.sorted().joinToString()}. " +
+                "Add them to prismComponents in build.gradle.kts"
+        }
+    }
+
+}
+
+val checkCodeLanguages = tasks.register<CheckCodeLanguages>("checkCodeLanguages") {
+    description = "Checks that every language of a code block on the rendered pages has its Prism grammar."
+    group = "verification"
+    components = prismComponents
+    website = websiteDir
 }
 
 /**
@@ -457,5 +579,5 @@ val checkMarkdownLinks = tasks.register<CheckMarkdownLinks>("checkMarkdownLinks"
 }
 
 tasks.run.configure {
-    finalizedBy(checkMaterialSymbols, checkMarkdownLinks)
+    finalizedBy(checkMaterialSymbols, checkCodeLanguages, checkMarkdownLinks)
 }

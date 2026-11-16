@@ -75,6 +75,12 @@ not only to the repository's own documentation.
   `var()` is invalid in `@font-face` descriptors, and the browser silently drops such a declaration.
 - markanywhere does not parse an image nested in a link, `[![alt](image.webp)](https://…)` renders as literal text —
   write such a linked image as raw HTML, `<a href="…"><img src="…" alt="…"></a>`.
+- markanywhere keeps only the language of a fenced code block's info string, as the `language-…` class —
+  anything after it (a file name, a title) is dropped, see [markanywhere#222](https://github.com/xemantic/markanywhere/issues/222).
+- markanywhere renders a line break and indentation between `</code>` and `</pre>`,
+  which would show as an empty last line — `xemantic.css` makes `pre` a grid, where such white space takes no space.
+- `prism.js` is loaded `async`, so nothing may depend on it having run:
+  a script extending a Prism grammar, or reading the highlighted tokens, races with it.
 - Google Fonts serves the `icon_names` subset as woff2 only to a browser User-Agent,
   otherwise it answers with a TrueType font.
 

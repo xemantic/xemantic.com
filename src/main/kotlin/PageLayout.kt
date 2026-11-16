@@ -106,9 +106,9 @@ private class MenuItem(val label: String, val href: String, val icon: String)
  * (BeerCSS's `l` helper) and in the [MENU_DRAWER] otherwise.
  */
 private val MENU = listOf(
+    MenuItem("Research", "/research/", "science"),
     MenuItem("Products", "/products/", "inventory_2"),
     MenuItem("Services", "/services/", "handshake"),
-    MenuItem("Research", "/research/", "science"),
     MenuItem("Art", "/art/", "palette"),
     MenuItem("Humans", "/humans/", "diversity_3"),
     MenuItem("News", "/news/", "newspaper")
@@ -173,13 +173,13 @@ private suspend fun MatcherScope.pageActions(
         "aria-label" to "Page actions",
         "data-markdown" to markdownPath
     ) {
-        "button"("class" to "small left-round page-copy border", "data-copy-page" to "") {
+        "button"("class" to "small no-round page-copy border", "data-copy-page" to "") {
             "i" { +"content_copy" }
             "span" { +"Copy page" }
         }
         "div" {
             "button"(
-                "class" to "small right-round square border",
+                "class" to "small no-round square border",
                 "aria-label" to "More page actions",
                 "aria-haspopup" to "menu"
             ) {
@@ -225,7 +225,7 @@ private suspend fun MatcherScope.drawerPageActions(markdownPath: String) {
     ) {
         "a"(
             "href" to markdownPath,
-            "class" to "button small border page-copy",
+            "class" to "button small no-round border page-copy",
             "data-copy-page" to ""
         ) {
             "i" { +"content_copy" }
@@ -233,7 +233,7 @@ private suspend fun MatcherScope.drawerPageActions(markdownPath: String) {
         }
         "a"(
             "href" to markdownPath,
-            "class" to "button small border",
+            "class" to "button small no-round border",
             "target" to "_blank"
         ) {
             "i" { +"north_east" }

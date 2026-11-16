@@ -5,7 +5,25 @@ image: /ai/workshops/images/agentic-ai-and-creative-coding-2025-social-media-lan
 ---
 # AI Workshops
 
-![An example code of a claude.ai clone written in 16 lines of Kotlin code](images/AnthropicAiIn16LinesOfCode.webp)
+```kotlin
+// Claude in 16 lines of code
+fun main() = runBlocking {
+    val anthropic = Anthropic()
+    val conversation = mutableListOf<Message>()
+    while (true) {
+        print("[user]> ")
+        val input = readln()
+        if (input == "exit") break
+        conversation += Message { +input }
+        println("...Thinking...")
+        val response = anthropic.messages.create {
+            messages = conversation
+        }
+        conversation += response
+        println("[assistant]> ${response.text}")
+    }
+}
+```
 
 ## Invitation
 
