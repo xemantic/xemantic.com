@@ -87,7 +87,7 @@ We publish our research as open source software.
 ### Robots will steal your food
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
-    <img src="../../../ai/workshops/images/robots_will_steal_your_food.jpg" alt="Robots will steal your food" style="width: 53%;">
+    <img src="../../../ai/workshops/images/robots_will_steal_your_food.webp" alt="Robots will steal your food" style="width: 53%;">
 </div>
 
 ---

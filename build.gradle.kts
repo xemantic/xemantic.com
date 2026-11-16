@@ -401,6 +401,61 @@ val checkMaterialSymbols = tasks.register<CheckMaterialSymbols>("checkMaterialSy
     website = websiteDir
 }
 
+/**
+ * Fails when a published Markdown document links to a page or a file of
+ * the [siteUrl] missing from the [website]. The build publishes every
+ * link absolute, so the check needs no knowledge of where a document
+ * sits, and a URL resolves as GitHub Pages serves it: the file itself,
+ * the `index.html` of a directory, or the `.html` of an extensionless
+ * path. Code blocks and code spans are skipped, as their URLs are text.
+ */
+abstract class CheckMarkdownLinks : DefaultTask() {
+
+    @get:Input
+    abstract val siteUrl: Property<String>
+
+    @get:InputDirectory
+    abstract val website: DirectoryProperty
+
+    @TaskAction
+    fun check() {
+        val root = website.get().asFile
+        val prefix = siteUrl.get().removeSuffix("/") + "/"
+        val codePattern = Regex("""(?s)^ {0,3}(`{3,}|~{3,}).*?^ {0,3}\1|(`+).*?\2""", RegexOption.MULTILINE)
+        val linkPattern = Regex("""]\(\s*<?([^)\s>]+)|\b(?:href|src|poster)="([^"]*)"""")
+        val broken = root.walkTopDown()
+            .filter { it.extension == "md" }
+            .flatMap { file ->
+                val text = file.readText().replace(codePattern, "")
+                linkPattern.findAll(text)
+                    .map { it.groupValues[1].ifEmpty { it.groupValues[2] } }
+                    .filter { it.startsWith(prefix) }
+                    .filterNot { url ->
+                        val path = URI(url).path.removePrefix("/")
+                        val target = File(root, path)
+                        target.isFile || File(target, "index.html").isFile || File(root, "$path.html").isFile
+                    }
+                    .map { "${file.relativeTo(root)}: $it" }
+            }
+            .distinct()
+            .toList()
+        check(broken.isEmpty()) {
+            "Published Markdown links to missing site files:\n${broken.joinToString("\n")}"
+        }
+    }
+
+}
+
+// the script-level siteUrl, shadowed by the task property within the configuration block
+val publishedSiteUrl = siteUrl
+
+val checkMarkdownLinks = tasks.register<CheckMarkdownLinks>("checkMarkdownLinks") {
+    description = "Checks that every site link in the published Markdown resolves to a published file."
+    group = "verification"
+    siteUrl = publishedSiteUrl
+    website = websiteDir
+}
+
 tasks.run.configure {
-    finalizedBy(checkMaterialSymbols)
+    finalizedBy(checkMaterialSymbols, checkMarkdownLinks)
 }

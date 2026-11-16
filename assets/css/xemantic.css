@@ -21,6 +21,10 @@
  * weights with their italics, each in the latin and latin-ext subsets
  * served by Google Fonts, the latter covering Polish and German,
  * downloaded only when a page uses it.
+ * Its glyphs are smaller than Roboto's at the same font size (cap height
+ * 0.65em against 0.71em, x-height 0.50em against 0.53em), which makes text
+ * look undersized next to icons, hence `size-adjust` scales the glyphs
+ * alone, leaving the font size, and BeerCSS's em-based spacing, intact.
  */
 @font-face {
   font-family: "Arsenal";
@@ -28,6 +32,7 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  size-adjust: 110%;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -37,6 +42,7 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  size-adjust: 110%;
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
@@ -46,6 +52,7 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
+  size-adjust: 110%;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -55,6 +62,7 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
+  size-adjust: 110%;
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
@@ -64,6 +72,7 @@
   font-weight: 400;
   font-style: italic;
   font-display: swap;
+  size-adjust: 110%;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -73,6 +82,7 @@
   font-weight: 400;
   font-style: italic;
   font-display: swap;
+  size-adjust: 110%;
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
@@ -82,6 +92,7 @@
   font-weight: 700;
   font-style: italic;
   font-display: swap;
+  size-adjust: 110%;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -91,6 +102,7 @@
   font-weight: 700;
   font-style: italic;
   font-display: swap;
+  size-adjust: 110%;
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
@@ -206,17 +218,106 @@ main h1 {
 }
 
 /*
- * The GitHub icon in the top app bar. The source SVG is the black
- * Invertocat; in dark mode we invert it to white so it stays legible
- * against the dark header, mirroring the rest of the theme.
+ * Brand logos (GitHub, X, LinkedIn, …), used as masks over the current
+ * text color like the xemantic logo below, so they follow the color
+ * scheme and the hover color of the button they sit in.
+ * Material Symbols has no brand logos, hence the image files.
  */
-.github-icon {
+.brand-icon {
+  display: inline-block;
+  flex: none;
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  /* BeerCSS makes every element inherit border-radius, which would clip the icon to the button's shape */
+  border-radius: 0;
+  background-color: currentColor;
+  mask: var(--brand-icon) center / contain no-repeat;
+}
+
+.circle > .brand-icon,
+.list .brand-icon {
   inline-size: 1.5rem;
   block-size: 1.5rem;
 }
 
-body.dark .github-icon {
-  filter: invert(1);
+.brand-icon.github { --brand-icon: url("/assets/images/github/GitHub_Invertocat_Black.svg"); }
+.brand-icon.x { --brand-icon: url("/assets/images/brands/x.svg"); }
+.brand-icon.linkedin { --brand-icon: url("/assets/images/brands/linkedin.png"); }
+.brand-icon.instagram { --brand-icon: url("/assets/images/brands/instagram.svg"); }
+.brand-icon.youtube { --brand-icon: url("/assets/images/brands/youtube.svg"); }
+.brand-icon.bluesky { --brand-icon: url("/assets/images/brands/bluesky.svg"); }
+
+/* a YouTube player, rendered from a `figure.youtube-video` of the Markdown source */
+figure.youtube-video {
+  margin: 1rem 0 0;
+}
+
+figure.youtube-video > iframe {
+  display: block;
+  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+
+/*
+ * The introduction of a person, a `section.profile` of the Markdown
+ * source, therefore a glass panel like the other top level sections,
+ * rendered as the bio (`div.profile-bio`) followed by the photograph
+ * (`img.profile-photo`), see ContentWidgets.kt. The photograph is
+ * square, flush with the edges of the panel: the left column, as tall
+ * as the panel, with the bio centered vertically next to it, as long as
+ * the panel is wide enough for the bio to fit within that height,
+ * otherwise spanning the whole width at the top, above the bio.
+ * It depends on the width of the panel, not of the viewport, which the
+ * table of contents drawer shares, hence the container query. Its rem
+ * is the fluid root font size, so the threshold scales with the text.
+ * Should the bio outgrow the photograph nevertheless, the photograph
+ * stretches with it, cropped, rather than leaving a gap.
+ */
+main > section.profile {
+  container-type: inline-size;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+}
+
+.profile-photo {
+  order: -1;
+  flex: 1 1 100%;
+  display: block;
+  min-inline-size: 0;
+  block-size: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 1.5rem 1.5rem 0 0;
+}
+
+.profile-bio {
+  flex: 1 1 100%;
+  padding: .5rem 1.5rem 1.5rem;
+}
+
+/* left-aligned with the bio, the icon of the first button with its text */
+.profile-bio > nav.social-media-links {
+  justify-content: start;
+  margin-inline-start: -.5rem;
+}
+
+@container (min-width: 56rem) {
+
+  .profile-photo {
+    flex: 0 0 40%;
+    border-radius: 1.5rem 0 0 1.5rem;
+  }
+
+  .profile-bio {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem 1.5rem 1.5rem 2rem;
+  }
+
 }
 
 /*
@@ -625,11 +726,17 @@ nav.site-footer-groups {
   text-decoration: underline;
 }
 
+/* a div rather than a nav, which BeerCSS would push down by a 1rem margin */
+.site-footer-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+
 /*
  * The page actions, like on https://platform.claude.com/docs/ - a BeerCSS
  * split button in the top right corner of `main`, on the row of the
- * centered `h1`, which it follows in the markup. On small screens the
- * `h1` takes the whole width, so the actions follow it visually as well.
+ * centered `h1`, which it follows in the markup.
  * BeerCSS has no disabled menu item, hence the last rule.
  */
 .page-actions {
@@ -639,26 +746,35 @@ nav.site-footer-groups {
   z-index: 2;
 }
 
-@media (max-width: 600px) {
+/*
+ * Below BeerCSS's large breakpoint, where the menu button opens the
+ * navigation drawer, the page actions are those of the drawer
+ * (`nav.drawer-page-actions`), and those following the `h1` are hidden.
+ * Above it, where the table of contents drawer is available, the page
+ * actions are those at its top, and those following the `h1` are hidden
+ * as well, remaining only on a page without a table of contents.
+ */
+@media (max-width: 992px) {
 
-  .page-actions {
-    position: static;
-    justify-content: center;
-    margin-block-end: 1.5rem;
+  main .page-actions {
+    display: none;
   }
 
 }
 
-/*
- * Where the table of contents drawer is available, the page actions are
- * those at its top, and those following the `h1` are hidden.
- */
 @media (min-width: 993px) {
 
   body:has(> #toc-drawer) main .page-actions {
     display: none;
   }
 
+}
+
+/* in the navigation drawer, aligned with the labels of the menu, padded
+   rather than spaced by margins, which BeerCSS overrides between siblings */
+nav.drawer-page-actions {
+  padding: .75rem .5rem;
+  gap: .5rem;
 }
 
 /*
@@ -732,6 +848,50 @@ main > section::before {
 
 main > section > :first-child {
   margin-block-start: 0;
+}
+
+/*
+ * The text of the sections is set at Material 3's body large, BeerCSS
+ * sets the body at body medium (.875rem), too small for reading prose.
+ * The list items follow, so that a list does not look like a footnote
+ * of the paragraph introducing it.
+ */
+main > section :is(p, li) {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+/*
+ * Links in the text of the sections, which BeerCSS's reset renders like
+ * the text around them: in the primary color, underlined by a thin line
+ * of half its opacity, set below the descenders, turning solid on hover.
+ * Buttons, e.g. the social media links, are left out.
+ */
+main > section :is(p, li) a:not(.button, .chip, .circle) {
+  color: var(--primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .2em;
+  text-decoration-color: color-mix(in srgb, var(--primary) 50%, transparent);
+  transition: text-decoration-color var(--speed2);
+}
+
+main > section :is(p, li) a:not(.button, .chip, .circle):is(:hover, :focus-visible) {
+  text-decoration-color: var(--primary);
+}
+
+main > section :is(p, li) a:not(.button, .chip, .circle):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: .25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  main > section :is(p, li) a {
+    transition: none;
+  }
+
 }
 
 @media (prefers-reduced-transparency: reduce) {

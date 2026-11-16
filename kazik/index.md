@@ -14,7 +14,7 @@ and I am currently affiliated with the [Foresight Institute](https://foresight.o
 I am also a Claude Ambassador for Science,
 appointed by Anthropic.
 
-<nav class="social-media-links">
+<div class="social-media-links">
 
 - [X](https://x.com/kazikpogoda)
 - [LinkedIn](https://www.linkedin.com/in/kpogoda/)
@@ -22,7 +22,7 @@ appointed by Anthropic.
 - [GitHub](https://github.com/morisil/)
 - [YouTube](https://www.youtube.com/KazikPogoda)
 
-</nav>
+</div>
 
 </section>
 

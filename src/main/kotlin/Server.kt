@@ -96,7 +96,7 @@ fun Application.website(
     routing {
         get("{path...}") {
             when (val resolution = root.resolve(call.request.path(), generatedDirs)) {
-                is Serve -> call.respondFile(resolution.file, baseUrl)
+                is Serve -> call.respondFile(resolution.file, root, baseUrl)
                 is Render -> call.respondRendered(resolution.markdown, resolution.page(root, baseUrl, generatedDirs))
                 is Redirect -> call.respondRedirect(resolution.location, permanent = false)
                 LlmsTxt -> call.respondText(
@@ -211,19 +211,22 @@ private val htmlContentType = ContentType.Text.Html.withCharset(Charsets.UTF_8)
 
 /**
  * Serves [file], its content type derived from the extension. A Markdown
- * source is [decorateMarkdown]d — a provenance front matter for its page
- * URL under [baseUrl], plus the copyright footer — exactly as the build
- * decorates the published `.md`; every other file is byte-for-byte verbatim.
+ * source, read from the [root], is [decorateMarkdown]d for the [baseUrl] —
+ * a provenance front matter, absolute links and the copyright footer —
+ * exactly as the build decorates the published `.md`, its links resolved
+ * against the source rather than the request path, which differs for a flat
+ * alias like `/ai/workshops.md`; every other file is byte-for-byte verbatim.
  */
 private suspend fun ApplicationCall.respondFile(
     file: Path,
+    root: Path,
     baseUrl: String,
     status: HttpStatusCode? = null
 ) {
     val body =
         if (file.name.endsWith(".md")) {
-            val pageUrl = baseUrl + request.path().trimStart('/').markdownPagePath()
-            decorateMarkdown(file.readBytes().decodeToString(), pageUrl).encodeToByteArray()
+            val path = file.toString().removePrefix("$root/")
+            decorateMarkdown(file.readBytes().decodeToString(), path, baseUrl).encodeToByteArray()
         } else {
             file.readBytes()
         }
@@ -243,7 +246,7 @@ private suspend fun ApplicationCall.respondNotFound(
     val status = HttpStatusCode.NotFound
     when (val body = root.resolveNotFound()) {
         is Render -> respondRendered(body.markdown, body.page(root, baseUrl, generatedDirs), status)
-        is Serve -> respondFile(body.file, baseUrl, status)
+        is Serve -> respondFile(body.file, root, baseUrl, status)
         else -> respondBytes(
             bytes = ByteArray(0),
             contentType = ContentType.Text.Plain.withCharset(Charsets.UTF_8),

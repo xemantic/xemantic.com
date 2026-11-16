@@ -66,6 +66,7 @@ fun Flow<String>.renderMarkdownToHtml(page: Page): Flow<String> = flow {
     emitAll(
         parse()
             .ensureFrontmatterTitle()
+            .checkContentClasses(page)
             .wrapInSections(tocDepth = 6)
             .wrapInHtmlDocument()
             .addPageMetadata(page)
@@ -161,19 +162,18 @@ fun main(args: Array<String>) {
             if (relativePath.endsWith(".md")) {
                 pageCount++
                 val htmlPath = relativePath.removeSuffix(".md") + ".html"
-                val pageUrl = siteUrl + relativePath.markdownPagePath()
                 val page = Page(relativePath, siteUrl, siteRoots)
                 launch {
                     renderPage(sourceFile, Path(targetDir, htmlPath), page)
                     println("Rendered $htmlPath")
                 }
                 launch(Dispatchers.IO) {
-                    copyMarkdown(sourceFile, Path(targetDir, relativePath), pageUrl)
+                    copyMarkdown(sourceFile, Path(targetDir, relativePath), relativePath, siteUrl)
                 }
                 val alias = relativePath.toFlatMarkdownAlias()
                 if (alias != null) {
                     launch(Dispatchers.IO) {
-                        copyMarkdown(sourceFile, Path(targetDir, alias), pageUrl)
+                        copyMarkdown(sourceFile, Path(targetDir, alias), relativePath, siteUrl)
                     }
                 }
                 markdownPaths += relativePath
@@ -260,25 +260,34 @@ internal fun String.htmlPagePath(): String {
 }
 
 /**
- * Decorates a Markdown document for publishing: its front matter is given a
- * `url` entry naming the [pageUrl] the document originates from, and a
- * `lang` entry of the [DEFAULT_LANG] unless it already states one — inserted
- * into an existing front matter, or added as a fresh one when the document
- * has none — and the site [MARKDOWN_COPYRIGHT_FOOTER] is appended. Serving
- * and building share this function, so the only intended difference between
- * the preview and the published file is the [pageUrl] host.
+ * Decorates the Markdown document at the relative [path] for publishing
+ * under the [siteUrl]: its front matter is given a `url` entry naming the
+ * page URL the document originates from, and a `lang` entry of the
+ * [DEFAULT_LANG] unless it already states one — inserted into an existing
+ * front matter, or added as a fresh one when the document has none — its
+ * relative links are made absolute, see [absolutizeLinks], and the site
+ * [MARKDOWN_COPYRIGHT_FOOTER] is appended. Serving and building share this
+ * function, so the only intended difference between the preview and the
+ * published file is the [siteUrl] host.
  *
  * Only the front matter is processed as YAML events, the Markdown body is
- * kept verbatim: rendering the parsed body back would reformat it.
- * A front matter without a closing `---` is malformed and left untouched.
+ * kept verbatim, except for its links: rendering the parsed body back would
+ * reformat it. A front matter without a closing `---` is malformed and left
+ * untouched.
  */
-internal suspend fun decorateMarkdown(content: String, pageUrl: String): String {
+internal suspend fun decorateMarkdown(content: String, path: String, siteUrl: String): String {
+    val pageUrl = siteUrl + path.markdownPagePath()
+    // relative links resolve against the directory of the source, which an
+    // `index.md` shares with its page URL with the trailing slash
+    val documentUrl = siteUrl + path.htmlPagePath()
     val lines = content.split("\n")
     val hasFrontMatter = lines.first().trimEnd() == "---"
     val close = if (hasFrontMatter) {
         lines.drop(1).indexOfFirst { it.trimEnd() == "---" } + 1
     } else 0
-    if (hasFrontMatter && close == 0) return content + MARKDOWN_COPYRIGHT_FOOTER
+    if (hasFrontMatter && close == 0) {
+        return content.absolutizeLinks(documentUrl, siteUrl) + MARKDOWN_COPYRIGHT_FOOTER
+    }
     val yaml = if (hasFrontMatter) {
         flowOf(lines.subList(1, close).joinToString("\n")).parseYaml()
     } else {
@@ -288,7 +297,7 @@ internal suspend fun decorateMarkdown(content: String, pageUrl: String): String 
     val body =
         if (hasFrontMatter) lines.subList(close + 1, lines.size).joinToString("\n")
         else "\n$content"
-    return "---\n$frontMatter---\n$body$MARKDOWN_COPYRIGHT_FOOTER"
+    return "---\n$frontMatter---\n${body.absolutizeLinks(documentUrl, siteUrl)}$MARKDOWN_COPYRIGHT_FOOTER"
 }
 
 /**
@@ -415,16 +424,16 @@ private fun copyFile(sourceFile: Path, targetFile: Path) {
 }
 
 /**
- * Writes the Markdown [sourceFile] to [targetFile] [decorateMarkdown]d with
- * a provenance front matter for [pageUrl] and the copyright footer. The live
+ * Writes the Markdown [sourceFile], at the relative [path] of the site, to
+ * [targetFile] [decorateMarkdown]d for publishing under the [siteUrl]. The live
  * server decorates a served `.md` the same way, so the published file and the
- * preview differ only in the [pageUrl] host.
+ * preview differ only in the [siteUrl] host.
  */
-private suspend fun copyMarkdown(sourceFile: Path, targetFile: Path, pageUrl: String) {
+private suspend fun copyMarkdown(sourceFile: Path, targetFile: Path, path: String, siteUrl: String) {
     targetFile.parent?.let { SystemFileSystem.createDirectories(it) }
     val content = SystemFileSystem.source(sourceFile).buffered().use { it.readString() }
     SystemFileSystem.sink(targetFile).buffered().use { sink ->
-        sink.writeString(decorateMarkdown(content, pageUrl))
+        sink.writeString(decorateMarkdown(content, path, siteUrl))
     }
 }
 
