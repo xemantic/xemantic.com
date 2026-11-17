@@ -1020,6 +1020,52 @@ article nav {
 }
 
 /*
+ * The buttons of the cards in a grid row share a baseline at the bottom
+ * of the cards, which the grid stretches to the height of the tallest:
+ * the card is a column, down to the `section` rendered around a card
+ * heading and its content, and the closing `nav` takes the height left,
+ * holding the buttons at its end. BeerCSS has no helper for it, `max`
+ * grows only a child of a `nav` or a `.row`.
+ * A card with no buttons is left alone.
+ */
+.grid > article:has(nav),
+.grid > article:has(nav) > .padding,
+.grid > article:has(nav) > section,
+.grid > article:has(nav) > .padding > section {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid > article:has(nav) > .padding,
+.grid > article:has(nav) > section,
+.grid > article:has(nav) > .padding > section,
+.grid > article:has(nav) section > nav:last-child {
+  flex: 1;
+}
+
+.grid > article:has(nav) section > nav:last-child {
+  align-items: flex-end;
+  align-content: flex-end;
+}
+
+/*
+ * The children of a flex column no longer collapse their margins, which
+ * would add up between them and make the card taller: the collapsed
+ * gap was always the top margin of the next child, so the bottom ones
+ * go, except for the last child, and so do the margins of a list's
+ * content, which used to collapse through the list into its own.
+ */
+.grid > article:has(nav) > :not(:last-child),
+.grid > article:has(nav) section > :not(:last-child),
+.grid > article:has(nav) section > :is(ul, ol) > li:last-child > :last-child {
+  margin-block-end: 0;
+}
+
+.grid > article:has(nav) section > :is(ul, ol) > li:first-child > :first-child {
+  margin-block-start: 0;
+}
+
+/*
  * The sections of the page content are glass panels, like the
  * registration box of https://luma.com/ - the surface is the
  * `tinted-glass`, which PageLayout.kt adds to them, here it gets

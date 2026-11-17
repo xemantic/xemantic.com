@@ -22,7 +22,7 @@ As award-winning AI developers, we focus on:
 * **AI Ethics & Alignment** - Ensuring AI systems are designed with human values and safety in mind
 
 <nav class="right-align">
-<a class="button transparent" href="../ai/"><span>See Xemantic AI</span><i>arrow_forward</i></a>
+<a class="button border" href="../ai/">See Xemantic AI</a>
 </nav>
 
 </article>
@@ -41,7 +41,7 @@ As AI educators, we offer:
 * **AI Integration Consulting** - Guidance on incorporating AI agents into existing systems
 
 <nav class="right-align">
-<a class="button transparent" href="../ai/"><span>See Xemantic AI</span><i>arrow_forward</i></a>
+<a class="button border" href="../ai/">See Xemantic AI</a>
 </nav>
 
 </article>
@@ -88,8 +88,8 @@ With significant contributions to the [OPENRNDR](https://openrndr.org/) creative
 * **Technical Art Consulting** - Support for artists and institutions in realizing complex digital projects
 
 <nav class="right-align">
-<a class="button transparent" href="../"><span>Xemantic projects</span><i>arrow_forward</i></a>
-<a class="button transparent" href="https://www.instagram.com/xemantic.berlin"><span>Instagram</span><i>north_east</i></a>
+<a class="button border" href="https://www.instagram.com/xemantic.berlin">Instagram</a>
+<a class="button border" href="../">Xemantic projects</a>
 </nav>
 
 </article>

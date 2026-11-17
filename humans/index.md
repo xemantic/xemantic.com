@@ -22,8 +22,8 @@ this research is more relevant than ever.
   contributor to the [OPENRNDR](https://openrndr.org/) creative coding framework
 
 <nav class="right-align">
-<a class="button transparent" href="../kazik/"><span>More</span><i>arrow_forward</i></a>
-<a class="button transparent" href="https://www.linkedin.com/in/kpogoda/"><span>LinkedIn</span><i>north_east</i></a>
+<a class="button border" href="https://www.linkedin.com/in/kpogoda/">LinkedIn</a>
+<a class="button border" href="../kazik/">More</a>
 </nav>
 
 </article>
@@ -41,7 +41,7 @@ Co-founder, psychology and data science.
 * Author of several papers on the intersection of machine learning, psychology and society
 
 <nav class="right-align">
-<a class="button transparent" href="https://www.linkedin.com/in/julia-thomas-a5ba27214/"><span>LinkedIn</span><i>north_east</i></a>
+<a class="button border" href="https://www.linkedin.com/in/julia-thomas-a5ba27214/">LinkedIn</a>
 </nav>
 
 </article>
@@ -60,7 +60,7 @@ AI and software development, design.
   [Synaesthesia and the Mathematics of Perception](https://youtu.be/KGK2W7cwQuw) projects
 
 <nav class="right-align">
-<a class="button transparent" href="https://www.linkedin.com/in/julie-amouzegar-b72bb120b/"><span>LinkedIn</span><i>north_east</i></a>
+<a class="button border" href="https://www.linkedin.com/in/julie-amouzegar-b72bb120b/">LinkedIn</a>
 </nav>
 
 </article>
