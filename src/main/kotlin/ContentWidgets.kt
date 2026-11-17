@@ -366,3 +366,46 @@ fun Flow<SemanticEvent>.checkContentClasses(page: Page): Flow<SemanticEvent> = f
         }
     })
 }
+
+/**
+ * Moves the `id` of the first heading of a card (`article`) to the card itself,
+ * so that an anchor, like an entry of the table of contents, scrolls to the top
+ * of the card, instead of the heading, which may follow an image.
+ *
+ * It has to run after `wrapInSections`, which sets the `id` on the `section`
+ * wrapping the heading. The events of a card are held back only up to
+ * this `section`, as the `article` mark precedes it in the stream.
+ * A card with an `id` of its own, or without a heading, stays as it is,
+ * just like the further headings of a card.
+ */
+fun Flow<SemanticEvent>.promoteCardIds(): Flow<SemanticEvent> = flow {
+    // the article awaiting the id, and the events following it
+    var article: SemanticEvent.Mark? = null
+    val held = mutableListOf<SemanticEvent>()
+    suspend fun release(id: String? = null) {
+        val mark = article ?: return
+        emit(if (id != null) mark.copy(attributes = mark.attributes + ("id" to id)) else mark)
+        held.forEach { emit(it) }
+        held.clear()
+        article = null
+    }
+    collect { event ->
+        when {
+            event is Mark && event.name == "article" -> {
+                release()
+                if (event["id"] == null) article = event else emit(event)
+            }
+            article == null -> emit(event)
+            event is Mark && event.name == "section" && event["id"] != null -> {
+                release(event["id"])
+                emit(event.copy(attributes = event.attributes - "id"))
+            }
+            event is Unmark && event.name == "article" -> {
+                release()
+                emit(event)
+            }
+            else -> held += event
+        }
+    }
+    release()
+}
