@@ -267,6 +267,8 @@ private const val NEWSLETTER_SUBSCRIBE_URL =
  * The form subscribing to the newsletter, see [NEWSLETTER_SUBSCRIBE_URL].
  * Buttondown answers with a page of its own, asking to confirm the
  * subscription, opened in a new tab, so that the reader stays on the site.
+ * The email field and the button are joined into a single pill,
+ * a BeerCSS `nav.no-space` of a `left-round` field and a `right-round` button.
  */
 private suspend fun MatcherScope.newsletterForm() {
     "div"("id" to "newsletter", "class" to "site-footer-newsletter") {
@@ -276,15 +278,19 @@ private suspend fun MatcherScope.newsletterForm() {
             "method" to "post",
             "target" to "_blank"
         ) {
-            "input"(
-                "type" to "email",
-                "name" to "email",
-                "required" to "",
-                "autocomplete" to "email",
-                "placeholder" to "your email",
-                "aria-label" to "Your email address"
-            ) {}
-            "button"("class" to "small") { +"Subscribe" }
+            "nav"("class" to "no-space") {
+                "div"("class" to "max field border left-round") {
+                    "input"(
+                        "type" to "email",
+                        "name" to "email",
+                        "required" to "",
+                        "autocomplete" to "email",
+                        "placeholder" to "your email",
+                        "aria-label" to "Your email address"
+                    ) {}
+                }
+                "button"("class" to "large right-round") { +"Subscribe" }
+            }
         }
     }
 }
@@ -557,10 +563,23 @@ fun Flow<SemanticEvent>.applyPageLayout(
                     "nav"("class" to "site-footer-groups", "aria-label" to "Site map") {
                         footer.forEach { group ->
                             "div" {
-                                "h2" { +group.title }
+                                "h2" {
+                                    val href = group.href
+                                    if (href != null) {
+                                        "a"("href" to href) { +group.title }
+                                    } else {
+                                        +group.title
+                                    }
+                                }
                                 "ul" {
                                     group.links.forEach { link ->
-                                        "li" { "a"("href" to link.href) { +link.label } }
+                                        "li" {
+                                            "a"("href" to link.href) { +link.label }
+                                            link.note?.let { note ->
+                                                +" "
+                                                "span"("class" to "site-footer-note") { +note }
+                                            }
+                                        }
                                     }
                                 }
                             }

@@ -176,22 +176,23 @@ h1 {
 }
 
 /*
- * The page title glows: two text shadows of the same color, a tight
- * one outlining the letters and a wide one spreading the light around
- * them.
+ * The page title glows: three text shadows of the same color, a tight
+ * one outlining the letters, a wide one spreading the light around
+ * them, and a halo reaching further out.
  * The color (`--title-glow`) is set for each color scheme: a bright,
  * neon green against the dark background, and purple against the light
  * one, where a glow has to be darker to be noticed.
  */
 main h1 {
-  --title-glow: rgb(150 60 220 / .4);
+  --title-glow: rgb(150 60 220 / .55);
   text-shadow:
     0 0 .08em var(--title-glow),
-    0 0 .4em var(--title-glow);
+    0 0 .4em var(--title-glow),
+    0 0 .7em var(--title-glow);
 }
 
 body.dark main h1 {
-  --title-glow: rgb(60 255 120 / .4);
+  --title-glow: rgb(60 255 120 / .55);
 }
 
 /*
@@ -759,6 +760,8 @@ body:not(.dark) .color-scheme-toggle > .to-light {
  * primary color, while in the light scheme, where the shader paints
  * a sky, it lightens it, as a pale one - the primary color alone,
  * a light tone in the dark scheme, would brighten the backdrop there.
+ * The cards of the page content (`article`) take it by their element,
+ * with no class to repeat in the Markdown of every card.
  * The latter selectors outweigh BeerCSS's `background-color: inherit`
  * of a `.fixed` header and the surface of a `dialog.left`.
  * A browser without `color-mix()` drops the declaration: the bar, the
@@ -766,6 +769,7 @@ body:not(.dark) .color-scheme-toggle > .to-light {
  * which have none, only blur the shader.
  */
 .tinted-glass,
+main article,
 :is(header, footer).fixed.tinted-glass,
 dialog.left.tinted-glass {
   background-color: color-mix(
@@ -780,6 +784,7 @@ dialog.left.tinted-glass {
 @media (prefers-reduced-transparency: reduce) {
 
   .tinted-glass,
+  main article,
   :is(header, footer).fixed.tinted-glass,
   dialog.left.tinted-glass {
     background-color: var(--surface-container);
@@ -839,7 +844,7 @@ nav.site-footer-groups {
 
 .site-footer-groups h2 {
   font-size: .875rem;
-  font-weight: 500;
+  font-weight: 700;
   color: var(--on-surface);
 }
 
@@ -851,7 +856,15 @@ nav.site-footer-groups {
   gap: .5rem;
 }
 
-.site-footer-groups a,
+/* the size of the navigation items of the top app bar, as the headings above */
+.site-footer-groups :not(h2) > a {
+  font-size: .875rem;
+  line-height: 1.25rem;
+  color: var(--on-surface);
+}
+
+/* the note following a link, like the "(alpha)" of a product */
+.site-footer-note,
 .site-footer-legal {
   font-size: .8125rem;
   line-height: 1.25rem;
@@ -888,33 +901,8 @@ nav.site-footer-groups {
 }
 
 .site-footer-newsletter form {
-  display: flex;
-  gap: .5rem;
   margin-block-start: .5rem;
-  max-inline-size: 22rem;
-}
-
-.site-footer-newsletter input {
-  flex: 1 1 0;
-  min-inline-size: 0;
-  block-size: 2.5rem;
-  padding: 0 1rem;
-  border: .0625rem solid var(--outline);
-  border-radius: 1.25rem;
-  background: transparent;
-  color: var(--on-surface);
-  font: inherit;
-  font-size: .875rem;
-}
-
-.site-footer-newsletter input:focus-visible {
-  outline: .125rem solid var(--primary);
-  outline-offset: -.0625rem;
-}
-
-.site-footer-newsletter button {
-  margin: 0;
-  block-size: 2.5rem;
+  max-inline-size: 24rem;
 }
 
 /* a div rather than a nav, which BeerCSS would push down by a 1rem margin */
@@ -997,11 +985,38 @@ nav.drawer-page-actions {
 
 /*
  * Headings in Markdown written inside a BeerCSS card (`article`) are
- * the card titles, set at Material 3's headline small instead of the
- * size of a page section heading.
+ * the card titles, set bold at Material 3's headline small instead of
+ * the size of a page section heading.
  */
 article h3 {
   font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/*
+ * The image heading a BeerCSS `article.no-padding` card, flush with
+ * the edges of the card: written in Markdown it is a link in
+ * a paragraph, an inline box leaving room for the descenders of
+ * a line of text below the image, and a gap above it.
+ */
+article.no-padding > p:first-child,
+article.no-padding > p:first-child > a {
+  display: block;
+  line-height: 0;
+  margin: 0;
+}
+
+article.no-padding > p:first-child img {
+  display: block;
+}
+
+article.no-padding > p:first-child + .padding {
+  margin-block-start: 0;
+}
+
+/* the buttons of a card wrap where the card is too narrow for them, instead of overflowing it */
+article nav {
+  flex-wrap: wrap;
 }
 
 /*
@@ -1027,12 +1042,13 @@ main > section > :first-child {
 }
 
 /*
- * The text of the sections is set at Material 3's body large, BeerCSS
+ * The text of the sections, and of the cards (`article`) outside them,
+ * is set at Material 3's body large, BeerCSS
  * sets the body at body medium (.875rem), too small for reading prose.
  * The list items follow, so that a list does not look like a footnote
  * of the paragraph introducing it.
  */
-main > section :is(p, li) {
+:is(main > section, main article) :is(p, li) {
   font-size: 1.125rem;
   line-height: 1.75rem;
 }
@@ -1042,8 +1058,12 @@ main > section :is(p, li) {
  * the text around them: in the primary color, underlined by a thin line
  * of half its opacity, set below the descenders, turning solid on hover.
  * Buttons, e.g. the social media links, are left out.
+ * BeerCSS makes every link an `inline-flex` box, which does not break
+ * across lines: a link too long for the rest of its line would move to
+ * a line of its own, leaving the punctuation following it on yet another.
  */
-main > section :is(p, li) a:not(.button, .chip, .circle) {
+:is(main > section, main article) :is(p, li) a:not(.button, .chip, .circle) {
+  display: inline;
   color: var(--primary);
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -1052,11 +1072,11 @@ main > section :is(p, li) a:not(.button, .chip, .circle) {
   transition: text-decoration-color var(--speed2);
 }
 
-main > section :is(p, li) a:not(.button, .chip, .circle):is(:hover, :focus-visible) {
+:is(main > section, main article) :is(p, li) a:not(.button, .chip, .circle):is(:hover, :focus-visible) {
   text-decoration-color: var(--primary);
 }
 
-main > section :is(p, li) a:not(.button, .chip, .circle):focus-visible {
+:is(main > section, main article) :is(p, li) a:not(.button, .chip, .circle):focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
   border-radius: .25rem;
@@ -1064,7 +1084,7 @@ main > section :is(p, li) a:not(.button, .chip, .circle):focus-visible {
 
 @media (prefers-reduced-motion: reduce) {
 
-  main > section :is(p, li) a {
+  :is(main > section, main article) :is(p, li) a {
     transition: none;
   }
 
