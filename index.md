@@ -59,7 +59,7 @@ Golem XIV, Honest Annie, Umwelt, markanywhere, Anthropic SDK Kotlin and more.
 
 <article class="no-padding s12 m12 l6">
 
-<a href="/services/"><img class="responsive home-card-image" src="/ai/workshops/images/dvlp-energy-ai-workshop-at-prachtsaal.webp" alt="dvlp.energy team during AI workshop at Prachtsaal"></a>
+<a href="/services/"><img class="responsive home-card-image" src="/services/images/ai-consulting.webp" alt="Generative artwork, a symmetric form of blurred light glowing red and orange in the center, and blue in the corners, on black"></a>
 
 <div class="padding">
 
