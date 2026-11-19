@@ -79,7 +79,7 @@ fun Flow<String>.renderMarkdownToHtml(page: Page): Flow<String> = flow {
 
 /**
  * Root entries of the repository which are not a part of the website:
- * the build machinery, the licensing files, the Jekyll leftovers, and
+ * the build machinery, the licensing files, and
  * the [SITE_FOOTER_FILE], which is rendered into every page instead.
  */
 internal val excludedRootEntries = setOf(
@@ -87,13 +87,6 @@ internal val excludedRootEntries = setOf(
     "LICENSE",
     "LICENSES",
     "REUSE.toml",
-    "_config.yml",
-    "_includes",
-    "_layouts",
-    "_plugins",
-    "_site",
-    "Gemfile",
-    "Gemfile.lock",
     "build",
     "build-logic",
     "gradle",

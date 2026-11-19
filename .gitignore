@@ -1,12 +1,6 @@
 .gradle
 build/
 
-### Jekyll (legacy, pre Kotlin renderer) ###
-_site/
-.sass-cache/
-.jekyll-cache/
-.jekyll-metadata
-
 ### IntelliJ IDEA ###
 /.idea/*
 !/.idea/codeStyles/

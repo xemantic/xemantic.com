@@ -53,9 +53,6 @@ not only to the repository's own documentation.
   `ensureFrontmatterTitle` is just as position-sensitive:
   it derives the `<title>` only from an `h1` directly following the front matter,
   so it has to run straight after `parse()`, before anything wraps the heading.
-- `./gradlew run` renders into `build/website`,
-  while the legacy Jekyll output still sits in the untracked `_site` directory —
-  do not confuse the two when verifying a change.
 - BeerCSS is not loaded from a CDN, nor through its JavaScript loader:
   `generateBeerCss` concatenates the chosen modules into `build/generated/website/assets/css/beercss.css`,
   together with a Material Symbols font subset holding only the listed icons —
