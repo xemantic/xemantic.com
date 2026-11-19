@@ -3,6 +3,7 @@ The site map in the footer of every page.
 Each `##` heading becomes a column,
 the list of links below it becomes the column's entries,
 the text following a link, like `(alpha)`, becomes its note.
+The paragraph at the end is the colophon, closing the footer.
 Anything else in this file is ignored,
 and the file itself is not published.
 -->
@@ -16,13 +17,13 @@ and the file itself is not published.
 
 ## [Products](/products/)
 
-- [Golem XIV](https://github.com/xemantic/golem-xiv) (alpha)
-- [Honest Annie](https://github.com/xemantic/honest-annie) (alpha)
+- [Golem XIV](/golem-xiv/) (alpha)
+- [Honest Annie](/honest-annie/) (alpha)
 - [Umwelt](https://github.com/xemantic/umwelt) (alpha)
 - [Noumen](https://github.com/xemantic/noumen) (alpha)
-- [markanywhere](https://github.com/xemantic/markanywhere)
+- [markanywhere](/markanywhere/)
 - [Anthropic SDK Kotlin](https://github.com/xemantic/anthropic-sdk-kotlin)
-- [Claudine](https://github.com/xemantic/claudine)
+- [Claudine](/ai/claudine/)
 
 ## [Services](/services/)
 
@@ -40,3 +41,6 @@ and the file itself is not published.
 - [Contact](/contact/)
 - [Archive](/archive/)
 - [Legal Notice (Impressum)](/impressum/)
+
+Made by humans and machines at [Prachtsaal](https://prachtsaal.berlin/), Berlin ·
+built with [markanywhere](/markanywhere/) and [BeerCSS](https://www.beercss.com/)

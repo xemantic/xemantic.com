@@ -21,6 +21,7 @@ import com.xemantic.markanywhere.transform.transform
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.io.buffered
 import kotlinx.io.files.SystemFileSystem
@@ -46,13 +47,38 @@ import java.net.URLEncoder
 private const val SOCIAL_MEDIA_LINKS = "social-media-links"
 
 /**
+ * The class of a `div` holding a Markdown list of short statements,
+ * typed one at a time by [STATEMENTS_JS], as if on a terminal:
+ *
+ * ```markdown
+ * <div class="statements">
+ *
+ * - Harness engineering
+ * - Loop engineering
+ *
+ * </div>
+ * ```
+ *
+ * The list stays a list in the rendered page, so it reads as one
+ * without the stylesheet, and without scripting xemantic.css lays
+ * the statements out one below another.
+ */
+private const val STATEMENTS = "statements"
+
+/** The script typing the [STATEMENTS], one after another, in a line it adds next to their list. */
+private const val STATEMENTS_JS = "/assets/js/statements.js"
+
+/**
  * The class of a `figure` holding a Markdown link to a YouTube video,
- * rendered as the embedded player, the link text becoming its title:
+ * rendered as the embedded player with rounded corners, the link text becoming its title,
+ * and an optional `figcaption` the caption shown below it:
  *
  * ```markdown
  * <figure class="youtube-video">
  *
  * [Video title](https://www.youtube.com/watch?v=rRjG86TAyq4)
+ *
+ * <figcaption>The caption of the video</figcaption>
  *
  * </figure>
  * ```
@@ -91,7 +117,7 @@ private const val GOOGLE_MAP_EMBED_URL = "https://www.google.com/maps/embed?"
  * ```markdown
  * <section class="profile">
  *
- * ![Kazik Pogoda](../assets/images/people/kazik/photo.jpg)
+ * ![Kazik Pogoda](../humans/images/photo.jpg)
  *
  * I am an independent AI researcher …
  *
@@ -106,6 +132,38 @@ private const val PROFILE = "profile"
 
 /** The mode of the paragraph holding the photograph of a [PROFILE]. */
 private const val PROFILE_PHOTO = "profile-photo"
+
+/**
+ * The class of a `div` holding frequently asked questions, each
+ * a heading followed by its answer, any Markdown:
+ *
+ * ```markdown
+ * <div class="faq">
+ *
+ * ### Is it a question?
+ *
+ * Yes, and this is the answer.
+ *
+ * </div>
+ * ```
+ *
+ * A question is rendered as a `details` element, BeerCSS's expansion,
+ * folded until asked for: the section `wrapInSections` starts at
+ * the heading becomes the `details`, keeping its `id`, so that the table
+ * of contents still links to the question, and the heading becomes
+ * the `summary`, followed by the icon turning as the answer unfolds.
+ * The questions share the column of the text of an article.
+ */
+private const val FAQ = "faq"
+
+/** The mode of the content of a question of the [FAQ]. */
+private const val FAQ_ITEM = "faq-item"
+
+/** The script unfolding the question of a [FAQ] a link points to, e.g. one of the table of contents. */
+private const val FAQ_JS = "/assets/js/faq.js"
+
+/** The headings, any of which may ask a question of the [FAQ]. */
+private val HEADINGS = setOf("h2", "h3", "h4", "h5", "h6")
 
 /**
  * Prism, highlighting the fenced code blocks in the browser, generated
@@ -154,9 +212,10 @@ internal fun SemanticEvent.Mark.hasClass(cssClass: String) =
  * Renders the Markdown widgets of the content, plain Markdown wrapped in an
  * HTML element of a semantic class, so that the source stays readable as
  * Markdown, while the rendered page gets the markup it needs, see
- * [SOCIAL_MEDIA_LINKS], [YOUTUBE_VIDEO], [GOOGLE_MAP] and [PROFILE]. Of the wrapped Markdown only
+ * [SOCIAL_MEDIA_LINKS], [STATEMENTS], [YOUTUBE_VIDEO], [GOOGLE_MAP], [PROFILE] and [FAQ]. Of the wrapped Markdown only
  * the links are kept, any surrounding list or paragraph is dropped,
- * except for the [PROFILE], which keeps its bio as it is. A fenced code block
+ * except for the [STATEMENTS], which keep their list,
+ * and the [PROFILE], which keeps its bio as it is. A fenced code block
  * is followed by [PRISM_JS], highlighting it.
  */
 fun Flow<SemanticEvent>.applyContentWidgets(): Flow<SemanticEvent> = transform {
@@ -166,7 +225,7 @@ fun Flow<SemanticEvent>.applyContentWidgets(): Flow<SemanticEvent> = transform {
 
     match({ name == "div" && hasClass(SOCIAL_MEDIA_LINKS) }) {
         "nav"(
-            "class" to "$SOCIAL_MEDIA_LINKS wrap center-align",
+            "class" to "$SOCIAL_MEDIA_LINKS wrap",
             "aria-label" to "Social media"
         ) {
             children(mode = SOCIAL_MEDIA_LINKS)
@@ -182,13 +241,21 @@ fun Flow<SemanticEvent>.applyContentWidgets(): Flow<SemanticEvent> = transform {
             val name = label.toString().trim()
             "a"(
                 "href" to href,
-                "class" to "circle transparent",
+                "class" to "circle transparent wave",
                 "aria-label" to name,
                 "title" to name
             ) {
                 "span"("class" to "brand-icon $icon") {}
             }
         }
+    }
+
+    match({ name == "div" && hasClass(STATEMENTS) }) { mark ->
+        "div"(mark.attributes) {
+            children()
+        }
+        // deferred, so that it runs only once the page is parsed, whichever list it serves
+        "script"("src" to STATEMENTS_JS, "defer" to "") {}
     }
 
     // the attributes of the photograph of the profile being read, null until its paragraph
@@ -232,7 +299,8 @@ fun Flow<SemanticEvent>.applyContentWidgets(): Flow<SemanticEvent> = transform {
     }
 
     match({ name == "figure" && hasClass(YOUTUBE_VIDEO) }) { mark ->
-        "figure"(mark.attributes) {
+        // BeerCSS's `round` gives the player rounded corners
+        "figure"(mark.attributes + ("class" to "${mark["class"]} round")) {
             children(mode = YOUTUBE_VIDEO)
         }
     }
@@ -252,6 +320,13 @@ fun Flow<SemanticEvent>.applyContentWidgets(): Flow<SemanticEvent> = transform {
                 "referrerpolicy" to "strict-origin-when-cross-origin",
                 "allowfullscreen" to ""
             ) {}
+        }
+    }
+
+    // the caption of a video is kept as it is
+    match("figcaption", mode = YOUTUBE_VIDEO) { mark ->
+        mark.name(mark.attributes) {
+            children()
         }
     }
 
@@ -293,6 +368,38 @@ fun Flow<SemanticEvent>.applyContentWidgets(): Flow<SemanticEvent> = transform {
         }
     }
 
+    match({ name == "div" && hasClass(FAQ) }) { mark ->
+        "div"(mark.attributes + ("class" to "${mark["class"]} prose")) {
+            children(mode = FAQ)
+        }
+        "script"("src" to FAQ_JS, "defer" to "") {}
+    }
+
+    match("section", mode = FAQ) { mark ->
+        "details"(mark.attributes) {
+            children(mode = FAQ_ITEM)
+        }
+    }
+
+    match({ name in HEADINGS }, mode = FAQ_ITEM) { mark ->
+        "summary" {
+            mark.name(mark.attributes) {
+                children()
+            }
+            "i" { +"expand_more" }
+        }
+    }
+
+    // the answer, and anything of the list which is not a question, is rendered as usual
+    listOf(FAQ, FAQ_ITEM).forEach { mode ->
+        match("*", mode = mode) { mark ->
+            mark.name(mark.attributes) {
+                children()
+            }
+        }
+        matchText(mode = mode) { +it }
+    }
+
     // only the first code block of a page brings the script
     var prismAdded = false
 
@@ -323,7 +430,7 @@ fun Flow<SemanticEvent>.applyContentWidgets(): Flow<SemanticEvent> = transform {
  * The classes the content widgets recognize in the Markdown source,
  * see [applyContentWidgets].
  */
-private val CONTENT_WIDGET_CLASSES = setOf(SOCIAL_MEDIA_LINKS, YOUTUBE_VIDEO, GOOGLE_MAP, PROFILE)
+private val CONTENT_WIDGET_CLASSES = setOf(SOCIAL_MEDIA_LINKS, STATEMENTS, YOUTUBE_VIDEO, GOOGLE_MAP, PROFILE, FAQ)
 
 /** The stylesheets every page links, see [applyPageLayout]. */
 private val PAGE_STYLESHEETS = listOf(BEER_CSS, XEMANTIC_CSS)
@@ -408,4 +515,21 @@ fun Flow<SemanticEvent>.promoteCardIds(): Flow<SemanticEvent> = flow {
         }
     }
     release()
+}
+
+/**
+ * Adds BeerCSS's `wave` to every card (`article`) of the content, the layer
+ * highlighting it on hover and keyboard focus, so that the Markdown does not
+ * have to repeat the class on each card. The effect is CSS only, an `::after`
+ * of the card, which takes no pointer events, so the links and the buttons
+ * of the card work as before.
+ *
+ * It has to run after [checkContentClasses], as `wave` is not a class of the content.
+ */
+fun Flow<SemanticEvent>.addCardWave(): Flow<SemanticEvent> = map { event ->
+    if (event is Mark && event.name == "article") {
+        val classes = event["class"]?.split(' ')?.filter { it.isNotEmpty() }.orEmpty()
+        if ("wave" in classes) event
+        else event.copy(attributes = event.attributes + ("class" to (classes + "wave").joinToString(" ")))
+    } else event
 }

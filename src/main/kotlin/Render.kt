@@ -52,7 +52,7 @@ import kotlinx.io.writeString
  * in its front matter (or without any front matter) gets one derived
  * from its first `h1`, so every rendered page carries a `<title>`.
  * The `head` is completed with the metadata of the [page], see
- * [addPageMetadata], the cards take the `id` of their heading, see [promoteCardIds], the images are completed, see [completeImages], the [applyContentWidgets] are rendered, and the page layout gets the site map of the
+ * [addPageMetadata], the cards take the `id` of their heading, see [promoteCardIds], and BeerCSS's `wave`, see [addCardWave], the images are completed, see [completeImages], the [applyContentWidgets] are rendered, and the page layout gets the site map of the
  * footer, read from the source directory for every page, so that the live server reflects its changes right away.
  * The document is prefixed with the HTML5 doctype, otherwise browsers
  * would fall back to the quirks mode, where the BeerCSS body grid
@@ -66,7 +66,9 @@ fun Flow<String>.renderMarkdownToHtml(page: Page): Flow<String> = flow {
             .checkContentClasses(page)
             .wrapInSections(tocDepth = 6)
             .promoteCardIds()
+            .addCardWave()
             .wrapInHtmlDocument()
+            .layOutArticle(page)
             .addPageMetadata(page)
             .completeImages(page)
             .applyContentWidgets()

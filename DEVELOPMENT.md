@@ -46,10 +46,12 @@ datePublished: 2026-11-20
 dateModified: 2026-12-03     # optional
 about: https://www.wikidata.org/wiki/Q…   # optional, the concept explained
 image: images/cover.webp     # optional, also the link preview image
+toc: closed                  # optional, see below
 ---
 ```
 
-- A page in `blog/` is a `BlogPosting`.
+- A page in `news/` is a `BlogPosting`, except for the news index itself —
+  company announcements are not journalism, which `NewsArticle` is meant for.
 - The profile page of a person in `PEOPLE` is a `ProfilePage`,
   its social media links becoming the person's `sameAs` profiles.
 - Any other page is a `WebPage`,
@@ -61,6 +63,14 @@ An `Article` or `BlogPosting` requires `author`, `datePublished` and `descriptio
 and the build fails when one is missing or invalid.
 The published Markdown carries the same front matter,
 with the `author` key replaced by the person's name.
+
+An `Article`, a `BlogPosting` and a `Course` are laid out for reading:
+the text flows in a column of a comfortable line length,
+with the images set between its runs.
+
+On wide screens the table of contents is open next to the content by default.
+A page setting `toc: closed`, like the home page,
+keeps it closed until its toggle in the top app bar is clicked.
 
 ## Update BeerCSS and Material Symbols
 

@@ -7,7 +7,11 @@
  * open by default and not closed by a click on the content, while on
  * narrower ones it stays an `auto` popover, closed by a click outside,
  * by Escape, and by following one of its links. Crossing the breakpoint
- * restores the default of the new viewport. The script runs right after
+ * restores the default of the new viewport. A page without a table of
+ * contents, whose drawer holds the page actions alone, or one setting `toc: closed`
+ * in its front matter (`data-default="closed"` on the drawer) keeps the
+ * drawer closed on wide viewports as well, until the toggle is clicked,
+ * and then it opens next to the content just the same. The script runs right after
  * the drawer, before the first paint, so a wide page does not show the
  * drawer sliding in. Following a link of the table of contents copied
  * to the navigation drawer closes that one as well.
@@ -16,11 +20,12 @@
 
   const drawer = document.currentScript.previousElementSibling;
   const wide = matchMedia("(min-width: 80rem)");
+  const closed = drawer.dataset.default === "closed";
 
   function applyDefault() {
     if (drawer.matches(":popover-open")) drawer.hidePopover();
     drawer.popover = wide.matches ? "manual" : "auto";
-    if (wide.matches) {
+    if (wide.matches && !closed) {
       drawer.style.transition = "none";
       drawer.showPopover();
       // showing a dialog focuses its first link, unwanted when not asked for
@@ -112,6 +117,30 @@
     });
   }
 
+  /*
+   * A table of contents taller than the drawer scrolls within it, and
+   * xemantic.css fades it out towards the edge it continues beyond,
+   * given the distance left to scroll in either direction.
+   */
+  const scrolled = drawer.querySelector("nav#toc");
+
+  function fade() {
+    if (!scrolled) return;
+    const before = scrolled.scrollTop;
+    const after = scrolled.scrollHeight - scrolled.clientHeight - before;
+    scrolled.style.setProperty("--toc-scroll-before", Math.max(0, before) + "px");
+    scrolled.style.setProperty("--toc-scroll-after", Math.max(0, after) + "px");
+  }
+
+  if (scrolled) {
+    scrolled.addEventListener("scroll", fade, { passive: true });
+    // neither a font loaded late, rewrapping the links, nor the drawer
+    // being shown, fires any scroll or resize event
+    const resized = new ResizeObserver(fade);
+    resized.observe(scrolled);
+    [...scrolled.children].forEach(child => resized.observe(child));
+  }
+
   let scheduled = false;
   function schedule() {
     if (scheduled) return;
@@ -119,6 +148,7 @@
     requestAnimationFrame(() => {
       scheduled = false;
       update();
+      fade();
     });
   }
 
@@ -135,5 +165,6 @@
   drawer.addEventListener("toggle", schedule);
   menu.addEventListener("toggle", schedule);
   update();
+  fade();
 
 })();

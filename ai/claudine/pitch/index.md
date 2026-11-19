@@ -263,7 +263,7 @@ https://xemantic.com
 ### Kazik Pogoda
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
-<img src="../../../assets/images/people/kazik/Kazik_Pogoda-Algorave_at_Prachtsaal.webp" alt="Kazik Pogoda" style="width: 45%;">
+<img src="../../../humans/images/Kazik_Pogoda-Algorave_at_Prachtsaal.webp" alt="Kazik Pogoda" style="width: 45%;">
 <ul style="width: 45%; font-size: .8em;">
 <li>Founder and CTO</li>
 <li>AI Developer</li>

@@ -1,5 +1,6 @@
 ---
 description: The research of Xemantic.
+toc: closed
 ---
 # Research
 
@@ -7,19 +8,18 @@ description: The research of Xemantic.
 
 <article class="no-padding s12 m6 l4">
 
-<a href="https://www.youtube.com/watch?v=rRjG86TAyq4"><img class="responsive" src="/research/images/golem-xiv-computational-consciousness-video.webp" alt="Golem XIV, autonomous metacognitive AI system with semantic memory and self-directed research, Kazik Pogoda speaking at the Computational Consciousness event of CIMC at Foresight AI Node, CIC Berlin"></a>
+<a href="/golem-xiv/"><img class="responsive" src="/research/images/golem-xiv-computational-consciousness-video.webp" alt="Golem XIV, autonomous metacognitive AI system with semantic memory and self-directed research, Kazik Pogoda speaking at the Computational Consciousness event of CIMC at Foresight AI Node, CIC Berlin"></a>
 
 <div class="padding">
 
 ### Golem XIV
 
 An autonomous metacognitive AI system with semantic memory and self-directed research —
-a talk given at the [Computational Consciousness event of the California Institute for Machine Consciousness](https://cimc.ai/).
+a talk given at the [Computational Consciousness](https://cimc.ai/events/computational-consciousness) event of the [California Institute for Machine Consciousness](https://cimc.ai/).
 
 <nav class="right-align">
-<a class="button border" href="https://github.com/xemantic/golem-xiv">Source</a>
-<a class="button border" href="/consciousness/">Presentation</a>
 <a class="button border" href="https://www.youtube.com/watch?v=rRjG86TAyq4">Video</a>
+<a class="button" href="/golem-xiv/">More</a>
 </nav>
 
 </div>
@@ -58,7 +58,7 @@ a talk given at [Foresight Institute](https://foresight.org)'s
 Thirteen open science problems, thirteen open-source research loops,
 built in one day at the Claude Impact Lab Berlin 2026
 by scientists and AI engineers
-of Claude Community Berlin and Foresight Institute.
+of Claude Community Berlin and [Foresight Institute](https://foresight.org).
 
 <nav class="right-align">
 <a class="button border" href="https://xemantic.github.io/claude-impact-lab-2026/">Report</a>

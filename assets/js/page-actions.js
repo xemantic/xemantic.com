@@ -31,15 +31,26 @@
     }
   }
 
+  /*
+   * The button keeps at least its width while it shows the feedback, so
+   * that the shorter "Copied!" neither shrinks it nor moves whatever
+   * is next to it, the content staying centered; only a longer label
+   * widens it. The icon and the label to return to are remembered on the
+   * first click, a click during the feedback would read the feedback itself.
+   */
   function showFeedback(button, icon, label) {
     const [iconElement, labelElement] = [button.querySelector("i"), button.querySelector("span")];
-    const [previousIcon, previousLabel] = [iconElement.textContent, labelElement.textContent];
+    if (!button.feedbackTimeout) {
+      button.restore = [iconElement.textContent, labelElement.textContent];
+      button.style.minInlineSize = `${button.getBoundingClientRect().width}px`;
+    }
     iconElement.textContent = icon;
     labelElement.textContent = label;
     clearTimeout(button.feedbackTimeout);
     button.feedbackTimeout = setTimeout(() => {
-      iconElement.textContent = previousIcon;
-      labelElement.textContent = previousLabel;
+      [iconElement.textContent, labelElement.textContent] = button.restore;
+      button.style.minInlineSize = "";
+      button.feedbackTimeout = null;
     }, FEEDBACK_DURATION);
   }
 

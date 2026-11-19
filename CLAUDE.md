@@ -70,15 +70,24 @@ not only to the repository's own documentation.
 - BeerCSS adds a `1rem` top margin to a block element (`section`, `nav`, `p`, headings, …) following any sibling,
   with a selector too specific (0,4,1) to override casually —
   an absolutely positioned helper element therefore goes *after* such a block in the markup, not before it.
+- BeerCSS's `helpers/alignment` module sets `justify-content` of `.left-align`, `.center-align` and `.right-align` with `!important`,
+  so no selector overrides the alignment of an element carrying one of these classes —
+  a widget whose alignment depends on its context must not emit them.
 - The Arsenal `@font-face` rules each repeat the same `size-adjust` value,
   which cannot be shared through a custom property —
   `var()` is invalid in `@font-face` descriptors, and the browser silently drops such a declaration.
 - markanywhere does not parse an image nested in a link, `[![alt](image.webp)](https://…)` renders as literal text —
   write such a linked image as raw HTML, `<a href="…"><img src="…" alt="…"></a>`.
+- markanywhere wraps raw inline HTML following a closing block tag (`</div>` then `<a class="button">…</a>`) in a `<p>`,
+  even inside a raw `nav` — `xemantic.css` dissolves such a paragraph of a card `nav` with `display: contents`.
 - markanywhere keeps only the language of a fenced code block's info string, as the `language-…` class —
   anything after it (a file name, a title) is dropped, see [markanywhere#222](https://github.com/xemantic/markanywhere/issues/222).
 - markanywhere renders a line break and indentation between `</code>` and `</pre>`,
   which would show as an empty last line — `xemantic.css` makes `pre` a grid, where such white space takes no space.
+- markanywhere passes an inline `svg` through only as one raw HTML block, so no blank line may occur between its tags —
+  and every class used inside it has to be defined in `xemantic.css`, like any other content class (see `figure.diagram`).
+- A `backdrop-filter` nested in an element which has one itself blurs nothing, only its tint shows —
+  a glass surface holding another glass (the TOC drawer and the page actions menu) takes its own glass from a `::before`.
 - `prism.js` is loaded `async`, so nothing may depend on it having run:
   a script extending a Prism grammar, or reading the highlighted tokens, races with it.
 - Google Fonts serves the `icon_names` subset as woff2 only to a browser User-Agent,

@@ -25,15 +25,14 @@ fun main() = runBlocking {
 }
 ```
 
-## Invitation
+## Do you want to build your own Claude Code?
 
-### Do you want to build your own ChatGPT, Claude Code or OpenClaw?
-
-But why would you build these tools if you can just use them? Learning simple yet powerful patterns of context and **harness engineering** lets you:
+But why would you do that if you can just use it? Learning simple yet powerful patterns of **context engineering** and **harness engineering** lets you:
 
 - use any existing agentic AI tools to full extent by understanding their internal mechanics
 - augment your projects with a machine-reasoning layer
 - autonomously conduct parts of your scientific research
+- prepare for Claude Developer, Claude Architect and Claude Forward Deployed Engineer certification
 
 We are [Xemantic](/), offering intensive one-day workshops and buildathons on **building powerful AI agents**. Your instructor, [Kazik Pogoda](#about-kazik-your-instructor), will take you on a journey of developing autonomous and highly capable AI systems, like [Claudine](https://github.com/xemantic/claudine/) (older sister of Claude Code) and [Golem XIV](https://github.com/xemantic/golem-xiv) (a metacognitive AI system with knowledge-graph memory and self-directed research).
 
@@ -99,7 +98,7 @@ Kazik is an independent AI researcher, open source enthusiast, open society advo
 
 As lead instructor at Xemantic, Kazik has personally trained over a hundred participants — from individual practitioners to entire organizations — in building agentic AI systems, and mentored the Agentic AI track at the [Berlin Bio × AI Hackathon](https://www.biohack.berlin/).
 
-![Kazik Pogoda live coding during Algorave at Prachtsaal](../../assets/images/people/kazik/Kazik_Pogoda-Algorave_at_Prachtsaal.webp)
+![Kazik Pogoda live coding during Algorave at Prachtsaal](../../humans/images/Kazik_Pogoda-Algorave_at_Prachtsaal.webp)
 
 ## Upcoming Sessions
 
@@ -175,6 +174,8 @@ Our workshop adheres to the [Berlin Code of Conduct](https://berlincodeofconduct
 
 ## Frequently Asked Questions
 
+<div class="faq">
+
 ### What level of programming experience is required?
 
 Our workshop is designed to be accessible to developers of all skill levels. The key requirements are:
@@ -203,3 +204,5 @@ We are working on that. Depending on popularity, we might also consider a pre-re
 While our workshop examples are available in Python, TypeScript, and Kotlin, Xemantic's own AI tooling is built primarily in Kotlin. Kotlin offers unique and powerful language features, making the code read almost like a natural language, while being fully executable with outstanding IDE support. Kotlin code can also be compiled to multiple targets, including web, mobile, and native platforms.
 
 *While Kotlin AI libraries are currently limited, we're actively working to expand the ecosystem.*
+
+</div>

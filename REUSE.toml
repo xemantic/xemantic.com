@@ -123,7 +123,7 @@ SPDX-FileCopyrightText = "2024 Kazimierz Pogoda / Xemantic"
 SPDX-License-Identifier = "LicenseRef-AllRightsReserved AND GPL-3.0-or-later"
 
 [[annotations]]
-path = "ideas/industria/**"
+path = ["ideas/industria/**", "art/images/industria-miniature.webp"]
 SPDX-FileCopyrightText = "2020 Kazimierz Pogoda, Dominique Schwenner, Patrycja Szumacher"
 SPDX-License-Identifier = "LicenseRef-AllRightsReserved"
 
@@ -192,3 +192,18 @@ SPDX-License-Identifier = "MIT"
 path = "old/xemantic.css"
 SPDX-FileCopyrightText = "Kazimierz Pogoda / Xemantic"
 SPDX-License-Identifier = "Apache-2.0"
+
+# The favicon: the aleph (U+2135) of Euler Math 0.75, designed by Hermann Zapf,
+# https://ctan.org/pkg/euler-math
+[[annotations]]
+path = [
+    "favicon.ico",
+    "logo/xemantic-favicon.svg",
+    "icons/apple-touch-icon*.png"
+]
+SPDX-FileCopyrightText = [
+    "1997, 2009 American Mathematical Society",
+    "2009, 2021 Khaled Hosny",
+    "2022-2026 Daniel Flipo"
+]
+SPDX-License-Identifier = "OFL-1.1"

@@ -56,12 +56,18 @@ private val ORGANIZATION_SAME_AS = SOCIAL_LINKS.map { it.href }
 
 private const val ORGANIZATION_LOGO = "/assets/images/logo.svg"
 
-/** The directory whose pages are blog posts. */
-internal const val BLOG_DIR = "blog/"
+/** The directory whose pages are news posts, except for its [NEWS_INDEX]. */
+internal const val NEWS_DIR = "news/"
+
+/** The page listing the news, an ordinary page rather than a post. */
+private const val NEWS_INDEX = NEWS_DIR + "index.md"
+
+/** Whether the page is a post in the [NEWS_DIR]. */
+internal val Page.isNewsPost get() = path.startsWith(NEWS_DIR) && path != NEWS_INDEX
 
 /**
  * The schema.org type of a page, set by the `type` entry of its front matter,
- * or implied: a page in the [BLOG_DIR] is a [BlogPosting], the profile page of
+ * or implied: a post in the [NEWS_DIR] is a [BlogPosting], the profile page of
  * a [Person] is a [ProfilePage], and any other page a [WebPage].
  */
 internal enum class PageType(
@@ -95,7 +101,7 @@ internal class PageInfo(private val page: Page, entries: Map<String, String>) {
 
     val type: PageType = run {
         val implied = when {
-            page.path.startsWith(BLOG_DIR) -> PageType.BlogPosting
+            page.isNewsPost -> PageType.BlogPosting
             profileOf != null -> PageType.ProfilePage
             else -> PageType.WebPage
         }
@@ -108,7 +114,7 @@ internal class PageInfo(private val page: Page, entries: Map<String, String>) {
             implied == PageType.WebPage && declared in listOf(PageType.Article, PageType.Course) -> declared
             else -> fail(
                 "the type $declared does not apply here, a page is a ${PageType.BlogPosting} " +
-                    "exactly when it is in $BLOG_DIR, and a ${PageType.ProfilePage} exactly when " +
+                    "exactly when it is a post in $NEWS_DIR, and a ${PageType.ProfilePage} exactly when " +
                     "it is the profile page of a person in PEOPLE"
             )
         }

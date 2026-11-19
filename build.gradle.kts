@@ -124,6 +124,7 @@ val beerCssModules = listOf(
     "settings/light",
     "settings/reset",
     "settings/theme",
+    "helpers/alignment",
     "helpers/form",
     "helpers/padding",
     "helpers/responsive",
@@ -133,6 +134,7 @@ val beerCssModules = listOf(
     "elements/card",
     "elements/dialog",
     "elements/divider",
+    "elements/expansion",
     "elements/field",
     "elements/grid",
     "elements/icon",
@@ -177,6 +179,7 @@ val materialSymbols = listOf(
     "psychology",
     "school",
     "science",
+    "slideshow",
     "smart_toy",
     "toc",
     "trending_up"
@@ -397,9 +400,14 @@ tasks.register<GenerateGoogleFont>("generateUbuntuMono") {
  * when a rendered page holds a code block in a language missing here.
  */
 val prismComponents = listOf(
+    "markup",
     "clike",
     "javascript",
+    "bash",
+    "cypher",
+    "json",
     "kotlin",
+    "markdown",
     "mermaid",
     "python",
     "typescript"

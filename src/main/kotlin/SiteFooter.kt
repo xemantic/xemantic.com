@@ -21,7 +21,7 @@ import kotlinx.io.files.Path
 
 /**
  * The Markdown file, at the website root, listing the site map shown in
- * the footer of every page. It is not published itself, see
+ * the footer of every page, and holding its colophon. It is not published itself, see
  * [excludedRootEntries].
  */
 internal const val SITE_FOOTER_FILE = "footer.md"
@@ -39,15 +39,28 @@ class FooterLink(val label: String, val href: String, val note: String? = null)
 class FooterGroup(val title: String, val href: String?, val links: List<FooterLink>)
 
 /**
- * Reads the site map of the footer from the [SITE_FOOTER_FILE] in this
+ * A piece of the colophon closing the site footer,
+ * either plain text, or a link if it has a [href].
+ */
+class FooterText(val text: String, val href: String? = null)
+
+/**
+ * The site footer, as authored in the [SITE_FOOTER_FILE]:
+ * the columns of the site map, and the [colophon] below them, empty if there is none.
+ */
+class SiteFooter(val groups: List<FooterGroup>, val colophon: List<FooterText>)
+
+/**
+ * Reads the footer from the [SITE_FOOTER_FILE] in this
  * website root: every `h2` starts a [FooterGroup], linked if the heading
- * is a link, and every link following it, typically in a list, becomes
+ * is a link, and every link following it, in a list, becomes
  * one of its [FooterLink]s, together with the text following it up to
  * the next link or the end of its list item.
+ * A paragraph outside of any list is the colophon, its links kept in place.
  * Everything else is ignored. A link before the first `h2` fails, as it
  * would be silently lost otherwise.
  */
-internal suspend fun Path.readSiteFooter(): List<FooterGroup> {
+internal suspend fun Path.readSiteFooter(): SiteFooter {
     val file = Path(this, SITE_FOOTER_FILE)
     val groups = mutableListOf<FooterGroup>()
     var title: String? = null
@@ -59,6 +72,15 @@ internal suspend fun Path.readSiteFooter(): List<FooterGroup> {
     // the link read already, still collecting the note following it
     var label: String? = null
     var labelHref: String? = null
+    val colophon = mutableListOf<FooterText>()
+    var listDepth = 0
+    var inColophon = false
+    var colophonHref: String? = null
+    val colophonText = StringBuilder()
+    fun closeColophonText() {
+        if (colophonText.isNotEmpty()) colophon += FooterText(colophonText.toString(), colophonHref)
+        colophonText.clear()
+    }
     fun closeLink() {
         val linkLabel = label ?: return
         links += FooterLink(linkLabel, labelHref!!, text.toString().trim().ifEmpty { null })
@@ -73,6 +95,16 @@ internal suspend fun Path.readSiteFooter(): List<FooterGroup> {
     file.readLines().parse().collect { event ->
         when (event) {
             is Mark -> when {
+                event.name == "ul" || event.name == "ol" -> listDepth++
+                event.name == "p" && listDepth == 0 -> {
+                    // paragraphs are joined, should there be more than one
+                    if (colophon.isNotEmpty()) colophon += FooterText(" ")
+                    inColophon = true
+                }
+                event.name == "a" && inColophon -> {
+                    closeColophonText()
+                    colophonHref = event["href"]
+                }
                 event.name == "h2" -> {
                     closeGroup()
                     inHeading = true
@@ -88,8 +120,20 @@ internal suspend fun Path.readSiteFooter(): List<FooterGroup> {
                     text.clear()
                 }
             }
-            is Text -> if (inHeading || href != null || label != null) text.append(event.text)
+            is Text -> when {
+                inColophon -> colophonText.append(event.text)
+                inHeading || href != null || label != null -> text.append(event.text)
+            }
             is Unmark -> when {
+                event.name == "ul" || event.name == "ol" -> listDepth--
+                event.name == "a" && inColophon -> {
+                    closeColophonText()
+                    colophonHref = null
+                }
+                event.name == "p" && inColophon -> {
+                    closeColophonText()
+                    inColophon = false
+                }
                 event.name == "h2" -> {
                     title = text.toString().trim()
                     inHeading = false
@@ -105,5 +149,5 @@ internal suspend fun Path.readSiteFooter(): List<FooterGroup> {
         }
     }
     closeGroup()
-    return groups
+    return SiteFooter(groups, colophon)
 }

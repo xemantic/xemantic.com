@@ -2,7 +2,7 @@
 
 <section class="profile">
 
-![Kazik Pogoda live coding during Algorave at Prachtsaal](../assets/images/people/kazik/Kazik_Pogoda-Algorave_at_Prachtsaal.webp)
+![Kazik Pogoda live coding during Algorave at Prachtsaal](../humans/images/Kazik_Pogoda-Algorave_at_Prachtsaal.webp)
 
 I am an independent AI researcher, open source advocate, community facilitator, computational artist and live coder. A programmer and software architect by trade, and a philosopher by education,
 I have a longstanding interest in cognitive science and ethics.
@@ -14,13 +14,17 @@ and I am currently affiliated with the [Foresight Institute](https://foresight.o
 I am also a Claude Ambassador for Science,
 appointed by Anthropic.
 
+> I started Xemantic years ago to research the connection between language and meaning.
+> Now, in the era of neurosymbolic AI,
+> this research is more relevant than ever.
+
 <div class="social-media-links">
 
-- [X](https://x.com/kazikpogoda)
 - [LinkedIn](https://www.linkedin.com/in/kpogoda/)
-- [Instagram](https://www.instagram.com/xemantic.berlin)
 - [GitHub](https://github.com/morisil/)
+- [X](https://x.com/kazikpogoda)
 - [YouTube](https://www.youtube.com/KazikPogoda)
+- [Instagram](https://www.instagram.com/xemantic.berlin)
 
 </div>
 
@@ -43,6 +47,11 @@ appointed by Anthropic.
 
 * [Agentic AI in Kotlin](../presentations/2025/kug-meetup-prachtsaal/) — Kotlin User Group meetup at Prachtsaal
 * [Claudine](../presentations/2025/bonial/) — presented at Bonial
+
+### Writing
+
+* [The last flight of Challenger](writing/the-last-flight-of-challenger/) — one of my [essays](writing/) on generative art, philosophy and culture
+* [Not so discreet charm of machine colors](writing/not-so-discreet-charm-of-machine-colors/) — on generative color in GLSL shaders, beyond the HSL color wheel
 
 ### Projects
 

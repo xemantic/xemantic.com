@@ -148,6 +148,17 @@ h1 {
 }
 
 /*
+ * The label of a button, at BeerCSS's .875rem (Material 3's label
+ * large), is set against a body text of 1rem at most, while the text
+ * here is larger (1.125rem), so the label grows with it, keeping
+ * about the same proportion. The small buttons keep their size,
+ * and `:where` leaves the selector as weak as BeerCSS's own.
+ */
+:where(.button, button):not(.small) {
+  font-size: 1rem;
+}
+
+/*
  * Lazenby's capitals are wide: at BeerCSS's 3.5625rem a word like
  * "PROFESSIONAL" does not fit a phone screen, so the size shrinks with
  * the viewport below ~660px, and a word still too long breaks.
@@ -648,6 +659,32 @@ nav.call-to-action {
   padding-block: 3rem 4rem;
 }
 
+/* a call to action followed by content, at the top of a page, needs less room below */
+nav.call-to-action:not(:last-child) {
+  padding-block-end: 2rem;
+}
+
+/*
+ * An announcement, like the "coming soon" of a product, centered and set
+ * in Lazenby Computer like a page title. It is set apart by a padding,
+ * as the selector of the margin BeerCSS gives it is too specific to override casually.
+ * The selector outweighs the one sizing the text of the content.
+ * The call to action following it comes closer, both standing together.
+ */
+main :is(section, .prose) > p.announcement {
+  padding-block-start: 2rem;
+  color: var(--on-surface-variant);
+  font-family: "Lazenby Computer", var(--font);
+  font-size: clamp(1.5rem, 1rem + 2.5vw, 2.5rem);
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+div:has(> p.announcement:last-child) + nav.call-to-action {
+  padding-block-start: 1rem;
+}
+
 /*
  * Icons in links and buttons get bolder on hover and keyboard focus, like
  * on fonts.google.com: the grade axis (GRAD) thickens the strokes without
@@ -822,6 +859,11 @@ main .tags > ul > li {
   min-block-size: 2.75rem;
 }
 
+/* the same navigation as in the top app bar, at the same size, instead of the .875rem of a BeerCSS dialog */
+#menu .list > li > a {
+  font-size: 1rem;
+}
+
 /*
  * The item of the page being read, or of the category it belongs to,
  * the link marked `active` by PageLayout.kt. A BeerCSS list has no
@@ -847,11 +889,12 @@ main .tags > ul > li {
 /*
  * The table of contents drawer (dialog#toc-drawer > nav#toc), a BeerCSS
  * `dialog.left` below the fixed top app bar, toggled by the button in
- * the very top left corner of the latter, shown only on pages having
- * a table of contents. The page actions stay at its top, only the
- * table of contents below them scrolls. On viewports wide
+ * the very top left corner of the latter. The page actions stay at its
+ * top, only the table of contents below them, if the page has one,
+ * scrolls. On viewports wide
  * enough to fit it next to the content, toc-drawer.js opens it by
- * default, without the backdrop, and the content makes room for it
+ * default, unless the page has no table of contents,
+ * without the backdrop, and the content makes room for it
  * as long as it is open, flat and square, with the links rendered like in
  * https://platform.claude.com/docs/ - muted and small. On narrower
  * viewports it slides over the content, above a backdrop leaving the
@@ -861,10 +904,6 @@ main .tags > ul > li {
  */
 :root {
   --toc-drawer-inline-size: 16rem;
-}
-
-body:not(:has(> #toc-drawer)) .toc-toggle {
-  display: none;
 }
 
 /*
@@ -881,7 +920,7 @@ body > header > .toc-toggle {
 
 @media (min-width: 993px) {
 
-  body:has(> #toc-drawer) > header > section {
+  body > header > section {
     padding-inline-start: max(.5rem, 3.5rem - max(0px, 100vw - 75rem) / 2);
   }
 
@@ -1079,7 +1118,10 @@ body > header > section {
   padding-inline: 0.5rem;
 }
 
-/* the items of the navigation, bold instead of BeerCSS's medium (500) */
+/*
+ * The items of the navigation, bold instead of BeerCSS's medium (500),
+ * at the size of the button labels, which they are.
+ */
 body > header nav > a.button {
   font-weight: 700;
 }
@@ -1196,7 +1238,8 @@ main article {
  * The site footer, modeled after https://www.anthropic.com/ - a band of
  * its own color, the logo and the small print on the left, and the site
  * map in columns of muted links, as many as fit. The columns stack below
- * the logo up to BeerCSS's large breakpoint (993px).
+ * the logo up to BeerCSS's large breakpoint (993px). The colophon closes
+ * the footer, across its whole width.
  */
 body > footer {
   grid-column: 1 / -1;
@@ -1206,7 +1249,7 @@ body > footer {
 
 .site-footer {
   display: grid;
-  grid-template-areas: "logo" "groups" "newsletter" "legal";
+  grid-template-areas: "logo" "groups" "newsletter" "legal" "colophon";
   gap: 2.5rem 2rem;
   inline-size: 100%;
 }
@@ -1215,7 +1258,11 @@ body > footer {
 
   .site-footer {
     grid-template-columns: minmax(12rem, 1fr) 3fr;
-    grid-template-areas: "logo groups" "newsletter groups" "legal groups";
+    grid-template-areas: "logo groups" "newsletter groups" "legal groups" "colophon colophon";
+  }
+
+  .site-footer-colophon {
+    text-align: center;
   }
 
   .site-footer-legal {
@@ -1254,7 +1301,7 @@ nav.site-footer-groups {
   gap: .5rem;
 }
 
-/* the size of the navigation items of the top app bar, as the headings above */
+/* the size of the headings above, a step below the navigation of the top app bar */
 .site-footer-groups :not(h2) > a {
   font-size: .875rem;
   line-height: 1.25rem;
@@ -1263,14 +1310,16 @@ nav.site-footer-groups {
 
 /* the note following a link, like the "(alpha)" of a product */
 .site-footer-note,
-.site-footer-legal {
+.site-footer-legal,
+.site-footer-colophon {
   font-size: .8125rem;
   line-height: 1.25rem;
   color: var(--on-surface-variant);
 }
 
 .site-footer-groups a:is(:hover, :focus-visible),
-.site-footer-legal a:not(.circle):is(:hover, :focus-visible) {
+.site-footer-legal a:not(.circle):is(:hover, :focus-visible),
+.site-footer-colophon a:is(:hover, :focus-visible) {
   color: var(--primary);
 }
 
@@ -1282,8 +1331,13 @@ nav.site-footer-groups {
   gap: .5rem;
 }
 
-.site-footer-legal a:not(.circle) {
+.site-footer-legal a:not(.circle),
+.site-footer-colophon a {
   text-decoration: underline;
+}
+
+.site-footer-colophon {
+  grid-area: colophon;
 }
 
 /* the newsletter subscription, a div rather than a section, for the same reason as below */
@@ -1294,7 +1348,7 @@ nav.site-footer-groups {
 
 .site-footer-newsletter h2 {
   font-size: .875rem;
-  font-weight: 500;
+  font-weight: 700;
   color: var(--on-surface);
 }
 
@@ -1322,40 +1376,11 @@ nav.site-footer-groups {
 
 /*
  * The page actions, like on https://platform.claude.com/docs/ - a BeerCSS
- * split button in the top right corner of `main`, on the row of the
- * centered `h1`, which it follows in the markup.
+ * split button at the top of the table of contents drawer, and, below
+ * BeerCSS's large breakpoint, where the menu button opens the navigation
+ * drawer instead, the `nav.drawer-page-actions` of that one.
  * BeerCSS has no disabled menu item, hence the last rule.
  */
-.page-actions {
-  position: absolute;
-  inset-block-start: .5rem;
-  inset-inline-end: .5rem;
-  z-index: 2;
-}
-
-/*
- * Below BeerCSS's large breakpoint, where the menu button opens the
- * navigation drawer, the page actions are those of the drawer
- * (`nav.drawer-page-actions`), and those following the `h1` are hidden.
- * Above it, where the table of contents drawer is available, the page
- * actions are those at its top, and those following the `h1` are hidden
- * as well, remaining only on a page without a table of contents.
- */
-@media (max-width: 992px) {
-
-  main .page-actions {
-    display: none;
-  }
-
-}
-
-@media (min-width: 993px) {
-
-  body:has(> #toc-drawer) main .page-actions {
-    display: none;
-  }
-
-}
 
 /* in the navigation drawer, centered between its dividers, padded
    rather than spaced by margins, which BeerCSS overrides between siblings */
@@ -1371,7 +1396,7 @@ nav.drawer-page-actions {
  */
 #toc-drawer .page-actions {
   position: relative;
-  inset: auto;
+  z-index: 2;
   flex: none;
   justify-content: start;
   margin-block-end: 1rem;
@@ -1419,6 +1444,11 @@ nav.drawer-page-actions {
   pointer-events: none;
 }
 
+/* the "(soon)" of such an item, at the size of the notes of the footer instead of the .75rem of BeerCSS's `small-text` */
+.page-actions menu > li .small-text {
+  font-size: .8125rem;
+}
+
 /*
  * Headings in Markdown written inside a BeerCSS card (`article`) are
  * the card titles, set bold at Material 3's headline small instead of
@@ -1427,6 +1457,17 @@ nav.drawer-page-actions {
 article h3 {
   font-size: 1.5rem;
   font-weight: 700;
+}
+
+/*
+ * The title opening a card stands further off the padding of the card:
+ * the paragraph below it is set off by its own margin and by the room
+ * under the baseline of the title, so with the padding alone the title
+ * would sit closer to the image above, or to the edge of the card,
+ * than to its own text.
+ */
+article h3:first-child {
+  margin-block-start: .5rem;
 }
 
 /*
@@ -1487,6 +1528,16 @@ body main article.wave:not([class*="ripple"]):active::after {
 /* the buttons of a card wrap where the card is too narrow for them, instead of overflowing it */
 article nav {
   flex-wrap: wrap;
+}
+
+/*
+ * The buttons closing a card stand as far off the text above them as
+ * the text does off the title, and the title off the image: a padding
+ * on top of the margin BeerCSS gives the `nav`, whose selector is too
+ * specific to override casually.
+ */
+article section > nav:last-child {
+  padding-block-start: .625rem;
 }
 
 /*
@@ -1734,7 +1785,124 @@ figure.article-image img {
   vertical-align: middle;
 }
 
-figure:is(.article-image, .youtube-video) > figcaption {
+/*
+ * A diagram, a `figure.diagram` of the Markdown source holding an inline
+ * `svg` in a `div`: a panel like the one of a code block, sharing its
+ * colors, so that the diagram follows the color scheme. The `svg` is
+ * drawn 1000 units wide, with the text sized for about that many pixels,
+ * so on a narrow screen it keeps a legible width, and the panel scrolls
+ * sideways, the caption staying in place.
+ */
+figure.diagram {
+  max-inline-size: min(62rem, 100% - 2rem);
+  margin: 2rem auto;
+  text-align: center;
+}
+
+figure.diagram > div {
+  border: 1px solid color-mix(in srgb, var(--on-surface) 12%, transparent);
+  border-radius: 1rem;
+  background-color: color-mix(in srgb, var(--code-surface) 92%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+figure.diagram svg {
+  display: block;
+  inline-size: 100%;
+  min-inline-size: 46rem;
+  block-size: auto;
+  font-family: var(--font);
+}
+
+figure.diagram :is(line, .edge) {
+  fill: none;
+  stroke: color-mix(in srgb, var(--code-keyword) 70%, transparent);
+  stroke-width: 2;
+}
+
+figure.diagram .arrowhead {
+  fill: var(--code-keyword);
+}
+
+/* the predicate of an edge, sitting on its line, which the outline in the color of the panel interrupts */
+figure.diagram .pred {
+  font-family: var(--code-font);
+  font-size: 15px;
+  fill: var(--code-keyword);
+  text-anchor: middle;
+  dominant-baseline: middle;
+  paint-order: stroke;
+  stroke: var(--code-surface);
+  stroke-width: 7px;
+  stroke-linejoin: round;
+}
+
+/* a node tinted with the color of its kind (`--node`), a memorized fact being plain */
+figure.diagram .node {
+  --node: var(--code-text);
+}
+
+figure.diagram .node rect {
+  fill: color-mix(in srgb, var(--node) 8%, var(--code-surface));
+  stroke: color-mix(in srgb, var(--node) 50%, transparent);
+  stroke-width: 1.5;
+}
+
+figure.diagram .node .name {
+  font-size: 21px;
+  fill: var(--code-text);
+  text-anchor: middle;
+}
+
+/* a name which is code, like the script of an intent */
+figure.diagram .node .name.mono {
+  font-family: var(--code-font);
+  font-size: 17px;
+}
+
+figure.diagram .node .type {
+  font-family: var(--code-font);
+  font-size: 14px;
+  fill: var(--code-function);
+  text-anchor: middle;
+}
+
+figure.diagram .node.actant {
+  --node: var(--code-type);
+}
+
+figure.diagram .node:is(.cogitation, .enunciation) {
+  --node: var(--code-string);
+}
+
+figure.diagram .node.phenomenon {
+  --node: var(--code-number);
+}
+
+/* an enunciation is drawn as a container of its phenomenon */
+figure.diagram .node.enunciation rect {
+  fill: color-mix(in srgb, var(--node) 3%, var(--code-surface));
+}
+
+figure.diagram .node:is(.actant, .cogitation, .enunciation, .phenomenon) .type {
+  fill: var(--node);
+}
+
+/* what the text refers to, found by the eye first */
+figure.diagram .highlight :is(line, .edge) {
+  stroke: var(--code-keyword);
+  stroke-width: 3;
+}
+
+figure.diagram .node.highlight rect {
+  stroke: var(--code-keyword);
+  stroke-width: 2.5;
+}
+
+figure:is(.article-image, .youtube-video, .diagram) > figcaption {
   margin-block-start: .5rem;
   font-size: .875rem;
   text-shadow:

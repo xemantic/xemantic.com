@@ -66,6 +66,15 @@ uniform float iGradingRadius;       // where the grading starts departing from t
 uniform vec3  iSky;
 uniform float iSkyRim;              // how much of the sky the rim of a shape bends away
 
+// the column of text of an article, where the picture fades towards
+// the color of the tinted glass surfaces of the page
+uniform vec2  iColumn;              // its center and half of its width, in pixels
+uniform float iColumnFeather;       // the width of its soft edge, in pixels
+uniform vec2  iColumnSpan;          // where the text ends and where it starts, its bottom and its top, in pixels
+uniform float iColumnFade;          // the height of the fade below and above the text, in pixels
+uniform float iColumnVeil;          // how much of the picture gives way to that color there, 0 without a column
+uniform vec3  iColumnColor;         // the color it fades to, following the color scheme
+
 const int LAYERS = 3;
 
 // Rotates v counterclockwise by the angle a.
@@ -188,5 +197,16 @@ void main() {
 
     vec3 graded = pow(color, gamma);
     // squared for deeper blacks, keeping the background calm under the text
-    gl_FragColor = vec4(graded * graded, 1.);
+    vec3 picture = graded * graded;
+
+    // The column of text: the picture fades towards the color of the tinted
+    // glass surfaces of the page, a deep shade of the primary color in the dark
+    // color scheme, and a pale one in the light scheme.
+    float veil = iColumnVeil * (1. - smoothstep(
+        iColumn.y, iColumn.y + iColumnFeather, abs(gl_FragCoord.x - iColumn.x)
+    ));
+    // it ends where the text does, fading away below and above it
+    veil *= smoothstep(iColumnSpan.x - iColumnFade, iColumnSpan.x, gl_FragCoord.y)
+        * (1. - smoothstep(iColumnSpan.y, iColumnSpan.y + iColumnFade, gl_FragCoord.y));
+    gl_FragColor = vec4(mix(picture, iColumnColor, veil), 1.);
 }

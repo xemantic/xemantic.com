@@ -77,6 +77,12 @@ private const val GENERATIVE_ART_DECO_JS = "/assets/js/generative-art-deco.js"
 private const val GENERATIVE_ART_DECO_SHADER = "/assets/shaders/generative-art-deco.frag"
 
 /**
+ * The script typing the page title, the first `h1`, as if on a terminal.
+ * It has to run right after the heading, see the script itself.
+ */
+private const val TITLE_JS = "/assets/js/title.js"
+
+/**
  * The script opening the [TOC_DRAWER] by default on wide viewports.
  * It has to run right after the drawer, see the script itself.
  */
@@ -99,7 +105,21 @@ private val PRELOADED_FONTS = listOf(
 /**
  * An item of the site navigation, see [MENU].
  */
-private class MenuItem(val label: String, val href: String, val icon: String)
+private class MenuItem(val label: String, val href: String, val icon: String) {
+
+    /**
+     * The `aria-current` value of this item on the page published at
+     * [pagePath] (see [htmlPagePath]): `page` on the page the item links
+     * to, `true` on a page nested below it, which belongs to the same
+     * category of the site, and `null` anywhere else.
+     */
+    fun ariaCurrent(pagePath: String): String? = when {
+        pagePath == href -> "page"
+        pagePath.startsWith(href) -> "true"
+        else -> null
+    }
+
+}
 
 /**
  * The site navigation, shown in the top app bar on large screens
@@ -111,7 +131,7 @@ private val MENU = listOf(
     MenuItem("Services", "/services/", "handshake"),
     MenuItem("Art", "/art/", "palette"),
     MenuItem("Humans", "/humans/", "diversity_3"),
-    MenuItem("News", "/news/", "newspaper")
+    MenuItem("Machines", "/machines/", "smart_toy")
 )
 
 /**
@@ -127,21 +147,37 @@ private const val MENU_DRAWER = "menu"
 /**
  * The `id` of the table of contents drawer: a BeerCSS `dialog.left`,
  * below the top app bar, holding the [pageActions] and, scrolling below
- * them, the `nav#toc` of the page, on large
+ * them, the `nav#toc` of the page, if it has one, on large
  * screens only (BeerCSS's `l` helper), as on the smaller ones the table
  * of contents is in the [MENU_DRAWER]. Like the latter it is a popover,
  * toggled by the button in the very top left corner of the top app bar,
  * right above it. [TOC_DRAWER_JS] opens it by default on viewports wide enough to
- * fit it next to the content.
+ * fit it next to the content, unless the page has no table of contents,
+ * or its front matter sets `toc: closed`, see [TOC_CLOSED].
  */
 private const val TOC_DRAWER = "toc-drawer"
 
 /**
+ * The value of the `toc` entry of the front matter keeping the [TOC_DRAWER]
+ * closed until its toggle is clicked, for a page like the home page, where
+ * the table of contents would compete with the content. It becomes the
+ * `data-default` attribute of the drawer, read by [TOC_DRAWER_JS].
+ */
+private const val TOC_CLOSED = "closed"
+
+/**
  * The class of the one translucent surface of the site, see xemantic.css:
- * the top app bar, the footer, the [TOC_DRAWER] and the top level
- * sections of the page content.
+ * the top app bar, the footer, the [MENU_DRAWER], the [TOC_DRAWER], the [PROFILE_SECTION]
+ * and the menu of the [pageActions].
  */
 private const val TINTED_GLASS = "tinted-glass"
+
+/**
+ * The class of the profile of a person, see `ContentWidgets.kt`, the only
+ * section of the page content which is a glass panel: the other ones
+ * have no surface of their own.
+ */
+private const val PROFILE_SECTION = "profile"
 
 /**
  * The transformation mode of the direct children of `main`,
@@ -159,13 +195,12 @@ private const val MAIN_CONTENT = "main-content"
  * through `:focus-within` of the chevron alone. The menu items are links,
  * the copying one falling back to the source when scripts do not run. The menu holds the other actions: copying,
  * opening the Markdown source, and chatting about the page with
- * Golem XIV, disabled until it is available, with the BeerCSS [menuClass]
- * choosing its direction and width, so that it stays within the page. The copying is done by
+ * Golem XIV, disabled until it is available; the menu is as wide as the
+ * [TOC_DRAWER] holding it. The copying is done by
  * [PAGE_ACTIONS_JS], reading the source from the `data-markdown` attribute.
  */
 private suspend fun MatcherScope.pageActions(
-    markdownPath: String,
-    menuClass: String
+    markdownPath: String
 ) {
     "nav"(
         "class" to "page-actions group split",
@@ -173,19 +208,19 @@ private suspend fun MatcherScope.pageActions(
         "aria-label" to "Page actions",
         "data-markdown" to markdownPath
     ) {
-        "button"("class" to "small no-round page-copy border", "data-copy-page" to "") {
+        "button"("class" to "small left-round page-copy border", "data-copy-page" to "") {
             "i" { +"content_copy" }
             "span" { +"Copy page" }
         }
         "div" {
             "button"(
-                "class" to "small no-round square border",
+                "class" to "small square right-round border",
                 "aria-label" to "More page actions",
                 "aria-haspopup" to "menu"
             ) {
                 "i" { +"expand_more" }
             }
-            "menu"("class" to menuClass) {
+            "menu"("class" to "right $TINTED_GLASS") {
                 "li" {
                     "a"("href" to markdownPath, "data-copy-page" to "") {
                         "i" { +"content_copy" }
@@ -225,7 +260,7 @@ private suspend fun MatcherScope.drawerPageActions(markdownPath: String) {
     ) {
         "a"(
             "href" to markdownPath,
-            "class" to "button small no-round border page-copy",
+            "class" to "button small border page-copy",
             "data-copy-page" to ""
         ) {
             "i" { +"content_copy" }
@@ -233,7 +268,7 @@ private suspend fun MatcherScope.drawerPageActions(markdownPath: String) {
         }
         "a"(
             "href" to markdownPath,
-            "class" to "button small no-round border",
+            "class" to "button small border",
             "target" to "_blank"
         ) {
             "i" { +"north_east" }
@@ -268,7 +303,8 @@ private const val NEWSLETTER_SUBSCRIBE_URL =
  * Buttondown answers with a page of its own, asking to confirm the
  * subscription, opened in a new tab, so that the reader stays on the site.
  * The email field and the button are joined into a single pill,
- * a BeerCSS `nav.no-space` of a `left-round` field and a `right-round` button.
+ * a BeerCSS `nav.no-space` of a `left-round` field and a `right-round` button,
+ * of the same height: a `small` field is as tall as a `medium` button.
  */
 private suspend fun MatcherScope.newsletterForm() {
     "div"("id" to "newsletter", "class" to "site-footer-newsletter") {
@@ -279,7 +315,7 @@ private suspend fun MatcherScope.newsletterForm() {
             "target" to "_blank"
         ) {
             "nav"("class" to "no-space") {
-                "div"("class" to "max field border left-round") {
+                "div"("class" to "max field border small left-round") {
                     "input"(
                         "type" to "email",
                         "name" to "email",
@@ -289,7 +325,7 @@ private suspend fun MatcherScope.newsletterForm() {
                         "aria-label" to "Your email address"
                     ) {}
                 }
-                "button"("class" to "large right-round") { +"Subscribe" }
+                "button"("class" to "medium right-round") { +"Subscribe" }
             }
         }
     }
@@ -302,11 +338,12 @@ private suspend fun MatcherScope.newsletterForm() {
 internal class SocialLink(val name: String, val href: String)
 
 internal val SOCIAL_LINKS = listOf(
-    SocialLink("GitHub", "https://github.com/xemantic"),
     SocialLink("LinkedIn", "https://www.linkedin.com/company/xemantic-berlin/"),
-    SocialLink("Instagram", "https://www.instagram.com/xemantic.berlin"),
+    SocialLink("GitHub", "https://github.com/xemantic"),
+    SocialLink("X", "https://x.com/XemanticAI"),
+    SocialLink("Bluesky", "https://bsky.app/profile/xemantic.com"),
     SocialLink("YouTube", "https://www.youtube.com/KazikPogoda"),
-    SocialLink("Bluesky", "https://bsky.app/profile/xemantic.com")
+    SocialLink("Instagram", "https://www.instagram.com/xemantic.berlin")
 )
 
 private val GITHUB_URL = SOCIAL_LINKS.first { it.name == "GitHub" }.href
@@ -370,25 +407,34 @@ private suspend fun MatcherScope.replay(captured: CapturedMark) {
  * [COLOR_SCHEME_INIT_JS] and a top app bar (`header.fixed` with a `section.responsive` holding the `nav`),
  * its content as wide as the one of `main` and carrying the [MENU], the `body` content is wrapped
  * in BeerCSS's `main.responsive` container, followed by the [MENU_DRAWER]
- * holding the same [MENU] for smaller screens, the first `h1` is followed by
- * the [pageActions] of the [page], which on large screens are those of the
- * [TOC_DRAWER] instead, if there is one, the table of contents (the `nav#toc`
- * appended by `wrapInSections` at the very end of the content) is moved
- * out of `main`, following it in the [TOC_DRAWER], toggled by the button
+ * holding the same [MENU] for smaller screens, the table of contents, if
+ * there is one (the `nav#toc`
+ * appended by `wrapInSections` at the very end of the content), is moved
+ * out of `main`, following it, below the [pageActions] of the [page], in the [TOC_DRAWER], toggled by the button
  * in the corner of the top app bar, whose navigation ends with the color scheme switch, and copied to the [MENU_DRAWER], and
  * the `body` is closed with a `footer` holding the logo, the site map
- * of the [footer] groups, read by [readSiteFooter], and the [COPYRIGHT]
- * notice.
+ * of the [footer] groups, read by [readSiteFooter], the [COPYRIGHT]
+ * notice, and the colophon of the [footer].
  */
 fun Flow<SemanticEvent>.applyPageLayout(
     page: Page,
-    footer: List<FooterGroup>
+    footer: SiteFooter
 ) = transform {
 
     // the nav#toc of wrapInSections, captured instead of emitted in place,
     // and replayed by the body after main
     var toc: CapturedMark? = null
     val captured = mutableListOf<CapturedMark>()
+    // the `toc` entry of the front matter, see TOC_DRAWER
+    var tocClosed = false
+
+    // not a metadata of the page, hence dropped from the head
+    match({ name == "meta" && this["name"] == "toc" }) { mark ->
+        check(mark["content"] == TOC_CLOSED) {
+            "${page.path} sets `toc: ${mark["content"]}` in its front matter, the only value supported is `$TOC_CLOSED`"
+        }
+        tocClosed = true
+    }
 
     match("head") {
         "head" {
@@ -458,7 +504,7 @@ fun Flow<SemanticEvent>.applyPageLayout(
                         // smaller ones it is in the MENU_DRAWER
                         "a"(
                             "href" to GITHUB_URL,
-                            "class" to "circle transparent l",
+                            "class" to "circle transparent wave l",
                             "aria-label" to "Xemantic on GitHub"
                         ) {
                             "span"("class" to "brand-icon github") {}
@@ -475,8 +521,7 @@ fun Flow<SemanticEvent>.applyPageLayout(
                     }
                 }
                 // in the very top left corner, out of the section, which it
-                // follows, as BeerCSS adds a margin to a section following a sibling, on large screens only (BeerCSS's `l` helper), and hidden
-                // by xemantic.css on a page without a table of contents
+                // follows, as BeerCSS adds a margin to a section following a sibling, on large screens only (BeerCSS's `l` helper)
                 "button"(
                     "class" to "circle transparent toc-toggle l",
                     "popovertarget" to TOC_DRAWER,
@@ -493,7 +538,7 @@ fun Flow<SemanticEvent>.applyPageLayout(
             defer {
                 "dialog"(
                     "id" to MENU_DRAWER,
-                    "class" to "left",
+                    "class" to "left $TINTED_GLASS",
                     "popover" to "",
                     "aria-label" to "Site navigation"
                 ) {
@@ -511,9 +556,20 @@ fun Flow<SemanticEvent>.applyPageLayout(
                         }
                     }
                     "ul"("class" to "list") {
+                        val pagePath = page.path.htmlPagePath()
                         MENU.forEach { item ->
+                            // BeerCSS has no active list item, only an active
+                            // link, whose icon it fills: xemantic.css adds the rest
+                            val current = item.ariaCurrent(pagePath)
+                            val attributes = buildList {
+                                add("href" to item.href)
+                                if (current != null) {
+                                    add("class" to "active")
+                                    add("aria-current" to current)
+                                }
+                            }
                             "li"("class" to "wave round") {
-                                "a"("href" to item.href) {
+                                "a"(*attributes.toTypedArray()) {
                                     "i" { +item.icon }
                                     "span" { +item.label }
                                 }
@@ -541,27 +597,28 @@ fun Flow<SemanticEvent>.applyPageLayout(
                         }
                     }
                 }
-                toc?.let { toc ->
-                    // on large screens only (BeerCSS's `l` helper), like its toggle
-                    "dialog"(
-                        "id" to TOC_DRAWER,
-                        "class" to "left $TINTED_GLASS l",
-                        "popover" to "",
-                        "aria-label" to "Table of contents"
-                    ) {
-                        // staying at the top of the drawer, as only the table of
-                        // contents scrolls; the menu is as wide as the drawer
-                        pageActions(page.markdownPath(), menuClass = "right")
-                        replay(toc)
-                    }
-                    "script"("src" to TOC_DRAWER_JS) {}
+                // on large screens only (BeerCSS's `l` helper), like its toggle;
+                // without a table of contents it holds the page actions alone,
+                // and stays closed until toggled
+                "dialog"(
+                    "id" to TOC_DRAWER,
+                    "class" to "left $TINTED_GLASS l",
+                    "popover" to "",
+                    "aria-label" to if (toc != null) "Table of contents" else "Page actions",
+                    "data-default" to if (tocClosed || toc == null) TOC_CLOSED else "open"
+                ) {
+                    // staying at the top of the drawer, as only the table of
+                    // contents scrolls
+                    pageActions(page.markdownPath())
+                    toc?.let { replay(it) }
                 }
+                "script"("src" to TOC_DRAWER_JS) {}
             }
             "footer"("class" to TINTED_GLASS) {
                 "section"("class" to "responsive site-footer") {
                     logoLink("site-footer-logo")
                     "nav"("class" to "site-footer-groups", "aria-label" to "Site map") {
-                        footer.forEach { group ->
+                        footer.groups.forEach { group ->
                             "div" {
                                 "h2" {
                                     val href = group.href
@@ -598,11 +655,24 @@ fun Flow<SemanticEvent>.applyPageLayout(
                             SOCIAL_LINKS.forEach { link ->
                                 "a"(
                                     "href" to link.href,
-                                    "class" to "circle transparent",
+                                    "class" to "circle transparent wave",
                                     "aria-label" to "Xemantic on ${link.name}",
                                     "title" to link.name
                                 ) {
                                     "span"("class" to "brand-icon ${brandIcon(link.href)}") {}
+                                }
+                            }
+                        }
+                    }
+                    if (footer.colophon.isNotEmpty()) {
+                        // a div rather than a p, which BeerCSS would push down by a 1rem margin
+                        "div"("class" to "site-footer-colophon") {
+                            footer.colophon.forEach { piece ->
+                                val href = piece.href
+                                if (href != null) {
+                                    "a"("href" to href) { +piece.text }
+                                } else {
+                                    +piece.text
                                 }
                             }
                         }
@@ -632,16 +702,10 @@ fun Flow<SemanticEvent>.applyPageLayout(
         captured.last().content += it
     }
 
-    // after the heading, not before it: BeerCSS spaces a heading following
-    // a sibling with its own margin, which would override the h1 margin;
-    // the table of contents, if any, comes only at the end of the stream,
-    // so these actions are always added, and hidden by xemantic.css
-    // wherever the TOC_DRAWER, holding its own, is available
-    var pageActionsAdded = false
-    // only the top level sections become glass panels
-    match("section", mode = MAIN_CONTENT) { mark ->
-        val classes = listOfNotNull(mark["class"], TINTED_GLASS).joinToString(" ")
-        "section"(mark.attributes + ("class" to classes)) {
+    var titleScriptAdded = false
+    // of the top level sections only the profile of a person is a glass panel
+    match({ name == "section" && hasClass(PROFILE_SECTION) }, mode = MAIN_CONTENT) { mark ->
+        "section"(mark.attributes + ("class" to "${mark["class"]} $TINTED_GLASS")) {
             children()
         }
     }
@@ -650,10 +714,10 @@ fun Flow<SemanticEvent>.applyPageLayout(
         mark.name(mark.attributes) {
             children()
         }
-        if (!pageActionsAdded) {
-            pageActionsAdded = true
-            // the menu, as wide as its items, opens leftwards, into the page
-            pageActions(page.markdownPath(), menuClass = "left no-wrap")
+        if (!titleScriptAdded) {
+            titleScriptAdded = true
+            // not deferred: it runs right after the title, before the first paint
+            "script"("src" to TITLE_JS) {}
         }
     }
 

@@ -93,6 +93,20 @@
     skyLuma: .3,
     skyRim: .25,                   // how much of the sky the rim of a shape bends away, see the shader
     skyFade: 3,                    // how quickly it follows a change of the scheme, per second
+
+    // The column of text of an article (`div.prose`, see ArticleLayout.kt):
+    // behind it the picture fades towards the color of the tinted glass
+    // surfaces of the page, see xemantic.css, which leaves the text a calm
+    // background to be read against, in either color scheme.
+    columnVeil: .93,               // how much of the picture gives way to that color there
+    columnTint: .12,               // how much of the primary color tints the surface color, as in xemantic.css
+    // This color stands in where no theme defines it, as in the playground.
+    columnColor: [.1, .09, .12],
+    columnFeather: 1.2,            // the width of its soft edge, as a fraction of the column
+    // The veil ends where the text does: above the first run of the text,
+    // and below the last one, it fades away, leaving the top
+    // and the bottom of the page to the picture.
+    columnFade: .5,                // the height of that fade, as a fraction of the column
   };
 
   const gamma = (detune, sign, t) => detune.map((d, i) =>
@@ -105,12 +119,23 @@
   // whichever CSS notation the theme defines it in.
   const probe = document.createElement("canvas").getContext("2d", {willReadFrequently: true});
   probe.canvas.width = probe.canvas.height = 1;
-  const skyColor = () => {
-    const color = getComputedStyle(document.body).getPropertyValue("--inverse-primary").trim();
+  const channels = (color) => {
     if (!color || !CSS.supports("color", color)) return undefined;
     probe.fillStyle = color;
     probe.fillRect(0, 0, 1, 1);
     return [...probe.getImageData(0, 0, 1, 1).data.slice(0, 3)].map((channel) => channel / 255);
+  };
+  const themeColor = (name) => getComputedStyle(document.body).getPropertyValue(name).trim();
+  const skyColor = () => channels(themeColor("--inverse-primary"));
+
+  // The color of the tinted glass surfaces of the page, the `tinted-glass`
+  // of xemantic.css without its transparency, or undefined if no theme defines it.
+  const glassColor = () => {
+    const primary = themeColor("--primary");
+    const surface = themeColor("--surface");
+    return primary && surface
+      ? channels(`color-mix(in oklab, ${primary} ${parameters.columnTint * 100}%, ${surface})`)
+      : undefined;
   };
 
   // Mirrors rotate() of the shader, so that a step taken in screen space can be
@@ -165,6 +190,19 @@
   addEventListener("blur", leave);
   tracking.addEventListener("change", leave);
   let uniforms;
+
+  // The column of text, if the page has any: its center and half of its width,
+  // in device pixels, measured on every frame, as it moves with the layout,
+  // e.g. when the table of contents opens next to it.
+  let prose;
+  const column = [0, 0];
+  // where the text ends and where it starts, the bottom of its last run
+  // and the top of the first one, in device pixels counted from the bottom
+  // of the canvas, like gl_FragCoord.y
+  const columnSpan = [0, 0];
+  // the color the picture fades to behind it, following the color scheme like the sky does
+  let columnColor;
+  let columnTarget;
 
   // shader-web-background reads the shader synchronously, as soon as shade() is
   // called, from a script of the document.
@@ -233,6 +271,13 @@
       const wasDay = day;
       day = document.body.classList.contains("light") ? 1 : 0;
       if (day && !wasDay) themeSky = skyColor();
+      if (day !== wasDay) {
+        const glass = glassColor() ?? p.columnColor;
+        columnColor ??= [...glass];
+        columnTarget = glass;
+      }
+      const follow = 1 - Math.exp(-p.skyFade * dt);
+      columnColor.forEach((channel, i) => columnColor[i] = channel + (columnTarget[i] - channel) * follow);
       daylight = daylight === undefined
         ? day
         : daylight + (day - daylight) * (1 - Math.exp(-p.skyFade * dt));
@@ -243,6 +288,18 @@
       layerTurn = oscillate(p.layerTurn, time);
       innerGamma = gamma(p.grading.innerDetune, 1, time);
       outerGamma = gamma(p.grading.outerDetune, -1, time);
+
+      if (prose === undefined) {
+        const runs = document.querySelectorAll("main .prose");
+        prose = runs.length ? [runs[0], runs[runs.length - 1]] : false;
+      }
+      if (prose) {
+        const {left, width, top} = prose[0].getBoundingClientRect();
+        column[0] = (left + width / 2) * ctx.cssPixelRatio;
+        column[1] = width / 2 * ctx.cssPixelRatio;
+        columnSpan[0] = ctx.toShaderY(prose[1].getBoundingClientRect().bottom);
+        columnSpan[1] = ctx.toShaderY(top);
+      }
 
       const previous = scroll;
       scroll = window.scrollY * ctx.cssPixelRatio * PARALLAX_SCROLLING_RATE;
@@ -285,6 +342,12 @@
           iGradingRadius:       () => parameters.gradingRadius,
           iSkyRim:              () => parameters.skyRim,
           iSky:                 () => (themeSky ?? parameters.sky).map((channel) => channel * daylight),
+          iColumn:              () => column,
+          iColumnFeather:       () => column[1] * parameters.columnFeather,
+          iColumnSpan:          () => columnSpan,
+          iColumnFade:          () => column[1] * parameters.columnFade,
+          iColumnVeil:          () => prose ? parameters.columnVeil : 0,
+          iColumnColor:         () => columnColor,
         }
       }
     }
