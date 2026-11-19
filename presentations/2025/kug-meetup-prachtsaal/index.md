@@ -48,7 +48,11 @@ Xemantic is a collective of applied philosophy based at Prachtsaal, founded by J
 ## 404 
 ### an example of our production
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Hb-P2f0cyMI?si=uDb8Uo-zzsxmzXtT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<figure class="youtube-video">
+
+[404](https://www.youtube.com/watch?v=Hb-P2f0cyMI)
+
+</figure>
 
 ---
 ## Agentic AI

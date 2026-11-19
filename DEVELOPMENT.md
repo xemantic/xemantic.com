@@ -12,11 +12,65 @@ Render the whole site into `build/website`:
 ./gradlew run
 ```
 
+The absolute URLs in the pages (canonical, Open Graph, `llms.txt`)
+are built from the `CNAME` domain.
+A preview deployed under another origin, for example one per pull request,
+overrides it:
+
+```shell
+./gradlew run -PsiteUrl=https://preview.example.org
+```
+
+The value has to be an origin, not a path below one,
+because the pages link to their assets with root-relative paths.
+
 Serve it live from the source, rendering Markdown on each request:
 
 ```shell
 ./gradlew serve
 ```
+
+## Front matter
+
+Every page becomes a schema.org entity,
+published as JSON-LD for search engines,
+and the front matter decides which one:
+
+```yaml
+---
+type: Article                # optional, see below
+title: Consciousness         # optional, the h1 otherwise
+description: One or two sentences summarizing the page.
+author: kazik                # a key of PEOPLE in StructuredData.kt
+datePublished: 2026-11-20
+dateModified: 2026-12-03     # optional
+about: https://www.wikidata.org/wiki/Q…   # optional, the concept explained
+image: images/cover.webp     # optional, also the link preview image
+toc: closed                  # optional, see below
+---
+```
+
+- A page in `news/` is a `BlogPosting`, except for the news index itself —
+  company announcements are not journalism, which `NewsArticle` is meant for.
+- The profile page of a person in `PEOPLE` is a `ProfilePage`,
+  its social media links becoming the person's `sameAs` profiles.
+- Any other page is a `WebPage`,
+  unless it declares `type: Article`,
+  which a concept explained in its own right should do, wherever it sits,
+  or `type: Course`, offered by the organization, like the workshops.
+
+An `Article` or `BlogPosting` requires `author`, `datePublished` and `description`,
+and the build fails when one is missing or invalid.
+The published Markdown carries the same front matter,
+with the `author` key replaced by the person's name.
+
+An `Article`, a `BlogPosting` and a `Course` are laid out for reading:
+the text flows in a column of a comfortable line length,
+with the images set between its runs.
+
+On wide screens the table of contents is open next to the content by default.
+A page setting `toc: closed`, like the home page,
+keeps it closed until its toggle in the top app bar is clicked.
 
 ## Update BeerCSS and Material Symbols
 
@@ -32,6 +86,26 @@ To use a new icon, add its name, as listed on [Material Symbols](https://fonts.g
 to `materialSymbols` first.
 Every `./gradlew run` is followed by `checkMaterialSymbols`,
 which fails the build when a rendered page uses an icon missing from the font.
+
+The Arsenal font is not committed either:
+`generateArsenal` downloads its styles and subsets, as listed in [build.gradle.kts](build.gradle.kts),
+from Google Fonts into `build/generated/website/assets/fonts`, together with its license,
+under the file names the `@font-face` rules of [xemantic.css](assets/css/xemantic.css) refer to.
+
+## Present source code
+
+A fenced code block is highlighted in the browser by [Prism](https://prismjs.com/),
+loaded `async`, and only by a page holding a code block,
+so the code is readable right away, and gets its colors once the script has run.
+Prism is not committed, like BeerCSS:
+`generatePrism` concatenates its core and the grammars listed in `prismComponents` of [build.gradle.kts](build.gradle.kts)
+into `build/generated/website/assets/js/prism.js`,
+its version being `prism` in [libs.versions.toml](gradle/libs.versions.toml).
+To use a new language, add its grammar to `prismComponents` first, after the grammars it extends.
+Every `./gradlew run` is followed by `checkCodeLanguages`,
+which fails the build when a rendered page holds a code block in a language without a grammar.
+The colors of the tokens, following the color scheme, are in [xemantic.css](assets/css/xemantic.css),
+and the code is set in Ubuntu Mono, downloaded by `generateUbuntuMono`.
 
 ## Update gradlew wrapper
 

@@ -19,8 +19,8 @@ The agent can fully control a [Unix-compliant](https://en.wikipedia.org/wiki/POS
 ---
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
-    <img src="../../workshops/images/Hero-Robot-Berlin-Hackathon-Website.png" alt="AI hack Berlin hackathon promo" style="width: 38%;">
-    <img src="../../workshops/images/robots_will_steal_your_food.jpg" alt="Robots will steal your food" style="width: 53%;">
+    <img src="../../workshops/images/Hero-Robot-Berlin-Hackathon-Website.webp" alt="AI hack Berlin hackathon promo" style="width: 38%;">
+    <img src="../../workshops/images/robots_will_steal_your_food.webp" alt="Robots will steal your food" style="width: 53%;">
 </div>
 
 ---
@@ -263,7 +263,7 @@ https://xemantic.com
 ### Kazik Pogoda
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
-<img src="../../../assets/images/people/kazik/Kazik_Pogoda-Algorave_at_Prachtsaal.jpg" alt="Kazik Pogoda" style="width: 45%;">
+<img src="../../../humans/images/Kazik_Pogoda-Algorave_at_Prachtsaal.webp" alt="Kazik Pogoda" style="width: 45%;">
 <ul style="width: 45%; font-size: .8em;">
 <li>Founder and CTO</li>
 <li>AI Developer</li>

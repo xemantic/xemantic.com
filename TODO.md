@@ -1,67 +1,51 @@
-# new website todo
+# TODO
 
-* move svg inside h1 and add alt text https://css-tricks.com/accessible-svgs/
-* fix all the margins in all resolutions
-* add support for media galleries
-* fix footer style
-* review the whole code
-* prepare fallback background for safari - negentropy
-* add all the projects
-* make shader background dependant on the mouse position
-* tweak evolution of the shader shape in time
-* double check all the shader optimizations and their relevance
-* review language mistakes
-* check ga gdpr
-* captions under media
-* blockquote style
-* check relative font scaling for all the used styles
-* write medium post about new website
-* prepare new og:graph graphics
-* new favicon
-* remove bold font if never used
-* shadow animation should follow touch events
-* social media sharing buttons like here: https://alligator.io/css/minimal-css-reset/
-* add alt to all the images
-* fix link style on small screens when dotted line is scaled down and does not look good
+Open items waiting for a decision.
+The previous list is kept in [TODO-old.md](TODO-old.md).
 
-# list of projects to add
+## Hosting and analytics
 
-* another project to add - word cloud for project dictionary
-* kotlin-swing-dsl
-* 8 rooms gallery
-* openrndr
-* the body of noise
-* eyegasm
-* alien landscapes
-* not so discreet charm of machine colors
-* ugly locomotive
-* the early green outburst
-* yozy
-* emocomu
-* terra aria
-* anatomy lesson futurium
-* differentia javaica
-* aggressive flowers
-* github-users
-* polskiezoo.info
-* dr Oblivion
-* cartesian creatures
+- [ ] Move the website from GitHub Pages to Cloudflare, and make the repository private.
+  GitHub Pages serves a private repository only on a paid plan,
+  while Cloudflare (Pages, or Workers static assets) builds from a private repository on the free plan.
+- [ ] Enable Cloudflare Web Analytics once the site is on Cloudflare.
+  The legacy Jekyll layout loaded its beacon script,
+  the new page layout does not, so no analytics are collected now.
+  Analytics enabled on the Cloudflare side are injected automatically,
+  with no script to add to the pages.
 
-* pride visuals - zdjęcie goji i paxa
+## Design
 
-* wszystkie artykuły z medium
+- [ ] Choose the `theme-color` of the site, coloring the browser UI on mobile.
+  The shader background stays dark in the light color scheme too,
+  so it is not obvious whether it should follow the color scheme,
+  or always be dark.
+- [ ] Should the first paint wait for the shader background?
+  Now `shader-web-background.js` and `generative-art-deco.js` are deferred,
+  and the background appears once the shader is fetched.
+  Blocking would delay every first visit by three requests.
 
-* polishismylove.pl
-* web4tia
-* tia-soa
-* memy.xemantic.com
-* blog.xemantic.com
-* semantic web - magisterka
-* matthew shepard
-* tadedon
-* content migration
-* z marchewka w zebach
-* majaczerwone
-* kot i los - put under xemantic
-* belcanto
-* tatry.info
+## Content
+
+- [ ] Write the content of the placeholder pages:
+  [Products](products/index.md), [Research](research/index.md), [Art](art/index.md) and [News](news/index.md).
+- [ ] Describe the workshops in more detail in the structured data:
+  the `Course` of `ai/workshops/index.md` could get a `hasCourseInstance` for each upcoming session
+  (dates, location, mode) and `offers` (the price),
+  which search engines need to show a course rich result.
+- [ ] Confirm Buttondown is still the newsletter provider:
+  the subscription form, lost with the legacy Jekyll layout,
+  is back in the footer of every page, posting to `buttondown.com/xemantic`.
+
+## Licensing
+
+- [ ] Annotate the third-party images in `REUSE.toml`:
+  `ai/workshops/images/Hero-Robot-Berlin-Hackathon-Website.webp` is the AI Hack Berlin promo artwork of Google,
+  currently falling under the site-wide CC BY 4.0, which is not ours to grant.
+  The photograph `robots_will_steal_your_food.webp` may also need its author credited.
+
+## markanywhere
+
+- [ ] Fix the parsing of an image nested in a link, `[![alt](image.webp)](https://…)`,
+  which renders as literal text.
+  `ai/workshops/index.md` works around it with raw HTML for the Prachtsaal banner.

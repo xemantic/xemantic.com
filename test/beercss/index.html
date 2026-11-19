@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Pure BeerCSS layout sandbox</title>
+  <!--
+    The full BeerCSS bundle straight from the CDN, unlike the site itself,
+    which vendors only the modules it uses: here every BeerCSS class and
+    every Material Symbols icon is available for experimenting.
+    No other stylesheet, no style attributes.
+  -->
+  <link href="https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/beer.min.css" rel="stylesheet">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/beer.min.js"></script>
+</head>
+<body>
+  <script>document.body.classList.add(matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')</script>
+
+  <!-- top app bar -->
+  <header class="fixed no-padding">
+    <section class="responsive small-padding">
+    <nav>
+      <button class="circle transparent s m" popovertarget="menu" aria-label="Menu">
+        <i>menu</i>
+      </button>
+      <a href="/" aria-label="xemantic home page"><h6>xemantic</h6></a>
+      <div class="max"></div>
+      <a href="/products/" class="button transparent l">Products</a>
+      <a href="/projects/" class="button transparent l">Projects</a>
+      <a href="/research/" class="button transparent l">Research</a>
+      <a href="/art/" class="button transparent l">Art</a>
+      <a href="/humans/" class="button transparent l">Humans</a>
+      <a href="/news/" class="button transparent l">News</a>
+      <a href="https://github.com/xemantic" class="button circle transparent" aria-label="Xemantic on GitHub">
+        <i>code</i>
+      </a>
+      <button class="circle transparent" popovertarget="toc-drawer" aria-label="Table of contents">
+        <i>toc</i>
+      </button>
+    </nav>
+    </section>
+  </header>
+
+  <!-- navigation drawer, for small and medium screens -->
+  <dialog id="menu" class="left" popover aria-label="Site navigation">
+    <header>
+      <nav>
+        <button class="circle transparent" popovertarget="menu" popovertargetaction="hide" aria-label="Close menu">
+          <i>menu_open</i>
+        </button>
+        <a href="/" aria-label="xemantic home page"><h6>xemantic</h6></a>
+      </nav>
+    </header>
+    <ul class="list">
+      <li class="wave round"><a href="/products/"><i>inventory_2</i><span>Products</span></a></li>
+      <li class="wave round"><a href="/projects/"><i>rocket_launch</i><span>Projects</span></a></li>
+      <li class="wave round"><a href="/research/"><i>science</i><span>Research</span></a></li>
+      <li class="wave round"><a href="/art/"><i>palette</i><span>Art</span></a></li>
+      <li class="wave round"><a href="/humans/"><i>diversity_3</i><span>Humans</span></a></li>
+      <li class="wave round"><a href="/news/"><i>newspaper</i><span>News</span></a></li>
+    </ul>
+  </dialog>
+
+  <!-- content -->
+  <main class="responsive">
+
+    <h1>Page title</h1>
+
+    <!-- page actions: split button with a menu -->
+    <nav class="group split" role="group" aria-label="Page actions">
+      <button class="small left-round border">
+        <i>content_copy</i>
+        <span>Copy page</span>
+      </button>
+      <div>
+        <button class="small right-round square border" aria-label="More page actions" aria-haspopup="menu">
+          <i>expand_more</i>
+        </button>
+        <menu class="right no-wrap">
+          <li><a href="#"><i>content_copy</i><span>Copy page as Markdown</span></a></li>
+          <li><a href="#"><i>north_east</i><span>Open Markdown</span></a></li>
+          <li class="disabled" aria-disabled="true">
+            <i>smart_toy</i>
+            <span>Chat with Golem XIV</span>
+            <span class="small-text">(soon)</span>
+          </li>
+        </menu>
+      </div>
+    </nav>
+
+    <p>
+      The lead paragraph of the page.
+      Everything on this page is styled by BeerCSS alone,
+      so whatever looks off here is what <code>xemantic.css</code> has to earn its place for.
+    </p>
+
+    <section id="typography">
+      <h2>Typography</h2>
+      <p>
+        A regular paragraph with a <a class="link" href="#">link</a>,
+        some <strong>strong</strong> and <em>emphasized</em> text,
+        and a bit of <code>inline code</code>.
+      </p>
+      <h3>A subsection</h3>
+      <p>Another paragraph, under a third level heading.</p>
+      <ul>
+        <li>An unordered list item</li>
+        <li>Another one</li>
+      </ul>
+      <blockquote>A block quote, as rendered from Markdown.</blockquote>
+      <pre><code>fun main() = println("a code block")</code></pre>
+    </section>
+
+    <section id="cards">
+      <h2>Cards</h2>
+      <div class="grid">
+        <article class="s12 m6 l4">
+          <h3 class="small">Golem XIV</h3>
+          <p>A card in a responsive grid: full width on small, half on medium, a third on large screens.</p>
+          <nav>
+            <a href="#" class="button">
+              <span>Learn more</span>
+              <i>arrow_forward</i>
+            </a>
+          </nav>
+        </article>
+        <article class="s12 m6 l4 border">
+          <h3 class="small">Umwelt</h3>
+          <p>The same card, with the <code>border</code> class.</p>
+          <nav>
+            <a href="#" class="button border">
+              <span>Learn more</span>
+              <i>arrow_forward</i>
+            </a>
+          </nav>
+        </article>
+        <article class="s12 m6 l4 fill">
+          <h3 class="small">markanywhere</h3>
+          <p>And one with the <code>fill</code> class.</p>
+          <nav>
+            <a href="#" class="button transparent">
+              <span>Learn more</span>
+              <i>arrow_forward</i>
+            </a>
+          </nav>
+        </article>
+      </div>
+    </section>
+
+    <section id="table">
+      <h2>Table</h2>
+      <table class="stripes">
+        <thead>
+          <tr><th>Service</th><th>Format</th><th>Duration</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Workshop</td><td>On site</td><td>2 days</td></tr>
+          <tr><td>Consulting</td><td>Remote</td><td>Ongoing</td></tr>
+          <tr><td>Talk</td><td>On site</td><td>1 hour</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="list">
+      <h2>List</h2>
+      <ul class="list border">
+        <li>
+          <i>school</i>
+          <div class="max">
+            <h6 class="small">Headline</h6>
+            <div>Supporting text</div>
+          </div>
+          <i>arrow_forward</i>
+        </li>
+        <li>
+          <i>engineering</i>
+          <div class="max">
+            <h6 class="small">Headline</h6>
+            <div>Supporting text</div>
+          </div>
+          <i>arrow_forward</i>
+        </li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- table of contents drawer -->
+  <dialog id="toc-drawer" class="right" popover aria-label="Table of contents">
+    <nav id="toc">
+      <ul class="list">
+        <li class="wave round"><a href="#typography">Typography</a></li>
+        <li class="wave round"><a href="#cards">Cards</a></li>
+        <li class="wave round"><a href="#table">Table</a></li>
+        <li class="wave round"><a href="#list">List</a></li>
+      </ul>
+    </nav>
+  </dialog>
+
+  <!-- footer -->
+  <footer class="no-padding">
+    <section class="responsive small-padding">
+      <a href="/" aria-label="xemantic home page"><h5>xemantic</h5></a>
+      <nav class="grid top-align" aria-label="Site map">
+        <div class="s6 m4 l2">
+          <h6 class="small">Products</h6>
+          <ul>
+            <li><a class="link" href="#">Golem XIV</a></li>
+            <li><a class="link" href="#">Umwelt</a></li>
+            <li><a class="link" href="#">markanywhere</a></li>
+            <li><a class="link" href="#">markdown.law</a></li>
+          </ul>
+        </div>
+        <div class="s6 m4 l2">
+          <h6 class="small">Projects</h6>
+          <ul>
+            <li><a class="link" href="#">404</a></li>
+            <li><a class="link" href="#">Industria</a></li>
+            <li><a class="link" href="#">Prachtsaal</a></li>
+          </ul>
+        </div>
+        <div class="s6 m4 l2">
+          <h6 class="small">Research</h6>
+          <ul>
+            <li><a class="link" href="#">Metacognitive AI</a></li>
+            <li><a class="link" href="#">AI Workshops</a></li>
+          </ul>
+        </div>
+        <div class="s6 m4 l2">
+          <h6 class="small">Art</h6>
+          <ul>
+            <li><a class="link" href="#">Pacyfka Loneliness</a></li>
+            <li><a class="link" href="#">Poetycki przewodnik po Tatrach</a></li>
+          </ul>
+        </div>
+        <div class="s6 m4 l2">
+          <h6 class="small">Xemantic</h6>
+          <ul>
+            <li><a class="link" href="#">News</a></li>
+            <li><a class="link" href="#">Services</a></li>
+            <li><a class="link" href="#">Contact</a></li>
+            <li><a class="link" href="#">Archive</a></li>
+            <li><a class="link" href="#">Legal Notice (Impressum)</a></li>
+          </ul>
+        </div>
+      </nav>
+      <hr>
+      <nav>
+        <p class="max">
+          © 2026 Xemantic · Content licensed under
+          <a class="link" href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>
+          unless stated otherwise
+        </p>
+        <a href="https://github.com/xemantic" class="button circle transparent" aria-label="Xemantic on GitHub">
+          <i>code</i>
+        </a>
+      </nav>
+    </section>
+  </footer>
+</body>
+</html>

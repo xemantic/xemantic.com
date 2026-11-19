@@ -83,6 +83,24 @@ path = "assets/images/github/**"
 SPDX-FileCopyrightText = "GitHub, Inc."
 SPDX-License-Identifier = "LicenseRef-AllRightsReserved"
 
+# Paths from Simple Icons 16.35.0 (https://simpleicons.org), CC0 1.0,
+# the logos themselves remaining trademarks of their owners.
+[[annotations]]
+path = [
+    "assets/images/brands/x.svg",
+    "assets/images/brands/instagram.svg",
+    "assets/images/brands/youtube.svg",
+    "assets/images/brands/bluesky.svg"
+]
+SPDX-FileCopyrightText = "Simple Icons contributors"
+SPDX-License-Identifier = "CC0-1.0"
+
+# The LinkedIn "in" bug from https://brand.linkedin.com, cropped and scaled down.
+[[annotations]]
+path = "assets/images/brands/linkedin.png"
+SPDX-FileCopyrightText = "LinkedIn Corporation"
+SPDX-License-Identifier = "LicenseRef-AllRightsReserved"
+
 # https://github.com/xemantic/shader-web-background
 [[annotations]]
 path = "assets/js/shader-web-background.js"
@@ -105,7 +123,7 @@ SPDX-FileCopyrightText = "2024 Kazimierz Pogoda / Xemantic"
 SPDX-License-Identifier = "LicenseRef-AllRightsReserved AND GPL-3.0-or-later"
 
 [[annotations]]
-path = "ideas/industria/**"
+path = ["ideas/industria/**", "art/images/industria-miniature.webp"]
 SPDX-FileCopyrightText = "2020 Kazimierz Pogoda, Dominique Schwenner, Patrycja Szumacher"
 SPDX-License-Identifier = "LicenseRef-AllRightsReserved"
 
@@ -174,3 +192,18 @@ SPDX-License-Identifier = "MIT"
 path = "old/xemantic.css"
 SPDX-FileCopyrightText = "Kazimierz Pogoda / Xemantic"
 SPDX-License-Identifier = "Apache-2.0"
+
+# The favicon: the aleph (U+2135) of Euler Math 0.75, designed by Hermann Zapf,
+# https://ctan.org/pkg/euler-math
+[[annotations]]
+path = [
+    "favicon.ico",
+    "logo/xemantic-favicon.svg",
+    "icons/apple-touch-icon*.png"
+]
+SPDX-FileCopyrightText = [
+    "1997, 2009 American Mathematical Society",
+    "2009, 2021 Khaled Hosny",
+    "2022-2026 Daniel Flipo"
+]
+SPDX-License-Identifier = "OFL-1.1"

@@ -1,26 +1,44 @@
 ---
+type: Course
 description: Learn how to build your own powerful AI agents
-image: ai/workshops/images/agentic-ai-and-creative-coding-2025-social-media-landscape.png
+image: /ai/workshops/images/agentic-ai-and-creative-coding-2025-social-media-landscape.jpg
 ---
-# Xemantic AI Workshops
+# AI Workshops
 
-![An example code of a claude.ai clone written in 16 lines of Kotlin code](images/AnthropicAiIn16LinesOfCode.webp)
+```kotlin
+// Claude in 16 lines of code
+fun main() = runBlocking {
+    val anthropic = Anthropic()
+    val conversation = mutableListOf<Message>()
+    while (true) {
+        print("[user]> ")
+        val input = readln()
+        if (input == "exit") break
+        conversation += Message { +input }
+        println("...Thinking...")
+        val response = anthropic.messages.create {
+            messages = conversation
+        }
+        conversation += response
+        println("[assistant]> ${response.text}")
+    }
+}
+```
 
-## Invitation
+## Do you want to build your own Claude Code?
 
-### Do you want to build your own ChatGPT, Claude Code or OpenClaw?
-
-But why would you build these tools if you can just use them? Learning simple yet powerful patterns of context and **harness engineering** lets you:
+But why would you do that if you can just use it? Learning simple yet powerful patterns of **context engineering** and **harness engineering** lets you:
 
 - use any existing agentic AI tools to full extent by understanding their internal mechanics
 - augment your projects with a machine-reasoning layer
 - autonomously conduct parts of your scientific research
+- prepare for Claude Developer, Claude Architect and Claude Forward Deployed Engineer certification
 
-We are [Xemantic](https://xemantic.com/), offering intensive one-day workshops and buildathons on **building powerful AI agents**. Your instructor, [Kazik Pogoda](#about-kazik-your-instructor), will take you on a journey of developing autonomous and highly capable AI systems, like [Claudine](https://github.com/xemantic/claudine/) (older sister of Claude Code) and [Golem XIV](https://github.com/xemantic/golem-xiv) (a metacognitive AI system with knowledge-graph memory and self-directed research).
+We are [Xemantic](/), offering intensive one-day workshops and buildathons on **building powerful AI agents**. Your instructor, [Kazik Pogoda](#about-kazik-your-instructor), will take you on a journey of developing autonomous and highly capable AI systems, like [Claudine](https://github.com/xemantic/claudine/) (older sister of Claude Code) and [Golem XIV](https://github.com/xemantic/golem-xiv) (a metacognitive AI system with knowledge-graph memory and self-directed research).
 
-Since 2025, Xemantic has trained more than a hundred people — individuals as well as whole organizations — in the arcane of Agentic AI, with applications in scientific research, creative technologies, management, and beyond, while winning [AI Hack Berlin 2024](https://rsvp.withgoogle.com/events/ai-hack-berlin/home) at Google (with "Robots will steal your food" project) and mentoring the Agentic AI track at the [Berlin Bio × AI Hackathon](https://www.biohack.berlin/).
+Since 2025, Xemantic has trained more than a hundred people — individuals as well as whole organizations — in the arcana of Agentic AI, with applications in scientific research, creative technologies, management, and beyond, while winning [AI Hack Berlin 2024](https://rsvp.withgoogle.com/events/ai-hack-berlin/home) at Google (with "Robots will steal your food" project) and mentoring the Agentic AI track at the [Berlin Bio × AI Hackathon](https://www.biohack.berlin/).
 
-![AI hack Berlin 2024 promo image](images/Hero-Robot-Berlin-Hackathon-Website.png)
+![AI hack Berlin 2024 promo image](images/Hero-Robot-Berlin-Hackathon-Website.webp)
 
 ![Kazik Pogoda and Victor Diaz receiving the 1st prize of the AI hack Berlin hackathon](images/robots_will_steal_your_food.webp)
 
@@ -50,7 +68,7 @@ Organizations whose teams we've trained:
 - [Bonial](https://www.bonial.com/en/)
 - [ImmoScout24](https://www.scout24.com/)
 
-> "Thank you for having us at Pratchsaal! The workshop you prepared for us was very insightful 💡 we’re already brainstorming multiple ideas how to incorporate AI agents in the dvlp.energy platform! I’m excited about how this technology could improve our product and day-to-day workflow."
+> "Thank you for having us at Prachtsaal! The workshop you prepared for us was very insightful 💡 we’re already brainstorming multiple ideas how to incorporate AI agents in the dvlp.energy platform! I’m excited about how this technology could improve our product and day-to-day workflow."
 > 
 > -- [Oliwia Golec](https://www.linkedin.com/in/oliwia-golec-3678a7114/), Co-founder & CTO @ dvlp.energy
 
@@ -76,11 +94,11 @@ Jump into the [Xemantic Discord server](https://discord.com/invite/vQktqqN2Vn) t
 
 ## About Kazik, Your Instructor
 
-Kazik is an independent AI researcher, open source enthusiast, open society advocate, computational artist, and live coder. A programmer and software architect by trade, and a philosopher by education, he brings a longstanding interest in cognitive science and ethics. He founded [Xemantic](https://xemantic.com/) (an applied philosophy collective) and [Prachtsaal](https://prachtsaal.berlin) (an art community), and is currently affiliated with the [Foresight Institute](https://foresight.org/), working at its Berlin AI Node.
+Kazik is an independent AI researcher, open source enthusiast, open society advocate, computational artist, and live coder. A programmer and software architect by trade, and a philosopher by education, he brings a longstanding interest in cognitive science and ethics. He founded [Xemantic](/) (an applied philosophy collective) and [Prachtsaal](https://prachtsaal.berlin) (an art community), and is currently affiliated with the [Foresight Institute](https://foresight.org/), working at its Berlin AI Node.
 
 As lead instructor at Xemantic, Kazik has personally trained over a hundred participants — from individual practitioners to entire organizations — in building agentic AI systems, and mentored the Agentic AI track at the [Berlin Bio × AI Hackathon](https://www.biohack.berlin/).
 
-![Kazik Pogoda live coding during Algorave at Prachtsaal](../../assets/images/people/kazik/Kazik_Pogoda-Algorave_at_Prachtsaal.jpg)
+![Kazik Pogoda live coding during Algorave at Prachtsaal](../../humans/images/Kazik_Pogoda-Algorave_at_Prachtsaal.webp)
 
 ## Upcoming Sessions
 
@@ -98,11 +116,11 @@ Workshops held in collaboration with the [Foresight Institute](https://foresight
 
 ### Prachtsaal
 
-<a href="https://prachtsaal.berlin/" id="prachtsaal-banner"></a>
+<a href="https://prachtsaal.berlin/"><img src="images/prachtsaal_banner.webp" alt="Prachtsaal"></a>
 
-Our past workshops have been taking place at [Prachtsaal](https://prachtsaal.berlin), a vibrant non-profit art community in Berlin's Neukölln district. As home to many resident artists, including our [Xemantic](https://xemantic.com) collective, it offers a unique and inspiring learning environment.
+Our past workshops have been taking place at [Prachtsaal](https://prachtsaal.berlin), a vibrant non-profit art community in Berlin's Neukölln district. As home to many resident artists, including our [Xemantic](/) collective, it offers a unique and inspiring learning environment.
 
-![dvlp.energy team during AI workshop at Prachtsaal](images/dvld-energy-ai-workshop-at-prachtsaal.webp)
+![dvlp.energy team during AI workshop at Prachtsaal](images/dvlp-energy-ai-workshop-at-prachtsaal.webp)
 
 ### Venue Highlights
 
@@ -113,13 +131,17 @@ Our past workshops have been taking place at [Prachtsaal](https://prachtsaal.ber
 - Opportunities to meet resident artists and view their work
 - [Café Augusta](https://cafeaugusta.de/) directly in front of the building, plus many restaurants and cafés within walking distance
 
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4860.810281427363!2d13.43115427705981!3d52.47179983979637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a84f09c11740b7%3A0x9f3c3a7993df62cc!2sPrachtsaal%20Studio!5e0!3m2!1sen!2sde!4v1739059455750!5m2!1sen!2sde" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+<figure class="google-map">
+
+[Prachtsaal Studio, Jonasstraße 22, 12053 Berlin](https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4860.810281427363!2d13.43115427705981!3d52.47179983979637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47a84f09c11740b7%3A0x9f3c3a7993df62cc!2sPrachtsaal%20Studio!5e0!3m2!1sen!2sde!4v1739059455750!5m2!1sen!2sde)
+
+</figure>
 
 ### Address
 
 <address>
-Prachtsaal
-Jonasstraße 22
+Prachtsaal<br>
+Jonasstraße 22<br>
 12053 Berlin
 </address>
 
@@ -152,6 +174,8 @@ Our workshop adheres to the [Berlin Code of Conduct](https://berlincodeofconduct
 
 ## Frequently Asked Questions
 
+<div class="faq">
+
 ### What level of programming experience is required?
 
 Our workshop is designed to be accessible to developers of all skill levels. The key requirements are:
@@ -177,6 +201,8 @@ We are working on that. Depending on popularity, we might also consider a pre-re
 
 ### Why does Xemantic build AI tools in Kotlin?
 
-While our workshop examples are available in Python, TypeScript, and Kotlin, Xemantic's own AI tooling is built primarily in Kotlin. Kotlin offers unique and powerful language features, making the code read almost like a natural language, while being fully executable with outstanding IDE support. Kotlin code can be also compiled to multiple targets, including web, mobile, and native platforms.
+While our workshop examples are available in Python, TypeScript, and Kotlin, Xemantic's own AI tooling is built primarily in Kotlin. Kotlin offers unique and powerful language features, making the code read almost like a natural language, while being fully executable with outstanding IDE support. Kotlin code can also be compiled to multiple targets, including web, mobile, and native platforms.
 
 *While Kotlin AI libraries are currently limited, we're actively working to expand the ecosystem.*
+
+</div>

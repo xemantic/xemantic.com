@@ -39,7 +39,11 @@ Xemantic resides at [Prachtsaal](https://prachtsaal.berlin)
 ---
 ### Xemantic's shows
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Hb-P2f0cyMI?si=uDb8Uo-zzsxmzXtT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<figure class="youtube-video">
+
+[404](https://www.youtube.com/watch?v=Hb-P2f0cyMI)
+
+</figure>
 
 https://www.instagram.com/xemantic.berlin
 
@@ -56,7 +60,7 @@ Kazik Pogoda, co-founder of Xemantic:
 ### Robots will steal your food
 
 <div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
-    <img src="../../../ai/workshops/images/robots_will_steal_your_food.jpg" alt="Robots will steal your food" style="width: 53%;">
+    <img src="../../../ai/workshops/images/robots_will_steal_your_food.webp" alt="Robots will steal your food" style="width: 53%;">
 </div>
 
 https://github.com/xemantic/claudine/

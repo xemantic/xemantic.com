@@ -1,95 +1,56 @@
-# Xemantic Professional Services
+---
+description: The services of Xemantic — AI workshops and AI consulting.
+toc: closed
+---
+# Services
 
-## Overview
+<h2 class="center-align large-padding bottom-padding">We teach how to build AI agents, and we help to put them to work.</h2>
 
-Xemantic delivers innovative software solutions with a focus on humanistic technology, ethical AI, and creative computing. We combine deep technical expertise with philosophical and artistic perspectives to create meaningful digital solutions.
+<div class="grid medium-space">
 
-## Core Services
+<article class="no-padding s12 m12 l6">
 
-### Artificial Intelligence & Machine Learning
+<a href="/contact/"><img class="responsive art-card-image" src="/services/images/ai-consulting.webp" alt="Generative artwork, a symmetric form of blurred light glowing red and orange in the center, and blue in the corners, on black"></a>
 
-As award-winning AI developers, we focus on:
+<div class="padding">
 
-* **Agentic AI Development** - Creating intelligent agents that work alongside humans in ethical and beneficial ways
-* **Machine Learning Solutions** - Custom ML implementations for business process optimization
-* **AI Ethics & Alignment** - Ensuring AI systems are designed with human values and safety in mind
+### AI consulting
 
-_See [Xemantic AI](../ai/) page for details._
+Guidance in bringing agentic AI into your organization —
+from choosing the right use cases and architecture,
+to agents running safely alongside your team and your existing systems.
 
-### AI Education & Training
+<nav class="right-align">
+<a class="button border" href="/contact/">Contact</a>
+</nav>
 
-As AI educators, we offer:
+</div>
 
-* **Agentic AI Workshops** - Intensive training on building powerful AI agents, from basic concepts to advanced implementations
-* **Custom Corporate Training** - Tailored AI development programs for your engineering teams
-* **Technical Mentoring** - Ongoing support for teams implementing AI solutions
-* **AI Integration Consulting** - Guidance on incorporating AI agents into existing systems
+</article>
 
-_See [Xemantic AI](../ai/) page for details._
+<article class="no-padding s12 m12 l6">
 
-### Software Architecture & Development
+<a href="/ai/workshops/"><img class="responsive art-card-image" src="/ai/workshops/images/dvlp-energy-ai-workshop-at-prachtsaal.webp" alt="dvlp.energy team during AI workshop at Prachtsaal"></a>
 
-With over two decades of experience in building scalable systems, we specialize in:
+<div class="padding">
 
-* **System Modernization** - Transforming legacy monoliths into modern, cloud-native architectures while maintaining business continuity.
-* **Performance Optimization** - Deep expertise in JVM tuning, memory management, transaction optimization, and system scalability. We've helped companies handle exponential traffic growth while reducing response times to milliseconds.
-* **Microservices Architecture** - Design and implementation of resilient microservice ecosystems with focus on API development, cloud deployment, and continuous delivery pipelines.
+### AI workshop
 
-### Digital Mental Health Solutions
+Hands-on training in building your own AI agents —
+context engineering and harness engineering,
+from the first lines of code to autonomous systems.
+For individuals, and tailored to engineering teams.
 
-Combining expertise in psychology, cognitive science, and software development, we create:
+<nav class="right-align">
+<a class="button border" href="/ai/workshops/">Workshops</a>
+</nav>
 
-* **Tools for Mental Health Professionals** - Software solutions to support counselors and psychologists in their practice
-* **Client Matching Systems** - Intelligent platforms to connect individuals with appropriate mental health support
-* **Data Privacy & Security** - Specialized solutions for handling sensitive health data with strict privacy controls
+</div>
 
-### Creative Technology
+</article>
 
-With significant contributions to the [OPENRNDR](https://openrndr.org/) creative coding framework and experience in media art installations, we offer:
+</div>
 
-* **Interactive Installations** - Custom development of immersive digital experiences
-* **Creative Coding Solutions** - Implementation of artistic visions through code
-* **Technical Art Consulting** - Support for artists and institutions in realizing complex digital projects
-
-_See [Xemantic projects](../) and [Instagram](https://www.instagram.com/xemantic.berlin) page for details._
-
-### Technical Consulting
-
-Supporting organizations with:
-
-* **Architecture Review** - Analysis and optimization of existing systems
-* **Technology Stack Modernization** - Guidance on adopting modern technologies and practices
-* **Team Mentoring** - Knowledge transfer and best practices implementation
-* **Open Source Integration** - Assistance with implementing and customizing our open-source solutions
-
-## Our Approach
-
-We believe in:
-
-* **Open Source First** - Whenever possible, we develop generic solutions as open-source components
-* **Ethical Technology** - Ensuring our solutions align with human values and social good
-* **Quality & Scalability** - Building robust systems that can grow with your needs
-* **Knowledge Transfer** - Empowering your team through collaboration and mentoring
-
-## Open Source
-
-Our commitment to open source is reflected in our growing collection of public repositories:
-
-* Visit our GitHub: [github.com/xemantic](https://github.com/xemantic)
-* Consider becoming a [Xemantic Sponsor](https://github.com/sponsors/xemantic)
-
-## Our Team
-
-Connect with us on LinkedIn:
-
-* [Kazik Pogoda](https://www.linkedin.com/in/kpogoda/) - Founder, AI Engineer & Software Architect
-* [Julia Thomas](https://www.linkedin.com/in/julia-thomas-a5ba27214/) - Psychology & Data Science
-* [Julie Amouzegar Kim](https://www.linkedin.com/in/julie-amouzegar-b72bb120b/) - AI & Software Development
-
-## Contact
-
-For inquiries about our services or to discuss your project needs:
-
-Email: <office@xemantic.com>
-
-See also [Contact Us](../contact/) page for more details.
+<nav class="center-align call-to-action">
+<a class="button extra" href="mailto:office@xemantic.com"><i>mail</i><span>Write to us</span></a>
+</nav>
