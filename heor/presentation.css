@@ -184,6 +184,9 @@ html { background: #15191f; font-size: clamp(70%, min(1.67vh, 3.4vw), 150%); }
   font-size: clamp(1.15rem, 2.5vw, 1.55rem);
 }
 
+/* A note carrying a full sentence or two, rather than a one-line aside. */
+.slide .note.wide { max-width: 62ch; }
+
 .slide img {
   max-width: 100%;
   max-height: 42vh;
