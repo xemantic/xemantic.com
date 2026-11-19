@@ -22,12 +22,6 @@ path = [
     ".idea/**",
     ".gitignore",
     "CNAME",
-    "Gemfile",
-    "Gemfile.lock",
-    "_config.yml",
-    "_includes/**",
-    "_layouts/**",
-    "_plugins/**",
     "**/*.js",
     "**/*.css"
 ]
