@@ -193,34 +193,33 @@ toc: closed
 
 <article class="no-padding s12 m6 l4">
 
-<a href="https://keithlim.art/"><img class="responsive" src="images/Keith_Lim.webp" alt="Keith Lim in a bowler hat, in the immersive theatrical performance INDUSTRIA"></a>
+<a href="https://abundanceds.com/"><img class="responsive" src="images/Paul_Schneider.webp" alt="Paul Schneider"></a>
 
 <div class="padding">
 
-### Keith Lim
+### Paul Schneider
 
-*Interdisciplinary artist: interactivity, technology, performance*
+*Health economist, medical doctor, forecaster*
 
 <div class="tags">
 
-- Immersive Theatre
-- Interactive Installations
-- Performance
-- Dance
-- Digital Art
-- Computer Science
-- Psychology
+- Foresight Institute
+- HEOR
+- Health Economics
+- AI Evals
+- Decision Science
+- Forecasting
+- Open Science
 
 </div>
 
 <nav class="right-align">
 <div class="social-media-links">
 
-- [LinkedIn](https://www.linkedin.com/in/keiththesedays/)
-- [Instagram](https://www.instagram.com/keiththesedays/)
+- [LinkedIn](https://www.linkedin.com/in/paul--/)
 
 </div>
-<a class="button border" href="https://keithlim.art/">Website</a>
+<a class="button border" href="https://abundanceds.com/">Abundance Decision Systems</a>
 </nav>
 
 </div>
@@ -291,6 +290,42 @@ toc: closed
 
 </div>
 <a class="button border" href="https://linktr.ee/pacyfka">Linktree</a>
+</nav>
+
+</div>
+
+</article>
+
+<article class="no-padding s12 m6 l4">
+
+<a href="https://keithlim.art/"><img class="responsive" src="images/Keith_Lim.webp" alt="Keith Lim in a bowler hat, in the immersive theatrical performance INDUSTRIA"></a>
+
+<div class="padding">
+
+### Keith Lim
+
+*Interdisciplinary artist: interactivity, technology, performance*
+
+<div class="tags">
+
+- Immersive Theatre
+- Interactive Installations
+- Performance
+- Dance
+- Digital Art
+- Computer Science
+- Psychology
+
+</div>
+
+<nav class="right-align">
+<div class="social-media-links">
+
+- [LinkedIn](https://www.linkedin.com/in/keiththesedays/)
+- [Instagram](https://www.instagram.com/keiththesedays/)
+
+</div>
+<a class="button border" href="https://keithlim.art/">Website</a>
 </nav>
 
 </div>
@@ -381,7 +416,7 @@ toc: closed
 
 ### Bradley Royes
 
-*AI Node Manager at Foresight Institute Berlin, community builder*
+*Community builder, cognitive scientist, tennis coach*
 
 <div class="tags">
 
