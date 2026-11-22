@@ -375,6 +375,40 @@ toc: closed
 
 <article class="no-padding s12 m6 l4">
 
+<a href="https://www.bradleyroyes.com/"><img class="responsive" src="images/Bradley_Royes.webp" alt="Bradley Royes"></a>
+
+<div class="padding">
+
+### Bradley Royes
+
+*AI Node Manager at Foresight Institute Berlin, community builder*
+
+<div class="tags">
+
+- Foresight Institute
+- AI Node Berlin
+- Cognitive Science
+- Community
+- Operations
+- Experience Design
+
+</div>
+
+<nav class="right-align">
+<div class="social-media-links">
+
+- [LinkedIn](https://www.linkedin.com/in/bradleyroyes)
+
+</div>
+<a class="button border" href="https://www.bradleyroyes.com/">Website</a>
+</nav>
+
+</div>
+
+</article>
+
+<article class="no-padding s12 m6 l4">
+
 <img class="responsive" src="images/Daniela_van_den_Heijden.webp" alt="Daniela van den Heijden">
 
 <div class="padding">
