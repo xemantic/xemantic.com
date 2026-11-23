@@ -28,6 +28,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          # the whole history, which the modification dates of the pages are read from
+          fetch-depth: 0
       - name: Setup Java
         uses: actions/setup-java@v6
         with:
