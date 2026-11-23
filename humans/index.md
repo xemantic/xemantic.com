@@ -411,11 +411,11 @@ toc: closed
 
 <article class="no-padding s12 m6 l4">
 
-<a href="https://www.bradleyroyes.com/"><img class="responsive" src="images/Bradley_Royes.webp" alt="Bradley Royes"></a>
+<a href="https://www.bradleyroyes.com/"><img class="responsive" src="images/Bradley_Royes.webp" alt="Bradley Clark Royes"></a>
 
 <div class="padding">
 
-### Bradley Royes
+### Bradley Clark Royes
 
 *Community builder, cognitive scientist, tennis coach*
 
