@@ -1,3 +1,6 @@
+---
+description: Kazik Pogoda — the founder of Xemantic, an independent AI researcher, software architect, computational artist and live coder.
+---
 # Kazik Pogoda
 
 <section class="profile">
