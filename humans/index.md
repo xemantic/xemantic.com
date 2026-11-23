@@ -1,4 +1,5 @@
 ---
+description: The people of Xemantic — the collective, its collaborators and its advisors.
 toc: closed
 ---
 # Humans
