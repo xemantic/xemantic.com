@@ -333,6 +333,40 @@ toc: closed
 
 </article>
 
+<article class="no-padding s12 m6 l4">
+
+<a href="https://www.linkedin.com/in/mikolajmaslukmeller/"><img class="responsive" src="images/Miko_Masluk-Meller.webp" alt="Miko Masluk-Meller wearing headphones, against a view of the Earth at night from orbit"></a>
+
+<div class="padding">
+
+### Miko Masluk-Meller
+
+*Cloud engineer, data consultant, project manager*
+
+<div class="tags">
+
+- Foresight Institute
+- Cloud Architecture
+- DevOps
+- Data Pipelines
+- Business Intelligence
+- AI/ML
+- AI Safety
+
+</div>
+
+<nav class="right-align">
+<div class="social-media-links">
+
+- [LinkedIn](https://www.linkedin.com/in/mikolajmaslukmeller/)
+
+</div>
+</nav>
+
+</div>
+
+</article>
+
 </div>
 
 ## Advisors
